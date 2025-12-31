@@ -1,0 +1,299 @@
+\documentclass{article}
+\usepackage[left=0.8cm,top=0.5cm,right=0.8cm,bottom=1.2cm]{geometry} 
+
+\usepackage[spanish]{babel}
+\usepackage{amsmath}
+\usepackage{amssymb}
+%\usepackage{enumitem}
+\usepackage[american]{circuitikz}
+\usepackage{enumerate}
+\usepackage{tikz}
+\usepackage{tikz-3dplot}
+\usepackage{siunitx}
+\begin{document}
+
+\begin{enumerate}
+
+
+
+\item[1.] \textcolor{red}{(\textbf{19 pts})} La figura muestra un circuito con cinco capacitores de capacitancias $C_1=C_2 =C$, $C_3 =C_4 = 2C$ y $C_5=5C$, donde $C$ es una constante con unidades de faradios ($\mathrm{F}$). Si $C=2{,}0\,\mu\mathrm{F}$ y $V=10\,\mathrm{V}$, determine:
+
+\begin{minipage}{0.6\textwidth}
+\begin{enumerate}
+	\item La capacitancia equivalente. \textcolor{red}{(\textbf{10 pts})}
+
+\item [$b)$] La carga total del circuito.\textcolor{red}{(\textbf{3 pts})}
+\item [$c)$] El voltaje en $C_4$ y $C_5$.\textcolor{red}{(\textbf{6 pts})}
+
+\end{enumerate}
+\paragraph{Solución:}
+\end{minipage}
+\hfill
+\begin{minipage}{0.4\textwidth}
+\begin{center}
+\begin{circuitikz}[scale=0.7]
+    % Batería y punto P
+    \draw (0,0) 
+        to[battery,invert, l=$V$] (0,4) coordinate[label=above:] (p)
+        to[short] (3,4);
+    
+    % Rama principal superior
+    \draw (3,4)
+        to[C, l=$C_1$] (3,2)
+        to[short] (3,2)
+        to[C, l=$C_2$] (3,0)
+        to[short] (0,0)
+       % to[C,l=$C_{3}$] (3,0)
+       ;
+    
+    % Capacitores verticales
+    \draw (3,4)
+    to[short] (3,4)
+    to[C, l=$C_3$] (6,4)
+        to[C, l=$C_4$] (6,2)
+        to[C,l=$C_5$] (6,0)
+        to[short] (3,0)
+        ;
+    \draw (3,2)
+        to[short] (6,2);
+    
+    % Título de la figura
+   % \node[below] at (3.5,-0.5) {Figura 1};
+\end{circuitikz}
+\end{center}
+\end{minipage}
+\paragraph{Solución:}
+\begin{enumerate}
+    \item[(a)] Capacitancia equivalente
+
+    Los capacitores $C_3$ y $C_4$ están en serie:
+    \[
+    C_{34} = \frac{C_3 C_4}{C_3 + C_4} = \frac{(2C)(2C)}{2C + 2C} = \frac{4C^2}{4C} = C \textcolor{red}{\quad (2\text{ pts})}
+    \]
+    
+    Este resultado está en paralelo con $C_1$:
+    \[
+    C_{134} = C_{34} + C_1 = C + C = 2C \textcolor{red}{\quad (2\text{ pts})}
+    \]
+    
+    Por otro lado, $C_2$ y $C_5$ están en paralelo:
+    \[
+    C_{25} = C_2 + C_5 = C + 5C = 6C \textcolor{red}{\quad (2\text{ pts})}
+    \]
+    
+    Finalmente, $C_{134}$ y $C_{25}$ están en serie:
+    \[
+    C_{eq} = \frac{C_{134} \cdot C_{25}}{C_{134} + C_{25}} = \frac{2C \cdot 6C}{2C + 6C} = \frac{12C^2}{8C} = \frac{3C}{2}
+    \]
+    
+    \[
+    \boxed{C_{eq} = \frac{3}{2}C} \textcolor{red}{\quad (2\text{ pts})}
+    \]
+Entonces, capacitancia equivalente:
+        \[
+        C_{eq} = \frac{3}{2}C = \frac{3}{2} \cdot 2\,\mu F = 3\,\mu F\textcolor{red}{\quad (2\text{ pts})}
+        \]
+    \item[(b)] La carga total del circuito.\textcolor{red}{(\textbf{3 pts})}.\\
+
+
+    \begin{itemize}
+
+        
+        \item Carga total:
+        \[
+        Q_{total} = C_{eq} \cdot V = 3\,\mu F \cdot 10\,V = 30\,\mu C
+        \]
+         \[\therefore ~
+        \boxed{Q_{total} = 30\,\mu C}\textcolor{red}{\quad (3\text{ pts})}
+        \]
+        
+        \end{itemize}
+       \item[(c)] El voltaje en $C_4$ y $C_5$. \textcolor{red}{(\textbf{6 pts})}\\
+       
+            \begin{itemize}
+            
+        \item Voltajes en la rama superior ($C_{134} = 4\,\mu F$) y la rama inferior ($C_{25} = 12\,\mu F$), como están en serie:
+        
+        \[
+        Q_{134} = Q_{25} = Q_{total} = 30\,\mu C
+        \]
+        
+        \[
+        V_{134} = \frac{Q}{C_{134}} = \frac{30\,\mu C}{4\,\mu F} = 7.5\,V
+        \]
+        
+        \[
+        V_{25} = \frac{Q}{C_{25}} = \frac{30\,\mu C}{12\,\mu F} = 2.5\,V
+        \]
+        
+        \[\therefore~
+        \boxed{V_{C5} =  2.5\,V}\textcolor{red}{\quad (3\text{ pts})}
+        \]
+        
+        \item El voltaje en $C_4$. $C_1$ y $C_{34}$ en paralelo comparten el mismo voltaje:
+        
+        \[
+        V_{C1} = V_{C34} = 7.5\,V
+        \]
+        
+           Para $C_{34}$:
+        \[
+        Q_{34} = C_{34} \cdot V_{C34} = 2\,\mu F \cdot 7.5\,V = 15\,\mu C
+        \]
+        
+        Como $C_3$ y $C_4$ están en serie, tienen la misma carga:
+        
+        \[
+        Q_{C3} = Q_{C4} = Q_{34} = 15\,\mu C
+        \]
+        
+      
+        \[\therefore~
+        \boxed{V_{C4} = \frac{Q_{C4}}{C_4} = \frac{15\,\mu C}{4\,\mu F} = 3.75\,V} \textcolor{red}{\quad (3\text{ pts})}
+        \]
+
+         
+    \end{itemize}
+
+   
+
+\end{enumerate}
+
+\newpage
+\item[1.] \textcolor{red}{(\textbf{19 pts})} La figura muestra un circuito con cinco capacitores de capacitancias $C_1=C_2 =C$, $C_3 =C_4 = 2C$ y $C_5=5C$, donde $C$ es una constante con unidades de faradios ($\mathrm{F}$). Si $C=2{,}0\,\mu\mathrm{F}$ y $V=11\,\mathrm{V}$, determine:
+
+\begin{minipage}{0.5\textwidth}
+\begin{enumerate}
+	\item La capacitancia equivalente. \textcolor{red}{(\textbf{8 pts})}
+%\end{enumerate}
+	
+%Si $C=2{,}0\,\mu\mathrm{F}$ y $V=11\,\mathrm{V}$, determine:
+%\begin{enumerate}
+\item La carga total del circuito.\textcolor{red}{(\textbf{3 pts})}
+\item  El voltaje y la carga en $C_4$ y $C_5$.\textcolor{red}{(\textbf{8 pts})}
+
+\end{enumerate}
+\paragraph{Solución:}
+\end{minipage}
+\hfill
+\begin{minipage}{0.5\textwidth}
+\begin{center}
+\begin{circuitikz}[scale=0.7]
+    % Batería y punto P
+    \draw (0,0) 
+        to[battery,invert, l=$V$] (0,4) coordinate[label=above:] (p)
+        to[short] (3,4);
+    
+    % Rama principal superior
+    \draw (3,4)
+        to[C, l=$C_1$] (3,2)
+        to[short] (3,2)
+        to[C, l=$C_2$] (3,0)
+        to[short] (0,0)
+       % to[C,l=$C_{3}$] (3,0)
+       ;
+    
+    % Capacitores verticales
+    \draw (3,4)
+    to[short] (6,4)
+        to[C, l=$C_3$] (6,2)
+                to[C,l=$C_5$] (6,0)
+        to[short] (3,0)
+        ;
+    \draw (3,2)
+        to[short] (6,2);
+    \draw (6,4) to[short] (9,4)
+    to[C, l=$C_4$] (9,2)
+    to[short] (6,2)
+    ;
+    
+    % Título de la figura
+   % \node[below] at (3.5,-0.5) {Figura 1};
+\end{circuitikz}
+\end{center}
+\end{minipage}
+\paragraph{Solución:}
+
+\begin{enumerate}
+    \item[(a)] Capacitancia equivalente
+
+    Los capacitores  $C_1$, $C_3$ y $C_4$ están en paralelo:
+
+    \[
+    C_{134} = C_3+C_4 + C_1 = 2C+2C + C = 5C \textcolor{red}{\quad (2\text{ pts})}
+    \]
+    
+    Por otro lado, $C_2$ y $C_5$ están en paralelo:
+    \[
+    C_{25} = C_2 + C_5 = C + 5C = 6C \textcolor{red}{\quad (3\text{ pts})}
+    \]
+    
+    Finalmente, $C_{134}$ y $C_{25}$ están en serie:
+    \[
+    C_{eq} = \frac{C_{134} \cdot C_{25}}{C_{134} + C_{25}} = \frac{5C \cdot 6C}{5C + 6C} = \frac{30C^2}{11C} = \frac{30C}{11}
+    \]
+    
+    \[
+    \boxed{C_{eq} = 5.45\,\mu F} \textcolor{red}{\quad (3\text{ pts})}
+    \]
+
+    \item[(b)] La carga total del circuito.\textcolor{red}{(\textbf{3 pts})}.\\
+
+
+    \begin{itemize}
+        \item Carga total:
+ \[
+    Q_{total} = C_{eq} \cdot V = \frac{30}{11}C \cdot 11V = 30C = 60\,\mu C
+    \]
+         \[\therefore ~
+        \boxed{Q_{total} = 60\,\mu C}\textcolor{red}{\quad (3\text{ pts})}
+        \]
+        
+        \end{itemize}
+       \item[(c)] El voltaje y la carga en $C_4$ y $C_5$.\textcolor{red}{(\textbf{8 pts})}\\
+       
+            \begin{itemize}
+            
+        \item Voltajes en la rama superior ($C_{134} = 10\,\mu F$) y la rama inferior ($C_{25} = 12\,\mu F$), como están en serie:
+        
+        \[
+        Q_{134} = Q_{25} = Q_{total} = 60\,\mu C
+        \]
+        
+        \[
+        V_{134} = \frac{Q}{C_{134}} = \frac{60\,\mu C}{10\,\mu F} = 6.0\,V
+        \]
+        
+        \[
+        V_{25} = \frac{Q}{C_{25}} = \frac{60\,\mu C}{12\,\mu F} = 5.0\,V
+        \]
+        
+       
+        
+        \item Como los capacitores $C_1$ $C_3$ y $C_{4}$ están paralelo, comparten el mismo voltaje:
+        
+         \[\therefore~
+        \boxed{V_{C4} =6.0\,V} \textcolor{red}{\quad (2\text{ pts})}
+        \]
+        \item $C_2$ y $C_5$ están en paralelo:
+        
+         \[\therefore~
+        \boxed{V_{C5} =  5.0\,V}\textcolor{red}{\quad (2\text{ pts})}
+        \]
+               \item La carga en $C_4$ y $C_5$:
+        
+         \[
+        \boxed{Q_{C4} = C_{4}V_{4}=2\cdot 2\,\mu F\cdot 6,0\,V=24\,\mu\text C}\textcolor{red}{\quad (2\text{ pts})}
+        \]
+       
+  \[
+        \boxed{Q_{C5} = C_{5}V_{5}=5\cdot 2\,\mu F\cdot 5,0\,V=50\,\mu\text C}\textcolor{red}{\quad (2\text{ pts})}
+        \]
+         
+    \end{itemize}
+
+   
+
+\end{enumerate}
+\end{enumerate}
+\end{document}
