@@ -52,7 +52,7 @@ def initialize_rag():
     stats = rag.get_collection_stats()
     if stats["total_problems"] == 0:
         with st.spinner("Indexando problemas de electromagnetismo..."):
-            rag.index_tex_files("/home/dell/Escritorio/electro_agent")
+            rag.index_tex_files(os.path.dirname(os.path.abspath(__file__)))
             st.success("✓ Base de conocimiento inicializada correctamente")
 
     return rag
