@@ -4,12 +4,12 @@ Interfaz Streamlit para el agente conversacional de electromagnetismo.
 import streamlit as st
 import os
 from dotenv import load_dotenv
-from rag_system import ElectromagnetismRAG
+from rag_system import ElectromagnetismRAG, CATEGORIES
 
 # Cargar variables de entorno
 load_dotenv()
 
-# Configuración de la página
+# Configuracion de la pagina
 st.set_page_config(
     page_title="Asistente de Electromagnetismo",
     page_icon="⚡",
@@ -39,6 +39,13 @@ st.markdown("""
         padding: 1rem;
         margin-bottom: 1rem;
     }
+    .category-badge {
+        background-color: #1E88E5;
+        color: white;
+        padding: 0.2rem 0.5rem;
+        border-radius: 5px;
+        font-size: 0.8rem;
+    }
 </style>
 """, unsafe_allow_html=True)
 
@@ -51,17 +58,21 @@ def initialize_rag():
     # Verificar si necesitamos indexar
     stats = rag.get_collection_stats()
     if stats["total_problems"] == 0:
-        with st.spinner("Indexando problemas de electromagnetismo..."):
-            rag.index_tex_files(os.path.dirname(os.path.abspath(__file__)))
-            st.success("✓ Base de conocimiento inicializada correctamente")
+        corpus_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), "corpus")
+        if os.path.exists(corpus_path):
+            with st.spinner("Indexando corpus de electromagnetismo..."):
+                rag.index_corpus(corpus_path)
+                st.success("Base de conocimiento inicializada correctamente")
+        else:
+            st.warning("Carpeta 'corpus' no encontrada. Crea la estructura de carpetas.")
 
     return rag
 
 
 def main():
-    """Función principal de la aplicación."""
+    """Funcion principal de la aplicacion."""
 
-    # Título
+    # Titulo
     st.markdown('<div class="main-title">⚡ Asistente de Electromagnetismo ⚡</div>', unsafe_allow_html=True)
     st.markdown('<div class="subtitle">Tu apoyo inteligente para aprender electromagnetismo</div>', unsafe_allow_html=True)
 
@@ -69,49 +80,77 @@ def main():
     try:
         rag = initialize_rag()
     except ValueError as e:
-        st.error(f"❌ Error de configuración: {e}")
-        st.info("💡 Asegúrate de que la variable ANTHROPIC_API_KEY esté configurada en el archivo .env")
+        st.error(f"Error de configuracion: {e}")
+        st.info("Asegurate de que la variable ANTHROPIC_API_KEY este configurada en el archivo .env")
         return
 
-    # Sidebar con información
+    # Sidebar con selector de temas
     with st.sidebar:
-        st.header("📚 Información")
+        st.header("📚 Temas de Estudio")
 
-        stats = rag.get_collection_stats()
-        st.metric("Problemas indexados", stats["total_problems"])
+        # Selector de tema
+        tema_options = ["Todos los temas"] + list(CATEGORIES.values())
+        tema_keys = ["todos"] + list(CATEGORIES.keys())
+
+        selected_index = st.radio(
+            "Selecciona un tema:",
+            range(len(tema_options)),
+            format_func=lambda x: tema_options[x],
+            key="tema_selector"
+        )
+
+        selected_category = tema_keys[selected_index]
+        st.session_state.selected_category = selected_category
+
+        # Mostrar tema activo
+        if selected_category != "todos":
+            st.info(f"Consultando: {CATEGORIES[selected_category]}")
 
         st.markdown("---")
 
-        st.subheader("🎯 ¿Qué puedo hacer?")
-        st.markdown("""
-        - Responder preguntas sobre electromagnetismo
-        - Explicar conceptos de campos eléctricos y magnéticos
-        - Ayudarte con problemas de capacitores
-        - Resolver circuitos usando leyes de Kirchhoff
-        - Aplicar las ecuaciones de Maxwell
-        - Mostrar soluciones paso a paso
-        """)
+        # Estadisticas por tema
+        st.subheader("📊 Documentos por tema")
+        stats_by_cat = rag.get_stats_by_category()
+        total_docs = sum(stats_by_cat.values())
+
+        for cat_key, cat_name in CATEGORIES.items():
+            count = stats_by_cat.get(cat_key, 0)
+            st.metric(cat_name, count)
+
+        st.metric("Total", total_docs)
 
         st.markdown("---")
 
+        # Seccion de administracion
+        st.subheader("⚙️ Administracion")
+
+        if st.button("🔄 Reindexar Corpus"):
+            with st.spinner("Reindexando..."):
+                corpus_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), "corpus")
+                rag.clear_and_reindex(corpus_path)
+                st.cache_resource.clear()
+            st.success("Corpus reindexado!")
+            st.rerun()
+
+        if st.button("🗑️ Limpiar conversacion"):
+            st.session_state.messages = []
+            st.rerun()
+
+        st.markdown("---")
+
+        # Ejemplos de preguntas
         st.subheader("💡 Ejemplos de preguntas")
         example_questions = [
-            "¿Cómo se calculan capacitores en serie?",
-            "Explícame la ley de Gauss",
-            "¿Qué es el campo eléctrico?",
-            "¿Cómo aplico las leyes de Kirchhoff?",
-            "¿Cuál es la diferencia entre campo eléctrico y magnético?"
+            "¿Que es el campo electrico?",
+            "Explica la ley de Gauss",
+            "¿Como funcionan los capacitores?",
+            "¿Que son las leyes de Kirchhoff?",
+            "Explica el campo magnetico"
         ]
 
         for question in example_questions:
-            if st.button(question, key=question):
+            if st.button(question, key=f"ex_{question[:20]}"):
                 st.session_state.example_question = question
-
-        st.markdown("---")
-
-        if st.button("🗑️ Limpiar conversación"):
-            st.session_state.messages = []
-            st.rerun()
 
     # Inicializar historial de mensajes
     if "messages" not in st.session_state:
@@ -140,19 +179,30 @@ def main():
 
         # Generar respuesta
         with st.chat_message("assistant"):
+            # Obtener categoria seleccionada
+            category_filter = st.session_state.get("selected_category", "todos")
+
+            # Mostrar contexto de busqueda
+            if category_filter != "todos":
+                st.caption(f"🔍 Buscando en: {CATEGORIES.get(category_filter, category_filter)}")
+
             with st.spinner("Pensando... 🤔"):
                 try:
-                    # Preparar historial para Claude (solo últimos 5 intercambios)
+                    # Preparar historial para Claude
                     conversation_history = []
-                    for msg in st.session_state.messages[-10:]:  # Últimos 10 mensajes (5 intercambios)
+                    for msg in st.session_state.messages[-10:]:
                         if msg["role"] in ["user", "assistant"]:
                             conversation_history.append({
                                 "role": msg["role"],
                                 "content": msg["content"]
                             })
 
-                    # Generar respuesta
-                    response = rag.generate_response(prompt, conversation_history[:-1])  # Excluir el último que ya está en el prompt
+                    # Generar respuesta con filtro de categoria
+                    response = rag.generate_response(
+                        prompt,
+                        conversation_history[:-1],
+                        category_filter=category_filter
+                    )
 
                     # Mostrar respuesta
                     st.markdown(response)
@@ -161,7 +211,7 @@ def main():
                     st.session_state.messages.append({"role": "assistant", "content": response})
 
                 except Exception as e:
-                    error_msg = f"❌ Error al generar respuesta: {str(e)}"
+                    error_msg = f"Error al generar respuesta: {str(e)}"
                     st.error(error_msg)
                     st.session_state.messages.append({"role": "assistant", "content": error_msg})
 
@@ -169,7 +219,7 @@ def main():
     st.markdown("---")
     st.markdown(
         '<div style="text-align: center; color: #666; font-size: 0.9rem;">'
-        'Desarrollado con ❤️ usando Claude 4.5, Streamlit y ChromaDB'
+        'Desarrollado con Claude, Streamlit y ChromaDB'
         '</div>',
         unsafe_allow_html=True
     )
