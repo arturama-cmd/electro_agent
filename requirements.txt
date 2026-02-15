@@ -9,3 +9,8 @@ numpy>=1.24.0
 
 # PDF processing
 pdfplumber>=0.10.0
+
+# OCR for scanned PDFs (requires Tesseract OCR installed on system)
+pytesseract>=0.3.10
+pdf2image>=1.16.0
+pillow>=10.0.0

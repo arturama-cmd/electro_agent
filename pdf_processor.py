@@ -1,6 +1,7 @@
 """
 Procesador de archivos PDF para extraccion de texto.
 Extrae contenido de PDFs para ser usado en el sistema RAG.
+Soporta PDFs con texto y PDFs escaneados (OCR).
 """
 import os
 from typing import List, Dict
@@ -11,32 +12,115 @@ except ImportError:
     print("pdfplumber no instalado. Ejecuta: pip install pdfplumber")
     pdfplumber = None
 
+# OCR dependencies (optional)
+try:
+    import pytesseract
+    from pdf2image import convert_from_path
+    from PIL import Image
+    OCR_AVAILABLE = True
 
-def extract_text_from_pdf(file_path: str) -> str:
+    # Configure Tesseract path for Windows
+    import platform
+    if platform.system() == "Windows":
+        tesseract_path = r"C:\Program Files\Tesseract-OCR\tesseract.exe"
+        if os.path.exists(tesseract_path):
+            pytesseract.pytesseract.tesseract_cmd = tesseract_path
+
+        # Use local tessdata directory if available (for additional languages)
+        local_tessdata = os.path.join(os.path.dirname(__file__), "tessdata")
+        if os.path.exists(local_tessdata):
+            os.environ["TESSDATA_PREFIX"] = local_tessdata
+
+    # Configure Poppler path for Windows (local installation)
+    POPPLER_PATH = None
+    if platform.system() == "Windows":
+        # Check local poppler installation first
+        local_poppler = os.path.join(os.path.dirname(__file__), "poppler-24.08.0", "Library", "bin")
+        if os.path.exists(local_poppler):
+            POPPLER_PATH = local_poppler
+except ImportError:
+    OCR_AVAILABLE = False
+    pytesseract = None
+    POPPLER_PATH = None
+
+
+def extract_text_with_ocr(file_path: str, language: str = "spa") -> str:
     """
-    Extrae texto de un archivo PDF.
-    
+    Extrae texto de un PDF escaneado usando OCR (Tesseract).
+
     Args:
         file_path: Ruta al archivo PDF
-        
+        language: Idioma para OCR (spa=espanol, eng=ingles)
+
+    Returns:
+        Texto extraido mediante OCR
+    """
+    if not OCR_AVAILABLE:
+        raise ImportError("pytesseract y pdf2image no estan instalados. Ejecuta: pip install pytesseract pdf2image")
+
+    text = ""
+    try:
+        # Convertir PDF a imagenes (una por pagina)
+        print(f"  Convirtiendo PDF a imagenes para OCR...")
+        if POPPLER_PATH:
+            images = convert_from_path(file_path, dpi=300, poppler_path=POPPLER_PATH)
+        else:
+            images = convert_from_path(file_path, dpi=300)
+
+        for page_num, image in enumerate(images, 1):
+            print(f"    OCR pagina {page_num}/{len(images)}...")
+            page_text = pytesseract.image_to_string(image, lang=language)
+            if page_text.strip():
+                text += f"\n--- Pagina {page_num} ---\n"
+                text += page_text + "\n"
+
+    except Exception as e:
+        print(f"Error en OCR para {file_path}: {e}")
+        return ""
+
+    return text
+
+
+def extract_text_from_pdf(file_path: str, use_ocr_fallback: bool = True) -> str:
+    """
+    Extrae texto de un archivo PDF.
+    Primero intenta extraccion directa, si falla usa OCR.
+
+    Args:
+        file_path: Ruta al archivo PDF
+        use_ocr_fallback: Si True, usa OCR cuando no hay texto extraible
+
     Returns:
         Texto extraido del PDF
     """
     if pdfplumber is None:
         raise ImportError("pdfplumber no esta instalado")
-    
+
     text = ""
+    has_text = False
+
     try:
         with pdfplumber.open(file_path) as pdf:
             for page_num, page in enumerate(pdf.pages, 1):
                 page_text = page.extract_text()
-                if page_text:
+                if page_text and page_text.strip():
+                    has_text = True
                     text += f"\n--- Pagina {page_num} ---\n"
                     text += page_text + "\n"
     except Exception as e:
         print(f"Error procesando PDF {file_path}: {e}")
         return ""
-    
+
+    # Si no se extrajo texto y OCR esta disponible, usar OCR
+    if not has_text and use_ocr_fallback:
+        if OCR_AVAILABLE:
+            print(f"  PDF escaneado detectado, usando OCR...")
+            text = extract_text_with_ocr(file_path)
+        else:
+            print(f"  Advertencia: PDF escaneado pero OCR no disponible")
+            print(f"  Instala: pip install pytesseract pdf2image")
+            print(f"  Y asegurate de tener Tesseract OCR instalado")
+
     return text
 
 

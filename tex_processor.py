@@ -15,76 +15,58 @@ def clean_latex(text: str) -> str:
     text = re.sub(r'%.*', '', text)
 
     # Preservar ecuaciones importantes
-    text = re.sub(r'\begin\{equation\}(.*?)\end\{equation\}', r'ECUACION: ', text, flags=re.DOTALL)
-    text = re.sub(r'\begin\{align\*?\}(.*?)\end\{align\*?\}', r'ECUACION: ', text, flags=re.DOTALL)
-    text = re.sub(r'\begin\{eqnarray\}(.*?)\end\{eqnarray\}', r'ECUACION: ', text, flags=re.DOTALL)
-    text = re.sub(r'\\[(.*?)\\]', r'ECUACION: ', text, flags=re.DOTALL)
-    text = re.sub(r'\$\$(.*?)\$\$', r'ECUACION: ', text, flags=re.DOTALL)
-    text = re.sub(r'\$(.*?)\$', r'MATH: ', text)
+    text = re.sub(r'\\begin\{equation\}(.*?)\\end\{equation\}', r'ECUACION: \1', text, flags=re.DOTALL)
+    text = re.sub(r'\\begin\{align\*?\}(.*?)\\end\{align\*?\}', r'ECUACION: \1', text, flags=re.DOTALL)
+    text = re.sub(r'\\begin\{eqnarray\}(.*?)\\end\{eqnarray\}', r'ECUACION: \1', text, flags=re.DOTALL)
+    text = re.sub(r'\\\[(.*?)\\\]', r'ECUACION: \1', text, flags=re.DOTALL)
+    text = re.sub(r'\$\$(.*?)\$\$', r'ECUACION: \1', text, flags=re.DOTALL)
+    text = re.sub(r'\$(.*?)\$', r'MATH: \1', text)
 
     # Eliminar entornos de dibujo
-    text = re.sub(r'\begin\{circuitikz\}.*?\end\{circuitikz\}', '[DIAGRAMA DE CIRCUITO]', text, flags=re.DOTALL)
-    text = re.sub(r'\begin\{tikzpicture\}.*?\end\{tikzpicture\}', '[DIAGRAMA]', text, flags=re.DOTALL)
-    text = re.sub(r'\includegraphics.*?\{.*?\}', '[IMAGEN]', text)
+    text = re.sub(r'\\begin\{circuitikz\}.*?\\end\{circuitikz\}', '[DIAGRAMA DE CIRCUITO]', text, flags=re.DOTALL)
+    text = re.sub(r'\\begin\{tikzpicture\}.*?\\end\{tikzpicture\}', '[DIAGRAMA]', text, flags=re.DOTALL)
+    text = re.sub(r'\\includegraphics.*?\{.*?\}', '[IMAGEN]', text)
 
     # Eliminar comandos de formato
-    text = re.sub(r'\documentclass.*', '', text)
-    text = re.sub(r'\usepackage.*', '', text)
-    text = re.sub(r'\geometry.*', '', text)
-    text = re.sub(r'\begin\{document\}', '', text)
-    text = re.sub(r'\end\{document\}', '', text)
-    text = re.sub(r'\newpage', '
----NUEVA PAGINA---
-', text)
-    text = re.sub(r'\clearpage', '
----NUEVA PAGINA---
-', text)
+    text = re.sub(r'\\documentclass.*', '', text)
+    text = re.sub(r'\\usepackage.*', '', text)
+    text = re.sub(r'\\geometry.*', '', text)
+    text = re.sub(r'\\begin\{document\}', '', text)
+    text = re.sub(r'\\end\{document\}', '', text)
+    text = re.sub(r'\\newpage', '\n---NUEVA PAGINA---\n', text)
+    text = re.sub(r'\\clearpage', '\n---NUEVA PAGINA---\n', text)
 
     # Simplificar comandos de texto
-    text = re.sub(r'\textbf\{(.*?)\}', r'****', text)
-    text = re.sub(r'\textit\{(.*?)\}', r'**', text)
-    text = re.sub(r'\textcolor\{[^}]+\}\{(.*?)\}', r'', text)
-    text = re.sub(r'\section\*?\{(.*?)\}', r'
-## 
-', text)
-    text = re.sub(r'\subsection\*?\{(.*?)\}', r'
-### 
-', text)
-    text = re.sub(r'\paragraph\{(.*?)\}', r'
-****
-', text)
+    text = re.sub(r'\\textbf\{(.*?)\}', r'**\1**', text)
+    text = re.sub(r'\\textit\{(.*?)\}', r'*\1*', text)
+    text = re.sub(r'\\textcolor\{[^}]+\}\{(.*?)\}', r'\1', text)
+    text = re.sub(r'\\section\*?\{(.*?)\}', r'\n## \1\n', text)
+    text = re.sub(r'\\subsection\*?\{(.*?)\}', r'\n### \1\n', text)
+    text = re.sub(r'\\paragraph\{(.*?)\}', r'\n**\1**\n', text)
 
     # Limpiar entornos de listas
-    text = re.sub(r'\begin\{enumerate\}.*?\{(.*?)\}', r'
-LISTA:', text)
-    text = re.sub(r'\begin\{enumerate\}', '
-LISTA:', text)
-    text = re.sub(r'\end\{enumerate\}', '', text)
-    text = re.sub(r'\begin\{itemize\}', '
-LISTA:', text)
-    text = re.sub(r'\end\{itemize\}', '', text)
-    text = re.sub(r'\item\[(.*?)\]', r'
-- : ', text)
-    text = re.sub(r'\item', '
-- ', text)
+    text = re.sub(r'\\begin\{enumerate\}.*?\{(.*?)\}', r'\nLISTA:', text)
+    text = re.sub(r'\\begin\{enumerate\}', '\nLISTA:', text)
+    text = re.sub(r'\\end\{enumerate\}', '', text)
+    text = re.sub(r'\\begin\{itemize\}', '\nLISTA:', text)
+    text = re.sub(r'\\end\{itemize\}', '', text)
+    text = re.sub(r'\\item\[(.*?)\]', r'\n- \1: ', text)
+    text = re.sub(r'\\item', '\n- ', text)
 
     # Limpiar otros entornos
-    text = re.sub(r'\begin\{minipage\}.*?\{.*?\}', '', text)
-    text = re.sub(r'\end\{minipage\}', '', text)
-    text = re.sub(r'\begin\{center\}', '', text)
-    text = re.sub(r'\end\{center\}', '', text)
-    text = re.sub(r'\begin\{wrapfigure\}.*?\{.*?\}', '', text)
-    text = re.sub(r'\end\{wrapfigure\}', '', text)
+    text = re.sub(r'\\begin\{minipage\}.*?\{.*?\}', '', text)
+    text = re.sub(r'\\end\{minipage\}', '', text)
+    text = re.sub(r'\\begin\{center\}', '', text)
+    text = re.sub(r'\\end\{center\}', '', text)
+    text = re.sub(r'\\begin\{wrapfigure\}.*?\{.*?\}', '', text)
+    text = re.sub(r'\\end\{wrapfigure\}', '', text)
 
     # Eliminar comandos residuales
-    text = re.sub(r'\[a-zA-Z]+\{([^}]*)\}', r'', text)
-    text = re.sub(r'\[a-zA-Z]+', '', text)
+    text = re.sub(r'\\[a-zA-Z]+\{([^}]*)\}', r'\1', text)
+    text = re.sub(r'\\[a-zA-Z]+', '', text)
 
     # Limpiar espacios
-    text = re.sub(r'
-{3,}', '
-
-', text)
+    text = re.sub(r'\n{3,}', '\n\n', text)
     text = re.sub(r' {2,}', ' ', text)
 
     return text.strip()

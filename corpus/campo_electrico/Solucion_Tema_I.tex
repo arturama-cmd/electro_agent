@@ -1,0 +1,390 @@
+\documentclass[12pt,letterpaper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[spanish,es-noshorthands]{babel}
+\usepackage{amsmath,amssymb}
+\usepackage{graphicx}
+\usepackage{xcolor}
+\usepackage{tikz}
+\usepackage[top=2cm, bottom=2cm, left=2cm, right=2cm]{geometry}
+\usepackage{cancel}
+
+% Definir colores
+\definecolor{carga_pos}{RGB}{180,0,0}
+\definecolor{carga_neg}{RGB}{0,0,180}
+\definecolor{vector_f}{RGB}{200,0,0}
+\definecolor{vector_r}{RGB}{0,100,200}
+
+\title{\textbf{Soluci\'on - Problema de Fuerza El\'ectrica}}
+\author{Electromagnetismo Asistente}
+\date{}
+
+\begin{document}
+\maketitle
+
+%========================================
+% ENUNCIADO
+%========================================
+\section*{Enunciado del Problema}
+
+Dada la siguiente configuraci\'on de cargas el\'ectricas dispuestas sobre un c\'irculo de radio $R$:
+\begin{itemize}
+    \item $q_1 = q_2 = 2Q$
+    \item $q_3 = -Q$
+    \item $q_0 = Q$ (ubicada en el punto P)
+\end{itemize}
+
+Con $Q = 10$ nC y $R = 25$ cm, determinar la fuerza que experimenta la part\'icula $q_0$.
+
+\begin{center}
+\begin{tikzpicture}[scale=3]
+    % Grilla
+    \draw[step=0.5cm, gray!20, very thin] (-1.3,-1.3) grid (1.3,1.3);
+
+    % Circulo de referencia
+    \draw[dashed, gray!60] (0,0) circle (1);
+
+    % Ejes
+    \draw[black, thick, ->] (-1.4,0) -- (1.5,0) node[right] {$\hat{x}$};
+    \draw[black, thick, ->] (0,-1.4) -- (0,1.5) node[above] {$\hat{y}$};
+
+    % Radio R
+    \draw[gray, dashed] (0,0) -- (0.707,0.707);
+    \node[gray] at (0.5,0.25) {$R$};
+
+    % Angulo 45
+    \draw[gray] (0,0.3) arc (90:135:0.3);
+    \node[gray, scale=0.8] at (-0.15,0.4) {$45^\circ$};
+
+    % Cargas
+    \fill[carga_pos] (1,0) circle (0.08) node[above right, black] {$q_0$ (P)};
+    \fill[carga_pos] (0,-1) circle (0.08) node[below, black] {$q_1$};
+    \fill[carga_pos] (-1,0) circle (0.08) node[left, black] {$q_2$};
+    \fill[carga_neg] (-0.707,0.707) circle (0.08) node[above left, black] {$q_3$};
+
+    % Etiquetas de posicion
+    \node[scale=0.7] at (1,-0.15) {$(R,0)$};
+    \node[scale=0.7] at (0.3,-1) {$(0,-R)$};
+    \node[scale=0.7] at (-1,-0.2) {$(-R,0)$};
+\end{tikzpicture}
+\end{center}
+
+%========================================
+% ANALISIS CUALITATIVO
+%========================================
+\section*{An\'alisis Cualitativo}
+
+La carga $q_0$ (positiva) interact\'ua con las cargas $q_1$, $q_2$ y $q_3$:
+
+\begin{itemize}
+    \item \textbf{Interacci\'on $q_1 \leftrightarrow q_0$}: Ambas cargas son positivas ($q_1 = 2Q > 0$, $q_0 = Q > 0$), por lo tanto la fuerza $\vec{F}_{10}$ es \textcolor{red}{\textbf{repulsiva}}.
+
+    \item \textbf{Interacci\'on $q_2 \leftrightarrow q_0$}: Ambas cargas son positivas ($q_2 = 2Q > 0$, $q_0 = Q > 0$), por lo tanto la fuerza $\vec{F}_{20}$ es \textcolor{red}{\textbf{repulsiva}}.
+
+    \item \textbf{Interacci\'on $q_3 \leftrightarrow q_0$}: Las cargas tienen signos opuestos ($q_3 = -Q < 0$, $q_0 = Q > 0$), por lo tanto la fuerza $\vec{F}_{30}$ es \textcolor{blue}{\textbf{atractiva}}.
+\end{itemize}
+
+%========================================
+% DIAGRAMA DE FUERZAS
+%========================================
+\section*{Diagrama de Fuerzas sobre $q_0$}
+
+\begin{center}
+\begin{tikzpicture}[scale=3]
+    % Grilla
+    \draw[step=0.5cm, gray!20, very thin] (-1.3,-1.3) grid (1.5,1.3);
+
+    % Circulo de referencia
+    \draw[dashed, gray!40] (0,0) circle (1);
+
+    % Ejes
+    \draw[black, thick, ->] (-1.4,0) -- (1.6,0) node[right] {$\hat{x}$};
+    \draw[black, thick, ->] (0,-1.4) -- (0,1.5) node[above] {$\hat{y}$};
+
+    % Cargas
+    \fill[carga_pos] (1,0) circle (0.08);
+    \fill[carga_pos] (0,-1) circle (0.08) node[below, black] {$q_1$};
+    \fill[carga_pos] (-1,0) circle (0.08) node[left, black] {$q_2$};
+    \fill[carga_neg] (-0.707,0.707) circle (0.08) node[above left, black] {$q_3$};
+
+    % Lineas punteadas de conexion
+    \draw[dashed, gray] (1,0) -- (0,-1);
+    \draw[dashed, gray] (1,0) -- (-1,0);
+    \draw[dashed, gray] (1,0) -- (-0.707,0.707);
+
+    % Vectores de fuerza
+    % F10: repulsiva, desde q1 hacia q0
+    \draw[vector_f, ultra thick, ->] (1,0) -- (1.35,0.35) node[right] {$\vec{F}_{10}$};
+
+    % F20: repulsiva, desde q2 hacia q0
+    \draw[red!70!black, ultra thick, ->] (1,0) -- (1.5,0) node[above] {$\vec{F}_{20}$};
+
+    % F30: atractiva, desde q0 hacia q3
+    \draw[blue!70!black, ultra thick, ->] (1,0) -- (0.5,0.35) node[above] {$\vec{F}_{30}$};
+
+    \node[black, below] at (1,-0.1) {$q_0$};
+\end{tikzpicture}
+\end{center}
+
+%========================================
+% DATOS NUMERICOS
+%========================================
+\section*{Datos Num\'ericos}
+
+\begin{align*}
+    Q &= 10 \text{ nC} = 10 \times 10^{-9} \text{ C} \\
+    R &= 25 \text{ cm} = 0.25 \text{ m} \\
+    K &= 9 \times 10^9 \text{ N}\cdot\text{m}^2/\text{C}^2 \\[0.3cm]
+    q_0 &= Q = 10 \times 10^{-9} \text{ C} \\
+    q_1 &= q_2 = 2Q = 20 \times 10^{-9} \text{ C} \\
+    q_3 &= -Q = -10 \times 10^{-9} \text{ C}
+\end{align*}
+
+\textbf{Posiciones:}
+\begin{align*}
+    \vec{r}_0 &= R\hat{x} = (0.25, 0) \text{ m} \\
+    \vec{r}_1 &= -R\hat{y} = (0, -0.25) \text{ m} \\
+    \vec{r}_2 &= -R\hat{x} = (-0.25, 0) \text{ m} \\
+    \vec{r}_3 &= -\frac{R}{\sqrt{2}}\hat{x} + \frac{R}{\sqrt{2}}\hat{y} = (-0.177, 0.177) \text{ m}
+\end{align*}
+
+%========================================
+% CALCULO DE F10
+%========================================
+\section*{C\'alculo de $\vec{F}_{10}$ (Fuerza de $q_1$ sobre $q_0$)}
+
+\begin{minipage}[c]{0.35\textwidth}
+\begin{center}
+\begin{tikzpicture}[scale=2.2]
+    % Grilla
+    \draw[step=0.5cm, gray!20, very thin] (-0.3,-1.3) grid (1.3,0.3);
+
+    % Ejes
+    \draw[black, thick, ->] (-0.4,0) -- (1.4,0) node[right] {$\hat{x}$};
+    \draw[black, thick, ->] (0,-1.4) -- (0,0.4) node[above] {$\hat{y}$};
+
+    % Cargas
+    \fill[carga_pos] (1,0) circle (0.06) node[above right, black, scale=0.9] {$q_0$};
+    \fill[carga_pos] (0,-1) circle (0.06) node[below left, black, scale=0.9] {$q_1$};
+
+    % Vectores de posicion
+    \draw[blue, thick, ->] (0,0) -- (0,-1) node[midway, left, scale=0.8] {$\vec{r}_1$};
+    \draw[blue, thick, ->] (0,0) -- (1,0) node[midway, above, scale=0.8] {$\vec{r}_0$};
+
+    % Vector r10
+    \draw[red, ultra thick, ->] (0,-1) -- (1,0) node[midway, right, scale=0.8] {$\vec{r}_{10}$};
+\end{tikzpicture}
+\end{center}
+\end{minipage}
+\hfill
+\begin{minipage}[c]{0.60\textwidth}
+\textbf{Construcci\'on del vector de posici\'on relativo:}
+\begin{align*}
+    \vec{r}_1 + \vec{r}_{10} &= \vec{r}_0 \\
+    \vec{r}_{10} &= \vec{r}_0 - \vec{r}_1 \\
+    \vec{r}_{10} &= (0.25\hat{x}) - (-0.25\hat{y}) \\
+    \vec{r}_{10} &= (0.25\hat{x} + 0.25\hat{y}) \text{ [m]}
+\end{align*}
+
+\textbf{Magnitud:}
+\begin{align*}
+    ||\vec{r}_{10}|| &= \sqrt{(0.25)^2 + (0.25)^2} \\
+    ||\vec{r}_{10}|| &= 0.25\sqrt{2} \text{ m} = 0.354 \text{ m}
+\end{align*}
+\end{minipage}
+
+\vspace{0.5cm}
+\textbf{Aplicando la Ley de Coulomb:}
+\begin{align*}
+    \vec{F}_{10} &= \frac{K \cdot q_1 \cdot q_0}{||\vec{r}_{10}||^3} \cdot \vec{r}_{10} \\[0.3cm]
+    \vec{F}_{10} &= \frac{(9 \times 10^9)(20 \times 10^{-9})(10 \times 10^{-9})}{(0.25\sqrt{2})^3} \cdot (0.25\hat{x} + 0.25\hat{y}) \\[0.3cm]
+    \vec{F}_{10} &= \frac{1.8 \times 10^{-6}}{0.0442} \cdot (0.25\hat{x} + 0.25\hat{y}) \\[0.3cm]
+    \vec{F}_{10} &= 4.07 \times 10^{-5} \cdot (0.25\hat{x} + 0.25\hat{y}) \\[0.3cm]
+    \vec{F}_{10} &= \boxed{(1.02 \times 10^{-5}\hat{x} + 1.02 \times 10^{-5}\hat{y}) \text{ [N]}}
+\end{align*}
+
+%========================================
+% CALCULO DE F20
+%========================================
+\section*{C\'alculo de $\vec{F}_{20}$ (Fuerza de $q_2$ sobre $q_0$)}
+
+\begin{minipage}[c]{0.35\textwidth}
+\begin{center}
+\begin{tikzpicture}[scale=2.2]
+    % Grilla
+    \draw[step=0.5cm, gray!20, very thin] (-1.3,-0.3) grid (1.3,0.3);
+
+    % Ejes
+    \draw[black, thick, ->] (-1.4,0) -- (1.4,0) node[right] {$\hat{x}$};
+    \draw[black, thick, ->] (0,-0.4) -- (0,0.4) node[above] {$\hat{y}$};
+
+    % Cargas
+    \fill[carga_pos] (1,0) circle (0.06) node[above right, black, scale=0.9] {$q_0$};
+    \fill[carga_pos] (-1,0) circle (0.06) node[above left, black, scale=0.9] {$q_2$};
+
+    % Vectores de posicion
+    \draw[blue, thick, ->] (0,0) -- (-1,0) node[midway, above, scale=0.8] {$\vec{r}_2$};
+    \draw[blue, thick, ->] (0,0) -- (1,0) node[midway, below, scale=0.8] {$\vec{r}_0$};
+
+    % Vector r20
+    \draw[red, ultra thick, ->] (-1,-0.15) -- (1,-0.15) node[midway, below, scale=0.8] {$\vec{r}_{20}$};
+\end{tikzpicture}
+\end{center}
+\end{minipage}
+\hfill
+\begin{minipage}[c]{0.60\textwidth}
+\textbf{Construcci\'on del vector de posici\'on relativo:}
+\begin{align*}
+    \vec{r}_2 + \vec{r}_{20} &= \vec{r}_0 \\
+    \vec{r}_{20} &= \vec{r}_0 - \vec{r}_2 \\
+    \vec{r}_{20} &= (0.25\hat{x}) - (-0.25\hat{x}) \\
+    \vec{r}_{20} &= 0.50\hat{x} \text{ [m]}
+\end{align*}
+
+\textbf{Magnitud:}
+\begin{align*}
+    ||\vec{r}_{20}|| &= 0.50 \text{ m} = 2R
+\end{align*}
+\end{minipage}
+
+\vspace{0.5cm}
+\textbf{Aplicando la Ley de Coulomb:}
+\begin{align*}
+    \vec{F}_{20} &= \frac{K \cdot q_2 \cdot q_0}{||\vec{r}_{20}||^3} \cdot \vec{r}_{20} \\[0.3cm]
+    \vec{F}_{20} &= \frac{(9 \times 10^9)(20 \times 10^{-9})(10 \times 10^{-9})}{(0.50)^3} \cdot (0.50\hat{x}) \\[0.3cm]
+    \vec{F}_{20} &= \frac{1.8 \times 10^{-6}}{0.125} \cdot (0.50\hat{x}) \\[0.3cm]
+    \vec{F}_{20} &= 1.44 \times 10^{-5} \cdot (0.50\hat{x}) \\[0.3cm]
+    \vec{F}_{20} &= \boxed{7.20 \times 10^{-6}\hat{x} \text{ [N]}}
+\end{align*}
+
+%========================================
+% CALCULO DE F30
+%========================================
+\section*{C\'alculo de $\vec{F}_{30}$ (Fuerza de $q_3$ sobre $q_0$)}
+
+\begin{minipage}[c]{0.35\textwidth}
+\begin{center}
+\begin{tikzpicture}[scale=2.2]
+    % Grilla
+    \draw[step=0.5cm, gray!20, very thin] (-1.0,-0.2) grid (1.3,1.0);
+
+    % Ejes
+    \draw[black, thick, ->] (-1.1,0) -- (1.4,0) node[right] {$\hat{x}$};
+    \draw[black, thick, ->] (0,-0.3) -- (0,1.1) node[above] {$\hat{y}$};
+
+    % Cargas
+    \fill[carga_pos] (1,0) circle (0.06) node[below right, black, scale=0.9] {$q_0$};
+    \fill[carga_neg] (-0.707,0.707) circle (0.06) node[above left, black, scale=0.9] {$q_3$};
+
+    % Vectores de posicion
+    \draw[blue, thick, ->] (0,0) -- (-0.707,0.707) node[midway, above left, scale=0.8] {$\vec{r}_3$};
+    \draw[blue, thick, ->] (0,0) -- (1,0) node[midway, below, scale=0.8] {$\vec{r}_0$};
+
+    % Vector r30
+    \draw[red, ultra thick, ->] (-0.707,0.707) -- (1,0) node[midway, below right, scale=0.8] {$\vec{r}_{30}$};
+\end{tikzpicture}
+\end{center}
+\end{minipage}
+\hfill
+\begin{minipage}[c]{0.60\textwidth}
+\textbf{Construcci\'on del vector de posici\'on relativo:}
+\begin{align*}
+    \vec{r}_3 + \vec{r}_{30} &= \vec{r}_0 \\
+    \vec{r}_{30} &= \vec{r}_0 - \vec{r}_3 \\
+    \vec{r}_{30} &= (0.25\hat{x}) - \left(-\frac{0.25}{\sqrt{2}}\hat{x} + \frac{0.25}{\sqrt{2}}\hat{y}\right) \\
+    \vec{r}_{30} &= \left(0.25 + \frac{0.25}{\sqrt{2}}\right)\hat{x} - \frac{0.25}{\sqrt{2}}\hat{y} \\
+    \vec{r}_{30} &= (0.427\hat{x} - 0.177\hat{y}) \text{ [m]}
+\end{align*}
+
+\textbf{Magnitud:}
+\begin{align*}
+    ||\vec{r}_{30}|| &= \sqrt{(0.427)^2 + (-0.177)^2} \\
+    ||\vec{r}_{30}|| &= 0.462 \text{ m}
+\end{align*}
+\end{minipage}
+
+\vspace{0.5cm}
+\textbf{Aplicando la Ley de Coulomb:}
+\begin{align*}
+    \vec{F}_{30} &= \frac{K \cdot q_3 \cdot q_0}{||\vec{r}_{30}||^3} \cdot \vec{r}_{30} \\[0.3cm]
+    \vec{F}_{30} &= \frac{(9 \times 10^9)(-10 \times 10^{-9})(10 \times 10^{-9})}{(0.462)^3} \cdot (0.427\hat{x} - 0.177\hat{y}) \\[0.3cm]
+    \vec{F}_{30} &= \frac{-9.0 \times 10^{-7}}{0.0986} \cdot (0.427\hat{x} - 0.177\hat{y}) \\[0.3cm]
+    \vec{F}_{30} &= -9.13 \times 10^{-6} \cdot (0.427\hat{x} - 0.177\hat{y}) \\[0.3cm]
+    \vec{F}_{30} &= \boxed{(-3.90 \times 10^{-6}\hat{x} + 1.62 \times 10^{-6}\hat{y}) \text{ [N]}}
+\end{align*}
+
+\textit{Nota: El signo negativo en $q_3$ produce una fuerza en direcci\'on opuesta a $\vec{r}_{30}$, consistente con una fuerza atractiva.}
+
+%========================================
+% FUERZA NETA
+%========================================
+\section*{C\'alculo de la Fuerza Neta $\vec{F}_{neta}$}
+
+La fuerza neta sobre $q_0$ es la suma vectorial de todas las fuerzas:
+
+\begin{align*}
+    \vec{F}_{neta} &= \vec{F}_{10} + \vec{F}_{20} + \vec{F}_{30}
+\end{align*}
+
+\textbf{Componente en $\hat{x}$:}
+\begin{align*}
+    F_x &= (1.02 \times 10^{-5}) + (7.20 \times 10^{-6}) + (-3.90 \times 10^{-6}) \\
+    F_x &= 1.35 \times 10^{-5} \text{ N}
+\end{align*}
+
+\textbf{Componente en $\hat{y}$:}
+\begin{align*}
+    F_y &= (1.02 \times 10^{-5}) + (0) + (1.62 \times 10^{-6}) \\
+    F_y &= 1.18 \times 10^{-5} \text{ N}
+\end{align*}
+
+\begin{center}
+\fbox{\parbox{0.8\textwidth}{
+\centering
+\textbf{RESULTADO FINAL}
+\begin{align*}
+    \vec{F}_{neta} &= (1.35 \times 10^{-5}\hat{x} + 1.18 \times 10^{-5}\hat{y}) \text{ [N]} \\[0.3cm]
+    ||\vec{F}_{neta}|| &= \sqrt{(1.35)^2 + (1.18)^2} \times 10^{-5} = 1.79 \times 10^{-5} \text{ N} \\[0.3cm]
+    \theta &= \arctan\left(\frac{1.18}{1.35}\right) = 41.2^\circ \text{ (respecto al eje } +x\text{)}
+\end{align*}
+}}
+\end{center}
+
+%========================================
+% DIAGRAMA FINAL
+%========================================
+\section*{Diagrama Final de la Fuerza Resultante}
+
+\begin{center}
+\begin{tikzpicture}[scale=4]
+    % Grilla
+    \draw[step=0.25cm, gray!15, very thin] (-0.2,-0.2) grid (1.0,0.8);
+
+    % Ejes
+    \draw[black, thick, ->] (-0.3,0) -- (1.1,0) node[right] {$\hat{x}$};
+    \draw[black, thick, ->] (0,-0.3) -- (0,0.9) node[above] {$\hat{y}$};
+
+    % Carga q0
+    \fill[carga_pos] (0.5,0.2) circle (0.04) node[below left, black] {$q_0$};
+
+    % Vectores de fuerza individuales
+    \draw[red!60, thick, ->] (0.5,0.2) -- (0.7,0.4) node[right, scale=0.7] {$\vec{F}_{10}$};
+    \draw[red!40, thick, ->] (0.5,0.2) -- (0.68,0.2) node[below, scale=0.7] {$\vec{F}_{20}$};
+    \draw[blue!60, thick, ->] (0.5,0.2) -- (0.4,0.24) node[above left, scale=0.7] {$\vec{F}_{30}$};
+
+    % Fuerza resultante
+    \draw[green!50!black, ultra thick, ->] (0.5,0.2) -- (0.84,0.55) node[above right] {$\vec{F}_{neta}$};
+
+    % Angulo
+    \draw[green!50!black] (0.65,0.2) arc (0:41.2:0.15);
+    \node[green!50!black, scale=0.8] at (0.75,0.28) {$41.2^\circ$};
+\end{tikzpicture}
+\end{center}
+
+\vspace{1cm}
+\hrule
+\vspace{0.3cm}
+\begin{center}
+\textit{Soluci\'on generada por Electromagnetismo Asistente}
+\end{center}
+
+\end{document}

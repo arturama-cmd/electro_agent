@@ -90,22 +90,13 @@ class ElectromagnetismRAG:
     def generate_response(self, user_question: str, conversation_history: List[Dict] = None, category_filter: Optional[str] = None) -> str:
         relevant_docs = self.retrieve_relevant_problems(user_question, n_results=3, category_filter=category_filter)
 
-        context = "## Material de referencia relevante:
-
-"
+        context = "## Material de referencia relevante:\n\n"
         for i, doc in enumerate(relevant_docs, 1):
             cat_display = doc["metadata"].get("category_display", "N/A")
             source = doc["metadata"].get("source", "N/A")
-            context += f"### Documento {i} - Tema: {cat_display}
-"
-            context += f"Fuente: {source}
-
-"
-            context += f"{doc['content'][:1500]}
-
----
-
-"
+            context += f"### Documento {i} - Tema: {cat_display}\n"
+            context += f"Fuente: {source}\n\n"
+            context += f"{doc['content'][:1500]}\n\n---\n\n"
 
         system_prompt = """Eres un asistente experto en electromagnetismo para estudiantes de ingenieria.
 
@@ -121,10 +112,7 @@ IMPORTANTE:
 - Explica los conceptos fisicos detras de las ecuaciones
 - Manten un tono educativo y de apoyo"""
 
-        user_message = f"{context}
-
-## Pregunta del estudiante:
-{user_question}"
+        user_message = f"{context}\n\n## Pregunta del estudiante:\n{user_question}"
 
         messages = []
         if conversation_history:
