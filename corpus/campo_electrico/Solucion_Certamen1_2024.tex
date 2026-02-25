@@ -1,0 +1,413 @@
+\documentclass[12pt,letterpaper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[spanish,es-noshorthands]{babel}
+\usepackage{amsmath,amssymb}
+\usepackage{graphicx}
+\usepackage{xcolor}
+\usepackage{tikz}
+\usetikzlibrary{3d,calc,decorations.markings,patterns}
+\usepackage[top=2cm, bottom=2cm, left=2cm, right=2cm]{geometry}
+
+% Definir colores
+\definecolor{carga_pos}{RGB}{180,0,0}
+\definecolor{carga_neg}{RGB}{0,0,180}
+\definecolor{vector_f}{RGB}{200,0,0}
+\definecolor{vector_e}{RGB}{0,150,0}
+
+\title{\textbf{Soluci\'on - Certamen 1 Electromagnetismo\\02/10/2024}}
+\author{Electromagnetismo Asistente}
+\date{}
+
+\begin{document}
+\maketitle
+
+%========================================
+% PROBLEMA 1
+%========================================
+\section*{Problema 1: Tres Cargas Puntuales (29 puntos)}
+
+\subsection*{Enunciado}
+Tres cargas puntuales se ubican en un sistema de referencia:
+\begin{itemize}
+    \item $q_1 = 11{,}8$ nC a $8{,}0$ cm del origen, formando $20^\circ$ con el eje $y$
+    \item $q_2 = -31{,}5$ nC en $(5, 2)$ cm
+    \item $q_3 = -10{,}3$ nC en $(-3, -4)$ cm
+\end{itemize}
+
+\begin{center}
+\begin{tikzpicture}[scale=0.55]
+    % Grilla
+    \draw[step=1cm, gray!20, very thin] (-6,-6) grid (8,10);
+
+    % Ejes
+    \draw[black, thick, ->] (-6,0) -- (8,0) node[right] {$x$};
+    \draw[black, thick, ->] (0,-6) -- (0,10) node[above] {$y$};
+
+    % Marcas
+    \foreach \x in {-5,-4,-3,-2,-1,1,2,3,4,5,6,7} {
+        \draw[gray] (\x,0.15) -- (\x,-0.15);
+    }
+    \foreach \y in {-5,-4,-3,-2,-1,1,2,3,4,5,6,7,8,9} {
+        \draw[gray] (0.15,\y) -- (-0.15,\y);
+    }
+
+    % Posicion de q1 (8 cm del origen, 20 grados desde eje y)
+    \coordinate (q1) at ({-8*sin(20)},{8*cos(20)});
+
+    % Linea desde origen a q1
+    \draw[gray, dashed] (0,0) -- (q1);
+    \draw[gray] (0,1.5) arc (90:110:1.5);
+    \node[gray, scale=0.8] at (-0.5,2) {$20^\circ$};
+
+    % Cargas
+    \fill[carga_pos] (q1) circle (0.3) node[above left, black] {$q_1$};
+    \fill[carga_neg] (5,2) circle (0.3) node[above right, black] {$q_2$};
+    \fill[carga_neg] (-3,-4) circle (0.3) node[below left, black] {$q_3$};
+
+    % Punto P
+    \fill[green!50!black] (1,0) circle (0.2) node[below right, black, scale=0.9] {P$(1,0)$};
+
+    % Etiquetas
+    \node[scale=0.7] at ({-8*sin(20)-0.8},{8*cos(20)+0.5}) {$8$ cm};
+    \node[scale=0.7] at (5,2.8) {$(5,2)$};
+    \node[scale=0.7] at (-3,-4.8) {$(-3,-4)$};
+\end{tikzpicture}
+\end{center}
+
+\subsection*{Datos Num\'ericos}
+
+Posici\'on de $q_1$ (a 8 cm del origen, $20^\circ$ desde el eje $y$):
+\begin{align*}
+    x_1 &= -8\sin(20^\circ) = -8 \times 0{,}342 = -2{,}736 \text{ cm} = -0{,}02736 \text{ m}\\
+    y_1 &= 8\cos(20^\circ) = 8 \times 0{,}940 = 7{,}518 \text{ cm} = 0{,}07518 \text{ m}
+\end{align*}
+
+\begin{align*}
+    q_1 &= 11{,}8 \text{ nC} = 11{,}8 \times 10^{-9} \text{ C} \quad \text{en } \vec{r}_1 = (-0{,}02736, 0{,}07518) \text{ m}\\
+    q_2 &= -31{,}5 \text{ nC} = -31{,}5 \times 10^{-9} \text{ C} \quad \text{en } \vec{r}_2 = (0{,}05, 0{,}02) \text{ m}\\
+    q_3 &= -10{,}3 \text{ nC} = -10{,}3 \times 10^{-9} \text{ C} \quad \text{en } \vec{r}_3 = (-0{,}03, -0{,}04) \text{ m}\\
+    K &= 9 \times 10^9 \text{ N}\cdot\text{m}^2/\text{C}^2
+\end{align*}
+
+%========================================
+% PARTE A: FUERZA SOBRE q2
+%========================================
+\subsection*{Parte (a): Fuerza el\'ectrica neta sobre $q_2$}
+
+\[
+\vec{F}_{neta} = \vec{F}_{12} + \vec{F}_{32}
+\]
+
+\subsubsection*{An\'alisis Cualitativo}
+\begin{itemize}
+    \item \textbf{$q_1 \to q_2$}: $q_1 > 0$, $q_2 < 0$ $\Rightarrow$ \textcolor{blue}{\textbf{Atractiva}} (hacia $q_1$)
+    \item \textbf{$q_3 \to q_2$}: $q_3 < 0$, $q_2 < 0$ $\Rightarrow$ \textcolor{red}{\textbf{Repulsiva}} (alejándose de $q_3$)
+\end{itemize}
+
+\subsubsection*{C\'alculo de $\vec{F}_{12}$ (de $q_1$ sobre $q_2$)}
+
+\begin{align*}
+    \vec{r}_{12} &= \vec{r}_2 - \vec{r}_1 = (0{,}05 - (-0{,}02736), 0{,}02 - 0{,}07518)\\
+    \vec{r}_{12} &= (0{,}07736, -0{,}05518) \text{ m}\\
+    ||\vec{r}_{12}|| &= \sqrt{(0{,}07736)^2 + (-0{,}05518)^2} = \sqrt{0{,}00903} = 0{,}0950 \text{ m}
+\end{align*}
+
+\begin{align*}
+    \vec{F}_{12} &= \frac{K q_1 q_2}{||\vec{r}_{12}||^3} \vec{r}_{12}\\
+    &= \frac{(9 \times 10^9)(11{,}8 \times 10^{-9})(-31{,}5 \times 10^{-9})}{(0{,}0950)^3} (0{,}07736, -0{,}05518)\\
+    &= \frac{-3{,}346 \times 10^{-6}}{8{,}574 \times 10^{-4}} (0{,}07736, -0{,}05518)\\
+    &= -3{,}903 \times 10^{-3} \cdot (0{,}07736, -0{,}05518)\\
+    \vec{F}_{12} &= \boxed{(-3{,}02\hat{x} + 2{,}15\hat{y}) \times 10^{-4} \text{ N}}
+\end{align*}
+
+\subsubsection*{C\'alculo de $\vec{F}_{32}$ (de $q_3$ sobre $q_2$)}
+
+\begin{align*}
+    \vec{r}_{32} &= \vec{r}_2 - \vec{r}_3 = (0{,}05 - (-0{,}03), 0{,}02 - (-0{,}04))\\
+    \vec{r}_{32} &= (0{,}08, 0{,}06) \text{ m}\\
+    ||\vec{r}_{32}|| &= \sqrt{(0{,}08)^2 + (0{,}06)^2} = 0{,}10 \text{ m}
+\end{align*}
+
+\begin{align*}
+    \vec{F}_{32} &= \frac{K q_3 q_2}{||\vec{r}_{32}||^3} \vec{r}_{32}\\
+    &= \frac{(9 \times 10^9)(-10{,}3 \times 10^{-9})(-31{,}5 \times 10^{-9})}{(0{,}10)^3} (0{,}08, 0{,}06)\\
+    &= \frac{2{,}920 \times 10^{-6}}{1{,}0 \times 10^{-3}} (0{,}08, 0{,}06)\\
+    &= 2{,}920 \times 10^{-3} \cdot (0{,}08, 0{,}06)\\
+    \vec{F}_{32} &= \boxed{(2{,}34\hat{x} + 1{,}75\hat{y}) \times 10^{-4} \text{ N}}
+\end{align*}
+
+\subsubsection*{Fuerza Neta}
+
+\begin{align*}
+    F_x &= (-3{,}02 + 2{,}34) \times 10^{-4} = -0{,}68 \times 10^{-4} \text{ N}\\
+    F_y &= (2{,}15 + 1{,}75) \times 10^{-4} = 3{,}90 \times 10^{-4} \text{ N}
+\end{align*}
+
+\begin{center}
+\fbox{\parbox{0.85\textwidth}{
+\centering
+\textbf{RESULTADO - Fuerza sobre $q_2$}
+\begin{align*}
+    \vec{F}_{neta} &= (-0{,}68\hat{x} + 3{,}90\hat{y}) \times 10^{-4} \text{ N}\\
+    ||\vec{F}_{neta}|| &= \sqrt{(0{,}68)^2 + (3{,}90)^2} \times 10^{-4} = 3{,}96 \times 10^{-4} \text{ N}\\
+    \theta &= \arctan\left(\frac{3{,}90}{-0{,}68}\right) = 99{,}9^\circ
+\end{align*}
+}}
+\end{center}
+
+\newpage
+%========================================
+% PARTE B: CAMPO EN (1,0)
+%========================================
+\subsection*{Parte (b): Campo el\'ectrico neto en P(1,0) cm}
+
+El punto P est\'a en $\vec{r}_P = (0{,}01, 0)$ m.
+
+\[
+\vec{E}_{total} = \vec{E}_1 + \vec{E}_2 + \vec{E}_3
+\]
+
+\subsubsection*{Campo $\vec{E}_1$ (de $q_1$ en P)}
+
+\begin{align*}
+    \vec{r}_{1P} &= \vec{r}_P - \vec{r}_1 = (0{,}01 - (-0{,}02736), 0 - 0{,}07518) = (0{,}03736, -0{,}07518) \text{ m}\\
+    ||\vec{r}_{1P}|| &= \sqrt{(0{,}03736)^2 + (-0{,}07518)^2} = 0{,}0840 \text{ m}
+\end{align*}
+
+\begin{align*}
+    \vec{E}_1 &= \frac{K q_1}{||\vec{r}_{1P}||^3} \vec{r}_{1P} = \frac{(9 \times 10^9)(11{,}8 \times 10^{-9})}{(0{,}0840)^3} (0{,}03736, -0{,}07518)\\
+    &= \frac{106{,}2}{5{,}93 \times 10^{-4}} (0{,}03736, -0{,}07518) = 1{,}791 \times 10^5 \cdot (0{,}03736, -0{,}07518)\\
+    \vec{E}_1 &= \boxed{(6693\hat{x} - 13468\hat{y}) \text{ N/C}}
+\end{align*}
+
+\subsubsection*{Campo $\vec{E}_2$ (de $q_2$ en P)}
+
+\begin{align*}
+    \vec{r}_{2P} &= \vec{r}_P - \vec{r}_2 = (0{,}01 - 0{,}05, 0 - 0{,}02) = (-0{,}04, -0{,}02) \text{ m}\\
+    ||\vec{r}_{2P}|| &= \sqrt{(-0{,}04)^2 + (-0{,}02)^2} = 0{,}0447 \text{ m}
+\end{align*}
+
+\begin{align*}
+    \vec{E}_2 &= \frac{K q_2}{||\vec{r}_{2P}||^3} \vec{r}_{2P} = \frac{(9 \times 10^9)(-31{,}5 \times 10^{-9})}{(0{,}0447)^3} (-0{,}04, -0{,}02)\\
+    &= \frac{-283{,}5}{8{,}94 \times 10^{-5}} (-0{,}04, -0{,}02) = -3{,}172 \times 10^6 \cdot (-0{,}04, -0{,}02)\\
+    \vec{E}_2 &= \boxed{(126880\hat{x} + 63440\hat{y}) \text{ N/C}}
+\end{align*}
+
+\subsubsection*{Campo $\vec{E}_3$ (de $q_3$ en P)}
+
+\begin{align*}
+    \vec{r}_{3P} &= \vec{r}_P - \vec{r}_3 = (0{,}01 - (-0{,}03), 0 - (-0{,}04)) = (0{,}04, 0{,}04) \text{ m}\\
+    ||\vec{r}_{3P}|| &= \sqrt{(0{,}04)^2 + (0{,}04)^2} = 0{,}0566 \text{ m}
+\end{align*}
+
+\begin{align*}
+    \vec{E}_3 &= \frac{K q_3}{||\vec{r}_{3P}||^3} \vec{r}_{3P} = \frac{(9 \times 10^9)(-10{,}3 \times 10^{-9})}{(0{,}0566)^3} (0{,}04, 0{,}04)\\
+    &= \frac{-92{,}7}{1{,}81 \times 10^{-4}} (0{,}04, 0{,}04) = -5{,}12 \times 10^5 \cdot (0{,}04, 0{,}04)\\
+    \vec{E}_3 &= \boxed{(-20480\hat{x} - 20480\hat{y}) \text{ N/C}}
+\end{align*}
+
+\subsubsection*{Campo Total}
+
+\begin{align*}
+    E_x &= 6693 + 126880 - 20480 = 113093 \text{ N/C}\\
+    E_y &= -13468 + 63440 - 20480 = 29492 \text{ N/C}
+\end{align*}
+
+\begin{center}
+\fbox{\parbox{0.85\textwidth}{
+\centering
+\textbf{RESULTADO - Campo en P(1,0)}
+\begin{align*}
+    \vec{E}_{total} &= (1{,}13 \times 10^5\hat{x} + 2{,}95 \times 10^4\hat{y}) \text{ N/C}\\
+    ||\vec{E}_{total}|| &= \sqrt{(113093)^2 + (29492)^2} = 1{,}17 \times 10^5 \text{ N/C}\\
+    \theta &= \arctan\left(\frac{29492}{113093}\right) = 14{,}6^\circ
+\end{align*}
+}}
+\end{center}
+
+\newpage
+%========================================
+% PROBLEMA 2
+%========================================
+\section*{Problema 2: Dos L\'ineas de Carga (30 puntos)}
+
+\subsection*{Enunciado}
+Dos l\'ineas de carga de $10{,}0$ cm de longitud y cargas iguales pero de signo contrario, $Q = 50{,}0$ nC, se ubican juntas sobre el eje $x$. El extremo izquierdo de la l\'inea negativa est\'a en $x = 2{,}0$ cm. Una carga puntual $q = -7{,}0$ $\mu$C se ubica en P$(-5, 10)$ cm.
+
+\begin{center}
+\begin{tikzpicture}[scale=0.4]
+    % Grilla
+    \draw[step=2cm, gray!20, very thin] (-10,-2) grid (26,14);
+
+    % Ejes
+    \draw[black, thick, ->] (-10,0) -- (26,0) node[right] {$x$};
+    \draw[black, thick, ->] (0,-2) -- (0,14) node[above] {$y$};
+
+    % Linea negativa (x = 2 a 12)
+    \draw[blue, ultra thick] (2,0) -- (12,0);
+    \fill[blue!20] (2,-0.4) rectangle (12,0.4);
+    \node[blue, below] at (7,-0.8) {$-Q$};
+    \foreach \x in {3,5,7,9,11} {
+        \node[blue, scale=0.8] at (\x,0) {$-$};
+    }
+
+    % Linea positiva (x = 12 a 22)
+    \draw[red, ultra thick] (12,0) -- (22,0);
+    \fill[red!20] (12,-0.4) rectangle (22,0.4);
+    \node[red, below] at (17,-0.8) {$+Q$};
+    \foreach \x in {13,15,17,19,21} {
+        \node[red, scale=0.8] at (\x,0) {$+$};
+    }
+
+    % Marcas
+    \draw[gray, thick] (2,0.5) -- (2,-0.5) node[below, scale=0.8] {2};
+    \draw[gray, thick] (12,0.5) -- (12,-0.5) node[below, scale=0.8] {12};
+    \draw[gray, thick] (22,0.5) -- (22,-0.5) node[below, scale=0.8] {22};
+
+    % Carga q
+    \fill[carga_neg] (-5,10) circle (0.5) node[above left, black] {$q$};
+    \node[scale=0.8] at (-5,11.5) {$(-5,10)$};
+
+    % Dimensiones
+    \draw[gray, |<->|] (2,2) -- (12,2) node[midway, above, scale=0.8] {10 cm};
+    \draw[gray, |<->|] (12,2) -- (22,2) node[midway, above, scale=0.8] {10 cm};
+\end{tikzpicture}
+\end{center}
+
+\subsection*{Datos Num\'ericos}
+
+\begin{align*}
+    L &= 10{,}0 \text{ cm} = 0{,}10 \text{ m}\\
+    Q &= 50{,}0 \text{ nC} = 50{,}0 \times 10^{-9} \text{ C}\\
+    q &= -7{,}0 \text{ }\mu\text{C} = -7{,}0 \times 10^{-6} \text{ C}\\
+    \vec{r}_P &= (-0{,}05, 0{,}10) \text{ m}\\
+    K &= 9 \times 10^9 \text{ N}\cdot\text{m}^2/\text{C}^2
+\end{align*}
+
+L\'inea negativa: desde $x_1 = 0{,}02$ m hasta $x_2 = 0{,}12$ m
+
+L\'inea positiva: desde $x_3 = 0{,}12$ m hasta $x_4 = 0{,}22$ m
+
+%========================================
+% PARTE A: DENSIDAD LINEAL
+%========================================
+\subsection*{Parte (a): Densidad lineal de carga $\lambda$}
+
+\begin{align*}
+    \lambda &= \frac{Q}{L} = \frac{50{,}0 \times 10^{-9}}{0{,}10}
+\end{align*}
+
+\begin{center}
+\fbox{\parbox{0.6\textwidth}{
+\centering
+\textbf{RESULTADO}
+\begin{align*}
+    \lambda_{+} &= +500 \text{ nC/m} = +5{,}0 \times 10^{-7} \text{ C/m}\\
+    \lambda_{-} &= -500 \text{ nC/m} = -5{,}0 \times 10^{-7} \text{ C/m}
+\end{align*}
+}}
+\end{center}
+
+\newpage
+%========================================
+% PARTE B: CAMPO EN P
+%========================================
+\subsection*{Parte (b): Campo el\'ectrico total en P(-5, 10) cm}
+
+\subsubsection*{Campo de la L\'inea Negativa}
+
+Para un elemento $dq = \lambda_{-} dx'$ en posici\'on $(x', 0)$ donde $x' \in [0{,}02, 0{,}12]$ m:
+
+\begin{align*}
+    \vec{r} &= \vec{r}_P - (x', 0) = (-0{,}05 - x', 0{,}10)\\
+    ||\vec{r}||^2 &= (x' + 0{,}05)^2 + 0{,}01
+\end{align*}
+
+Sea $u = x' + 0{,}05$, $a = 0{,}01$ m$^2$:
+- Cuando $x' = 0{,}02$: $u_1 = 0{,}07$ m
+- Cuando $x' = 0{,}12$: $u_2 = 0{,}17$ m
+
+\textbf{Componente $E_x^{(-)}$:}
+\begin{align*}
+    E_x^{(-)} &= -K\lambda_{-} \int_{0{,}07}^{0{,}17} \frac{u \, du}{(u^2 + 0{,}01)^{3/2}} = -K\lambda_{-} \left[-\frac{1}{\sqrt{u^2 + 0{,}01}}\right]_{0{,}07}^{0{,}17}\\
+    &= K\lambda_{-} \left(\frac{1}{\sqrt{0{,}0389}} - \frac{1}{\sqrt{0{,}0149}}\right) = K\lambda_{-}(5{,}07 - 8{,}19)\\
+    &= (9 \times 10^9)(-5 \times 10^{-7})(-3{,}12) = +14040 \text{ N/C}
+\end{align*}
+
+\textbf{Componente $E_y^{(-)}$:}
+\begin{align*}
+    E_y^{(-)} &= K\lambda_{-} \cdot 0{,}10 \int_{0{,}07}^{0{,}17} \frac{du}{(u^2 + 0{,}01)^{3/2}} = \frac{0{,}10 \cdot K\lambda_{-}}{0{,}01} \left[\frac{u}{\sqrt{u^2 + 0{,}01}}\right]_{0{,}07}^{0{,}17}\\
+    &= 10 \cdot K\lambda_{-} \left(\frac{0{,}17}{0{,}197} - \frac{0{,}07}{0{,}122}\right) = 10 \cdot K\lambda_{-}(0{,}863 - 0{,}574)\\
+    &= 10 \times (9 \times 10^9)(-5 \times 10^{-7})(0{,}289) = -13005 \text{ N/C}
+\end{align*}
+
+\subsubsection*{Campo de la L\'inea Positiva}
+
+Para $x' \in [0{,}12, 0{,}22]$ m, sea $u = x' + 0{,}05$:
+- Cuando $x' = 0{,}12$: $u_3 = 0{,}17$ m
+- Cuando $x' = 0{,}22$: $u_4 = 0{,}27$ m
+
+\textbf{Componente $E_x^{(+)}$:}
+\begin{align*}
+    E_x^{(+)} &= K\lambda_{+} \left(\frac{1}{\sqrt{0{,}0829}} - \frac{1}{\sqrt{0{,}0389}}\right) = K\lambda_{+}(3{,}47 - 5{,}07)\\
+    &= (9 \times 10^9)(5 \times 10^{-7})(-1{,}60) = -7200 \text{ N/C}
+\end{align*}
+
+\textbf{Componente $E_y^{(+)}$:}
+\begin{align*}
+    E_y^{(+)} &= 10 \cdot K\lambda_{+} \left(\frac{0{,}27}{0{,}288} - \frac{0{,}17}{0{,}197}\right) = 10 \cdot K\lambda_{+}(0{,}938 - 0{,}863)\\
+    &= 10 \times (9 \times 10^9)(5 \times 10^{-7})(0{,}075) = 3375 \text{ N/C}
+\end{align*}
+
+\subsubsection*{Campo Total}
+
+\begin{align*}
+    E_x &= E_x^{(-)} + E_x^{(+)} = +14040 - 7200 = +6840 \text{ N/C}\\
+    E_y &= E_y^{(-)} + E_y^{(+)} = -13005 + 3375 = -9630 \text{ N/C}
+\end{align*}
+
+\begin{center}
+\fbox{\parbox{0.85\textwidth}{
+\centering
+\textbf{RESULTADO - Campo en P}
+\begin{align*}
+    \vec{E}_{total} &= (6840\hat{x} - 9630\hat{y}) \text{ N/C}\\
+    &= (0{,}68\hat{x} - 0{,}96\hat{y}) \times 10^4 \text{ N/C}\\
+    ||\vec{E}_{total}|| &= \sqrt{(6840)^2 + (9630)^2} = 11810 \text{ N/C} \approx 1{,}18 \times 10^4 \text{ N/C}
+\end{align*}
+}}
+\end{center}
+
+%========================================
+% PARTE C: FUERZA SOBRE q
+%========================================
+\subsection*{Parte (c): Fuerza el\'ectrica sobre $q$}
+
+\begin{align*}
+    \vec{F} &= q \cdot \vec{E}_{total} = (-7{,}0 \times 10^{-6})(6840\hat{x} - 9630\hat{y})
+\end{align*}
+
+\begin{center}
+\fbox{\parbox{0.85\textwidth}{
+\centering
+\textbf{RESULTADO - Fuerza sobre $q$}
+\begin{align*}
+    \vec{F} &= (-0{,}0479\hat{x} + 0{,}0674\hat{y}) \text{ N}\\
+    &= (-47{,}9\hat{x} + 67{,}4\hat{y}) \text{ mN}\\
+    ||\vec{F}|| &= \sqrt{(47{,}9)^2 + (67{,}4)^2} = 82{,}7 \text{ mN}\\
+    \theta &= \arctan\left(\frac{67{,}4}{-47{,}9}\right) = 125{,}4^\circ
+\end{align*}
+}}
+\end{center}
+
+\subsubsection*{Interpretaci\'on F\'isica}
+La carga $q$ es negativa, por lo tanto la fuerza es \textbf{opuesta} al campo. Como el campo apunta hacia el cuarto cuadrante ($+\hat{x}$, $-\hat{y}$), la fuerza apunta hacia el segundo cuadrante ($-\hat{x}$, $+\hat{y}$).
+
+\vspace{1cm}
+\hrule
+\vspace{0.3cm}
+\begin{center}
+\textit{Soluci\'on generada por Electromagnetismo Asistente}
+\end{center}
+
+\end{document}

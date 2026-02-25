@@ -1,0 +1,647 @@
+\documentclass[12pt,letterpaper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[spanish,es-noshorthands]{babel}
+\usepackage{amsmath,amssymb}
+\usepackage{graphicx}
+\usepackage{xcolor}
+\usepackage{tikz}
+\usepackage{tikz-3dplot}
+\usetikzlibrary{3d,calc,decorations.markings,patterns,arrows}
+\usepackage[top=2cm, bottom=2cm, left=2cm, right=2cm]{geometry}
+\usepackage{cancel}
+
+% Definir colores
+\definecolor{corriente1}{RGB}{180,0,0}
+\definecolor{corriente2}{RGB}{0,0,180}
+\definecolor{corriente3}{RGB}{0,150,0}
+\definecolor{vector_B}{RGB}{0,100,200}
+\definecolor{vector_F}{RGB}{200,0,0}
+\definecolor{carga_pos}{RGB}{180,0,0}
+
+\title{\textbf{Soluci\'on - Tarea 4: Campo Magn\'etico e Inducci\'on Electromagn\'etica}}
+\author{Electro\_asistente AI-UBB}
+\date{Electromagnetismo 2022-1}
+
+\begin{document}
+\maketitle
+
+%========================================
+% PROBLEMA 1
+%========================================
+\section*{Problema 1: Campo Magn\'etico de Conductores y Fuerza sobre Carga}
+
+\subsection*{Enunciado}
+
+Tres conductores rectos y muy extensos conducen corrientes $I_1 = 2{,}6$ [A], $I_2 = 5{,}1$ [A] e $I_3 = 3{,}2$ [A], en las direcciones que indica la figura. En un instante de tiempo, una carga puntual $q = 5{,}8$ [mC] se mueve con una rapidez $v = 50{,}0$ [m/s] en la direcci\'on indicada. Considerando que $a = 5{,}4$ [cm], $b = 2{,}8$ [cm] y $c = 7{,}3$ [cm], determine:
+
+\begin{itemize}
+    \item[(a)] El campo magn\'etico total $\vec{B}$ en la posici\'on de la carga puntual $q$.
+    \item[(b)] La fuerza magn\'etica neta $\vec{F}_m$ ejercida sobre la carga puntual $q$.
+    \item[(c)] La fuerza magn\'etica $\vec{F}_m$ ejercida sobre una secci\'on de 2 [m] de longitud del conductor $I_2$, ejercida por la corriente $I_1$.
+\end{itemize}
+
+\begin{center}
+\begin{tikzpicture}[scale=1.2]
+    % Grilla
+    \draw[step=1cm, gray!20, very thin] (-2,-4) grid (4,2);
+
+    % Ejes
+    \draw[black, thick, ->] (-1,0) -- (4,0) node[right] {$\hat{x}$};
+    \draw[black, thick, ->] (0,-4) -- (0,2) node[above] {$\hat{y}$};
+    \node at (3.5,1.5) {$\hat{z}$ (sale)};
+
+    % Conductor I1 (vertical, corriente hacia arriba)
+    \draw[corriente1, ultra thick] (0,-3.5) -- (0,1.5);
+    \draw[corriente1, thick, ->] (0,-1) -- (0,0.5) node[left] {$I_1$};
+
+    % Conductor I2 (vertical, corriente hacia abajo)
+    \draw[corriente2, ultra thick] (1.5,-3.5) -- (1.5,1.5);
+    \draw[corriente2, thick, ->] (1.5,0.5) -- (1.5,-1) node[right] {$I_2$};
+
+    % Conductor I3 (horizontal, corriente hacia +x)
+    \draw[corriente3, ultra thick] (-1.5,-2.5) -- (3.5,-2.5);
+    \draw[corriente3, thick, ->] (1,-2.5) -- (2.5,-2.5) node[below] {$I_3$};
+
+    % Carga q con velocidad
+    \fill[carga_pos] (2.8,0.8) circle (0.12) node[above right, black] {$q$};
+    \draw[vector_F, ultra thick, ->] (2.8,0.8) -- (2.3,1.5) node[above] {$\vec{v}$};
+    \node[scale=0.8] at (2.2,1.1) {$60$^\circ$$};
+
+    % Distancias
+    \draw[<->, gray] (0,-3.2) -- (1.5,-3.2) node[midway, below] {$b$};
+    \draw[<->, gray] (0,1.2) -- (2.8,1.2) node[midway, above] {$a+b$};
+    \draw[<->, gray] (3.2,0.8) -- (3.2,-2.5) node[midway, right] {$c$};
+
+    % Etiquetas de distancia
+    \node[scale=0.7] at (-0.5,-3.2) {$a=5{,}4$ cm};
+    \node[scale=0.7] at (0.75,-3.6) {$b=2{,}8$ cm};
+    \node[scale=0.7] at (3.8,-0.8) {$c=7{,}3$ cm};
+\end{tikzpicture}
+\end{center}
+
+%----------------------------------------
+\subsection*{Datos Num\'ericos}
+
+\begin{align*}
+    I_1 &= 2{,}6 \text{ A} \quad \text{(hacia arriba, }+\hat{y}\text{)} \\
+    I_2 &= 5{,}1 \text{ A} \quad \text{(hacia abajo, }-\hat{y}\text{)} \\
+    I_3 &= 3{,}2 \text{ A} \quad \text{(hacia la derecha, }+\hat{x}\text{)} \\
+    q &= 5{,}8 \text{ mC} = 5{,}8 \times 10^{-3} \text{ C} \\
+    v &= 50{,}0 \text{ m/s} \quad \text{(a }60$^\circ$ \text{ del eje }+x\text{)} \\
+    a &= 5{,}4 \text{ cm} = 0{,}054 \text{ m} \\
+    b &= 2{,}8 \text{ cm} = 0{,}028 \text{ m} \\
+    c &= 7{,}3 \text{ cm} = 0{,}073 \text{ m} \\
+    \mu_0 &= 4\pi \times 10^{-7} \text{ T}\cdot\text{m/A}
+\end{align*}
+
+%----------------------------------------
+\subsection*{(a) Campo Magn\'etico Total en la Posici\'on de $q$}
+
+El campo magn\'etico de un conductor recto infinito a una distancia $r$ es:
+\begin{equation*}
+    \vec{B} = \frac{\mu_0 I}{2\pi r} \hat{\phi}
+\end{equation*}
+
+donde $\hat{\phi}$ se determina por la regla de la mano derecha.
+
+\textbf{Posici\'on de la carga $q$:} $(x_q, y_q) = (a+b, 0) = (0{,}082, 0)$ m (tomando el origen en $I_1$)
+
+\vspace{0.3cm}
+\textbf{Campo debido a $I_1$:}
+
+\begin{minipage}[c]{0.35\textwidth}
+\begin{center}
+\begin{tikzpicture}[scale=2]
+    \draw[black, thick, ->] (-0.3,0) -- (1.2,0) node[right] {$\hat{x}$};
+    \draw[black, thick, ->] (0,-0.3) -- (0,0.8) node[above] {$\hat{y}$};
+
+    % I1 en origen
+    \draw[corriente1, fill=white] (0,0) circle (0.08);
+    \fill[corriente1] (0,0) circle (0.03);
+    \node[below left] at (0,0) {$I_1$};
+
+    % Carga q
+    \fill[carga_pos] (0.8,0) circle (0.05) node[above] {$q$};
+
+    % Distancia
+    \draw[<->, gray] (0,-0.15) -- (0.8,-0.15) node[midway, below] {$a$};
+
+    % Campo B1
+    \draw[vector_B, ultra thick, ->] (0.8,0) -- (0.8,0.4) node[right] {$\vec{B}_1$};
+\end{tikzpicture}
+\end{center}
+\end{minipage}
+\hfill
+\begin{minipage}[c]{0.60\textwidth}
+Distancia de $I_1$ a $q$: $r_1 = a = 0{,}054$ m
+
+Por regla de la mano derecha, $I_1$ (hacia $+\hat{y}$) genera campo en $+\hat{k}$ (sale de la p\'agina) en la posici\'on de $q$:
+
+\begin{align*}
+    \vec{B}_1 &= \frac{\mu_0 I_1}{2\pi a} \hat{k} \\
+    \vec{B}_1 &= \frac{(4\pi \times 10^{-7})(2{,}6)}{2\pi (0{,}054)} \hat{k} \\
+    \vec{B}_1 &= \frac{2 \times 10^{-7} \times 2{,}6}{0{,}054} \hat{k} \\
+    \vec{B}_1 &= 9{,}63 \times 10^{-6} \hat{k} \text{ [T]}
+\end{align*}
+\end{minipage}
+
+\vspace{0.5cm}
+\textbf{Campo debido a $I_2$:}
+
+\begin{minipage}[c]{0.35\textwidth}
+\begin{center}
+\begin{tikzpicture}[scale=2]
+    \draw[black, thick, ->] (-0.3,0) -- (1.2,0) node[right] {$\hat{x}$};
+    \draw[black, thick, ->] (0,-0.3) -- (0,0.8) node[above] {$\hat{y}$};
+
+    % I2
+    \draw[corriente2, fill=white] (0.5,0) circle (0.08);
+    \node[corriente2] at (0.5,0) {$\times$};
+    \node[below] at (0.5,0) {$I_2$};
+
+    % Carga q
+    \fill[carga_pos] (1.0,0) circle (0.05) node[above] {$q$};
+
+    % Distancia
+    \draw[<->, gray] (0.5,-0.15) -- (1.0,-0.15) node[midway, below] {$a$};
+
+    % Campo B2
+    \draw[vector_B, ultra thick, ->] (1.0,0) -- (1.0,-0.4) node[right] {$\vec{B}_2$};
+\end{tikzpicture}
+\end{center}
+\end{minipage}
+\hfill
+\begin{minipage}[c]{0.60\textwidth}
+Distancia de $I_2$ a $q$: $r_2 = a = 0{,}054$ m (nota: la distancia horizontal desde $I_2$ hasta $q$ es $a$)
+
+Por regla de la mano derecha, $I_2$ (hacia $-\hat{y}$) genera campo en $-\hat{k}$ en la posici\'on de $q$:
+
+\begin{align*}
+    \vec{B}_2 &= \frac{\mu_0 I_2}{2\pi (a+b)} (-\hat{k}) \\
+    \vec{B}_2 &= \frac{(4\pi \times 10^{-7})(5{,}1)}{2\pi (0{,}082)} (-\hat{k}) \\
+    \vec{B}_2 &= -12{,}44 \times 10^{-6} \hat{k} \text{ [T]}
+\end{align*}
+\end{minipage}
+
+\vspace{0.5cm}
+\textbf{Campo debido a $I_3$:}
+
+\begin{minipage}[c]{0.35\textwidth}
+\begin{center}
+\begin{tikzpicture}[scale=2]
+    \draw[black, thick, ->] (-0.3,0) -- (1.2,0) node[right] {$\hat{x}$};
+    \draw[black, thick, ->] (0,-0.5) -- (0,0.5) node[above] {$\hat{y}$};
+
+    % I3 horizontal
+    \draw[corriente3, ultra thick, ->] (-0.2,-0.3) -- (1.0,-0.3) node[right] {$I_3$};
+
+    % Carga q
+    \fill[carga_pos] (0.8,0.2) circle (0.05) node[above] {$q$};
+
+    % Distancia
+    \draw[<->, gray] (1.1,-0.3) -- (1.1,0.2) node[midway, right] {$c$};
+
+    % Campo B3
+    \draw[vector_B, ultra thick, ->] (0.8,0.2) -- (0.8,0.6) node[right] {$\vec{B}_3$};
+\end{tikzpicture}
+\end{center}
+\end{minipage}
+\hfill
+\begin{minipage}[c]{0.60\textwidth}
+Distancia de $I_3$ a $q$: $r_3 = c = 0{,}073$ m
+
+Por regla de la mano derecha, $I_3$ (hacia $+\hat{x}$) genera campo en $+\hat{k}$ en la posici\'on de $q$ (que est\'a arriba del conductor):
+
+\begin{align*}
+    \vec{B}_3 &= \frac{\mu_0 I_3}{2\pi c} \hat{k} \\
+    \vec{B}_3 &= \frac{(4\pi \times 10^{-7})(3{,}2)}{2\pi (0{,}073)} \hat{k} \\
+    \vec{B}_3 &= 8{,}77 \times 10^{-6} \hat{k} \text{ [T]}
+\end{align*}
+\end{minipage}
+
+\vspace{0.5cm}
+\textbf{Campo Magn\'etico Total:}
+
+\begin{align*}
+    \vec{B} &= \vec{B}_1 + \vec{B}_2 + \vec{B}_3 \\
+    \vec{B} &= (9{,}63 - 12{,}44 + 8{,}77) \times 10^{-6} \hat{k} \\
+\end{align*}
+
+\begin{center}
+\fbox{\parbox{0.6\textwidth}{
+\centering
+$\vec{B} = 5{,}96 \times 10^{-6} \hat{k}$ \textbf{[T]}
+
+El campo magn\'etico total sale de la p\'agina.
+}}
+\end{center}
+
+%----------------------------------------
+\subsection*{(b) Fuerza Magn\'etica sobre la Carga $q$}
+
+La fuerza magn\'etica sobre una carga en movimiento es:
+\begin{equation*}
+    \vec{F}_m = q\vec{v} \times \vec{B}
+\end{equation*}
+
+\textbf{Vector velocidad:}
+
+La velocidad forma un \'angulo de $60$^\circ$$ con el eje $+x$ en el segundo cuadrante:
+\begin{align*}
+    \vec{v} &= v(\cos 120° \hat{i} + \sin 120° \hat{j}) \\
+    \vec{v} &= 50(-0{,}5 \hat{i} + 0{,}866 \hat{j}) \\
+    \vec{v} &= (-25 \hat{i} + 43{,}3 \hat{j}) \text{ [m/s]}
+\end{align*}
+
+\textbf{C\'alculo de la fuerza:}
+
+\begin{align*}
+    \vec{F}_m &= q\vec{v} \times \vec{B} \\
+    \vec{F}_m &= (5{,}8 \times 10^{-3})[(-25\hat{i} + 43{,}3\hat{j}) \times (5{,}96 \times 10^{-6}\hat{k})]
+\end{align*}
+
+Usando las reglas del producto cruz:
+\begin{align*}
+    \hat{i} \times \hat{k} &= -\hat{j} \\
+    \hat{j} \times \hat{k} &= \hat{i}
+\end{align*}
+
+\begin{align*}
+    \vec{F}_m &= (5{,}8 \times 10^{-3})(5{,}96 \times 10^{-6})[(-25)(-\hat{j}) + (43{,}3)(\hat{i})] \\
+    \vec{F}_m &= (3{,}46 \times 10^{-8})[43{,}3\hat{i} + 25\hat{j}]
+\end{align*}
+
+\begin{center}
+\fbox{\parbox{0.7\textwidth}{
+\centering
+$\vec{F}_m = (1{,}50 \times 10^{-6}\hat{i} + 8{,}64 \times 10^{-7}\hat{j})$ \textbf{[N]}
+
+\'o equivalentemente: $\vec{F}_m \approx (1{,}50\hat{i} + 0{,}86\hat{j}) \times 10^{-6}$ \textbf{[N]}
+}}
+\end{center}
+
+%----------------------------------------
+\subsection*{(c) Fuerza entre Conductores $I_1$ e $I_2$}
+
+La fuerza sobre un conductor que porta corriente en un campo magn\'etico es:
+\begin{equation*}
+    \vec{F} = I\vec{\ell} \times \vec{B}
+\end{equation*}
+
+\textbf{Campo de $I_1$ en la posici\'on de $I_2$:}
+
+La distancia entre $I_1$ e $I_2$ es $b = 0{,}028$ m.
+
+\begin{align*}
+    \vec{B}_1 &= \frac{\mu_0 I_1}{2\pi b} (-\hat{k}) \quad \text{(entra a la p\'agina en la posici\'on de }I_2\text{)}
+\end{align*}
+
+\textbf{Fuerza sobre una secci\'on de longitud $\ell = 2$ m de $I_2$:}
+
+El vector $\vec{\ell}_2$ apunta en la direcci\'on de la corriente $I_2$, es decir, $-\hat{j}$:
+
+\begin{align*}
+    \vec{F} &= I_2 \vec{\ell}_2 \times \vec{B}_1 \\
+    \vec{F} &= I_2 \cdot \ell \cdot (-\hat{j}) \times \frac{\mu_0 I_1}{2\pi b}(-\hat{k}) \\
+    \vec{F} &= \frac{\mu_0 I_1 I_2 \ell}{2\pi b} (\hat{j} \times \hat{k}) \\
+    \vec{F} &= \frac{\mu_0 I_1 I_2 \ell}{2\pi b} \hat{i}
+\end{align*}
+
+\begin{align*}
+    \vec{F} &= \frac{(4\pi \times 10^{-7})(2{,}6)(5{,}1)(2)}{2\pi (0{,}028)} \hat{i} \\
+    \vec{F} &= \frac{(2 \times 10^{-7})(2{,}6)(5{,}1)(2)}{0{,}028} \hat{i} \\
+    \vec{F} &= \frac{5{,}304 \times 10^{-6}}{0{,}028} \hat{i} \\
+    \vec{F} &= 1{,}89 \times 10^{-4} \hat{i} \text{ [N]}
+\end{align*}
+
+\begin{center}
+\fbox{\parbox{0.7\textwidth}{
+\centering
+$\vec{F} = 1{,}89 \times 10^{-4} \hat{i}$ \textbf{[N]}
+
+La fuerza es \textbf{repulsiva} (en direcci\'on $+\hat{x}$, alejando los conductores), lo cual es consistente con corrientes antiparalelas.
+}}
+\end{center}
+
+\newpage
+%========================================
+% PROBLEMA 2
+%========================================
+\section*{Problema 2: Inducci\'on Electromagn\'etica en Sistema Espira-Solenoide}
+
+\subsection*{Enunciado}
+
+Una espira de 20 vueltas, radio $R_1 = 7{,}0$ [cm] y resistencia $R = 45$ [$\Omega$] se ubica en el centro de un solenoide muy largo, que tiene $n = 200$ [vueltas/metro], radio $R_2 = 5{,}0$ [cm] y es conc\'entrica a este \'ultimo. Si por el solenoide circula una corriente variable $I(t) = 3\sqrt{t}$ [A], determine:
+
+\begin{itemize}
+    \item[(a)] El flujo magn\'etico a trav\'es de la espira.
+    \item[(b)] La fem inducida $\varepsilon$ en la espira.
+    \item[(c)] La magnitud y direcci\'on de la corriente inducida en la espira.
+\end{itemize}
+
+\begin{center}
+\begin{tikzpicture}[scale=1.5]
+    % Solenoide (cilindro exterior)
+    \draw[thick, blue!60] (-2,0) ellipse (0.8 and 0.4);
+    \draw[thick, blue!60] (2,0) ellipse (0.8 and 0.4);
+    \draw[thick, blue!60] (-2,0.4) -- (2,0.4);
+    \draw[thick, blue!60] (-2,-0.4) -- (2,-0.4);
+
+    % Espiras del solenoide
+    \foreach \x in {-1.8,-1.4,...,1.8} {
+        \draw[blue!40, thin] (\x,0) ellipse (0.75 and 0.35);
+    }
+
+    % Espira interior (m\'as grande que el solenoide)
+    \draw[thick, red!70] (0,0) ellipse (1.2 and 0.6);
+    \node[red!70, below] at (0,-0.7) {Espira ($N=20$, $R_1=7$ cm)};
+
+    % Etiquetas
+    \node[blue!60, above] at (0,0.5) {Solenoide ($n=200$ v/m, $R_2=5$ cm)};
+
+    % Campo B
+    \draw[green!50!black, ultra thick, ->] (-2.5,0) -- (-1.5,0) node[above] {$\vec{B}$};
+
+    % Corriente
+    \node[blue!60] at (2.5,0) {$I(t)=3\sqrt{t}$};
+
+    % Radio del solenoide
+    \draw[<->, gray] (0,0) -- (0.75,0.35) node[midway, above right, scale=0.8] {$R_2$};
+
+    % Radio de la espira
+    \draw[<->, gray] (0,0) -- (1.2,0) node[midway, below, scale=0.8] {$R_1$};
+\end{tikzpicture}
+\end{center}
+
+%----------------------------------------
+\subsection*{Datos Num\'ericos}
+
+\begin{align*}
+    N &= 20 \text{ vueltas (espira)} \\
+    R_1 &= 7{,}0 \text{ cm} = 0{,}07 \text{ m (radio de la espira)} \\
+    R &= 45 \text{ }\Omega \text{ (resistencia de la espira)} \\
+    n &= 200 \text{ vueltas/m (densidad del solenoide)} \\
+    R_2 &= 5{,}0 \text{ cm} = 0{,}05 \text{ m (radio del solenoide)} \\
+    I(t) &= 3\sqrt{t} \text{ [A]} \\
+    \mu_0 &= 4\pi \times 10^{-7} \text{ T}\cdot\text{m/A}
+\end{align*}
+
+\textbf{Nota importante:} Como $R_1 > R_2$, la espira es m\'as grande que el solenoide. El campo magn\'etico del solenoide solo existe \textbf{dentro} del solenoide (radio $R_2$), por lo que el flujo a trav\'es de la espira se calcula usando el \'area del solenoide, no de la espira.
+
+%----------------------------------------
+\subsection*{(a) Flujo Magn\'etico a Trav\'es de la Espira}
+
+\textbf{Campo magn\'etico dentro del solenoide:}
+
+\begin{equation*}
+    B = \mu_0 n I(t) = \mu_0 n \cdot 3\sqrt{t}
+\end{equation*}
+
+\textbf{Flujo a trav\'es de una vuelta de la espira:}
+
+Como el campo solo existe dentro del solenoide (radio $R_2$):
+
+\begin{align*}
+    \phi_1 &= \int \vec{B} \cdot d\vec{S} = B \cdot A_{solenoide} \\
+    \phi_1 &= \mu_0 n \cdot 3\sqrt{t} \cdot \pi R_2^2
+\end{align*}
+
+\textbf{Flujo total a trav\'es de las $N$ vueltas:}
+
+\begin{align*}
+    \Phi(t) &= N \cdot \phi_1 = N \cdot \mu_0 n \cdot 3\sqrt{t} \cdot \pi R_2^2
+\end{align*}
+
+Sustituyendo valores:
+
+\begin{align*}
+    \Phi(t) &= 20 \cdot (4\pi \times 10^{-7}) \cdot 200 \cdot 3\sqrt{t} \cdot \pi (0{,}05)^2 \\
+    \Phi(t) &= 20 \cdot (4\pi \times 10^{-7}) \cdot 200 \cdot 3 \cdot \pi \cdot (0{,}0025) \cdot \sqrt{t} \\
+    \Phi(t) &= 20 \cdot 4 \cdot 200 \cdot 3 \cdot 0{,}0025 \cdot \pi^2 \times 10^{-7} \cdot \sqrt{t} \\
+    \Phi(t) &= 120 \cdot \pi^2 \times 10^{-7} \cdot \sqrt{t} \\
+    \Phi(t) &= 1{,}184 \times 10^{-4} \sqrt{t} \text{ [Wb]}
+\end{align*}
+
+\begin{center}
+\fbox{\parbox{0.6\textwidth}{
+\centering
+$\Phi(t) = 1{,}184 \times 10^{-4} \sqrt{t}$ \textbf{[Wb]}
+
+El flujo aumenta con $\sqrt{t}$.
+}}
+\end{center}
+
+\begin{center}
+\begin{tikzpicture}[scale=1]
+    \draw[->] (0,0) -- (4,0) node[right] {$t$};
+    \draw[->] (0,0) -- (0,2.5) node[above] {$\Phi$};
+    \draw[thick, blue, domain=0:3.5, samples=50] plot (\x, {1.5*sqrt(\x)});
+    \node[blue] at (3,2.5) {$\Phi \propto \sqrt{t}$};
+\end{tikzpicture}
+\end{center}
+
+%----------------------------------------
+\subsection*{(b) FEM Inducida en la Espira}
+
+Por la Ley de Faraday:
+
+\begin{equation*}
+    \varepsilon = -\frac{d\Phi}{dt}
+\end{equation*}
+
+\begin{align*}
+    \varepsilon &= -\frac{d}{dt}\left[1{,}184 \times 10^{-4} \sqrt{t}\right] \\
+    \varepsilon &= -1{,}184 \times 10^{-4} \cdot \frac{d}{dt}(t^{1/2}) \\
+    \varepsilon &= -1{,}184 \times 10^{-4} \cdot \frac{1}{2} t^{-1/2} \\
+    \varepsilon &= -\frac{5{,}92 \times 10^{-5}}{\sqrt{t}} \text{ [V]}
+\end{align*}
+
+\begin{center}
+\fbox{\parbox{0.6\textwidth}{
+\centering
+$\varepsilon(t) = -\dfrac{5{,}92 \times 10^{-5}}{\sqrt{t}}$ \textbf{[V]}
+
+La fem inducida disminuye en magnitud con el tiempo.
+}}
+\end{center}
+
+%----------------------------------------
+\subsection*{(c) Corriente Inducida en la Espira}
+
+Por la Ley de Ohm:
+
+\begin{align*}
+    I_{ind} &= \frac{|\varepsilon|}{R} = \frac{5{,}92 \times 10^{-5}}{45\sqrt{t}}
+\end{align*}
+
+\begin{center}
+\fbox{\parbox{0.6\textwidth}{
+\centering
+$I_{ind}(t) = \dfrac{1{,}32 \times 10^{-6}}{\sqrt{t}}$ \textbf{[A]}
+}}
+\end{center}
+
+\textbf{Direcci\'on de la corriente inducida:}
+
+Por la \textbf{Ley de Lenz}: La corriente inducida se opone al cambio de flujo.
+
+\begin{itemize}
+    \item El flujo a trav\'es de la espira est\'a \textbf{aumentando} (ya que $I(t) = 3\sqrt{t}$ aumenta con el tiempo).
+    \item Por lo tanto, la corriente inducida debe crear un campo magn\'etico que se \textbf{oponga} al campo del solenoide.
+    \item Si el campo del solenoide apunta hacia la derecha ($+\hat{x}$), la corriente inducida debe crear un campo hacia la izquierda ($-\hat{x}$).
+    \item Por la regla de la mano derecha, la corriente inducida circula en \textbf{sentido horario} vista desde la derecha (sentido opuesto a la corriente del solenoide).
+\end{itemize}
+
+\begin{center}
+\begin{tikzpicture}[scale=1.2]
+    % Espira
+    \draw[thick, red!70] (0,0) circle (1.5);
+
+    % Flechas de corriente (horario visto desde +x)
+    \draw[red!70, ultra thick, ->] (0,1.5) -- (-0.5,1.45);
+    \draw[red!70, ultra thick, ->] (-1.5,0) -- (-1.45,-0.5);
+    \draw[red!70, ultra thick, ->] (0,-1.5) -- (0.5,-1.45);
+    \draw[red!70, ultra thick, ->] (1.5,0) -- (1.45,0.5);
+
+    % Campo B del solenoide (aumentando)
+    \draw[green!50!black, ultra thick, ->] (-2.5,0) -- (-1.8,0);
+    \node[green!50!black] at (-2.5,0.4) {$\vec{B}_{sol}$};
+    \node[green!50!black] at (-2.5,-0.4) {(aumenta)};
+
+    % Campo B inducido
+    \draw[blue, ultra thick, ->] (1.8,0) -- (2.5,0);
+    \node[blue] at (2.5,0.4) {$\vec{B}_{ind}$};
+    \node[blue] at (2.5,-0.4) {(se opone)};
+
+    \node[red!70] at (0,-2) {$I_{ind}$ (horario)};
+\end{tikzpicture}
+\end{center}
+
+\newpage
+%========================================
+% PROBLEMA 3
+%========================================
+\section*{Problema 3: Campo Magn\'etico Neto Cero (Problema 7, Gu\'ia 9)}
+
+\subsection*{Enunciado}
+
+Un alambre recto muy largo conduce una corriente $I_1$ hacia la derecha. Una espira circular de radio $R = 0{,}10$ m conduce una corriente $I_2 = 1{,}0$ A en sentido antihorario. El centro de la espira est\'a a una distancia $D = 0{,}20$ m del alambre recto. Determine el valor de $I_1$ para que el campo magn\'etico neto en el centro de la espira sea cero.
+
+\begin{center}
+\begin{tikzpicture}[scale=2]
+    % Alambre recto
+    \draw[corriente1, ultra thick] (-2,0) -- (2.5,0);
+    \draw[corriente1, thick, ->] (0,0) -- (1.5,0);
+    \node[corriente1, below] at (1,0) {$I_1$};
+
+    % Espira circular
+    \draw[corriente2, thick] (1,1.2) circle (0.6);
+
+    % Flechas de corriente en la espira (antihorario)
+    \draw[corriente2, thick, ->] (1,1.8) -- (0.9,1.79);
+    \draw[corriente2, thick, ->] (0.4,1.2) -- (0.41,1.3);
+    \draw[corriente2, thick, ->] (1,0.6) -- (1.1,0.61);
+    \draw[corriente2, thick, ->] (1.6,1.2) -- (1.59,1.1);
+
+    \node[corriente2] at (1.8,1.2) {$I_2$};
+
+    % Centro de la espira
+    \fill[black] (1,1.2) circle (0.03);
+    \node[above right] at (1,1.2) {Centro};
+
+    % Distancias
+    \draw[<->, gray] (1,0.1) -- (1,1.1) node[midway, right] {$D$};
+    \draw[<->, gray] (1,1.2) -- (1.6,1.2) node[midway, above] {$R$};
+
+    % Ejes
+    \draw[black, thick, ->] (-1.5,1.8) -- (-0.8,1.8) node[right] {$\hat{x}$};
+    \draw[black, thick, ->] (-1.5,1.8) -- (-1.5,2.3) node[above] {$\hat{y}$};
+    \node at (-1.2,2.1) {$\hat{z}$: sale};
+\end{tikzpicture}
+\end{center}
+
+%----------------------------------------
+\subsection*{Datos}
+
+\begin{align*}
+    R &= 0{,}10 \text{ m (radio de la espira)} \\
+    D &= 0{,}20 \text{ m (distancia del alambre al centro de la espira)} \\
+    I_2 &= 1{,}0 \text{ A (corriente en la espira, antihorario)} \\
+    I_1 &= \text{ ? (corriente en el alambre recto)}
+\end{align*}
+
+%----------------------------------------
+\subsection*{Soluci\'on}
+
+\textbf{Campo magn\'etico de la espira circular en su centro:}
+
+Para una espira circular de radio $R$ con corriente $I$, el campo en el centro es:
+
+\begin{equation*}
+    B_{espira} = \frac{\mu_0 I_2}{2R}
+\end{equation*}
+
+Por la regla de la mano derecha, con corriente antihoraria (vista desde arriba), el campo apunta hacia $-\hat{y}$ (hacia abajo, entrando a la p\'agina en la vista lateral):
+
+\begin{align*}
+    \vec{B}_2 &= \frac{\mu_0 I_2}{2R} (-\hat{y}) \\
+    B_2 &= \frac{(4\pi \times 10^{-7})(1{,}0)}{2(0{,}10)} \\
+    B_2 &= \frac{4\pi \times 10^{-7}}{0{,}20} \\
+    B_2 &= 2\pi \times 10^{-6} \text{ T} = 6{,}28 \times 10^{-6} \text{ T}
+\end{align*}
+
+\textbf{Campo magn\'etico del alambre recto en el centro de la espira:}
+
+\begin{equation*}
+    B_{alambre} = \frac{\mu_0 I_1}{2\pi D}
+\end{equation*}
+
+Por la regla de la mano derecha, con corriente hacia $+\hat{x}$ y el punto de inter\'es arriba del alambre, el campo apunta hacia $+\hat{y}$ (hacia arriba, saliendo de la p\'agina):
+
+\begin{align*}
+    \vec{B}_1 &= \frac{\mu_0 I_1}{2\pi D} (+\hat{y})
+\end{align*}
+
+\textbf{Condici\'on para campo neto cero:}
+
+\begin{align*}
+    \vec{B}_1 + \vec{B}_2 &= \vec{0} \\
+    \frac{\mu_0 I_1}{2\pi D} &= \frac{\mu_0 I_2}{2R}
+\end{align*}
+
+Despejando $I_1$:
+
+\begin{align*}
+    I_1 &= \frac{\pi D}{R} \cdot I_2 \\
+    I_1 &= \frac{\pi (0{,}20)}{0{,}10} \cdot 1{,}0 \\
+    I_1 &= 2\pi \cdot 1{,}0 \\
+    I_1 &= 2\pi \text{ A}
+\end{align*}
+
+\begin{center}
+\fbox{\parbox{0.6\textwidth}{
+\centering
+$I_1 = 2\pi \approx 6{,}28$ \textbf{[A]}
+
+La corriente debe fluir hacia la derecha ($+\hat{x}$) para que su campo se oponga al de la espira.
+}}
+\end{center}
+
+%----------------------------------------
+\subsection*{Verificaci\'on}
+
+\begin{align*}
+    B_1 &= \frac{\mu_0 I_1}{2\pi D} = \frac{(4\pi \times 10^{-7})(6{,}28)}{2\pi (0{,}20)} = \frac{4 \times 6{,}28 \times 10^{-7}}{0{,}40} = 6{,}28 \times 10^{-6} \text{ T} \\
+    B_2 &= 6{,}28 \times 10^{-6} \text{ T}
+\end{align*}
+
+Como $B_1 = B_2$ y apuntan en direcciones opuestas, el campo neto es efectivamente cero. $\checkmark$
+
+\vspace{1cm}
+\hrule
+\vspace{0.3cm}
+\begin{center}
+\textit{Soluci\'on generada por Electromagnetismo Asistente AI-UBB}
+\end{center}
+
+\end{document}

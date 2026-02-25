@@ -48,3 +48,27 @@ Thumbs.db
 
 # Logs
 *.log
+
+# LaTeX auxiliaries
+*.aux
+*.synctex.gz
+*.fdb_latexmk
+*.fls
+
+# Large binaries (install locally)
+poppler-24.08.0/
+tessdata/
+
+# Backup folders
+backup_tex/
+
+# Windows artifacts
+*.wmf
+nul
+
+# Local settings
+.claude/settings.local.json
+
+# Copyright PDFs (libros)
+**/campo electrico sears.pdf
+**/campo electrico serway.pdf

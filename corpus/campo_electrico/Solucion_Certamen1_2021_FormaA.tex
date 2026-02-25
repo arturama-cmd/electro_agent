@@ -1,0 +1,667 @@
+\documentclass[12pt,letterpaper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[spanish,es-noshorthands]{babel}
+\usepackage{amsmath,amssymb}
+\usepackage{graphicx}
+\usepackage{xcolor}
+\usepackage{tikz}
+\usetikzlibrary{3d,calc,decorations.markings}
+\usepackage[top=2cm, bottom=2cm, left=2cm, right=2cm]{geometry}
+\usepackage{cancel}
+
+% Definir colores
+\definecolor{carga_pos}{RGB}{180,0,0}
+\definecolor{carga_neg}{RGB}{0,0,180}
+\definecolor{vector_f}{RGB}{200,0,0}
+\definecolor{vector_e}{RGB}{0,150,0}
+
+\title{\textbf{Soluci\'on - Certamen 1 Electromagnetismo 2021\\Forma A}}
+\author{Electromagnetismo Asistente}
+\date{}
+
+\begin{document}
+\maketitle
+
+%========================================
+% PROBLEMA 1
+%========================================
+\section*{Problema 1: Cargas Puntuales (30 puntos)}
+
+\subsection*{Enunciado}
+Cuatro cargas puntuales se ubican sobre los ejes de un sistema de referencia con las siguientes cargas y posiciones:
+\begin{itemize}
+    \item $q_1 = -Q$ en $(0, 2d)$
+    \item $q_2 = 2Q$ en $(d, 0)$
+    \item $q_3 = 3Q$ en $(0, -3d)$
+    \item $q_4 = -8Q$ en $(-d, 0)$
+\end{itemize}
+Con $Q = 40{,}0$ [nC] y $d = 7{,}0$ [cm].
+
+\begin{center}
+\begin{tikzpicture}[scale=2.5]
+    % Grilla
+    \draw[step=0.5cm, gray!20, very thin] (-1.5,-2.0) grid (1.5,1.5);
+
+    % Ejes
+    \draw[black, thick, ->] (-1.6,0) -- (1.7,0) node[right] {$\hat{x}$};
+    \draw[black, thick, ->] (0,-2.1) -- (0,1.7) node[above] {$\hat{y}$};
+
+    % Marcas de distancia
+    \draw[gray, |<->|] (-0.15,0) -- (-0.15,1) node[midway, left, scale=0.8] {$2d$};
+    \draw[gray, |<->|] (0.15,0) -- (0.15,-1.5) node[midway, right, scale=0.8] {$3d$};
+    \draw[gray, |<->|] (0,-0.15) -- (0.5,-0.15) node[midway, below, scale=0.8] {$d$};
+    \draw[gray, |<->|] (0,0.15) -- (-0.5,0.15) node[midway, above, scale=0.8] {$d$};
+
+    % Cargas
+    \fill[carga_neg] (0,1) circle (0.08) node[above right, black] {$q_1 = -Q$};
+    \fill[carga_pos] (0.5,0) circle (0.08) node[above right, black] {$q_2 = 2Q$};
+    \fill[carga_pos] (0,-1.5) circle (0.08) node[below right, black] {$q_3 = 3Q$};
+    \fill[carga_neg] (-0.5,0) circle (0.08) node[above left, black] {$q_4 = -8Q$};
+
+    % Origen
+    \node[below left] at (0,0) {O};
+\end{tikzpicture}
+\end{center}
+
+%----------------------------------------
+\subsection*{Datos Num\'ericos}
+%----------------------------------------
+
+\begin{align*}
+    Q &= 40{,}0 \text{ nC} = 40{,}0 \times 10^{-9} \text{ C} \\
+    d &= 7{,}0 \text{ cm} = 0{,}07 \text{ m} \\
+    K &= 9 \times 10^9 \text{ N}\cdot\text{m}^2/\text{C}^2
+\end{align*}
+
+\textbf{Valores de las cargas:}
+\begin{align*}
+    q_1 &= -Q = -40 \times 10^{-9} \text{ C} \\
+    q_2 &= 2Q = 80 \times 10^{-9} \text{ C} \\
+    q_3 &= 3Q = 120 \times 10^{-9} \text{ C} \\
+    q_4 &= -8Q = -320 \times 10^{-9} \text{ C}
+\end{align*}
+
+\textbf{Posiciones:}
+\begin{align*}
+    \vec{r}_1 &= (0, 2d) = (0, 0{,}14) \text{ m} \\
+    \vec{r}_2 &= (d, 0) = (0{,}07, 0) \text{ m} \\
+    \vec{r}_3 &= (0, -3d) = (0, -0{,}21) \text{ m} \\
+    \vec{r}_4 &= (-d, 0) = (-0{,}07, 0) \text{ m}
+\end{align*}
+
+%========================================
+% PARTE A: FUERZA SOBRE q4
+%========================================
+\subsection*{Parte (a): Fuerza el\'ectrica neta sobre $q_4$ (20 puntos)}
+
+La fuerza neta sobre $q_4$ es:
+\[
+\vec{F}_{neta} = \vec{F}_{14} + \vec{F}_{24} + \vec{F}_{34}
+\]
+
+\subsubsection*{An\'alisis Cualitativo}
+
+\begin{itemize}
+    \item \textbf{$q_1 \to q_4$}: $q_1 = -Q < 0$, $q_4 = -8Q < 0$ $\Rightarrow$ \textcolor{red}{\textbf{Repulsiva}}
+    \item \textbf{$q_2 \to q_4$}: $q_2 = 2Q > 0$, $q_4 = -8Q < 0$ $\Rightarrow$ \textcolor{blue}{\textbf{Atractiva}}
+    \item \textbf{$q_3 \to q_4$}: $q_3 = 3Q > 0$, $q_4 = -8Q < 0$ $\Rightarrow$ \textcolor{blue}{\textbf{Atractiva}}
+\end{itemize}
+
+%--- F14 ---
+\subsubsection*{C\'alculo de $\vec{F}_{14}$ (Fuerza de $q_1$ sobre $q_4$)}
+
+\begin{minipage}[c]{0.35\textwidth}
+\begin{center}
+\begin{tikzpicture}[scale=2.0]
+    \draw[step=0.5cm, gray!20, very thin] (-0.8,-0.2) grid (0.3,1.3);
+    \draw[black, thick, ->] (-0.9,0) -- (0.4,0) node[right] {$\hat{x}$};
+    \draw[black, thick, ->] (0,-0.3) -- (0,1.4) node[above] {$\hat{y}$};
+
+    \fill[carga_neg] (0,1) circle (0.05) node[right, scale=0.8] {$q_1$};
+    \fill[carga_neg] (-0.5,0) circle (0.05) node[below, scale=0.8] {$q_4$};
+
+    \draw[red, ultra thick, ->] (0,1) -- (-0.5,0) node[midway, left, scale=0.8] {$\vec{r}_{14}$};
+    \draw[vector_f, thick, ->] (-0.5,0) -- (-0.7,-0.4) node[below, scale=0.8] {$\vec{F}_{14}$};
+\end{tikzpicture}
+\end{center}
+\end{minipage}
+\hfill
+\begin{minipage}[c]{0.60\textwidth}
+\textbf{Vector de posici\'on relativo:}
+\begin{align*}
+    \vec{r}_{14} &= \vec{r}_4 - \vec{r}_1 \\
+    \vec{r}_{14} &= (-0{,}07, 0) - (0, 0{,}14) \\
+    \vec{r}_{14} &= (-0{,}07\hat{x} - 0{,}14\hat{y}) \text{ m}
+\end{align*}
+
+\textbf{Magnitud:}
+\begin{align*}
+    ||\vec{r}_{14}|| &= \sqrt{(-0{,}07)^2 + (-0{,}14)^2} \\
+    &= \sqrt{0{,}0049 + 0{,}0196} = \sqrt{0{,}0245} \\
+    &= 0{,}1565 \text{ m} = d\sqrt{5}
+\end{align*}
+\end{minipage}
+
+\vspace{0.3cm}
+\textbf{Aplicando la Ley de Coulomb:}
+\begin{align*}
+    \vec{F}_{14} &= \frac{K \cdot q_1 \cdot q_4}{||\vec{r}_{14}||^3} \cdot \vec{r}_{14} \\[0.3cm]
+    \vec{F}_{14} &= \frac{(9 \times 10^9)(-40 \times 10^{-9})(-320 \times 10^{-9})}{(0{,}1565)^3} \cdot (-0{,}07\hat{x} - 0{,}14\hat{y}) \\[0.3cm]
+    \vec{F}_{14} &= \frac{1{,}152 \times 10^{-4}}{3{,}838 \times 10^{-3}} \cdot (-0{,}07\hat{x} - 0{,}14\hat{y}) \\[0.3cm]
+    \vec{F}_{14} &= 30{,}02 \cdot (-0{,}07\hat{x} - 0{,}14\hat{y}) \\[0.3cm]
+    \vec{F}_{14} &= \boxed{(-2{,}10\hat{x} - 4{,}20\hat{y}) \times 10^{-3} \text{ N}}
+\end{align*}
+
+%--- F24 ---
+\subsubsection*{C\'alculo de $\vec{F}_{24}$ (Fuerza de $q_2$ sobre $q_4$)}
+
+\begin{minipage}[c]{0.35\textwidth}
+\begin{center}
+\begin{tikzpicture}[scale=2.0]
+    \draw[step=0.5cm, gray!20, very thin] (-0.8,-0.3) grid (0.8,0.3);
+    \draw[black, thick, ->] (-0.9,0) -- (0.9,0) node[right] {$\hat{x}$};
+    \draw[black, thick, ->] (0,-0.4) -- (0,0.4) node[above] {$\hat{y}$};
+
+    \fill[carga_pos] (0.5,0) circle (0.05) node[above, scale=0.8] {$q_2$};
+    \fill[carga_neg] (-0.5,0) circle (0.05) node[above, scale=0.8] {$q_4$};
+
+    \draw[red, ultra thick, ->] (0.5,0) -- (-0.5,0) node[midway, below, scale=0.8] {$\vec{r}_{24}$};
+    \draw[blue, thick, ->] (-0.5,0) -- (0.1,0) node[above, scale=0.8] {$\vec{F}_{24}$};
+\end{tikzpicture}
+\end{center}
+\end{minipage}
+\hfill
+\begin{minipage}[c]{0.60\textwidth}
+\textbf{Vector de posici\'on relativo:}
+\begin{align*}
+    \vec{r}_{24} &= \vec{r}_4 - \vec{r}_2 \\
+    \vec{r}_{24} &= (-0{,}07, 0) - (0{,}07, 0) \\
+    \vec{r}_{24} &= -0{,}14\hat{x} \text{ m} = -2d\hat{x}
+\end{align*}
+
+\textbf{Magnitud:}
+\begin{align*}
+    ||\vec{r}_{24}|| &= 0{,}14 \text{ m} = 2d
+\end{align*}
+\end{minipage}
+
+\vspace{0.3cm}
+\textbf{Aplicando la Ley de Coulomb:}
+\begin{align*}
+    \vec{F}_{24} &= \frac{K \cdot q_2 \cdot q_4}{||\vec{r}_{24}||^3} \cdot \vec{r}_{24} \\[0.3cm]
+    \vec{F}_{24} &= \frac{(9 \times 10^9)(80 \times 10^{-9})(-320 \times 10^{-9})}{(0{,}14)^3} \cdot (-0{,}14\hat{x}) \\[0.3cm]
+    \vec{F}_{24} &= \frac{-2{,}304 \times 10^{-4}}{2{,}744 \times 10^{-3}} \cdot (-0{,}14\hat{x}) \\[0.3cm]
+    \vec{F}_{24} &= -83{,}97 \cdot (-0{,}14\hat{x}) \\[0.3cm]
+    \vec{F}_{24} &= \boxed{11{,}76 \times 10^{-3}\hat{x} \text{ N}}
+\end{align*}
+
+\textit{Nota: El signo positivo en $\hat{x}$ indica atracci\'on hacia $q_2$.}
+
+%--- F34 ---
+\subsubsection*{C\'alculo de $\vec{F}_{34}$ (Fuerza de $q_3$ sobre $q_4$)}
+
+\begin{minipage}[c]{0.35\textwidth}
+\begin{center}
+\begin{tikzpicture}[scale=1.8]
+    \draw[step=0.5cm, gray!20, very thin] (-0.8,-1.7) grid (0.3,0.3);
+    \draw[black, thick, ->] (-0.9,0) -- (0.4,0) node[right] {$\hat{x}$};
+    \draw[black, thick, ->] (0,-1.8) -- (0,0.4) node[above] {$\hat{y}$};
+
+    \fill[carga_pos] (0,-1.5) circle (0.05) node[right, scale=0.8] {$q_3$};
+    \fill[carga_neg] (-0.5,0) circle (0.05) node[above, scale=0.8] {$q_4$};
+
+    \draw[red, ultra thick, ->] (0,-1.5) -- (-0.5,0) node[midway, right, scale=0.8] {$\vec{r}_{34}$};
+    \draw[blue, thick, ->] (-0.5,0) -- (-0.2,-0.9) node[right, scale=0.8] {$\vec{F}_{34}$};
+\end{tikzpicture}
+\end{center}
+\end{minipage}
+\hfill
+\begin{minipage}[c]{0.60\textwidth}
+\textbf{Vector de posici\'on relativo:}
+\begin{align*}
+    \vec{r}_{34} &= \vec{r}_4 - \vec{r}_3 \\
+    \vec{r}_{34} &= (-0{,}07, 0) - (0, -0{,}21) \\
+    \vec{r}_{34} &= (-0{,}07\hat{x} + 0{,}21\hat{y}) \text{ m}
+\end{align*}
+
+\textbf{Magnitud:}
+\begin{align*}
+    ||\vec{r}_{34}|| &= \sqrt{(-0{,}07)^2 + (0{,}21)^2} \\
+    &= \sqrt{0{,}0049 + 0{,}0441} = \sqrt{0{,}049} \\
+    &= 0{,}2214 \text{ m} = d\sqrt{10}
+\end{align*}
+\end{minipage}
+
+\vspace{0.3cm}
+\textbf{Aplicando la Ley de Coulomb:}
+\begin{align*}
+    \vec{F}_{34} &= \frac{K \cdot q_3 \cdot q_4}{||\vec{r}_{34}||^3} \cdot \vec{r}_{34} \\[0.3cm]
+    \vec{F}_{34} &= \frac{(9 \times 10^9)(120 \times 10^{-9})(-320 \times 10^{-9})}{(0{,}2214)^3} \cdot (-0{,}07\hat{x} + 0{,}21\hat{y}) \\[0.3cm]
+    \vec{F}_{34} &= \frac{-3{,}456 \times 10^{-4}}{1{,}086 \times 10^{-2}} \cdot (-0{,}07\hat{x} + 0{,}21\hat{y}) \\[0.3cm]
+    \vec{F}_{34} &= -31{,}82 \cdot (-0{,}07\hat{x} + 0{,}21\hat{y}) \\[0.3cm]
+    \vec{F}_{34} &= \boxed{(2{,}23\hat{x} - 6{,}68\hat{y}) \times 10^{-3} \text{ N}}
+\end{align*}
+
+\textit{Nota: La fuerza apunta hacia $q_3$ (atractiva).}
+
+%--- FUERZA NETA ---
+\subsubsection*{Fuerza Neta sobre $q_4$}
+
+\begin{align*}
+    \vec{F}_{neta} &= \vec{F}_{14} + \vec{F}_{24} + \vec{F}_{34}
+\end{align*}
+
+\textbf{Componente $\hat{x}$:}
+\begin{align*}
+    F_x &= (-2{,}10 + 11{,}76 + 2{,}23) \times 10^{-3} \\
+    F_x &= 11{,}89 \times 10^{-3} \text{ N}
+\end{align*}
+
+\textbf{Componente $\hat{y}$:}
+\begin{align*}
+    F_y &= (-4{,}20 + 0 - 6{,}68) \times 10^{-3} \\
+    F_y &= -10{,}88 \times 10^{-3} \text{ N}
+\end{align*}
+
+\begin{center}
+\fbox{\parbox{0.85\textwidth}{
+\centering
+\textbf{RESULTADO - Fuerza sobre $q_4$}
+\begin{align*}
+    \vec{F}_{neta} &= (11{,}89\hat{x} - 10{,}88\hat{y}) \times 10^{-3} \text{ N} \\[0.3cm]
+    ||\vec{F}_{neta}|| &= \sqrt{(11{,}89)^2 + (-10{,}88)^2} \times 10^{-3} = 16{,}12 \times 10^{-3} \text{ N} \\[0.3cm]
+    \theta &= \arctan\left(\frac{-10{,}88}{11{,}89}\right) = -42{,}5^\circ \text{ (respecto a }+\hat{x}\text{)}
+\end{align*}
+}}
+\end{center}
+
+\begin{center}
+\begin{tikzpicture}[scale=3]
+    \draw[step=0.25cm, gray!15, very thin] (-0.3,-0.5) grid (0.6,0.3);
+    \draw[black, thick, ->] (-0.4,0) -- (0.7,0) node[right] {$\hat{x}$};
+    \draw[black, thick, ->] (0,-0.6) -- (0,0.4) node[above] {$\hat{y}$};
+
+    \fill[carga_neg] (0,0) circle (0.04) node[above left] {$q_4$};
+
+    % Fuerzas individuales
+    \draw[red!60, thick, ->] (0,0) -- (-0.15,-0.3) node[left, scale=0.7] {$\vec{F}_{14}$};
+    \draw[blue!60, thick, ->] (0,0) -- (0.4,0) node[above, scale=0.7] {$\vec{F}_{24}$};
+    \draw[blue!40, thick, ->] (0,0) -- (0.08,-0.24) node[right, scale=0.7] {$\vec{F}_{34}$};
+
+    % Fuerza resultante
+    \draw[green!50!black, ultra thick, ->] (0,0) -- (0.45,-0.4) node[right] {$\vec{F}_{neta}$};
+
+    % Angulo
+    \draw[green!50!black] (0.2,0) arc (0:-42.5:0.2);
+    \node[green!50!black, scale=0.7] at (0.28,-0.12) {$42{,}5^\circ$};
+\end{tikzpicture}
+\end{center}
+
+\newpage
+%========================================
+% PARTE B: CAMPO EN EL ORIGEN
+%========================================
+\subsection*{Parte (b): Campo el\'ectrico neto en el origen (10 puntos)}
+
+El campo el\'ectrico en el origen es la suma de los campos producidos por cada carga:
+\[
+\vec{E}_{total} = \vec{E}_1 + \vec{E}_2 + \vec{E}_3 + \vec{E}_4
+\]
+
+donde $\vec{E}_i = \frac{K q_i}{||\vec{r}_{0i}||^3}\vec{r}_{0i}$ y $\vec{r}_{0i}$ es el vector del origen a la carga $q_i$.
+
+\subsubsection*{Campo de cada carga en el origen}
+
+\textbf{Campo $\vec{E}_1$ (de $q_1 = -Q$ en $(0, 2d)$):}
+\begin{align*}
+    \vec{r}_{01} &= (0, 2d) - (0, 0) = 2d\hat{y} \\
+    ||\vec{r}_{01}|| &= 2d = 0{,}14 \text{ m} \\
+    \vec{E}_1 &= \frac{K(-Q)}{(2d)^2}\hat{y} = -\frac{KQ}{4d^2}\hat{y}
+\end{align*}
+
+\textbf{Campo $\vec{E}_2$ (de $q_2 = 2Q$ en $(d, 0)$):}
+\begin{align*}
+    \vec{r}_{02} &= (d, 0) - (0, 0) = d\hat{x} \\
+    ||\vec{r}_{02}|| &= d = 0{,}07 \text{ m} \\
+    \vec{E}_2 &= \frac{K(2Q)}{d^2}\hat{x} = \frac{2KQ}{d^2}\hat{x}
+\end{align*}
+
+\textbf{Campo $\vec{E}_3$ (de $q_3 = 3Q$ en $(0, -3d)$):}
+\begin{align*}
+    \vec{r}_{03} &= (0, -3d) - (0, 0) = -3d\hat{y} \\
+    ||\vec{r}_{03}|| &= 3d = 0{,}21 \text{ m} \\
+    \vec{E}_3 &= \frac{K(3Q)}{(3d)^2}(-\hat{y}) = -\frac{KQ}{3d^2}\hat{y}
+\end{align*}
+
+\textbf{Campo $\vec{E}_4$ (de $q_4 = -8Q$ en $(-d, 0)$):}
+\begin{align*}
+    \vec{r}_{04} &= (-d, 0) - (0, 0) = -d\hat{x} \\
+    ||\vec{r}_{04}|| &= d = 0{,}07 \text{ m} \\
+    \vec{E}_4 &= \frac{K(-8Q)}{d^2}(-\hat{x}) = \frac{8KQ}{d^2}\hat{x}
+\end{align*}
+
+\subsubsection*{Campo Total}
+
+\textbf{Componente $\hat{x}$:}
+\begin{align*}
+    E_x &= \frac{2KQ}{d^2} + \frac{8KQ}{d^2} = \frac{10KQ}{d^2}
+\end{align*}
+
+\textbf{Componente $\hat{y}$:}
+\begin{align*}
+    E_y &= -\frac{KQ}{4d^2} - \frac{KQ}{3d^2} = -KQ\left(\frac{1}{4d^2} + \frac{1}{3d^2}\right) = -\frac{7KQ}{12d^2}
+\end{align*}
+
+\subsubsection*{Valores Num\'ericos}
+
+\begin{align*}
+    \frac{KQ}{d^2} &= \frac{(9 \times 10^9)(40 \times 10^{-9})}{(0{,}07)^2} = \frac{360}{4{,}9 \times 10^{-3}} = 7{,}347 \times 10^4 \text{ N/C}
+\end{align*}
+
+\begin{align*}
+    E_x &= 10 \times 7{,}347 \times 10^4 = 7{,}347 \times 10^5 \text{ N/C} \\
+    E_y &= -\frac{7}{12} \times 7{,}347 \times 10^4 = -4{,}286 \times 10^4 \text{ N/C}
+\end{align*}
+
+\begin{center}
+\fbox{\parbox{0.85\textwidth}{
+\centering
+\textbf{RESULTADO - Campo en el Origen}
+\begin{align*}
+    \vec{E}_{total} &= (7{,}35 \times 10^5\hat{x} - 4{,}29 \times 10^4\hat{y}) \text{ N/C} \\[0.3cm]
+    ||\vec{E}_{total}|| &= \sqrt{(7{,}35 \times 10^5)^2 + (-4{,}29 \times 10^4)^2} = 7{,}36 \times 10^5 \text{ N/C} \\[0.3cm]
+    \theta &= \arctan\left(\frac{-4{,}29 \times 10^4}{7{,}35 \times 10^5}\right) = -3{,}34^\circ
+\end{align*}
+}}
+\end{center}
+
+\newpage
+%========================================
+% PROBLEMA 2
+%========================================
+\section*{Problema 2: Semianillo con Carga (29 puntos)}
+
+\subsection*{Enunciado}
+Un semianillo (mitad de una circunferencia) posee una densidad de carga lineal uniforme $\lambda = 18{,}0$ [$\mu$C/m] y un radio $R = 30{,}0$ [cm].
+
+\begin{center}
+\begin{tikzpicture}[scale=2.8,
+    x={(-0.4cm,-0.3cm)},  % eje x hacia atras-izquierda
+    y={(1cm,0cm)},         % eje y hacia la derecha
+    z={(0cm,1cm)}]         % eje z hacia arriba
+
+    % Plano xy sombreado (base)
+    \fill[blue!5, opacity=0.5] (-1.2,-1.2,0) -- (1.2,-1.2,0) -- (1.2,1.2,0) -- (-1.2,1.2,0) -- cycle;
+
+    % Grilla en plano xy
+    \foreach \i in {-1,-0.5,0,0.5,1} {
+        \draw[gray!30, very thin] (\i,-1.2,0) -- (\i,1.2,0);
+        \draw[gray!30, very thin] (-1.2,\i,0) -- (1.2,\i,0);
+    }
+
+    % Ejes 3D
+    \draw[black, thick, ->] (0,0,0) -- (1.5,0,0) node[below left] {$\hat{x}$};
+    \draw[black, thick, ->] (0,0,0) -- (0,1.5,0) node[right] {$\hat{y}$};
+    \draw[black, thick, ->] (0,0,0) -- (0,0,1.8) node[above] {$\hat{z}$};
+
+    % Parte trasera del eje x (punteada)
+    \draw[black, dashed] (0,0,0) -- (-0.8,0,0);
+
+    % Semianillo en el plano xy (y >= 0)
+    % Dibujamos el arco parametricamente
+    \draw[blue, ultra thick,
+        decoration={markings, mark=at position 0.25 with {\arrow{>}}, mark=at position 0.75 with {\arrow{>}}},
+        postaction={decorate}]
+        plot[domain=0:180, samples=60] ({cos(\x)}, {sin(\x)}, 0);
+
+    % Sombra del semianillo proyectada
+    \draw[blue!20, thick] plot[domain=0:180, samples=60] ({cos(\x)}, {sin(\x)}, -0.02);
+
+    % Radio R
+    \draw[blue, dashed, thick] (0,0,0) -- ({cos(45)}, {sin(45)}, 0);
+    \node[blue] at ({0.5*cos(45)}, {0.5*sin(45)+0.15}, 0) {$R$};
+
+    % Punto P en el eje z
+    \fill[red] (0,0,1.3) circle (0.06);
+    \node[red, right] at (0,0.1,1.35) {P $(0,0,z)$};
+
+    % Linea vertical z (distancia)
+    \draw[gray, thick, |<->|] (0.15,0,0) -- (0.15,0,1.3) node[midway, right, scale=0.9] {$z$};
+
+    % Elemento diferencial dq
+    \fill[green!60!black] ({cos(60)}, {sin(60)}, 0) circle (0.05);
+    \node[green!50!black, above right, scale=0.9] at ({cos(60)+0.1}, {sin(60)+0.1}, 0) {$dq$};
+
+    % Vector r desde dq hasta P
+    \draw[orange, thick, dashed, ->] ({cos(60)}, {sin(60)}, 0) -- (0,0,1.3);
+    \node[orange, scale=0.8] at ({0.5*cos(60)+0.15}, {0.5*sin(60)}, 0.7) {$\vec{r}$};
+
+    % Angulo phi en el plano xy
+    \draw[gray, thick] (0,0.3,0) arc (90:60:0.3);
+    \node[gray, scale=0.8] at (0.1,0.4,0) {$\phi$};
+
+    % Etiqueta lambda
+    \node[blue, scale=1.0] at ({cos(135)-0.2}, {sin(135)+0.1}, 0) {$\lambda$};
+
+    % Vector dE en P (componentes)
+    \draw[vector_e, thick, ->] (0,0,1.3) -- (0,0,1.6) node[above, scale=0.8] {$dE_z$};
+    \draw[vector_e, thick, ->] (0,0,1.3) -- (0,-0.25,1.3) node[below, scale=0.8] {$dE_y$};
+
+    % Centro O
+    \node[below] at (0.1,-0.1,0) {O};
+
+    % Anotacion del plano
+    \node[gray, scale=0.7] at (-0.8,-0.8,0) {plano $xy$};
+\end{tikzpicture}
+\end{center}
+
+\subsection*{Datos Num\'ericos}
+
+\begin{align*}
+    \lambda &= 18{,}0 \text{ }\mu\text{C/m} = 18{,}0 \times 10^{-6} \text{ C/m} \\
+    R &= 30{,}0 \text{ cm} = 0{,}30 \text{ m} \\
+    z &= 21{,}0 \text{ cm} = 0{,}21 \text{ m} \\
+    K &= 9 \times 10^9 \text{ N}\cdot\text{m}^2/\text{C}^2
+\end{align*}
+
+%========================================
+% PARTE A: CAMPO DEL SEMIANILLO
+%========================================
+\subsection*{Parte (a): Campo el\'ectrico en el eje del semianillo (19 puntos)}
+
+\subsubsection*{Configuraci\'on Geom\'etrica}
+
+El semianillo se encuentra en el plano $xy$, extendi\'endose desde $\phi = 0$ hasta $\phi = \pi$ (en la regi\'on $y \geq 0$). Un elemento diferencial de carga se ubica en:
+\[
+\vec{r}' = R\cos\phi\,\hat{x} + R\sin\phi\,\hat{y}
+\]
+
+El punto de observaci\'on P est\'a en el eje $z$:
+\[
+\vec{r}_P = z\,\hat{z}
+\]
+
+\subsubsection*{Elemento Diferencial de Carga}
+
+\begin{align*}
+    dq &= \lambda \cdot dl = \lambda \cdot R \, d\phi
+\end{align*}
+
+\subsubsection*{Vector de Separaci\'on}
+
+\begin{align*}
+    \vec{r} &= \vec{r}_P - \vec{r}' = -R\cos\phi\,\hat{x} - R\sin\phi\,\hat{y} + z\,\hat{z}
+\end{align*}
+
+\begin{align*}
+    ||\vec{r}|| &= \sqrt{R^2\cos^2\phi + R^2\sin^2\phi + z^2} = \sqrt{R^2 + z^2}
+\end{align*}
+
+\textit{Nota: La distancia $||\vec{r}||$ es constante para todos los elementos del semianillo.}
+
+\subsubsection*{Campo Diferencial}
+
+\begin{align*}
+    d\vec{E} &= \frac{K \, dq}{||\vec{r}||^3} \vec{r} \\[0.2cm]
+    d\vec{E} &= \frac{K \lambda R \, d\phi}{(R^2 + z^2)^{3/2}} \left(-R\cos\phi\,\hat{x} - R\sin\phi\,\hat{y} + z\,\hat{z}\right)
+\end{align*}
+
+\subsubsection*{Integraci\'on de Componentes}
+
+\textbf{Componente $\hat{x}$:}
+\begin{align*}
+    E_x &= \int_0^{\pi} \frac{-K\lambda R^2 \cos\phi}{(R^2 + z^2)^{3/2}} d\phi = \frac{-K\lambda R^2}{(R^2 + z^2)^{3/2}} \left[\sin\phi\right]_0^{\pi} \\
+    E_x &= \frac{-K\lambda R^2}{(R^2 + z^2)^{3/2}} (0 - 0) = \boxed{0}
+\end{align*}
+
+\textit{Por simetr\'ia, las contribuciones en $\hat{x}$ se cancelan.}
+
+\textbf{Componente $\hat{y}$:}
+\begin{align*}
+    E_y &= \int_0^{\pi} \frac{-K\lambda R^2 \sin\phi}{(R^2 + z^2)^{3/2}} d\phi = \frac{-K\lambda R^2}{(R^2 + z^2)^{3/2}} \left[-\cos\phi\right]_0^{\pi} \\
+    E_y &= \frac{-K\lambda R^2}{(R^2 + z^2)^{3/2}} \left[-(-1) - (-1)\right] = \frac{-K\lambda R^2}{(R^2 + z^2)^{3/2}} \cdot 2 \\
+    E_y &= \boxed{\frac{-2K\lambda R^2}{(R^2 + z^2)^{3/2}}}
+\end{align*}
+
+\textbf{Componente $\hat{z}$:}
+\begin{align*}
+    E_z &= \int_0^{\pi} \frac{K\lambda R z}{(R^2 + z^2)^{3/2}} d\phi = \frac{K\lambda R z}{(R^2 + z^2)^{3/2}} \left[\phi\right]_0^{\pi} \\
+    E_z &= \boxed{\frac{\pi K\lambda R z}{(R^2 + z^2)^{3/2}}}
+\end{align*}
+
+\subsubsection*{Valores Num\'ericos}
+
+\begin{align*}
+    R^2 + z^2 &= (0{,}30)^2 + (0{,}21)^2 = 0{,}09 + 0{,}0441 = 0{,}1341 \text{ m}^2 \\
+    (R^2 + z^2)^{3/2} &= (0{,}1341)^{3/2} = 0{,}0491 \text{ m}^3
+\end{align*}
+
+\textbf{Componente $E_y$:}
+\begin{align*}
+    E_y &= \frac{-2 \times (9 \times 10^9) \times (18 \times 10^{-6}) \times (0{,}30)^2}{0{,}0491} \\
+    E_y &= \frac{-2 \times 9 \times 18 \times 0{,}09 \times 10^3}{0{,}0491} \\
+    E_y &= \frac{-29{,}16 \times 10^3}{0{,}0491} = -5{,}94 \times 10^5 \text{ N/C}
+\end{align*}
+
+\textbf{Componente $E_z$:}
+\begin{align*}
+    E_z &= \frac{\pi \times (9 \times 10^9) \times (18 \times 10^{-6}) \times (0{,}30) \times (0{,}21)}{0{,}0491} \\
+    E_z &= \frac{\pi \times 9 \times 18 \times 0{,}063 \times 10^3}{0{,}0491} \\
+    E_z &= \frac{32{,}06 \times 10^3}{0{,}0491} = 6{,}53 \times 10^5 \text{ N/C}
+\end{align*}
+
+\begin{center}
+\fbox{\parbox{0.85\textwidth}{
+\centering
+\textbf{RESULTADO - Campo El\'ectrico del Semianillo}
+\begin{align*}
+    \vec{E} &= (-5{,}94 \times 10^5\hat{y} + 6{,}53 \times 10^5\hat{z}) \text{ N/C} \\[0.3cm]
+    ||\vec{E}|| &= \sqrt{(5{,}94)^2 + (6{,}53)^2} \times 10^5 = 8{,}83 \times 10^5 \text{ N/C}
+\end{align*}
+}}
+\end{center}
+
+\begin{center}
+\begin{tikzpicture}[scale=2.5]
+    % Ejes
+    \draw[black, thick, ->] (-0.5,0) -- (1.5,0) node[right] {$\hat{y}$};
+    \draw[black, thick, ->] (0,-0.3) -- (0,1.5) node[above] {$\hat{z}$};
+
+    % Punto P
+    \fill[red] (0,0.8) circle (0.04) node[left] {P};
+
+    % Componentes del campo
+    \draw[blue, thick, ->] (0,0.8) -- (-0.6,0.8) node[above] {$E_y$};
+    \draw[blue, thick, ->] (0,0.8) -- (0,1.4) node[right] {$E_z$};
+
+    % Campo resultante
+    \draw[green!50!black, ultra thick, ->] (0,0.8) -- (-0.6,1.4) node[above left] {$\vec{E}$};
+
+    % Angulo
+    \draw[green!50!black] (0,1.1) arc (90:132:0.3);
+    \node[green!50!black, scale=0.8] at (-0.15,1.2) {$\theta$};
+\end{tikzpicture}
+\end{center}
+
+\newpage
+%========================================
+% PARTE B: FUERZA SOBRE LA CARGA
+%========================================
+\subsection*{Parte (b): Fuerza sobre la carga puntual (10 puntos)}
+
+Se ubica una carga puntual $q = -22{,}0$ [$\mu$C] en el punto P.
+
+\begin{align*}
+    q &= -22{,}0 \text{ }\mu\text{C} = -22{,}0 \times 10^{-6} \text{ C}
+\end{align*}
+
+La fuerza el\'ectrica sobre la carga es:
+\begin{align*}
+    \vec{F} &= q \cdot \vec{E}
+\end{align*}
+
+\subsubsection*{C\'alculo de Componentes}
+
+\textbf{Componente $\hat{y}$:}
+\begin{align*}
+    F_y &= q \cdot E_y = (-22{,}0 \times 10^{-6}) \times (-5{,}94 \times 10^5) \\
+    F_y &= 13{,}07 \text{ N}
+\end{align*}
+
+\textbf{Componente $\hat{z}$:}
+\begin{align*}
+    F_z &= q \cdot E_z = (-22{,}0 \times 10^{-6}) \times (6{,}53 \times 10^5) \\
+    F_z &= -14{,}37 \text{ N}
+\end{align*}
+
+\begin{center}
+\fbox{\parbox{0.85\textwidth}{
+\centering
+\textbf{RESULTADO - Fuerza sobre $q$}
+\begin{align*}
+    \vec{F} &= (13{,}07\hat{y} - 14{,}37\hat{z}) \text{ N} \\[0.3cm]
+    ||\vec{F}|| &= \sqrt{(13{,}07)^2 + (-14{,}37)^2} = 19{,}42 \text{ N} \\[0.3cm]
+    \theta &= \arctan\left(\frac{-14{,}37}{13{,}07}\right) = -47{,}7^\circ \text{ (respecto a }+\hat{y}\text{)}
+\end{align*}
+}}
+\end{center}
+
+\subsubsection*{Interpretaci\'on F\'isica}
+
+La carga $q$ es negativa, por lo tanto la fuerza tiene direcci\'on \textbf{opuesta} al campo el\'ectrico:
+\begin{itemize}
+    \item El campo apunta hacia $-\hat{y}$ y $+\hat{z}$
+    \item La fuerza apunta hacia $+\hat{y}$ y $-\hat{z}$
+    \item La carga negativa es atra\'ida hacia el semianillo (componente $-\hat{z}$)
+    \item Y empujada hacia el lado opuesto del semicírculo (componente $+\hat{y}$)
+\end{itemize}
+
+\begin{center}
+\begin{tikzpicture}[scale=2.5]
+    % Ejes
+    \draw[black, thick, ->] (-0.8,0) -- (1.0,0) node[right] {$\hat{y}$};
+    \draw[black, thick, ->] (0,-0.8) -- (0,1.2) node[above] {$\hat{z}$};
+
+    % Punto P con carga
+    \fill[carga_neg] (0,0.5) circle (0.05) node[left] {$q$};
+
+    % Campo E (gris, referencia)
+    \draw[gray, dashed, ->] (0,0.5) -- (-0.4,0.9) node[above left, scale=0.8] {$\vec{E}$};
+
+    % Fuerza F (opuesta)
+    \draw[red, ultra thick, ->] (0,0.5) -- (0.5,0) node[right] {$\vec{F}$};
+
+    % Semianillo (esquem\'atico)
+    \draw[blue, thick] (-0.3,-0.5) arc (180:0:0.3);
+    \node[blue, scale=0.8] at (0,-0.65) {Semianillo};
+\end{tikzpicture}
+\end{center}
+
+\vspace{1cm}
+\hrule
+\vspace{0.3cm}
+\begin{center}
+\textit{Soluci\'on generada por Electromagnetismo Asistente}
+\end{center}
+
+\end{document}
