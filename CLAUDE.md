@@ -15,14 +15,16 @@ pip install -r requirements.txt
 # Run the application
 streamlit run app.py
 
-# Add a single PDF to existing ChromaDB
+# Add a single PDF to existing ChromaDB (edit file to set path/category)
 python add_single_pdf.py
 
-# Test PDF processor
+# Test PDF processor (outputs chunk count and preview)
 python pdf_processor.py "path/to/file.pdf"
 
 # Compile LaTeX solutions
 cd corpus/campo_electrico && pdflatex -interaction=nonstopmode "Solucion_Tema_I.tex"
+
+# Force reindex: delete chroma_db/ folder and restart app
 ```
 
 ## Architecture
@@ -36,80 +38,111 @@ User Query → app.py (Streamlit UI)
     ↓                       ↓
 ChromaDB               Claude API
 (vector search)        (response generation)
+    ↑
+tex_processor.py ←── corpus/*.tex
+pdf_processor.py ←── corpus/*.pdf
 ```
 
-### Key Files
+### Core Modules
 
 | File | Purpose |
 |------|---------|
-| `app.py` | Streamlit UI entry point, session management, `@st.cache_resource` for lazy RAG init |
-| `rag_system.py` | RAG orchestrator: `ElectromagnetismRAG` class with ChromaDB integration and Claude API calls |
-| `tex_processor.py` | LaTeX parsing: `clean_latex()` preserves math while removing markup, `extract_chunks_from_tex()` splits files |
-| `pdf_processor.py` | PDF extraction with OCR fallback via pytesseract |
-| `add_single_pdf.py` | Utility to add PDFs to existing vector database |
+| `app.py` | Streamlit UI, session state, `@st.cache_resource` for lazy RAG init |
+| `rag_system.py` | `ElectromagnetismRAG` class: ChromaDB + Claude API orchestration |
+| `tex_processor.py` | `clean_latex()` preserves math, `extract_chunks_from_tex()` splits files |
+| `pdf_processor.py` | pdfplumber extraction with Tesseract OCR fallback |
+| `add_single_pdf.py` | Add PDFs to existing vector DB without full reindex |
+
+### Data Flow
+
+1. **Indexing** (first run or reindex):
+   - `rag_system.index_corpus()` iterates `corpus/` subfolders
+   - `.tex` files → `tex_processor.extract_chunks_from_tex()`
+   - `.pdf` files → `pdf_processor.process_pdf_to_chunks()`
+   - All chunks stored in ChromaDB with metadata
+
+2. **Query Processing**:
+   - `retrieve_relevant_problems(query, category_filter)` → top 3 chunks
+   - Context + conversation history → Claude API
+   - Streaming response rendered in Streamlit
 
 ### Knowledge Base
 
-Documents are organized by topic in `corpus/`:
-- `campo_electrico/` - Electric field problems (active)
-- `campo_magnetico/` - Magnetic field (planned)
-- `corriente_directa/` - DC circuits (planned)
-- `corriente_alterna/` - AC circuits (planned)
-- `maquinas_electricas/` - Electric machines (planned)
+Documents in `corpus/` by topic (categories defined in `rag_system.py` → `CATEGORIES` dict):
 
-Categories are defined in `rag_system.py` → `CATEGORIES` dict.
+| Category | Status | Content |
+|----------|--------|---------|
+| `campo_electrico/` | Active | Exams, solutions, Sears/Serway textbook chapters |
+| `campo_magnetico/` | Active | Homework solutions, Biot-Savart problems |
+| `corriente_directa/` | Planned | DC circuits (empty) |
+| `corriente_alterna/` | Planned | AC circuits (empty) |
+| `maquinas_electricas/` | Planned | Electric machines (empty) |
 
 ### ChromaDB
 
-- Auto-generated in `chroma_db/` on first run
-- Downloads embedding model (~79 MB) on first initialization
-- Delete `chroma_db/` folder to force complete reindex
-- Use sidebar "Reindexar Corpus" button for reindex from UI
+- Collection: `electromagnetism_corpus`
+- Persistence: `chroma_db/` (auto-created)
+- First run downloads embedding model (~79 MB)
+- Delete folder to force complete reindex
+- UI reindex: sidebar "Reindexar Corpus" button
 
-## Key Patterns
+### Chunk Metadata Schema
 
-**Category Filtering**: RAG retrieval uses `where_filter` in `retrieve_relevant_problems()` to limit search to specific topics.
+```python
+{
+    "source": "filename.tex",
+    "category": "campo_electrico",
+    "category_display": "Campo Eléctrico",
+    "chunk_number": "0",
+    "file_type": "tex" | "pdf"
+}
+```
 
-**Metadata-Rich Chunks**: Each chunk includes `source`, `category`, `category_display`, `chunk_number`, `file_type`.
+## Key Implementation Details
 
-**Fallback Text Extraction**: PDFs try direct extraction via pdfplumber first, then OCR if content is scanned.
+**Category Filtering**: `retrieve_relevant_problems()` accepts `category_filter` for WHERE clause on ChromaDB.
 
-## Customization Points
+**Text Extraction Pipeline**:
+- LaTeX: Regex-based cleanup preserving equations (marks as `ECUACION:`/`MATH:`)
+- PDF: pdfplumber first, Tesseract OCR fallback for scanned docs
+- Encoding: UTF-8 with latin-1 fallback
 
-- **Claude behavior**: Edit `system_prompt` in `rag_system.py` → `generate_response()`
-- **Retrieval count**: Modify `n_results` parameter in `generate_response()` (default: 3)
-- **Model**: Currently uses `claude-sonnet-4-20250514`
+**Caching**: `@st.cache_resource` on `initialize_rag()` prevents re-init per session.
+
+## Customization
+
+| What | Where |
+|------|-------|
+| Claude system prompt | `rag_system.py` → `generate_response()` → `system_prompt` |
+| Retrieved chunk count | `generate_response()` → `n_results` (default: 3) |
+| Model | `rag_system.py` → `claude-sonnet-4-20250514` |
+| Add new category | `rag_system.py` → `CATEGORIES` dict + create folder in `corpus/` |
 
 ## System Dependencies
 
-- Tesseract OCR for scanned PDFs (Windows: `C:\Program Files\Tesseract-OCR`)
-- Poppler included locally in `poppler-24.08.0/Library/bin/`
-- tessdata directory for OCR language models (includes Spanish)
-
-## Development Notes
-
-- Primary language: Spanish (UI and corpus content)
-- API key configured via `.env` file (`ANTHROPIC_API_KEY`)
+| Dependency | Purpose | Location |
+|------------|---------|----------|
+| Tesseract OCR | Scanned PDF extraction | `C:\Program Files\Tesseract-OCR` |
+| Poppler | PDF to image conversion | `poppler-24.08.0/Library/bin/` (included) |
+| tessdata | Spanish OCR models | `tessdata/` (included) |
 
 ## Solution Generator (LaTeX/PDF)
 
-Generates detailed solutions for electromagnetics problems with TikZ diagrams.
+Solutions in `corpus/*/Solucion_*.tex` follow this structure:
+1. Problem statement with TikZ diagram (2D or 3D)
+2. Qualitative analysis (force directions, charge interactions)
+3. Step-by-step calculation with position vectors
+4. Boxed final result (`\boxed{}`)
+5. Physical interpretation
 
-### Solution Format
-
-Solutions in `corpus/campo_electrico/Solucion_*.tex` follow this structure:
-- Problem statement with TikZ diagram (2D or 3D)
-- Qualitative analysis (attractive/repulsive forces)
-- Detailed calculation with position vectors
-- Boxed final result
-- Physical interpretation
-
-### TikZ Libraries Required
-
+**TikZ libraries required:**
 ```latex
 \usetikzlibrary{3d,calc,decorations.markings,patterns}
 ```
 
-## Session Logs
+## Notes
 
-Session logs are stored in `.claude/logs/` with format `YYYY-MM-DD_session_log.md`.
+- UI and corpus content are in Spanish
+- API key: `.env` file with `ANTHROPIC_API_KEY`
+- Session logs: `.claude/logs/YYYY-MM-DD_session_log.md`
+- Textbook PDFs (Sears, Serway) are gitignored due to copyright
