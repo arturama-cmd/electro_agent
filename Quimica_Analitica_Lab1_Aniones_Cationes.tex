@@ -1,0 +1,580 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[spanish]{babel}
+\usepackage[margin=2.5cm]{geometry}
+\usepackage{amsmath,amssymb}
+\usepackage[version=4]{mhchem} % Para formulas quimicas
+\usepackage{array}
+\usepackage{booktabs}
+\usepackage{xcolor}
+\usepackage{tcolorbox}
+\usepackage{enumitem}
+\usepackage{fancyhdr}
+\usepackage{titlesec}
+
+% Colores personalizados
+\definecolor{azuloscuro}{RGB}{0,51,102}
+\definecolor{verde}{RGB}{0,128,0}
+\definecolor{rojo}{RGB}{180,0,0}
+\definecolor{amarillo}{RGB}{255,200,0}
+\definecolor{grisclaro}{RGB}{245,245,245}
+
+% Configuracion de secciones
+\titleformat{\section}{\Large\bfseries\color{azuloscuro}}{\thesection}{1em}{}
+\titleformat{\subsection}{\large\bfseries\color{azuloscuro!80}}{\thesubsection}{1em}{}
+
+% Cajas para resultados
+\newtcolorbox{resultado}[1][]{
+    colback=grisclaro,
+    colframe=azuloscuro,
+    fonttitle=\bfseries,
+    title=#1,
+    boxrule=0.5pt,
+    arc=3pt
+}
+
+\newtcolorbox{reaccionbox}{
+    colback=white,
+    colframe=verde!70!black,
+    boxrule=0.5pt,
+    arc=2pt,
+    left=5pt,
+    right=5pt
+}
+
+% Encabezado y pie de pagina
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\small Lab 1Q.A. 2025-10}
+\fancyhead[R]{\small Identificacion de Aniones y Cationes}
+\fancyfoot[C]{\thepage}
+\renewcommand{\headrulewidth}{0.4pt}
+
+\begin{document}
+
+% ===========================================
+% PORTADA
+% ===========================================
+\begin{center}
+    {\LARGE\bfseries\color{azuloscuro} Laboratorio de Quimica Analitica}\\[0.5cm]
+    {\Large Lab 1Q.A. 2025-10 (USS)}\\[1cm]
+    {\Huge\bfseries Identificacion de Aniones y Cationes}\\[1.5cm]
+    \rule{\textwidth}{1pt}
+\end{center}
+
+\vspace{1cm}
+
+% ===========================================
+% MATERIALES
+% ===========================================
+\section{Materiales Necesarios}
+
+\begin{itemize}[leftmargin=*]
+    \item \ce{HNO3} 6M (2 unidades)
+    \item \ce{HCl} 6M (2 unidades)
+    \item 11 tubos de ensayo
+    \item Trabajar en 4 estaciones, 8 grupos
+\end{itemize}
+
+% ===========================================
+% PREPARACION
+% ===========================================
+\section{Preparacion de Muestras}
+
+\subsection{Aniones}
+\textbf{4 grupos $\rightarrow$ ANIONES:} Son 11 aniones. Sacar una punta de espatula, disolver en $\sim$40g de agua (aproximadamente 2 dedos de altura en el tubo).
+
+\vspace{0.3cm}
+\textbf{Aniones a identificar:}
+\begin{center}
+\ce{PO4^{3-}}, \ce{SO4^{2-}}, \ce{SO3^{2-}}, \ce{I^-}, \ce{Br^-}, \ce{Cl^-}, \ce{NO2^-}, \ce{NO3^-}, \ce{CO3^{2-}}, \ce{C2O4^{2-}}, \ce{CrO4^{2-}}
+\end{center}
+
+\textbf{Nota:} Disolucion dificil con \ce{C2O4^{2-}} (oxalato)
+
+\subsection{Cationes (9 tubos)}
+
+\begin{center}
+\begin{tabular}{clcc}
+\toprule
+\textbf{N°} & \textbf{Compuesto} & \textbf{Cation} & \textbf{Color} \\
+\midrule
+1 & \ce{BaCl2} & \ce{Ba^{2+}} & -- \\
+2 & \ce{AgNO3} & \ce{Ag^+} & -- \\
+3 & \ce{Ca(NO3)2} & \ce{Ca^{2+}} & -- \\
+4 & \ce{FeCl3 * 6H2O} & \ce{Fe^{3+}} & Amarillo \\
+5 & \ce{NiCl2 * 6H2O} & \ce{Ni^{2+}} & Verde \\
+6 & \ce{AlCl3} & \ce{Al^{3+}} & -- \\
+7 & \ce{ZnCl2} & \ce{Zn^{2+}} & -- \\
+8 & \ce{CoCl2 * 6H2O} & \ce{Co^{2+}} & Rojo \\
+9 & \ce{Cu(NO3)2 * 3H2O} & \ce{Cu^{2+}} & Celeste \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\subsection{Notas Importantes}
+\begin{itemize}[leftmargin=*]
+    \item Fijarse en colores de las soluciones
+    \item Limpiar espatula entre cada muestra
+    \item \ce{NH3} = \ce{NH4OH} (en solucion acuosa)
+    \item Lavar vasos y tubos despues de cada ensayo
+    \item Acetato de etilo = alcohol etilico
+\end{itemize}
+
+\newpage
+
+% ===========================================
+% ENSAYOS DE ANIONES
+% ===========================================
+\section{Ensayos Especificos -- ANIONES}
+
+% --- 1. Fosfato ---
+\subsection{1. Fosfato (\ce{PO4^{3-}})}
+
+\textbf{Reactivo:} Molibdato de amonio \ce{(NH4)6Mo7O24 * 4H2O}
+
+\textbf{Procedimiento:}
+\begin{enumerate}[leftmargin=*]
+    \item Agregar 5 mL de molibdato de amonio 0.5 mol/L
+    \item Agregar 4 mL de muestra
+    \item Agregar 1 mL de \ce{HNO3} 6M (medio acido)
+\end{enumerate}
+
+\begin{reaccionbox}
+\textbf{Reaccion:}
+\begin{equation*}
+\ce{(NH4)6Mo7O24 + PO4^{3-} + H^+ -> (NH4)3[PMo12O40] + H2O + NH4^+}
+\end{equation*}
+\end{reaccionbox}
+
+\begin{resultado}[Resultado positivo]
+Precipitado \textbf{\textcolor{amarillo!80!black}{AMARILLO}}
+\end{resultado}
+
+% --- 2. Sulfato ---
+\subsection{2. Sulfato (\ce{SO4^{2-}})}
+
+\textbf{Reactivo:} Cloruro de bario \ce{BaCl2}
+
+\textbf{Procedimiento:}
+\begin{enumerate}[leftmargin=*]
+    \item Agregar gotas de \ce{BaCl2}
+    \item Agregar \ce{H^+} (\ce{HCl} 6M, 3 gotas)
+\end{enumerate}
+
+\begin{reaccionbox}
+\textbf{Reaccion:}
+\begin{equation*}
+\ce{SO4^{2-} + Ba^{2+} -> BaSO4 v}
+\end{equation*}
+\end{reaccionbox}
+
+\begin{resultado}[Resultado positivo]
+Precipitado \textbf{BLANCO}
+\end{resultado}
+
+% --- 3. Sulfito ---
+\subsection{3. Sulfito (\ce{SO3^{2-}})}
+
+\textbf{Reactivos:}
+\begin{itemize}[leftmargin=*]
+    \item 5g \ce{ZnSO4} saturado
+    \item 5g \ce{K4[Fe(CN)6]} (Ferrocianuro de potasio)
+    \item 2g \ce{Na2[Fe(CN)5NO]} (Nitroprusiato de sodio)
+\end{itemize}
+
+\textbf{Procedimiento:}
+\begin{enumerate}[leftmargin=*]
+    \item Mezclar \ce{ZnSO4} con ferrocianuro $\rightarrow$ \ce{Zn2[Fe(CN)6] v}
+    \item Agregar nitroprusiato de sodio
+    \item Mezclar con la muestra
+\end{enumerate}
+
+\begin{resultado}[Resultado positivo]
+Precipitado \textbf{\textcolor{rojo}{ROJO}} (contiene \ce{SO3^{2-}})
+\end{resultado}
+
+% --- 4. Yoduro ---
+\subsection{4. Yoduro (\ce{I^-})}
+
+\textbf{Reactivos:} \ce{KI}, \ce{NO2^-}, \ce{CH3COOH}, \ce{CHCl3} (cloroformo)
+
+\textbf{Procedimiento:}
+\begin{enumerate}[leftmargin=*]
+    \item \textbf{Trabajar bajo campana de extraccion}
+    \item Agregar 2-3g de \ce{CH3COOH}
+    \item Se libera \ce{I2} (yodo)
+    \item Extraer con \ce{CHCl3} ($d = 1.49$ g/mL)
+\end{enumerate}
+
+\begin{reaccionbox}
+\textbf{Reaccion:}
+\begin{equation*}
+\ce{KI_{(ac)} + NO2^- + H^+ -> I2 + NO ^  + K^+ + H2O}
+\end{equation*}
+\end{reaccionbox}
+
+\begin{resultado}[Resultado positivo]
+Color \textbf{CAFE} (gas violeta). \ce{I2} en \ce{CHCl3} $\rightarrow$ color \textbf{\textcolor{violet}{LILA}}
+\end{resultado}
+
+% --- 5. Bromuro ---
+\subsection{5. Bromuro (\ce{Br^-})}
+
+\textbf{Reactivos:} \ce{MnO4^-} (permanganato), \ce{H2SO4} 3M, \ce{CHCl3}
+
+\textbf{Procedimiento:}
+\begin{enumerate}[leftmargin=*]
+    \item \textbf{Trabajar bajo campana} (gases)
+    \item Agregar 4g de \ce{H2SO4} 3M
+    \item Extraer \ce{Br2} con \ce{CHCl3}
+\end{enumerate}
+
+\begin{reaccionbox}
+\textbf{Reaccion:}
+\begin{equation*}
+\ce{2Br^- + MnO4^- + 8H^+ -> Br2 ^ + Mn^{2+} + 4H2O}
+\end{equation*}
+\end{reaccionbox}
+
+\begin{resultado}[Resultado positivo]
+Color \textbf{\textcolor{rojo}{ROJIZO}}. \ce{Br2} en \ce{CHCl3} $\rightarrow$ \textbf{\textcolor{rojo}{ROJIZO}}
+\end{resultado}
+
+% --- 6. Cloruro ---
+\subsection{6. Cloruro (\ce{Cl^-})}
+
+\textbf{Reactivo:} \ce{AgNO3} (Nitrato de plata)
+
+\begin{reaccionbox}
+\textbf{Reaccion:}
+\begin{equation*}
+\ce{Cl^- + Ag^+ -> AgCl v}
+\end{equation*}
+\end{reaccionbox}
+
+\begin{resultado}[Resultado positivo]
+Precipitado \textbf{BLANCO}
+\end{resultado}
+
+% --- 7. Nitrito ---
+\subsection{7. Nitrito (\ce{NO2^-})}
+
+\textbf{Reactivos:} \ce{HCl} 6 mol/L, urea \ce{CO(NH2)2}
+
+\textbf{Procedimiento:}
+\begin{enumerate}[leftmargin=*]
+    \item Agregar 10g de \ce{HCl} 6 mol/L
+    \item Agregar punta de espatula de urea
+\end{enumerate}
+
+\begin{reaccionbox}
+\textbf{Reaccion:}
+\begin{equation*}
+\ce{CO(NH2)2 + 2HNO2 -> 2N2 ^ + CO2 ^ + 3H2O}
+\end{equation*}
+\end{reaccionbox}
+
+\begin{resultado}[Resultado positivo]
+Desprendimiento de gas \ce{N2} (burbujas)
+\end{resultado}
+
+% --- 8. Nitrato ---
+\subsection{8. Nitrato (\ce{NO3^-})}
+
+\textbf{Reactivos:} \ce{CH3COOH} 6 mol/L, Zn en polvo, \ce{HCl} 6 mol/L, urea
+
+\textbf{Procedimiento:}
+\begin{enumerate}[leftmargin=*]
+    \item Agregar 10g de \ce{CH3COOH} 6 mol/L
+    \item Agregar Zn en polvo
+    \item Esperar 3-4 minutos
+    \item Agregar 10g \ce{HCl} 6 mol/L + punta de espatula de urea
+\end{enumerate}
+
+\begin{resultado}[Resultado positivo]
+Desprendimiento de gas \ce{N2} (burbujas)
+\end{resultado}
+
+% --- 9. Carbonato ---
+\subsection{9. Carbonato (\ce{CO3^{2-}})}
+
+\textbf{Reactivo:} \ce{CH3COOH} 6 mol/L (acido acetico)
+
+\textbf{Procedimiento:} Agregar 3-4g de \ce{CH3COOH} 6 mol/L
+
+\begin{reaccionbox}
+\textbf{Reaccion:}
+\begin{equation*}
+\ce{CO3^{2-} + 2H^+ -> CO2 ^ + H2O}
+\end{equation*}
+\end{reaccionbox}
+
+\begin{resultado}[Resultado positivo]
+Desprendimiento de gas \ce{CO2} (burbujas/efervescencia)
+\end{resultado}
+
+% --- 10. Oxalato ---
+\subsection{10. Oxalato (\ce{C2O4^{2-}})}
+
+\textbf{Reactivos:} \ce{KMnO4} (permanganato de potasio), \ce{H2SO4}
+
+\textbf{Procedimiento:}
+\begin{enumerate}[leftmargin=*]
+    \item Agregar gotas de \ce{C2O4^{2-}}
+    \item Agregar 10g de \ce{KMnO4}
+    \item Agregar 2-3g de \ce{H2SO4}
+    \item \textbf{NO} agregar mas de 2 mL
+\end{enumerate}
+
+\begin{reaccionbox}
+\textbf{Reaccion:}
+\begin{equation*}
+\ce{5C2O4^{2-} + 2MnO4^- + 16H^+ -> 10CO2 ^ + 2Mn^{2+} + 8H2O}
+\end{equation*}
+\end{reaccionbox}
+
+\begin{resultado}[Resultado positivo]
+Cambio de color \textbf{\textcolor{violet}{VIOLETA}} $\rightarrow$ \textbf{INCOLORO} (decoloracion del permanganato)
+\end{resultado}
+
+% --- 11. Cromato ---
+\subsection{11. Cromato (\ce{CrO4^{2-}})}
+
+\textbf{Reactivos:} \ce{H2SO4}, acetato de etilo, \ce{H2O2}
+
+\textbf{Procedimiento:}
+\begin{enumerate}[leftmargin=*]
+    \item Agregar 2-3g de \ce{H2SO4} 6g/L
+    \item Agregar 1 mL de acetato de etilo
+    \item Agregar 2-3g de \ce{H2O2}
+    \item El alcohol amilico ayuda a estabilizar
+    \item \textbf{Nota:} \ce{CrO5} es poco estable
+\end{enumerate}
+
+\begin{reaccionbox}
+\textbf{Reaccion:}
+\begin{equation*}
+\ce{CrO4^{2-} + 2H^+ + H2O2 -> CrO5 + 3H2O}
+\end{equation*}
+\end{reaccionbox}
+
+\begin{resultado}[Resultado positivo]
+Capa organica color \textbf{\textcolor{blue}{AZUL}}
+\end{resultado}
+
+\newpage
+
+% ===========================================
+% ENSAYOS DE CATIONES
+% ===========================================
+\section{Ensayos Especificos -- CATIONES}
+
+% --- 1. Plata ---
+\subsection{1. Plata (\ce{Ag^+})}
+
+\textbf{Fuente:} \ce{AgNO3} (Nitrato de plata)
+
+\textbf{Reactivo:} \ce{KI} (Yoduro de potasio) 0.5 mol/L
+
+\textbf{Procedimiento:}
+\begin{enumerate}[leftmargin=*]
+    \item Agregar 10g de muestra
+    \item Agregar \ce{KI} gota a gota
+\end{enumerate}
+
+\begin{reaccionbox}
+\textbf{Reaccion:}
+\begin{equation*}
+\ce{Ag^+ + I^- -> AgI v}
+\end{equation*}
+\end{reaccionbox}
+
+\begin{resultado}[Resultado positivo]
+Precipitado \textbf{\textcolor{amarillo!80!black}{AMARILLO}}
+\end{resultado}
+
+% --- 2. Bario ---
+\subsection{2. Bario (\ce{Ba^{2+}})}
+
+\textbf{Reactivo:} \ce{K2CrO4} (Cromato de potasio)
+
+\textbf{Procedimiento:}
+\begin{enumerate}[leftmargin=*]
+    \item Agregar 3g de muestra
+    \item Agregar 10g de \ce{K2CrO4} (en vaso de precipitado)
+\end{enumerate}
+
+\begin{reaccionbox}
+\textbf{Reaccion:}
+\begin{equation*}
+\ce{Ba^{2+} + CrO4^{2-} -> BaCrO4 v}
+\end{equation*}
+\end{reaccionbox}
+
+\begin{resultado}[Resultado positivo]
+Precipitado \textbf{\textcolor{amarillo!80!black}{AMARILLO}}
+\end{resultado}
+
+% --- 3. Calcio ---
+\subsection{3. Calcio (\ce{Ca^{2+}})}
+
+\textbf{Reactivo:} \ce{NaOH} 6 mol/L
+
+\textbf{Procedimiento:}
+\begin{enumerate}[leftmargin=*]
+    \item Agregar 10g de muestra
+    \item Agregar \ce{NaOH} gota a gota
+\end{enumerate}
+
+\begin{reaccionbox}
+\textbf{Reaccion:}
+\begin{equation*}
+\ce{Ca^{2+} + 2OH^- -> Ca(OH)2 v}
+\end{equation*}
+\end{reaccionbox}
+
+\begin{resultado}[Resultado positivo]
+Precipitado \textbf{BLANCO GELATINOSO}
+\end{resultado}
+
+% --- 4. Hierro III ---
+\subsection{4. Hierro III (\ce{Fe^{3+}})}
+
+\textbf{Reactivo:} \ce{KSCN} (Tiocianato de potasio) 0.1 mol/L
+
+\textbf{Procedimiento:}
+\begin{enumerate}[leftmargin=*]
+    \item Agregar 10g de muestra
+    \item Agregar 5-10g de \ce{KSCN}
+    \item \textbf{IMPORTANTE: NO usar \ce{HCl}}
+\end{enumerate}
+
+\begin{reaccionbox}
+\textbf{Reaccion:}
+\begin{equation*}
+\ce{Fe^{3+} + SCN^- -> [FeSCN]^{2+}}
+\end{equation*}
+\end{reaccionbox}
+
+\begin{resultado}[Resultado positivo]
+Solucion color \textbf{\textcolor{rojo}{ROJO}} intenso
+\end{resultado}
+
+% --- 5. Aluminio ---
+\subsection{5. Aluminio (\ce{Al^{3+}})}
+
+\textbf{Reactivo:} \ce{NH4OH} (Hidroxido de amonio)
+
+\textbf{Procedimiento:}
+\begin{enumerate}[leftmargin=*]
+    \item Agregar 10g de muestra
+    \item Agregar \ce{NH4OH}
+\end{enumerate}
+
+\begin{reaccionbox}
+\textbf{Reaccion:}
+\begin{equation*}
+\ce{Al^{3+} + 3NH4OH -> Al(OH)3 v + 3NH4^+}
+\end{equation*}
+\end{reaccionbox}
+
+\begin{resultado}[Resultado positivo]
+Precipitado \textbf{BLANCO GELATINOSO}
+\end{resultado}
+
+% --- 6. Zinc ---
+\subsection{6. Zinc (\ce{Zn^{2+}})}
+
+\textbf{Reactivo:} \ce{NaOH} (Hidroxido de sodio)
+
+\textbf{Procedimiento:} Agregar 30 gotas de \ce{NaOH}
+
+\begin{reaccionbox}
+\textbf{Reaccion:}
+\begin{equation*}
+\ce{Zn^{2+} + 2OH^- -> Zn(OH)2 v}
+\end{equation*}
+\end{reaccionbox}
+
+\begin{resultado}[Resultado positivo]
+Precipitado \textbf{BLANCO GELATINOSO}
+\end{resultado}
+
+% --- 7. Cobre ---
+\subsection{7. Cobre II (\ce{Cu^{2+}})}
+
+\textbf{Reactivo:} \ce{NH3} (Amoniaco)
+
+\textbf{Procedimiento:}
+\begin{enumerate}[leftmargin=*]
+    \item Agregar 10g de muestra
+    \item Agregar \ce{NH3} gota a gota
+\end{enumerate}
+
+\begin{reaccionbox}
+\textbf{Reaccion:}
+\begin{equation*}
+\ce{Cu^{2+} + 4NH3 -> [Cu(NH3)4]^{2+}}
+\end{equation*}
+\end{reaccionbox}
+
+\begin{resultado}[Resultado positivo]
+Solucion color \textbf{\textcolor{blue}{AZUL REY}} (complejo tetraaminocobre)
+\end{resultado}
+
+% --- 8. Niquel ---
+\subsection{8. Niquel II (\ce{Ni^{2+}})}
+
+\textbf{Reactivo:} DMG (Dimetilglioxima) en \ce{NH3}
+
+\textbf{Procedimiento:}
+\begin{enumerate}[leftmargin=*]
+    \item Agregar 10g de muestra
+    \item Agregar DMG en medio de \ce{NH3}
+\end{enumerate}
+
+\begin{reaccionbox}
+\textbf{Reaccion:}
+\begin{equation*}
+\ce{Ni^{2+} + 2DMG -> Ni(DMG)2 v}
+\end{equation*}
+\end{reaccionbox}
+
+\begin{resultado}[Resultado positivo]
+Precipitado \textbf{\textcolor{red!70!black}{ROJO (FUCSIA)}}
+\end{resultado}
+
+% --- 9. Cobalto ---
+\subsection{9. Cobalto II (\ce{Co^{2+}})}
+
+\textbf{Reactivos:} \ce{KSCN} (Tiocianato de potasio), \ce{NH4OH}
+
+\textbf{Procedimiento:}
+\begin{enumerate}[leftmargin=*]
+    \item Agregar 10g de muestra
+    \item Agregar \ce{KSCN} (solido)
+    \item Agregar \ce{NH4OH}
+    \item \textbf{Nota:} \ce{NH3} = \ce{NH4OH}
+\end{enumerate}
+
+\begin{reaccionbox}
+\textbf{Reaccion:}
+\begin{equation*}
+\ce{Co^{2+} + 4SCN^- -> [Co(SCN)4]^{2-}}
+\end{equation*}
+\end{reaccionbox}
+
+\begin{resultado}[Resultado positivo]
+Solucion color \textbf{\textcolor{blue}{AZUL}}
+\end{resultado}
+
+\vfill
+
+\begin{center}
+\rule{0.5\textwidth}{0.5pt}\\[0.3cm]
+\textit{Documento digitalizado a partir de notas de laboratorio}\\
+\textit{Lab 1Q.A. 2025-10 -- Universidad San Sebastian}
+\end{center}
+
+\end{document}

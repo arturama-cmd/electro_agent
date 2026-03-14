@@ -9,22 +9,26 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 ## Commands
 
 ```bash
-# Setup
+# Setup (Windows)
+python -m venv venv
+venv\Scripts\activate
 pip install -r requirements.txt
 
 # Run the application
 streamlit run app.py
 
-# Add a single PDF to existing ChromaDB (edit file to set path/category)
+# Add a single PDF to existing ChromaDB
+# Edit add_single_pdf.py lines 74-75 to set pdf_path and category, then run:
 python add_single_pdf.py
 
 # Test PDF processor (outputs chunk count and preview)
 python pdf_processor.py "path/to/file.pdf"
 
-# Compile LaTeX solutions
-cd corpus/campo_electrico && pdflatex -interaction=nonstopmode "Solucion_Tema_I.tex"
+# Compile LaTeX solutions (from project root)
+pdflatex -interaction=nonstopmode -output-directory=corpus/campo_electrico corpus/campo_electrico/Solucion_Tema_I.tex
 
 # Force reindex: delete chroma_db/ folder and restart app
+# Or use UI "Reindexar todo el corpus" button in Upload tab → Advanced options
 ```
 
 ## Architecture
@@ -47,7 +51,7 @@ pdf_processor.py ←── corpus/*.pdf
 
 | File | Purpose |
 |------|---------|
-| `app.py` | Streamlit UI, session state, `@st.cache_resource` for lazy RAG init |
+| `app.py` | Mobile-first Streamlit UI with 3 tabs (Chat, Solver, Upload) |
 | `rag_system.py` | `ElectromagnetismRAG` class: ChromaDB + Claude API orchestration |
 | `tex_processor.py` | `clean_latex()` preserves math, `extract_chunks_from_tex()` splits files |
 | `pdf_processor.py` | pdfplumber extraction with Tesseract OCR fallback |
@@ -59,16 +63,16 @@ pdf_processor.py ←── corpus/*.pdf
    - `rag_system.index_corpus()` iterates `corpus/` subfolders
    - `.tex` files → `tex_processor.extract_chunks_from_tex()`
    - `.pdf` files → `pdf_processor.process_pdf_to_chunks()`
-   - All chunks stored in ChromaDB with metadata
+   - All chunks stored in ChromaDB with metadata via `collection.add()`
 
 2. **Query Processing**:
-   - `retrieve_relevant_problems(query, category_filter)` → top 3 chunks
-   - Context + conversation history → Claude API
-   - Streaming response rendered in Streamlit
+   - `retrieve_relevant_problems(query, category_filter)` → top 3 chunks via `collection.query()`
+   - Context + conversation history → Claude API `messages.create()`
+   - Response rendered in Streamlit chat bubbles
 
 ### Knowledge Base
 
-Documents in `corpus/` by topic (categories defined in `rag_system.py` → `CATEGORIES` dict):
+Documents in `corpus/` by topic (categories defined in `rag_system.py:13-19` → `CATEGORIES` dict):
 
 | Category | Status | Content |
 |----------|--------|---------|
@@ -84,7 +88,7 @@ Documents in `corpus/` by topic (categories defined in `rag_system.py` → `CATE
 - Persistence: `chroma_db/` (auto-created)
 - First run downloads embedding model (~79 MB)
 - Delete folder to force complete reindex
-- UI reindex: sidebar "Reindexar Corpus" button
+- UI reindex: Upload tab → Advanced options → "Reindexar todo el corpus"
 
 ### Chunk Metadata Schema
 
@@ -94,29 +98,34 @@ Documents in `corpus/` by topic (categories defined in `rag_system.py` → `CATE
     "category": "campo_electrico",
     "category_display": "Campo Eléctrico",
     "chunk_number": "0",
-    "file_type": "tex" | "pdf"
+    "file_type": "tex" | "pdf" | "manual"
 }
 ```
 
 ## Key Implementation Details
 
-**Category Filtering**: `retrieve_relevant_problems()` accepts `category_filter` for WHERE clause on ChromaDB.
+**Category Filtering**: `retrieve_relevant_problems()` at `rag_system.py:73` accepts `category_filter` for WHERE clause on ChromaDB.
 
 **Text Extraction Pipeline**:
-- LaTeX: Regex-based cleanup preserving equations (marks as `ECUACION:`/`MATH:`)
-- PDF: pdfplumber first, Tesseract OCR fallback for scanned docs
-- Encoding: UTF-8 with latin-1 fallback
+- LaTeX: Regex-based cleanup preserving equations (marks as `ECUACION:`/`MATH:`) in `tex_processor.py:10-72`
+- PDF: pdfplumber first, Tesseract OCR fallback for scanned docs in `pdf_processor.py:84-124`
+- Encoding: UTF-8 with latin-1 fallback in `tex_processor.py:78-82`
 
-**Caching**: `@st.cache_resource` on `initialize_rag()` prevents re-init per session.
+**Caching**: `@st.cache_resource` on `initialize_rag()` at `app.py:514-523` prevents re-init per session.
 
 ## Customization
 
 | What | Where |
 |------|-------|
-| Claude system prompt | `rag_system.py` → `generate_response()` → `system_prompt` |
-| Retrieved chunk count | `generate_response()` → `n_results` (default: 3) |
-| Model | `rag_system.py` → `claude-sonnet-4-20250514` |
-| Add new category | `rag_system.py` → `CATEGORIES` dict + create folder in `corpus/` |
+| Claude system prompt | `rag_system.py:101-113` → `system_prompt` variable |
+| Retrieved chunk count | `rag_system.py:73` → `n_results` parameter (default: 3) |
+| Max response tokens | `rag_system.py:124` → `max_tokens` (default: 4096) |
+| Model | `rag_system.py:123` → `claude-sonnet-4-20250514` |
+| Add new category | `rag_system.py:13-19` → `CATEGORIES` dict + create folder in `corpus/` |
+| Conversation history limit | `app.py:631` → slicing `[-10:]` (last 10 messages) |
+| Single PDF add paths | `add_single_pdf.py:74-75` → `pdf_path` and `category` variables |
+| Tesseract path (Windows) | `pdf_processor.py:25` |
+| Poppler path (Windows) | `pdf_processor.py:38` |
 
 ## System Dependencies
 
@@ -146,3 +155,6 @@ Solutions in `corpus/*/Solucion_*.tex` follow this structure:
 - API key: `.env` file with `ANTHROPIC_API_KEY`
 - Session logs: `.claude/logs/YYYY-MM-DD_session_log.md`
 - Textbook PDFs (Sears, Serway) are gitignored due to copyright
+- First run downloads sentence-transformers embedding model (~79 MB) - be patient
+- ChromaDB uses default `all-MiniLM-L6-v2` embeddings (no custom embedding function)
+- UI has 3 main tabs: Chat (conversation), Resolver (step-by-step solver), Subir (upload to corpus)

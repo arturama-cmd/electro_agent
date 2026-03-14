@@ -1,0 +1,456 @@
+\documentclass[12pt,letterpaper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[spanish]{babel}
+\usepackage{amsmath,amssymb}
+\usepackage{graphicx}
+\usepackage{xcolor}
+\usepackage{tikz}
+\usepackage{booktabs}
+\usepackage{array}
+\usepackage{multirow}
+\usepackage{fancyhdr}
+\usepackage{geometry}
+\usepackage{hyperref}
+\usepackage{enumitem}
+\usepackage{tcolorbox}
+
+\geometry{top=2.5cm, bottom=2.5cm, left=2.5cm, right=2.5cm}
+
+% Colores corporativos
+\definecolor{primary}{RGB}{99, 102, 241}
+\definecolor{secondary}{RGB}{16, 185, 129}
+\definecolor{accent}{RGB}{245, 158, 11}
+\definecolor{darkbg}{RGB}{15, 23, 42}
+\definecolor{lighttext}{RGB}{148, 163, 184}
+
+% Configuracion de hyperref
+\hypersetup{
+    colorlinks=true,
+    linkcolor=primary,
+    urlcolor=primary
+}
+
+% Header y footer
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\textcolor{primary}{\textbf{ElectroAI}}}
+\fancyhead[R]{\textcolor{lighttext}{An\'alisis de Despliegue}}
+\fancyfoot[C]{\thepage}
+\renewcommand{\headrulewidth}{0.5pt}
+
+\title{
+    \vspace{-1cm}
+    \textcolor{primary}{\rule{\linewidth}{2pt}}\\[0.5cm]
+    {\Huge\textbf{An\'alisis de Factibilidad}}\\[0.3cm]
+    {\LARGE Despliegue de ElectroAI en Infraestructura Universitaria}\\[0.5cm]
+    \textcolor{primary}{\rule{\linewidth}{2pt}}
+}
+\author{
+    \textbf{ElectroAI - Asistente de Electromagnetismo}\\
+    Universidad del B\'io-B\'io
+}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+\thispagestyle{empty}
+
+\vspace{1cm}
+
+\begin{tcolorbox}[colback=primary!10, colframe=primary, title=\textbf{Resumen Ejecutivo}]
+Este documento analiza la factibilidad de desplegar ElectroAI utilizando infraestructura local (rack de GPUs) en lugar de APIs comerciales. La conclusi\'on principal es que \textbf{el despliegue local es factible, m\'as econ\'omico y proporciona mayor control} sobre el servicio educativo.
+\end{tcolorbox}
+
+\newpage
+\tableofcontents
+\newpage
+
+%========================================
+\section{Contexto y Problema}
+%========================================
+
+\subsection{Situaci\'on Actual}
+
+ElectroAI es una aplicaci\'on de asistencia educativa para electromagnetismo que utiliza:
+\begin{itemize}
+    \item \textbf{Claude Sonnet 4} (Anthropic) como modelo de lenguaje
+    \item \textbf{ChromaDB} para almacenamiento vectorial
+    \item \textbf{Streamlit} como interfaz web
+    \item \textbf{Sistema RAG} para recuperaci\'on de problemas resueltos
+\end{itemize}
+
+\subsection{Problema Identificado}
+
+El uso de la API de Anthropic presenta las siguientes limitaciones:
+\begin{enumerate}
+    \item \textbf{Costo por consulta}: Cada estudiante requiere cr\'editos API
+    \item \textbf{Dependencia externa}: El servicio depende de disponibilidad de Anthropic
+    \item \textbf{Privacidad}: Los datos de consultas viajan a servidores externos
+    \item \textbf{Escalabilidad limitada}: Costos crecen linealmente con el uso
+\end{enumerate}
+
+\subsection{Recurso Disponible}
+
+La universidad cuenta con un \textbf{rack de tarjetas gr\'aficas de \'ultima generaci\'on} disponible para aplicaciones de inteligencia artificial.
+
+%========================================
+\section{An\'alisis T\'ecnico}
+%========================================
+
+\subsection{Limitaci\'on de Claude}
+
+\begin{tcolorbox}[colback=red!10, colframe=red!70!black, title=\textbf{Importante}]
+\textbf{Claude NO puede ejecutarse localmente.} Es un modelo propietario cerrado de Anthropic, disponible \'unicamente v\'ia API de pago.
+\end{tcolorbox}
+
+\subsection{Alternativa: Modelos Open Source}
+
+Existen modelos de c\'odigo abierto con calidad comparable que \textbf{s\'i pueden ejecutarse en hardware local}:
+
+\begin{table}[h]
+\centering
+\caption{Modelos Open Source Recomendados}
+\begin{tabular}{@{}lccl@{}}
+\toprule
+\textbf{Modelo} & \textbf{Par\'ametros} & \textbf{VRAM} & \textbf{Calidad} \\
+\midrule
+Llama 3.1 70B & 70B & 40 GB & Excelente \\
+Llama 3.1 8B & 8B & 8 GB & Muy buena \\
+Mistral 7B & 7B & 6 GB & Buena \\
+Qwen 2.5 72B & 72B & 45 GB & Excelente \\
+DeepSeek-V2 & 236B (MoE) & 80 GB & Superior \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsection{Servidores de Inferencia}
+
+Para servir modelos localmente se pueden usar:
+
+\begin{table}[h]
+\centering
+\caption{Opciones de Servidor de Inferencia}
+\begin{tabular}{@{}llll@{}}
+\toprule
+\textbf{Software} & \textbf{Facilidad} & \textbf{Rendimiento} & \textbf{Uso} \\
+\midrule
+Ollama & F\'acil & Bueno & Desarrollo/Producci\'on peque\~na \\
+vLLM & Media & Excelente & Producci\'on \\
+TGI (HuggingFace) & Media & Muy bueno & Producci\'on \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+%========================================
+\section{Arquitectura Propuesta}
+%========================================
+
+\begin{center}
+\begin{tikzpicture}[
+    node distance=1.5cm,
+    box/.style={rectangle, draw=primary, fill=primary!10, rounded corners, minimum width=4cm, minimum height=1cm, align=center},
+    smallbox/.style={rectangle, draw=secondary, fill=secondary!10, rounded corners, minimum width=2.5cm, minimum height=0.8cm, align=center, font=\small},
+    arrow/.style={->, thick, primary}
+]
+
+% Servidor GPU
+\node[box, minimum width=10cm, minimum height=2.5cm] (gpu) at (0,4) {};
+\node[above] at (gpu.north) {\textbf{Servidor GPU (Rack Universidad)}};
+\node[smallbox] at (-2,4.3) {Llama 3.1 70B};
+\node[smallbox] at (2,4.3) {Ollama/vLLM};
+\node[font=\small, lighttext] at (0,3.5) {API REST: puerto 11434};
+
+% Aplicacion
+\node[box, minimum width=10cm, minimum height=2cm] (app) at (0,1.5) {};
+\node[above] at (app.north) {\textbf{ElectroAI Application}};
+\node[smallbox, fill=accent!20, draw=accent] at (-3,1.5) {Streamlit};
+\node[smallbox, fill=accent!20, draw=accent] at (0,1.5) {RAG System};
+\node[smallbox, fill=accent!20, draw=accent] at (3,1.5) {ChromaDB};
+
+% Proxy
+\node[box, minimum width=6cm] (proxy) at (0,-0.5) {Nginx + SSL + Auth LDAP};
+
+% Estudiantes
+\node[smallbox] at (-4,-2.5) {Estudiante 1};
+\node[smallbox] at (0,-2.5) {Estudiante 2};
+\node[smallbox] at (4,-2.5) {Estudiante N};
+
+% Flechas
+\draw[arrow] (gpu) -- (app);
+\draw[arrow] (app) -- (proxy);
+\draw[arrow] (proxy) -- (-4,-1.8);
+\draw[arrow] (proxy) -- (0,-1.8);
+\draw[arrow] (proxy) -- (4,-1.8);
+
+\end{tikzpicture}
+\end{center}
+
+\subsection{Componentes del Sistema}
+
+\begin{enumerate}
+    \item \textbf{Capa de Inferencia}: Servidor GPU ejecutando modelo Llama 3.1
+    \item \textbf{Capa de Aplicaci\'on}: ElectroAI con RAG y ChromaDB
+    \item \textbf{Capa de Acceso}: Nginx con SSL y autenticaci\'on LDAP universitaria
+    \item \textbf{Clientes}: Navegadores web (m\'ovil y escritorio)
+\end{enumerate}
+
+%========================================
+\section{An\'alisis de Costos}
+%========================================
+
+\subsection{Escenario de Uso}
+
+\begin{tcolorbox}[colback=secondary!10, colframe=secondary]
+\textbf{Par\'ametros del escenario:}
+\begin{itemize}[noitemsep]
+    \item 500 estudiantes activos
+    \item 50 consultas promedio por estudiante/mes
+    \item 12 meses de operaci\'on
+    \item Total: \textbf{300,000 consultas/a\~no}
+\end{itemize}
+\end{tcolorbox}
+
+\subsection{Opci\'on 1: API de Anthropic (Claude)}
+
+\begin{table}[h]
+\centering
+\caption{Costos API Anthropic - Claude Sonnet 4}
+\begin{tabular}{@{}lr@{}}
+\toprule
+\textbf{Concepto} & \textbf{Costo} \\
+\midrule
+Precio Input & \$3.00 / 1M tokens \\
+Precio Output & \$15.00 / 1M tokens \\
+\midrule
+Tokens promedio por consulta (input) & 2,000 tokens \\
+Tokens promedio por consulta (output) & 1,000 tokens \\
+\midrule
+Costo por consulta (input) & \$0.006 \\
+Costo por consulta (output) & \$0.015 \\
+\textbf{Costo total por consulta} & \textbf{\$0.021} \\
+\midrule
+\textbf{Costo mensual (25,000 consultas)} & \textbf{\$525} \\
+\textbf{Costo anual (300,000 consultas)} & \textbf{\$6,300} \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsection{Opci\'on 2: Hardware Local}
+
+\begin{table}[h]
+\centering
+\caption{Costos Despliegue Local}
+\begin{tabular}{@{}lr@{}}
+\toprule
+\textbf{Concepto} & \textbf{Costo Anual} \\
+\midrule
+Hardware (ya disponible) & \$0 \\
+Electricidad (estimado 500W promedio, 8h/d\'ia) & \$350 \\
+Mantenimiento y soporte & \$500 \\
+Licencias software (todo open source) & \$0 \\
+\midrule
+\textbf{Total anual} & \textbf{\$850} \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsection{Comparativa y Ahorro}
+
+\begin{table}[h]
+\centering
+\caption{Comparativa de Costos (5 a\~nos)}
+\begin{tabular}{@{}lrrr@{}}
+\toprule
+\textbf{A\~no} & \textbf{API Anthropic} & \textbf{Local} & \textbf{Ahorro} \\
+\midrule
+A\~no 1 & \$6,300 & \$850 & \$5,450 \\
+A\~no 2 & \$6,300 & \$850 & \$5,450 \\
+A\~no 3 & \$6,300 & \$850 & \$5,450 \\
+A\~no 4 & \$6,300 & \$850 & \$5,450 \\
+A\~no 5 & \$6,300 & \$850 & \$5,450 \\
+\midrule
+\textbf{Total 5 a\~nos} & \textbf{\$31,500} & \textbf{\$4,250} & \textbf{\$27,250} \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{tcolorbox}[colback=secondary!20, colframe=secondary, title=\textbf{Ahorro Proyectado}]
+\begin{center}
+\textbf{\Huge \$27,250 USD}\\[0.3cm]
+\large en 5 a\~nos de operaci\'on
+\end{center}
+\end{tcolorbox}
+
+%========================================
+\section{Rendimiento Esperado}
+%========================================
+
+\subsection{Velocidad de Inferencia}
+
+\begin{table}[h]
+\centering
+\caption{Rendimiento por Configuraci\'on de Hardware}
+\begin{tabular}{@{}lccc@{}}
+\toprule
+\textbf{Modelo} & \textbf{Hardware} & \textbf{Tokens/s} & \textbf{Tiempo respuesta} \\
+\midrule
+Llama 3.1 8B & 1x RTX 4090 & 80 tok/s & 3-5 segundos \\
+Llama 3.1 70B & 2x A100 80GB & 40 tok/s & 8-15 segundos \\
+Qwen 2.5 72B & 4x A100 80GB & 35 tok/s & 10-20 segundos \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsection{Capacidad de Usuarios Concurrentes}
+
+\begin{table}[h]
+\centering
+\caption{Usuarios Simult\'aneos Soportados}
+\begin{tabular}{@{}lcc@{}}
+\toprule
+\textbf{Configuraci\'on} & \textbf{Usuarios simult\'aneos} & \textbf{Latencia p95} \\
+\midrule
+Ollama + 1 GPU & 3-5 & 15 segundos \\
+vLLM + 2 GPU & 10-15 & 12 segundos \\
+vLLM + 4 GPU & 25-40 & 10 segundos \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+%========================================
+\section{Requisitos de Hardware}
+%========================================
+
+\subsection{Configuraci\'on M\'inima}
+\begin{itemize}
+    \item GPU: 1x NVIDIA con 10+ GB VRAM (RTX 3080, A10)
+    \item RAM: 32 GB
+    \item CPU: 8 cores
+    \item Almacenamiento: 50 GB SSD
+    \item Modelo recomendado: Llama 3.1 8B
+\end{itemize}
+
+\subsection{Configuraci\'on Recomendada}
+\begin{itemize}
+    \item GPU: 2x NVIDIA A100 80GB o 4x RTX 4090
+    \item RAM: 128 GB
+    \item CPU: 32 cores
+    \item Almacenamiento: 200 GB NVMe SSD
+    \item Modelo recomendado: Llama 3.1 70B
+\end{itemize}
+
+\subsection{Configuraci\'on \'Optima}
+\begin{itemize}
+    \item GPU: 4x NVIDIA A100 80GB o 8x RTX 4090
+    \item RAM: 256 GB
+    \item CPU: 64 cores
+    \item Almacenamiento: 500 GB NVMe SSD
+    \item Modelo recomendado: Qwen 2.5 72B / DeepSeek-V2
+\end{itemize}
+
+%========================================
+\section{Seguridad y Autenticaci\'on}
+%========================================
+
+\subsection{Medidas de Seguridad Propuestas}
+
+\begin{enumerate}
+    \item \textbf{SSL/TLS}: Todas las comunicaciones cifradas
+    \item \textbf{Autenticaci\'on LDAP}: Integraci\'on con directorio universitario
+    \item \textbf{Rate Limiting}: M\'aximo 10 consultas/minuto por usuario
+    \item \textbf{Firewall}: Solo puerto 443 expuesto al exterior
+    \item \textbf{Logs}: Registro de todas las consultas para auditor\'ia
+    \item \textbf{Backups}: Respaldo autom\'atico del corpus y configuraciones
+\end{enumerate}
+
+\subsection{Privacidad de Datos}
+
+\begin{tcolorbox}[colback=secondary!10, colframe=secondary]
+\textbf{Ventaja del despliegue local:} Todas las consultas de los estudiantes permanecen dentro de la infraestructura universitaria. No se env\'ian datos a servidores externos.
+\end{tcolorbox}
+
+%========================================
+\section{Plan de Implementaci\'on}
+%========================================
+
+\subsection{Fases del Proyecto}
+
+\begin{enumerate}
+    \item \textbf{Fase 1 - Preparaci\'on}
+    \begin{itemize}
+        \item Verificar hardware disponible
+        \item Instalar sistema operativo y drivers NVIDIA
+        \item Configurar red y accesos
+    \end{itemize}
+
+    \item \textbf{Fase 2 - Instalaci\'on}
+    \begin{itemize}
+        \item Instalar Ollama o vLLM
+        \item Descargar modelo Llama 3.1
+        \item Desplegar ElectroAI
+    \end{itemize}
+
+    \item \textbf{Fase 3 - Configuraci\'on}
+    \begin{itemize}
+        \item Configurar Nginx con SSL
+        \item Integrar autenticaci\'on LDAP
+        \item Configurar monitoreo
+    \end{itemize}
+
+    \item \textbf{Fase 4 - Pruebas}
+    \begin{itemize}
+        \item Pruebas de carga
+        \item Pruebas de seguridad
+        \item Pruebas con usuarios piloto
+    \end{itemize}
+
+    \item \textbf{Fase 5 - Producci\'on}
+    \begin{itemize}
+        \item Despliegue gradual
+        \item Capacitaci\'on a estudiantes
+        \item Monitoreo continuo
+    \end{itemize}
+\end{enumerate}
+
+%========================================
+\section{Conclusiones y Recomendaciones}
+%========================================
+
+\subsection{Conclusiones}
+
+\begin{enumerate}
+    \item \textbf{Factibilidad}: El despliegue local es \textbf{completamente factible} con el hardware disponible.
+
+    \item \textbf{Costo-beneficio}: El ahorro proyectado de \textbf{\$27,250 USD en 5 a\~nos} justifica ampliamente la inversi\'on de tiempo en implementaci\'on.
+
+    \item \textbf{Calidad}: Los modelos open source como Llama 3.1 70B ofrecen calidad \textbf{comparable a Claude} para tareas educativas.
+
+    \item \textbf{Control}: La universidad mantiene \textbf{control total} sobre el servicio, datos y disponibilidad.
+
+    \item \textbf{Escalabilidad}: El sistema puede escalar agregando m\'as GPUs sin costos adicionales de licencia.
+\end{enumerate}
+
+\subsection{Recomendaci\'on Final}
+
+\begin{tcolorbox}[colback=primary!20, colframe=primary, title=\textbf{Recomendaci\'on}]
+\textbf{Se recomienda proceder con el despliegue local} utilizando:
+\begin{itemize}
+    \item Modelo: \textbf{Llama 3.1 70B} (mejor balance calidad/recursos)
+    \item Servidor: \textbf{Ollama} (facilidad de uso) o \textbf{vLLM} (mejor rendimiento)
+    \item Autenticaci\'on: \textbf{LDAP universitario}
+\end{itemize}
+
+Esta configuraci\'on permitir\'a atender a \textbf{500+ estudiantes} con un costo operativo de aproximadamente \textbf{\$70 USD/mes}.
+\end{tcolorbox}
+
+\vspace{1cm}
+
+\begin{center}
+\textcolor{primary}{\rule{0.5\linewidth}{1pt}}\\[0.5cm]
+\textit{Documento generado por ElectroAI}\\
+\textit{Universidad del B\'io-B\'io}\\
+\today
+\end{center}
+
+\end{document}
