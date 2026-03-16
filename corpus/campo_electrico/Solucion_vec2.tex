@@ -1,0 +1,413 @@
+\documentclass[12pt,letterpaper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[spanish,es-noshorthands]{babel}
+\usepackage{amsmath,amssymb}
+\usepackage{graphicx}
+\usepackage{xcolor}
+\usepackage{tikz}
+\usepackage{tikz-3dplot}
+\usetikzlibrary{3d,calc,arrows.meta,decorations.markings,patterns,angles,quotes}
+\usepackage[top=2.5cm, bottom=4cm, left=2cm, right=2cm, footskip=40pt]{geometry}
+\usepackage{fancyhdr}
+\usepackage{lastpage}
+
+% Definir colores
+\definecolor{vecA}{RGB}{220,50,50}
+\definecolor{vecB}{RGB}{50,50,220}
+\definecolor{vecC}{RGB}{50,180,50}
+\definecolor{ejeX}{RGB}{150,0,0}
+\definecolor{ejeY}{RGB}{0,150,0}
+\definecolor{ejeZ}{RGB}{0,0,150}
+\definecolor{ubbblue}{RGB}{0,51,102}
+
+% Configuracion de encabezado y pie de pagina
+\pagestyle{fancy}
+\fancyhf{}
+\renewcommand{\headrulewidth}{0pt}
+\renewcommand{\footrulewidth}{0.4pt}
+
+% Pie de pagina con logos y creditos
+\fancyfoot[L]{%
+    \raisebox{-0.5cm}{\includegraphics[height=1.2cm]{logo ubb.png}}%
+}
+\fancyfoot[C]{%
+    \begin{minipage}[b]{8cm}
+        \centering
+        \footnotesize
+        \textcolor{ubbblue}{\textbf{Dr. Arturo Fern\'andez P\'erez}}\\
+        \scriptsize Departamento de F\'isica -- Universidad del B\'io-B\'io\\
+        \scriptsize \textit{Electro\_Asistente\_AI-UBB}\\
+        \tiny P\'agina \thepage\ de \pageref{LastPage}
+    \end{minipage}%
+}
+\fancyfoot[R]{%
+    \raisebox{-0.5cm}{\includegraphics[height=1.2cm]{logo dfis.png}}%
+}
+
+% Aplicar estilo fancy a todas las paginas incluyendo la primera
+\fancypagestyle{plain}{%
+    \fancyhf{}
+    \renewcommand{\headrulewidth}{0pt}
+    \renewcommand{\footrulewidth}{0.4pt}
+    \fancyfoot[L]{%
+        \raisebox{-0.5cm}{\includegraphics[height=1.2cm]{logo ubb.png}}%
+    }
+    \fancyfoot[C]{%
+        \begin{minipage}[b]{8cm}
+            \centering
+            \footnotesize
+            \textcolor{ubbblue}{\textbf{Dr. Arturo Fern\'andez P\'erez}}\\
+            \scriptsize Departamento de F\'isica -- Universidad del B\'io-B\'io\\
+            \scriptsize \textit{Electro\_Asistente\_AI-UBB}\\
+            \tiny P\'agina \thepage\ de \pageref{LastPage}
+        \end{minipage}%
+    }
+    \fancyfoot[R]{%
+        \raisebox{-0.5cm}{\includegraphics[height=1.2cm]{logo dfis.png}}%
+    }
+}
+
+\begin{document}
+
+%========================================
+% ENCABEZADO INSTITUCIONAL
+%========================================
+\begin{center}
+    \includegraphics[height=2cm]{logo ubb.png}\\[0.3cm]
+    {\large\textcolor{ubbblue}{\textbf{UNIVERSIDAD DEL B\'IO-B\'IO}}}\\[0.1cm]
+    {\normalsize Facultad de Ciencias -- Departamento de F\'isica}\\[0.1cm]
+    {\normalsize\textbf{Dr. Arturo Fern\'andez P\'erez}}
+\end{center}
+
+\vspace{0.3cm}
+\hrule height 1pt
+\vspace{0.5cm}
+
+{\centering\Large\textbf{Soluci\'on: Productos Escalar y Vectorial}\par}
+
+\vspace{0.5cm}
+
+%========================================
+% ENUNCIADO
+%========================================
+\section*{Enunciado del Problema}
+
+Dados los vectores $\vec{A}$ y $\vec{B}$, determine:
+\begin{enumerate}
+    \item El producto escalar $\vec{A} \cdot \vec{B}$
+    \item El producto vectorial $\vec{A} \times \vec{B}$
+    \item El \'angulo $\theta$ que forman entre s\'i, usando el producto escalar
+\end{enumerate}
+
+Donde:
+\begin{eqnarray*}
+\vec{A} &=& -4\hat{\imath}+7\hat{\jmath}-12\hat{k} \\
+\vec{B} &=& 7\hat{\imath}-2\hat{\jmath}+8\hat{k}
+\end{eqnarray*}
+
+%========================================
+% REPRESENTACION GRAFICA 3D
+%========================================
+\section*{Representaci\'on Gr\'afica 3D de los Vectores}
+
+\begin{center}
+\tdplotsetmaincoords{70}{120}
+\begin{tikzpicture}[tdplot_main_coords, scale=0.28,
+    axis/.style={-{Stealth[length=3mm]}, thick},
+    vector/.style={-{Stealth[length=4mm]}, ultra thick},
+    projection/.style={dashed, thin, gray!60}]
+
+    % Plano de referencia XY
+    \fill[blue!5, opacity=0.3] (-8,-5,0) -- (10,-5,0) -- (10,10,0) -- (-8,10,0) -- cycle;
+
+    % Grilla en plano XY (z=0)
+    \foreach \x in {-6,-4,-2,0,2,4,6,8} {
+        \draw[gray!25, very thin] (\x,-4,0) -- (\x,9,0);
+    }
+    \foreach \y in {-4,-2,0,2,4,6,8} {
+        \draw[gray!25, very thin] (-7,\y,0) -- (9,\y,0);
+    }
+
+    % Ejes coordenados
+    \draw[axis, ejeX] (0,0,0) -- (12,0,0) node[anchor=north east] {$\hat{\imath}$ (x)};
+    \draw[axis, ejeY] (0,0,0) -- (0,12,0) node[anchor=north west] {$\hat{\jmath}$ (y)};
+    \draw[axis, ejeZ] (0,0,0) -- (0,0,12) node[anchor=south] {$\hat{k}$ (z)};
+
+    % Ejes negativos
+    \draw[gray, thin, dashed] (0,0,0) -- (-7,0,0);
+    \draw[gray, thin, dashed] (0,0,0) -- (0,0,-14);
+
+    % Origen
+    \node[anchor=north east] at (0,0,0) {$O$};
+
+    %--- VECTOR A (-4,7,-12) ---
+    % Proyecciones de A
+    \draw[projection] (-4,0,0) -- (-4,7,0) -- (0,7,0);
+    \draw[projection] (-4,7,0) -- (-4,7,-12);
+    \draw[projection, dotted] (0,0,0) -- (-4,7,0);
+    % Vector A
+    \draw[vector, vecA] (0,0,0) -- (-4,7,-12);
+    \node[vecA, anchor=east, font=\bfseries] at (-4,7,-12) {$\vec{A}$};
+    % Punto final
+    \fill[vecA] (-4,7,-12) circle (5pt);
+
+    %--- VECTOR B (7,-2,8) ---
+    % Proyecciones de B
+    \draw[projection] (7,0,0) -- (7,-2,0) -- (0,-2,0);
+    \draw[projection] (7,-2,0) -- (7,-2,8);
+    \draw[projection, dotted] (0,0,0) -- (7,-2,0);
+    % Vector B
+    \draw[vector, vecB] (0,0,0) -- (7,-2,8);
+    \node[vecB, anchor=west, font=\bfseries] at (7,-2,8) {$\vec{B}$};
+    % Punto final
+    \fill[vecB] (7,-2,8) circle (5pt);
+
+    % Indicar angulo entre vectores (aproximado)
+    \draw[orange, thick, dashed] (-2,3.5,-6) arc (150:30:2);
+    \node[orange] at (2,2,0) {$\theta$};
+
+\end{tikzpicture}
+\end{center}
+
+%========================================
+% PARTE 1: PRODUCTO ESCALAR
+%========================================
+\section*{Parte 1: Producto Escalar $\vec{A} \cdot \vec{B}$}
+
+\subsection*{Definici\'on}
+
+El producto escalar (o producto punto) de dos vectores se define como:
+\begin{equation*}
+\vec{A} \cdot \vec{B} = A_x B_x + A_y B_y + A_z B_z
+\end{equation*}
+
+\subsection*{C\'alculo}
+
+Identificando las componentes:
+\begin{itemize}
+    \item $\vec{A} = (-4, 7, -12)$ \quad $\Rightarrow$ \quad $A_x = -4$, $A_y = 7$, $A_z = -12$
+    \item $\vec{B} = (7, -2, 8)$ \quad $\Rightarrow$ \quad $B_x = 7$, $B_y = -2$, $B_z = 8$
+\end{itemize}
+
+Sustituyendo:
+\begin{equation*}
+\vec{A} \cdot \vec{B} = (-4)(7) + (7)(-2) + (-12)(8)
+\end{equation*}
+
+\begin{equation*}
+\vec{A} \cdot \vec{B} = -28 - 14 - 96
+\end{equation*}
+
+\begin{equation*}
+\boxed{\vec{A} \cdot \vec{B} = -138}
+\end{equation*}
+
+\textbf{Interpretaci\'on:} El resultado negativo indica que el \'angulo entre los vectores es \textbf{obtuso} (mayor que $90^\circ$).
+
+%========================================
+% PARTE 2: PRODUCTO VECTORIAL
+%========================================
+\section*{Parte 2: Producto Vectorial $\vec{A} \times \vec{B}$}
+
+\subsection*{Definici\'on}
+
+El producto vectorial se calcula mediante el determinante:
+\begin{equation*}
+\vec{A} \times \vec{B} = \begin{vmatrix}
+\hat{\imath} & \hat{\jmath} & \hat{k} \\
+A_x & A_y & A_z \\
+B_x & B_y & B_z
+\end{vmatrix}
+\end{equation*}
+
+\subsection*{C\'alculo del Determinante}
+
+\begin{equation*}
+\vec{A} \times \vec{B} = \begin{vmatrix}
+\hat{\imath} & \hat{\jmath} & \hat{k} \\
+-4 & 7 & -12 \\
+7 & -2 & 8
+\end{vmatrix}
+\end{equation*}
+
+Expandiendo por cofactores de la primera fila:
+
+\textbf{Componente $\hat{\imath}$:}
+\begin{equation*}
+(\vec{A} \times \vec{B})_x = \begin{vmatrix} 7 & -12 \\ -2 & 8 \end{vmatrix} = (7)(8) - (-12)(-2) = 56 - 24 = \mathbf{32}
+\end{equation*}
+
+\textbf{Componente $\hat{\jmath}$:}
+\begin{equation*}
+(\vec{A} \times \vec{B})_y = -\begin{vmatrix} -4 & -12 \\ 7 & 8 \end{vmatrix} = -[(-4)(8) - (-12)(7)] = -[-32 + 84] = -52 = \mathbf{-52}
+\end{equation*}
+
+\textbf{Componente $\hat{k}$:}
+\begin{equation*}
+(\vec{A} \times \vec{B})_z = \begin{vmatrix} -4 & 7 \\ 7 & -2 \end{vmatrix} = (-4)(-2) - (7)(7) = 8 - 49 = \mathbf{-41}
+\end{equation*}
+
+Por lo tanto:
+\begin{equation*}
+\boxed{\vec{A} \times \vec{B} = 32\hat{\imath} - 52\hat{\jmath} - 41\hat{k}}
+\end{equation*}
+
+\subsection*{Verificaci\'on: Magnitud del Producto Vectorial}
+
+\begin{equation*}
+\left\Vert \vec{A} \times \vec{B} \right\Vert = \sqrt{32^2 + (-52)^2 + (-41)^2} = \sqrt{1024 + 2704 + 1681} = \sqrt{5409} \approx 73.55
+\end{equation*}
+
+\textbf{Interpretaci\'on:} El vector $\vec{A} \times \vec{B}$ es \textbf{perpendicular} tanto a $\vec{A}$ como a $\vec{B}$, y su magnitud representa el \'area del paralelogramo formado por ambos vectores.
+
+%========================================
+% PARTE 3: ANGULO ENTRE VECTORES
+%========================================
+\section*{Parte 3: \'Angulo $\theta$ entre los Vectores}
+
+\subsection*{F\'ormula}
+
+El \'angulo entre dos vectores se obtiene de la relaci\'on:
+\begin{equation*}
+\vec{A} \cdot \vec{B} = \left\Vert \vec{A} \right\Vert \left\Vert \vec{B} \right\Vert \cos\theta
+\end{equation*}
+
+Despejando $\theta$:
+\begin{equation*}
+\theta = \arccos\left( \frac{\vec{A} \cdot \vec{B}}{\left\Vert \vec{A} \right\Vert \left\Vert \vec{B} \right\Vert} \right)
+\end{equation*}
+
+\subsection*{Paso 1: Calcular $\left\Vert \vec{A} \right\Vert$}
+
+\begin{equation*}
+\left\Vert \vec{A} \right\Vert = \sqrt{(-4)^2 + 7^2 + (-12)^2} = \sqrt{16 + 49 + 144} = \sqrt{209} \approx \boxed{14.457}
+\end{equation*}
+
+\subsection*{Paso 2: Calcular $\left\Vert \vec{B} \right\Vert$}
+
+\begin{equation*}
+\left\Vert \vec{B} \right\Vert = \sqrt{7^2 + (-2)^2 + 8^2} = \sqrt{49 + 4 + 64} = \sqrt{117} \approx \boxed{10.817}
+\end{equation*}
+
+\subsection*{Paso 3: Calcular $\cos\theta$}
+
+\begin{equation*}
+\cos\theta = \frac{\vec{A} \cdot \vec{B}}{\left\Vert \vec{A} \right\Vert \left\Vert \vec{B} \right\Vert} = \frac{-138}{(14.457)(10.817)} = \frac{-138}{156.39}
+\end{equation*}
+
+\begin{equation*}
+\cos\theta \approx -0.8824
+\end{equation*}
+
+\subsection*{Paso 4: Calcular $\theta$}
+
+\begin{equation*}
+\theta = \arccos(-0.8824)
+\end{equation*}
+
+\begin{equation*}
+\boxed{\theta \approx 151.94^\circ \approx 152^\circ}
+\end{equation*}
+
+En radianes: $\theta \approx 2.652$ rad
+
+\subsection*{Verificaci\'on usando el Producto Vectorial}
+
+Tambi\'en se puede verificar usando:
+\begin{equation*}
+\left\Vert \vec{A} \times \vec{B} \right\Vert = \left\Vert \vec{A} \right\Vert \left\Vert \vec{B} \right\Vert \sin\theta
+\end{equation*}
+
+\begin{equation*}
+\sin(151.94^\circ) \approx 0.4706
+\end{equation*}
+
+\begin{equation*}
+\left\Vert \vec{A} \right\Vert \left\Vert \vec{B} \right\Vert \sin\theta = (14.457)(10.817)(0.4706) \approx 73.57 \approx \left\Vert \vec{A} \times \vec{B} \right\Vert \quad \checkmark
+\end{equation*}
+
+%========================================
+% REPRESENTACION DEL ANGULO
+%========================================
+\section*{Visualizaci\'on del \'Angulo entre Vectores}
+
+\begin{center}
+\begin{tikzpicture}[scale=0.8]
+    % Vectores en 2D (proyeccion esquematica)
+    \coordinate (O) at (0,0);
+    \coordinate (A) at (-2,3);
+    \coordinate (B) at (3,1);
+
+    % Dibujar vectores
+    \draw[vecA, ultra thick, -Stealth] (O) -- (A) node[midway, left] {$\vec{A}$};
+    \draw[vecB, ultra thick, -Stealth] (O) -- (B) node[midway, below right] {$\vec{B}$};
+
+    % Dibujar angulo
+    \pic[draw=orange, thick, angle radius=1.2cm, angle eccentricity=1.3, "$\theta = 152^\circ$", fill=orange!20] {angle = B--O--A};
+
+    % Origen
+    \fill (O) circle (3pt);
+    \node[below left] at (O) {$O$};
+
+    % Nota
+    \node[text width=6cm, align=center] at (0,-2) {\small El \'angulo obtuso indica que los vectores\\apuntan en direcciones ``opuestas''};
+
+\end{tikzpicture}
+\end{center}
+
+%========================================
+% RESUMEN DE RESULTADOS
+%========================================
+\section*{Resumen de Resultados}
+
+\begin{center}
+\begin{tabular}{|c|c|}
+\hline
+\textbf{Cantidad} & \textbf{Valor} \\
+\hline
+\hline
+$\vec{A} \cdot \vec{B}$ & $\boxed{-138}$ \\
+\hline
+$\vec{A} \times \vec{B}$ & $\boxed{32\hat{\imath} - 52\hat{\jmath} - 41\hat{k}}$ \\
+\hline
+$\left\Vert \vec{A} \times \vec{B} \right\Vert$ & $73.55$ \\
+\hline
+$\left\Vert \vec{A} \right\Vert$ & $14.457$ \\
+\hline
+$\left\Vert \vec{B} \right\Vert$ & $10.817$ \\
+\hline
+$\theta$ & $\boxed{151.94^\circ \approx 152^\circ}$ \\
+\hline
+\end{tabular}
+\end{center}
+
+%========================================
+% INTERPRETACION FISICA
+%========================================
+\section*{Interpretaci\'on F\'isica}
+
+En electromagnetismo, estos productos vectoriales tienen aplicaciones fundamentales:
+
+\begin{itemize}
+    \item \textbf{Producto escalar ($\vec{A} \cdot \vec{B}$):}
+    \begin{itemize}
+        \item Trabajo realizado: $W = \vec{F} \cdot \vec{d}$
+        \item Flujo el\'ectrico: $\Phi_E = \vec{E} \cdot \vec{A}$
+        \item Potencia el\'ectrica: $P = \vec{F} \cdot \vec{v}$
+    \end{itemize}
+
+    \item \textbf{Producto vectorial ($\vec{A} \times \vec{B}$):}
+    \begin{itemize}
+        \item Fuerza magn\'etica: $\vec{F} = q\vec{v} \times \vec{B}$
+        \item Torque: $\vec{\tau} = \vec{r} \times \vec{F}$
+        \item Campo magn\'etico (Biot-Savart): $d\vec{B} = \frac{\mu_0 I}{4\pi} \frac{d\vec{l} \times \hat{r}}{r^2}$
+    \end{itemize}
+
+    \item \textbf{\'Angulo entre vectores:}
+    \begin{itemize}
+        \item Determina la componente de un vector en la direcci\'on de otro
+        \item Un \'angulo obtuso ($\theta > 90^\circ$) indica que las proyecciones son opuestas
+    \end{itemize}
+\end{itemize}
+
+\end{document}
