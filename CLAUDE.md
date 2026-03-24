@@ -166,3 +166,7 @@ Solutions in `corpus/*/Solucion_*.tex` follow this structure:
 - API key: `.env` file with `ANTHROPIC_API_KEY`
 - Session logs: `.claude/logs/YYYY-MM-DD_session_log.md`
 - Textbook PDFs (Sears, Serway) are gitignored due to copyright
+- Git remote must include the username to avoid 403 auth errors:
+  ```bash
+  git remote set-url origin https://arturama-cmd@github.com/arturama-cmd/electro_agent.git
+  ```
