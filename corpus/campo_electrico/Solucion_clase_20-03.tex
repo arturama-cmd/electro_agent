@@ -1,0 +1,457 @@
+\documentclass[12pt,letterpaper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[spanish,es-noshorthands]{babel}
+\usepackage{amsmath,amssymb}
+\usepackage{graphicx}
+\usepackage{xcolor}
+\usepackage{tikz}
+\usetikzlibrary{calc,arrows.meta,decorations.markings}
+\usepackage[top=2.5cm, bottom=4cm, left=2cm, right=2cm, footskip=40pt]{geometry}
+\usepackage{fancyhdr}
+\usepackage{lastpage}
+
+% Colores para cargas
+\definecolor{colorQ1}{RGB}{220,50,50}     % q1 rojo
+\definecolor{colorQ2}{RGB}{50,50,220}     % q2 azul
+\definecolor{colorQ3}{RGB}{50,160,50}     % q3 verde
+\definecolor{colorQ4}{RGB}{200,100,0}     % q4 naranja
+\definecolor{colorFR}{RGB}{140,0,200}     % resultante morado
+\definecolor{ubbblue}{RGB}{0,51,102}
+
+% Encabezado y pie de pagina
+\pagestyle{fancy}
+\fancyhf{}
+\renewcommand{\headrulewidth}{0pt}
+\renewcommand{\footrulewidth}{0.4pt}
+
+\fancyfoot[L]{%
+    \raisebox{-0.5cm}{\includegraphics[height=1.2cm]{logo ubb.png}}%
+}
+\fancyfoot[C]{%
+    \begin{minipage}[b]{8cm}
+        \centering
+        \footnotesize
+        \textcolor{ubbblue}{\textbf{Dr. Arturo Fern\'andez P\'erez}}\\
+        \scriptsize Departamento de F\'isica -- Universidad del B\'io-B\'io\\
+        \scriptsize \textit{Electro\_Asistente\_AI-UBB}\\
+        \tiny P\'agina \thepage\ de \pageref{LastPage}
+    \end{minipage}%
+}
+\fancyfoot[R]{%
+    \raisebox{-0.5cm}{\includegraphics[height=1.2cm]{logo dfis.png}}%
+}
+
+\fancypagestyle{plain}{%
+    \fancyhf{}
+    \renewcommand{\headrulewidth}{0pt}
+    \renewcommand{\footrulewidth}{0.4pt}
+    \fancyfoot[L]{\raisebox{-0.5cm}{\includegraphics[height=1.2cm]{logo ubb.png}}}
+    \fancyfoot[C]{%
+        \begin{minipage}[b]{8cm}
+            \centering
+            \footnotesize
+            \textcolor{ubbblue}{\textbf{Dr. Arturo Fern\'andez P\'erez}}\\
+            \scriptsize Departamento de F\'isica -- Universidad del B\'io-B\'io\\
+            \scriptsize \textit{Electro\_Asistente\_AI-UBB}\\
+            \tiny P\'agina \thepage\ de \pageref{LastPage}
+        \end{minipage}%
+    }
+    \fancyfoot[R]{\raisebox{-0.5cm}{\includegraphics[height=1.2cm]{logo dfis.png}}}
+}
+
+\begin{document}
+
+%========================================
+% ENCABEZADO INSTITUCIONAL
+%========================================
+\begin{center}
+    \includegraphics[height=2cm]{logo ubb.png}\\[0.3cm]
+    {\large\textcolor{ubbblue}{\textbf{UNIVERSIDAD DEL B\'IO-B\'IO}}}\\[0.1cm]
+    {\normalsize Facultad de Ciencias -- Departamento de F\'isica}\\[0.1cm]
+    {\normalsize\textbf{Dr. Arturo Fern\'andez P\'erez}}
+\end{center}
+
+\vspace{0.3cm}
+\hrule height 1pt
+\vspace{0.5cm}
+
+{\centering\Large\textbf{Soluci\'on: Fuerza Resultante sobre una Carga Puntual}\par}
+
+\vspace{0.5cm}
+
+%========================================
+% ENUNCIADO
+%========================================
+\section*{Enunciado del Problema}
+
+Cuatro cargas puntuales se ubican en el plano $xy$ con coordenadas en cent\'imetros:
+
+\begin{center}
+\begin{tabular}{|c|c|c|}
+\hline
+\textbf{Carga} & \textbf{Valor} & \textbf{Posici\'on} [cm] \\
+\hline
+$q_1$ & $+5$ [nC] & $(12,\ 7)$ \\
+$q_2$ & $-4$ [nC] & $(-2,\ 17)$ \\
+$q_3$ & $+12$ [nC] & $(-10,\ -4)$ \\
+$q_4$ & $-18$ [nC] & $(8,\ -15)$ \\
+\hline
+\end{tabular}
+\end{center}
+
+Donde $1\,\text{nC} = 10^{-9}\,\text{C}$. \quad \textbf{Determinar la fuerza resultante sobre $q_1$.}
+
+%========================================
+% FIGURA DE CONFIGURACION
+%========================================
+\section*{Configuraci\'on de Cargas en el Plano}
+
+\begin{center}
+\begin{tikzpicture}[scale=0.22,
+    ejeXY/.style={-{Stealth[length=3mm]}, thick},
+    carga/.style={circle, inner sep=3pt}]
+
+    % Grilla cada 5 cm
+    \foreach \x in {-10,-5,0,5,10,15} {
+        \draw[gray!20, very thin] (\x,-18) -- (\x,21);
+    }
+    \foreach \y in {-15,-10,-5,0,5,10,15,20} {
+        \draw[gray!20, very thin] (-14,\y) -- (17,\y);
+    }
+
+    % Ejes
+    \draw[ejeXY] (-14,0) -- (17,0) node[right] {$x$ [cm]};
+    \draw[ejeXY] (0,-18) -- (0,21) node[above] {$y$ [cm]};
+
+    % Marcas de escala
+    \foreach \x in {-10,-5,5,10,15} {
+        \draw[thick] (\x,0.5) -- (\x,-0.5) node[below, font=\small] {\x};
+    }
+    \foreach \y in {-15,-10,-5,5,10,15,20} {
+        \draw[thick] (0.5,\y) -- (-0.5,\y) node[left, font=\small] {\y};
+    }
+    \node[below left, font=\small] at (0,0) {$O$};
+
+    % Lineas de interaccion (punteadas) hacia q1
+    \draw[gray!50, dashed, thin] (-2,17)  -- (12,7);
+    \draw[gray!50, dashed, thin] (-10,-4) -- (12,7);
+    \draw[gray!50, dashed, thin] (8,-15)  -- (12,7);
+
+    % ---- VECTORES DE FUERZA sobre q1 (escala: 0.35 unidades/muN) ----
+    % F21 = (-4.949, 3.535) muN -> punta en (12-1.732, 7+1.237) = (10.268, 8.237)
+    \draw[-{Stealth[length=3mm]}, colorQ2, very thick]
+        (12,7) -- (10.268, 8.237)
+        node[above left, font=\footnotesize, colorQ2] {$\vec{F}_{21}$};
+
+    % F31 = (7.984, 3.992) muN -> punta en (12+2.794, 7+1.397) = (14.794, 8.397)
+    \draw[-{Stealth[length=3mm]}, colorQ3, very thick]
+        (12,7) -- (14.794, 8.397)
+        node[above right, font=\footnotesize, colorQ3] {$\vec{F}_{31}$};
+
+    % F41 = (-2.898, -15.939) muN -> punta en (12-1.014, 7-5.579) = (10.986, 1.421)
+    \draw[-{Stealth[length=3mm]}, colorQ4, very thick]
+        (12,7) -- (10.986, 1.421)
+        node[right, font=\footnotesize, colorQ4] {$\vec{F}_{41}$};
+
+    % FR = (0.137, -8.412) muN -> punta en (12+0.048, 7-2.944) = (12.048, 4.056)
+    \draw[-{Stealth[length=4mm]}, colorFR, ultra thick]
+        (12,7) -- (12.048, 4.056)
+        node[right, font=\footnotesize, colorFR] {$\vec{F}_R$};
+
+    % ---- CARGAS ----
+    \fill[colorQ2] (-2,17) circle (8pt);
+    \node[colorQ2, above right, font=\small\bfseries] at (-2,17) {$q_2\,(-)$};
+    \node[colorQ2, below right, font=\footnotesize] at (-2,17) {$(-2,17)$};
+
+    \fill[colorQ1] (12,7) circle (10pt);
+    \node[colorQ1, above right, font=\small\bfseries] at (12,7) {$q_1\,(+)$};
+    \node[colorQ1, below right, font=\footnotesize] at (12,7) {$(12,7)$};
+
+    \fill[colorQ3] (-10,-4) circle (8pt);
+    \node[colorQ3, below right, font=\small\bfseries] at (-10,-4) {$q_3\,(+)$};
+    \node[colorQ3, above right, font=\footnotesize] at (-10,-4) {$(-10,-4)$};
+
+    \fill[colorQ4] (8,-15) circle (8pt);
+    \node[colorQ4, below right, font=\small\bfseries] at (8,-15) {$q_4\,(-)$};
+    \node[colorQ4, above left, font=\footnotesize] at (8,-15) {$(8,-15)$};
+
+\end{tikzpicture}
+\end{center}
+
+%========================================
+% FORMULA
+%========================================
+\section*{Ley de Coulomb -- Forma Vectorial}
+
+Usando las cargas en valor absoluto y el vector de separaci\'on \textbf{sin normalizar}:
+
+\begin{equation*}
+\vec{F}_{ij} = k\,\frac{|q_i|\,|q_j|}{|\vec{r}_{ij}|^3}\,\vec{r}_{ij}
+\qquad \text{con} \quad k = 9\times10^9\;\left[\frac{\text{N\,m}^2}{\text{C}^2}\right]
+\end{equation*}
+
+donde $\vec{r}_{ij}$ es el vector de separaci\'on apuntando en la \textbf{direcci\'on f\'isica de la fuerza}:
+\begin{itemize}
+    \item Cargas de \textbf{igual signo} (repulsi\'on): $\vec{r}_{ij}$ apunta \emph{desde la carga fuente hacia $q_1$}.
+    \item Cargas de \textbf{signo opuesto} (atracci\'on): $\vec{r}_{ij}$ apunta \emph{desde $q_1$ hacia la carga fuente}.
+\end{itemize}
+
+%========================================
+% PASO 1: ANALISIS CUALITATIVO Y VECTORES
+%========================================
+\section*{Paso 1: An\'alisis Cualitativo y Vectores de Direcci\'on}
+
+Convirtiendo coordenadas a metros y determinando el tipo de interacci\'on:
+
+\subsection*{Fuerza $\vec{F}_{21}$: $q_2 = -4\,\text{nC}$ sobre $q_1 = +5\,\text{nC}$}
+
+Signos \textbf{opuestos} $\Rightarrow$ \textbf{atracci\'on}: la fuerza sobre $q_1$ apunta \emph{hacia} $q_2$.
+
+\begin{equation*}
+\vec{r}_{21} = \vec{r}_2 - \vec{r}_1
+= (-0{,}02 - 0{,}12)\,\hat{\imath} + (0{,}17 - 0{,}07)\,\hat{\jmath}
+= -0{,}14\,\hat{\imath} + 0{,}10\,\hat{\jmath}\quad[\text{m}]
+\end{equation*}
+\begin{equation*}
+|\vec{r}_{21}| = \sqrt{(-0{,}14)^2 + (0{,}10)^2} = \sqrt{0{,}0296} \approx 0{,}1720\;\text{m}
+\end{equation*}
+
+\subsection*{Fuerza $\vec{F}_{31}$: $q_3 = +12\,\text{nC}$ sobre $q_1 = +5\,\text{nC}$}
+
+Signos \textbf{iguales} $\Rightarrow$ \textbf{repulsi\'on}: la fuerza sobre $q_1$ apunta \emph{alejándose} de $q_3$.
+
+\begin{equation*}
+\vec{r}_{31} = \vec{r}_1 - \vec{r}_3
+= (0{,}12 - (-0{,}10))\,\hat{\imath} + (0{,}07 - (-0{,}04))\,\hat{\jmath}
+= 0{,}22\,\hat{\imath} + 0{,}11\,\hat{\jmath}\quad[\text{m}]
+\end{equation*}
+\begin{equation*}
+|\vec{r}_{31}| = \sqrt{(0{,}22)^2 + (0{,}11)^2} = \sqrt{0{,}0605} \approx 0{,}2460\;\text{m}
+\end{equation*}
+
+\subsection*{Fuerza $\vec{F}_{41}$: $q_4 = -18\,\text{nC}$ sobre $q_1 = +5\,\text{nC}$}
+
+Signos \textbf{opuestos} $\Rightarrow$ \textbf{atracci\'on}: la fuerza sobre $q_1$ apunta \emph{hacia} $q_4$.
+
+\begin{equation*}
+\vec{r}_{41} = \vec{r}_4 - \vec{r}_1
+= (0{,}08 - 0{,}12)\,\hat{\imath} + (-0{,}15 - 0{,}07)\,\hat{\jmath}
+= -0{,}04\,\hat{\imath} - 0{,}22\,\hat{\jmath}\quad[\text{m}]
+\end{equation*}
+\begin{equation*}
+|\vec{r}_{41}| = \sqrt{(-0{,}04)^2 + (-0{,}22)^2} = \sqrt{0{,}0500} \approx 0{,}2236\;\text{m}
+\end{equation*}
+
+%========================================
+% PASO 2: FUERZAS INDIVIDUALES
+%========================================
+\section*{Paso 2: C\'alculo de Cada Fuerza}
+
+\subsection*{Fuerza $\vec{F}_{21}$}
+
+\begin{equation*}
+\vec{F}_{21} = \left[9\times10^9\;\frac{(5\times10^{-9})(4\times10^{-9})}{(0{,}1720)^3}\right]
+\left(-0{,}14\,\hat{\imath} + 0{,}10\,\hat{\jmath}\right)
+\end{equation*}
+
+\begin{equation*}
+\vec{F}_{21} = \left[\frac{1{,}80\times10^{-7}}{5{,}09\times10^{-3}}\right]
+\left(-0{,}14\,\hat{\imath} + 0{,}10\,\hat{\jmath}\right)
+= 3{,}54\times10^{-5}\,
+\left(-0{,}14\,\hat{\imath} + 0{,}10\,\hat{\jmath}\right)
+\end{equation*}
+
+\begin{equation*}
+\boxed{\vec{F}_{21} = \left(-4{,}949\,\hat{\imath} + 3{,}535\,\hat{\jmath}\right)\;\mu\text{N}}
+\end{equation*}
+
+\subsection*{Fuerza $\vec{F}_{31}$}
+
+\begin{equation*}
+\vec{F}_{31} = \left[9\times10^9\;\frac{(12\times10^{-9})(5\times10^{-9})}{(0{,}2460)^3}\right]
+\left(0{,}22\,\hat{\imath} + 0{,}11\,\hat{\jmath}\right)
+\end{equation*}
+
+\begin{equation*}
+\vec{F}_{31} = \left[\frac{5{,}40\times10^{-7}}{1{,}489\times10^{-2}}\right]
+\left(0{,}22\,\hat{\imath} + 0{,}11\,\hat{\jmath}\right)
+= 3{,}63\times10^{-5}\,
+\left(0{,}22\,\hat{\imath} + 0{,}11\,\hat{\jmath}\right)
+\end{equation*}
+
+\begin{equation*}
+\boxed{\vec{F}_{31} = \left(+7{,}984\,\hat{\imath} + 3{,}992\,\hat{\jmath}\right)\;\mu\text{N}}
+\end{equation*}
+
+\subsection*{Fuerza $\vec{F}_{41}$}
+
+\begin{equation*}
+\vec{F}_{41} = \left[9\times10^9\;\frac{(18\times10^{-9})(5\times10^{-9})}{(0{,}2236)^3}\right]
+\left(-0{,}04\,\hat{\imath} - 0{,}22\,\hat{\jmath}\right)
+\end{equation*}
+
+\begin{equation*}
+\vec{F}_{41} = \left[\frac{8{,}10\times10^{-7}}{1{,}118\times10^{-2}}\right]
+\left(-0{,}04\,\hat{\imath} - 0{,}22\,\hat{\jmath}\right)
+= 7{,}25\times10^{-5}\,
+\left(-0{,}04\,\hat{\imath} - 0{,}22\,\hat{\jmath}\right)
+\end{equation*}
+
+\begin{equation*}
+\boxed{\vec{F}_{41} = \left(-2{,}898\,\hat{\imath} - 15{,}939\,\hat{\jmath}\right)\;\mu\text{N}}
+\end{equation*}
+
+%========================================
+% PASO 3: SUMA VECTORIAL
+%========================================
+\section*{Paso 3: Fuerza Resultante $\vec{F}_R = \vec{F}_{21} + \vec{F}_{31} + \vec{F}_{41}$}
+
+\subsection*{Componente $x$}
+
+\begin{equation*}
+F_{Rx} = (-4{,}949) + (+7{,}984) + (-2{,}898) = +0{,}137\;\mu\text{N}
+\end{equation*}
+
+\subsection*{Componente $y$}
+
+\begin{equation*}
+F_{Ry} = (+3{,}535) + (+3{,}992) + (-15{,}939) = -8{,}412\;\mu\text{N}
+\end{equation*}
+
+\subsection*{Magnitud}
+
+\begin{equation*}
+|\vec{F}_R| = \sqrt{(0{,}137)^2 + (-8{,}412)^2}
+= \sqrt{0{,}019 + 70{,}762}
+= \sqrt{70{,}781}
+\approx 8{,}413\;\mu\text{N}
+\end{equation*}
+
+\subsection*{Direcci\'on}
+
+\begin{equation*}
+\theta = \arctan\!\left(\frac{-8{,}412}{0{,}137}\right) \approx -89{,}1^\circ
+\end{equation*}
+
+Como $F_{Rx}>0$ y $F_{Ry}<0$: cuarto cuadrante, fuerza apuntando pr\'acticamente en $-\hat{\jmath}$.
+
+%========================================
+% FIGURA DE FUERZAS
+%========================================
+\section*{Diagrama de Fuerzas sobre $q_1$}
+
+\begin{center}
+\begin{tikzpicture}[scale=0.50,
+    fuerza/.style={-{Stealth[length=4mm]}, very thick},
+    resultante/.style={-{Stealth[length=5mm]}, ultra thick},
+    eje/.style={-{Stealth[length=3mm]}, thick, gray}]
+
+    % Grilla
+    \foreach \x in {-3,-2,-1,0,1,2,3,4,5,6,7,8} {
+        \draw[gray!20, very thin] (\x,-18) -- (\x,6);
+    }
+    \foreach \y in {-17,-16,...,5} {
+        \draw[gray!20, very thin] (-4,\y) -- (10,\y);
+    }
+
+    % Ejes en muN
+    \draw[eje] (-4,0) -- (10,0) node[right, black] {$x\;[\mu\text{N}]$};
+    \draw[eje] (0,-18) -- (0,6) node[above, black] {$y\;[\mu\text{N}]$};
+
+    \foreach \x in {-4,-2,2,4,6,8} {
+        \draw[thick] (\x,0.2) -- (\x,-0.2) node[below, font=\small] {\x};
+    }
+    \foreach \y in {-16,-14,-12,-10,-8,-6,-4,-2,2,4} {
+        \draw[thick] (0.15,\y) -- (-0.15,\y) node[left, font=\small] {\y};
+    }
+    \node[below left, font=\small] at (0,0) {$O$};
+
+    % F21 = (-4.949, 3.535) muN
+    \draw[fuerza, colorQ2] (0,0) -- (-4.949, 3.535)
+        node[above left, colorQ2, font=\footnotesize\bfseries]
+        {$\vec{F}_{21} = (-4{,}95\,\hat{\imath}+3{,}54\,\hat{\jmath})\,\mu\text{N}$};
+
+    % F31 = (7.984, 3.992) muN
+    \draw[fuerza, colorQ3] (0,0) -- (7.984, 3.992)
+        node[above right, colorQ3, font=\footnotesize\bfseries]
+        {$\vec{F}_{31} = (7{,}98\,\hat{\imath}+3{,}99\,\hat{\jmath})\,\mu\text{N}$};
+
+    % F41 = (-2.898, -15.939) muN
+    \draw[fuerza, colorQ4] (0,0) -- (-2.898, -15.939)
+        node[below left, colorQ4, font=\footnotesize\bfseries]
+        {$\vec{F}_{41} = (-2{,}90\,\hat{\imath}-15{,}94\,\hat{\jmath})\,\mu\text{N}$};
+
+    % FR = (0.137, -8.412) muN
+    \draw[resultante, colorFR] (0,0) -- (0.137, -8.412)
+        node[right, colorFR, font=\footnotesize\bfseries, xshift=2pt]
+        {$\vec{F}_R = (0{,}14\,\hat{\imath}-8{,}41\,\hat{\jmath})\,\mu\text{N}$};
+
+    \fill[colorQ1] (0,0) circle (5pt);
+    \node[colorQ1, above right, font=\small\bfseries] at (0,0) {$q_1$};
+
+\end{tikzpicture}
+\end{center}
+
+%========================================
+% RESULTADO FINAL
+%========================================
+\section*{Resultado Final}
+
+\begin{equation*}
+\boxed{
+\vec{F}_R = \left(0{,}137\,\hat{\imath} - 8{,}412\,\hat{\jmath}\right)\,\mu\text{N}
+\qquad
+|\vec{F}_R| \approx 8{,}41\;\mu\text{N}
+\qquad
+\theta \approx -89{,}1^\circ
+}
+\end{equation*}
+
+\begin{center}
+\begin{tabular}{|l|c|}
+\hline
+\textbf{Cantidad} & \textbf{Valor} \\
+\hline\hline
+$\vec{F}_{21}$ (de $q_2$ sobre $q_1$) & $(-4{,}949\,\hat{\imath} + 3{,}535\,\hat{\jmath})\ \mu\text{N}$ \\
+\hline
+$\vec{F}_{31}$ (de $q_3$ sobre $q_1$) & $(+7{,}984\,\hat{\imath} + 3{,}992\,\hat{\jmath})\ \mu\text{N}$ \\
+\hline
+$\vec{F}_{41}$ (de $q_4$ sobre $q_1$) & $(-2{,}898\,\hat{\imath} - 15{,}939\,\hat{\jmath})\ \mu\text{N}$ \\
+\hline
+$F_{Rx}$ & $+0{,}137\ \mu\text{N}$ \\
+\hline
+$F_{Ry}$ & $-8{,}412\ \mu\text{N}$ \\
+\hline
+$|\vec{F}_R|$ & $\mathbf{8{,}41\ \mu\text{N}}$ \\
+\hline
+$\theta$ (desde $+x$, sentido antihorario) & $\mathbf{-89{,}1^\circ}$ \\
+\hline
+\end{tabular}
+\end{center}
+
+%========================================
+% INTERPRETACION FISICA
+%========================================
+\section*{Interpretaci\'on F\'isica}
+
+\begin{itemize}
+    \item La fuerza dominante es $\vec{F}_{41}$, con $|\vec{F}_{41}| \approx 16{,}1\,\mu\text{N}$.
+          $q_4$ es la carga de mayor magnitud ($18\,\text{nC}$) y la m\'as cercana en la
+          direcci\'on $-\hat{\jmath}$, por lo que su atracci\'on sobre $q_1$ es intensa y
+          casi vertical hacia abajo.
+
+    \item Las componentes $x$ se cancelan casi completamente
+          ($F_{Rx} = +0{,}137\,\mu\text{N} \approx 0$),
+          de modo que la fuerza resultante apunta pr\'acticamente en $-\hat{\jmath}$
+          ($\theta \approx -89{,}1^\circ$).
+
+    \item Las fuerzas $\vec{F}_{21}$ y $\vec{F}_{31}$ contribuyen ambas positivamente
+          en $y$ ($+3{,}54$ y $+3{,}99\,\mu\text{N}$) pero no compensan la gran
+          componente $-15{,}94\,\mu\text{N}$ de $\vec{F}_{41}$.
+
+    \item Este problema ilustra el \textbf{Principio de Superposici\'on}: la fuerza
+          total sobre $q_1$ es la suma vectorial de las contribuciones individuales,
+          calculadas de forma independiente con la Ley de Coulomb.
+\end{itemize}
+
+\end{document}

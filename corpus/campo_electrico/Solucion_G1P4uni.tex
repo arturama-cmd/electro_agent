@@ -1,0 +1,408 @@
+\documentclass[12pt,letterpaper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[spanish,es-noshorthands]{babel}
+\usepackage{amsmath,amssymb}
+\usepackage{graphicx}
+\usepackage{xcolor}
+\usepackage{tikz}
+\usetikzlibrary{calc,arrows.meta,decorations.markings,patterns}
+\usepackage[top=2.5cm, bottom=4cm, left=2cm, right=2cm, footskip=40pt]{geometry}
+\usepackage{fancyhdr}
+\usepackage{lastpage}
+
+% Definir colores
+\definecolor{ubbblue}{RGB}{0,51,102}
+\definecolor{cargazul}{RGB}{50,50,220}
+\definecolor{cargarojo}{RGB}{220,50,50}
+\definecolor{cargaverde}{RGB}{50,160,50}
+
+% Configuracion de encabezado y pie de pagina
+\pagestyle{fancy}
+\fancyhf{}
+\renewcommand{\headrulewidth}{0pt}
+\renewcommand{\footrulewidth}{0.4pt}
+
+\fancyfoot[L]{%
+    \raisebox{-0.5cm}{\includegraphics[height=1.2cm]{logo ubb.png}}%
+}
+\fancyfoot[C]{%
+    \begin{minipage}[b]{8cm}
+        \centering
+        \footnotesize
+        \textcolor{ubbblue}{\textbf{Dr. Arturo Fern\'andez P\'erez}}\\
+        \scriptsize Departamento de F\'isica -- Universidad del B\'io-B\'io\\
+        \scriptsize \textit{Electro\_Asistente\_AI-UBB}\\
+        \tiny P\'agina \thepage\ de \pageref{LastPage}
+    \end{minipage}%
+}
+\fancyfoot[R]{%
+    \raisebox{-0.5cm}{\includegraphics[height=1.2cm]{logo dfis.png}}%
+}
+
+\fancypagestyle{plain}{%
+    \fancyhf{}
+    \renewcommand{\headrulewidth}{0pt}
+    \renewcommand{\footrulewidth}{0.4pt}
+    \fancyfoot[L]{%
+        \raisebox{-0.5cm}{\includegraphics[height=1.2cm]{logo ubb.png}}%
+    }
+    \fancyfoot[C]{%
+        \begin{minipage}[b]{8cm}
+            \centering
+            \footnotesize
+            \textcolor{ubbblue}{\textbf{Dr. Arturo Fern\'andez P\'erez}}\\
+            \scriptsize Departamento de F\'isica -- Universidad del B\'io-B\'io\\
+            \scriptsize \textit{Electro\_Asistente\_AI-UBB}\\
+            \tiny P\'agina \thepage\ de \pageref{LastPage}
+        \end{minipage}%
+    }
+    \fancyfoot[R]{%
+        \raisebox{-0.5cm}{\includegraphics[height=1.2cm]{logo dfis.png}}%
+    }
+}
+
+\begin{document}
+
+%========================================
+% ENCABEZADO INSTITUCIONAL
+%========================================
+\begin{center}
+    \includegraphics[height=2cm]{logo ubb.png}\\[0.3cm]
+    {\large\textcolor{ubbblue}{\textbf{UNIVERSIDAD DEL B\'IO-B\'IO}}}\\[0.1cm]
+    {\normalsize Facultad de Ciencias -- Departamento de F\'isica}\\[0.1cm]
+    {\normalsize\textbf{Dr. Arturo Fern\'andez P\'erez}}
+\end{center}
+
+\vspace{0.3cm}
+\hrule height 1pt
+\vspace{0.5cm}
+
+{\centering\Large\textbf{Soluci\'on: Equilibrio de Carga en el Eje $X$}\par}
+{\centering\normalsize Gu\'ia 1 -- Problema 4 Unidimensional\par}
+
+\vspace{0.5cm}
+
+%========================================
+% ENUNCIADO
+%========================================
+\section*{Enunciado del Problema}
+
+Dos cargas puntuales est\'an ubicadas sobre el eje $X$:
+\[
+q_1 = +2{,}5\ [\mu\text{C}] \quad \text{en } x = 0\ \text{[m]},
+\qquad
+q_2 = -3{,}5\ [\mu\text{C}] \quad \text{en } x = 0{,}6\ \text{[m]}
+\]
+Encuentre el punto sobre el eje $X$ donde, al colocar una carga puntual de
+magnitud $q = 3\ [\mu\text{C}]$, la \textbf{fuerza neta} sobre ella sea nula.
+
+%========================================
+% DIAGRAMA DE LA CONFIGURACION
+%========================================
+\section*{Diagrama de la Configuraci\'on}
+
+\begin{center}
+\begin{tikzpicture}[scale=1.0, >=Stealth]
+    % Eje x
+    \draw[->, gray, thin] (-8.0,0) -- (5.5,0) node[right]{$x$};
+
+    % === CARGAS FUENTE ===
+    \fill[cargazul]  (0,0) circle (6pt);
+    \node[cargazul, above=10pt, font=\small\bfseries] at (0,0)
+        {$q_1{=}{+}2{,}5\,\mu$C};
+    \node[below=7pt, font=\scriptsize] at (0,0) {$x{=}0$};
+
+    \fill[cargarojo] (2.4,0) circle (6pt);
+    \node[cargarojo, above=10pt, font=\small\bfseries] at (2.4,0)
+        {$q_2{=}{-}3{,}5\,\mu$C};
+    \node[below=7pt, font=\scriptsize] at (2.4,0) {$x{=}0{,}6$\,m};
+
+    % Cota entre cargas (arriba del eje, lejos de flechas)
+    \draw[<->, black!70, thin] (0,0.6) -- (2.4,0.6)
+        node[midway, above, font=\scriptsize]{$d{=}0{,}6$\,m};
+
+    % === POSICION A (izquierda de q1) ===
+    \fill[black!65] (-5.5,0) circle (5pt);
+    \node[above=9pt, font=\small] at (-5.5,0) {$+q$};
+    \node[below=10pt, font=\small\bfseries] at (-5.5,0) {A};
+
+    % Linea de referencia vertical hacia las flechas
+    \draw[gray!35, very thin, dashed] (-5.5,-0.1) -- (-5.5,-2.1);
+
+    % F_q1 en A: repulsion de q1, apunta IZQUIERDA
+    \draw[->, cargazul, very thick] (-5.5,-1.0) -- (-7.1,-1.0);
+    \node[cargazul, left, font=\small\bfseries] at (-7.1,-1.0) {$\vec{F}_{q_1}$};
+
+    % F_q2 en A: atraccion de q2, apunta DERECHA
+    \draw[->, cargarojo, very thick] (-5.5,-1.85) -- (-3.9,-1.85);
+    \node[cargarojo, right, font=\small\bfseries] at (-3.9,-1.85) {$\vec{F}_{q_2}$};
+
+    % === POSICION B (entre q1 y q2) ===
+    \fill[black!35] (1.2,0) circle (5pt);
+    \node[above=9pt, font=\small, black!50] at (1.2,0) {$+q$};
+    \node[below=10pt, font=\small\bfseries, black!45] at (1.2,0) {B};
+
+    \draw[gray!35, very thin, dashed] (1.2,-0.1) -- (1.2,-2.1);
+
+    % F_q1 en B: repulsion de q1, apunta DERECHA
+    % Etiqueta centrada sobre la flecha para evitar traslape con q2
+    \draw[->, cargazul!75, thick] (1.2,-1.0) -- (2.0,-1.0);
+    \node[cargazul!85, above, font=\small\bfseries] at (1.6,-1.0) {$\vec{F}_{q_1}$};
+
+    % F_q2 en B: atraccion de q2, apunta DERECHA tambien
+    \draw[->, cargarojo!75, thick] (1.2,-1.85) -- (2.0,-1.85);
+    \node[cargarojo!85, above, font=\small\bfseries] at (1.6,-1.85) {$\vec{F}_{q_2}$};
+
+    % Nota debajo de B
+    \node[font=\footnotesize, black!55, align=center] at (1.2,-2.6)
+        {paralelas\\ $\Rightarrow$ sin equilibrio};
+
+    % === POSICION C (derecha de q2) ===
+    \fill[black!35] (4.0,0) circle (5pt);
+    \node[above=9pt, font=\small, black!50] at (4.0,0) {$+q$};
+    \node[below=10pt, font=\small\bfseries, black!45] at (4.0,0) {C};
+
+    \draw[gray!35, very thin, dashed] (4.0,-0.1) -- (4.0,-2.1);
+
+    % F_q1 en C: repulsion de q1, apunta DERECHA
+    \draw[->, cargazul!75, thick] (4.0,-1.0) -- (4.9,-1.0);
+    \node[cargazul!85, right, font=\small\bfseries] at (4.9,-1.0) {$\vec{F}_{q_1}$};
+
+    % F_q2 en C: atraccion de q2, apunta IZQUIERDA
+    \draw[->, cargarojo!75, thick] (4.0,-1.85) -- (3.1,-1.85);
+    \node[cargarojo!85, left, font=\small\bfseries] at (3.1,-1.85) {$\vec{F}_{q_2}$};
+
+\end{tikzpicture}
+\end{center}
+
+%========================================
+% ANALISIS CUALITATIVO
+%========================================
+\section*{An\'alisis Cualitativo}
+
+La carga de prueba $q = +3\ \mu\text{C}$ es positiva. Se analizan las tres regiones del eje:
+
+\begin{itemize}
+    \item \textbf{Regi\'on A} (izquierda de $q_1$): $q_1$ (positiva) \textit{repele} a $q$ hacia la izquierda
+    $(-\hat{\imath})$; $q_2$ (negativa) \textit{atrae} a $q$ hacia la derecha $(+\hat{\imath})$.
+    Las fuerzas son opuestas $\Rightarrow$ pueden cancelarse. \checkmark
+
+    \item \textbf{Regi\'on B} (entre $q_1$ y $q_2$): $q_1$ repele hacia la derecha $(+\hat{\imath})$ y
+    $q_2$ atrae tambi\'en hacia la derecha $(+\hat{\imath})$. Las fuerzas son \textit{paralelas}
+    $\Rightarrow$ no puede haber equilibrio. $\times$
+
+    \item \textbf{Regi\'on C} (derecha de $q_2$): $q_1$ repele hacia la derecha y $q_2$ atrae
+    hacia la izquierda. Las fuerzas son opuestas $\Rightarrow$ candidata, pero se verificar\'a
+    si existe soluci\'on f\'isica. \checkmark (por verificar)
+\end{itemize}
+
+Solo deben calcularse las regiones \textbf{A} y \textbf{C}.
+
+%========================================
+% SITUACION A
+%========================================
+\section*{Situaci\'on A: $q$ a la izquierda de $q_1$}
+
+Sea $x > 0$ la distancia entre la carga de prueba $q$ y $q_1$.
+Entonces la distancia entre $q$ y $q_2$ es $x + 0{,}6$ [m].
+
+\subsection*{Fuerzas sobre $q$}
+
+Usando la Ley de Coulomb vectorial con $K = 9\times10^9\ \text{[N\,m}^2/\text{C}^2\text{]}$:
+
+\begin{align*}
+\vec{F}_{q_1} &= K\frac{|q_1|\,q}{x^2}\,(-\hat{\imath})
+= \frac{9\times10^9\cdot(2{,}5\times10^{-6})(3\times10^{-6})}{x^2}\,(-\hat{\imath})
+= \frac{0{,}0675}{x^2}\,(-\hat{\imath})\ \text{[N]} \\[8pt]
+\vec{F}_{q_2} &= K\frac{|q_2|\,q}{(x+0{,}6)^2}\,(+\hat{\imath})
+= \frac{9\times10^9\cdot(3{,}5\times10^{-6})(3\times10^{-6})}{(x+0{,}6)^2}\,(+\hat{\imath})
+= \frac{0{,}0945}{(x+0{,}6)^2}\,(+\hat{\imath})\ \text{[N]}
+\end{align*}
+
+\subsection*{Condici\'on de equilibrio}
+
+\[
+\vec{F}_{q_1} + \vec{F}_{q_2} = \vec{0}
+\quad\Rightarrow\quad
+\frac{0{,}0945}{(x+0{,}6)^2} = \frac{0{,}0675}{x^2}
+\]
+
+Productos cruzados:
+\[
+0{,}0945\,x^2 = 0{,}0675\,(x^2 + 1{,}2x + 0{,}36)
+\]
+\[
+0{,}0945\,x^2 = 0{,}0675\,x^2 + 0{,}081\,x + 0{,}0243
+\]
+
+\[
+\boxed{0{,}027\,x^2 - 0{,}081\,x - 0{,}0243 = 0}
+\]
+
+\subsection*{Resoluci\'on de la ecuaci\'on de segundo grado}
+
+Aplicando la f\'ormula cuadr\'atica con $a=0{,}027$, $b=-0{,}081$, $c=-0{,}0243$:
+
+\[
+x = \frac{0{,}081 \pm \sqrt{(-0{,}081)^2 - 4(0{,}027)(-0{,}0243)}}{2(0{,}027)}
+= \frac{0{,}081 \pm \sqrt{0{,}006561 + 0{,}002624}}{0{,}054}
+= \frac{0{,}081 \pm \sqrt{0{,}009185}}{0{,}054}
+\]
+
+\[
+x = \frac{0{,}081 \pm 0{,}09584}{0{,}054}
+\]
+
+\[
+x_1 = \frac{0{,}081 + 0{,}09584}{0{,}054} = \frac{0{,}17684}{0{,}054} \approx \mathbf{3{,}275}\ \text{[m]}
+\quad\checkmark
+\]
+\[
+x_2 = \frac{0{,}081 - 0{,}09584}{0{,}054} = \frac{-0{,}01484}{0{,}054} \approx -0{,}275\ \text{[m]}
+\quad\times\ \text{(descartada: }x \text{ debe ser } >0\text{)}
+\]
+
+$\Rightarrow$ \textbf{En la Situaci\'on A}: $x = 3{,}275$ [m], es decir, la carga de prueba debe colocarse
+$3{,}275$~m a la izquierda de $q_1$.
+
+%========================================
+% SITUACION C
+%========================================
+\section*{Situaci\'on C: $q$ a la derecha de $q_2$}
+
+Sea $x > 0$ la distancia entre $q$ y $q_2$.
+La distancia entre $q$ y $q_1$ es $x + 0{,}6$ [m].
+
+\subsection*{Fuerzas sobre $q$}
+
+\begin{align*}
+\vec{F}_{q_2} &= K\frac{|q_2|\,q}{x^2}\,(-\hat{\imath})
+= \frac{0{,}0945}{x^2}\,(-\hat{\imath})\ \text{[N]}
+\quad\text{($q_2$ negativa atrae hacia la izquierda)}\\[8pt]
+\vec{F}_{q_1} &= K\frac{|q_1|\,q}{(x+0{,}6)^2}\,(+\hat{\imath})
+= \frac{0{,}0675}{(x+0{,}6)^2}\,(+\hat{\imath})\ \text{[N]}
+\quad\text{($q_1$ positiva repele hacia la derecha)}
+\end{align*}
+
+\subsection*{Condici\'on de equilibrio}
+
+\[
+\frac{0{,}0945}{x^2} = \frac{0{,}0675}{(x+0{,}6)^2}
+\]
+\[
+0{,}0945\,(x^2 + 1{,}2x + 0{,}36) = 0{,}0675\,x^2
+\]
+\[
+0{,}0945\,x^2 + 0{,}1134\,x + 0{,}0340 = 0{,}0675\,x^2
+\]
+
+\[
+\boxed{0{,}027\,x^2 + 0{,}1134\,x + 0{,}0340 = 0}
+\]
+
+Discriminante:
+\[
+\Delta = (0{,}1134)^2 - 4(0{,}027)(0{,}0340) = 0{,}012860 - 0{,}003672 = 0{,}009188
+\]
+\[
+x = \frac{-0{,}1134 \pm \sqrt{0{,}009188}}{0{,}054}
+= \frac{-0{,}1134 \pm 0{,}09585}{0{,}054}
+\]
+\[
+x_1 = \frac{-0{,}1134 + 0{,}09585}{0{,}054} = \frac{-0{,}01755}{0{,}054} \approx -0{,}325\ \text{[m]}
+\quad\times
+\]
+\[
+x_2 = \frac{-0{,}1134 - 0{,}09585}{0{,}054} = \frac{-0{,}20925}{0{,}054} \approx -3{,}875\ \text{[m]}
+\quad\times
+\]
+
+Ambas ra\'ices son negativas ($x$ debe ser $\geq 0$).
+$\Rightarrow$ \textbf{No existe soluci\'on f\'isicamente v\'alida en la Regi\'on C.} $\times$
+
+%========================================
+% RESULTADO FINAL
+%========================================
+\section*{Resultado Final}
+
+La \'unica posici\'on de equilibrio se encuentra en la \textbf{Regi\'on A}:
+
+\[
+\boxed{
+\vec{F}_{\text{neta}} = 0 \quad \text{a } 3{,}275\ \text{[m] a la izquierda de } q_1\ (= {+}2{,}5\ \mu\text{C})
+}
+\]
+
+\vspace{0.4cm}
+\begin{center}
+\begin{tikzpicture}[scale=1.05, >=Stealth]
+    % Eje x
+    \draw[->, gray, thin] (-7.8,0) -- (3.8,0) node[right]{$x$};
+
+    % === CARGAS FUENTE ===
+    \fill[cargazul]  (0,0) circle (6pt);
+    \node[cargazul, above=10pt, font=\small\bfseries] at (0,0)
+        {$q_1{=}{+}2{,}5\,\mu$C};
+
+    \fill[cargarojo] (2.4,0) circle (6pt);
+    \node[cargarojo, above=10pt, font=\small\bfseries] at (2.4,0)
+        {$q_2{=}{-}3{,}5\,\mu$C};
+
+    % Cota entre cargas
+    \draw[<->, black!70, thin] (0,-0.55) -- (2.4,-0.55)
+        node[midway, below, font=\scriptsize]{$0{,}6$\,m};
+
+    % === POSICION DE EQUILIBRIO ===
+    \fill[cargaverde] (-6.55,0) circle (6pt);
+    \node[cargaverde, above=10pt, font=\small\bfseries] at (-6.55,0)
+        {$q{=}{+}3\,\mu$C};
+    \node[cargaverde, below=10pt, font=\small\bfseries] at (-6.55,0)
+        {\textbf{Equilibrio}};
+
+    % Cota de la solucion
+    \draw[<->, cargaverde!70, thick] (-6.55,-1.0) -- (0,-1.0)
+        node[midway, below, font=\small]{$3{,}275$\,m};
+
+    % Linea de referencia
+    \draw[gray!35, very thin, dashed] (-6.55,-0.1) -- (-6.55,-1.7);
+
+    % Flechas de equilibrio DEBAJO del eje (opuestas, igual longitud)
+    \draw[->, cargazul, ultra thick] (-6.55,-2.0) -- (-7.65,-2.0);
+    \node[cargazul, left, font=\small\bfseries] at (-7.65,-2.0) {$\vec{F}_{q_1}$};
+
+    \draw[->, cargarojo, ultra thick] (-6.55,-2.0) -- (-5.45,-2.0);
+    \node[cargarojo, right, font=\small\bfseries] at (-5.45,-2.0) {$\vec{F}_{q_2}$};
+
+    % Nota de equilibrio
+    \node[font=\normalsize\bfseries, black] at (-6.55, 0.9)
+        {$\displaystyle\sum\vec{F} = \vec{0}$};
+
+\end{tikzpicture}
+\end{center}
+
+%========================================
+% INTERPRETACION FISICA
+%========================================
+\section*{Interpretaci\'on F\'isica}
+
+\begin{itemize}
+    \item La soluci\'on existe \textit{solo} a la izquierda del sistema porque $q_1$ es positiva
+    (repele a $q$) y $q_2$ es negativa (atrae a $q$): desde la izquierda, estas dos acciones
+    apuntan en direcciones opuestas y pueden equilibrarse.
+
+    \item La regi\'on C no ofrece soluci\'on porque $|q_2| > |q_1|$: la atracci\'on de $q_2$
+    siempre supera la repulsi\'on de $q_1$ en esa zona, independientemente de la distancia.
+
+    \item La distancia de equilibrio es relativamente grande ($3{,}275$~m comparado con la
+    separaci\'on de $0{,}6$~m entre las cargas) porque la fuerza de $q_2$ cae con el cuadrado
+    de la distancia; para que $|\vec{F}_{q_2}|$ (con $r_{q_2} = 3{,}875$~m) iguale a
+    $|\vec{F}_{q_1}|$ (con $r_{q_1} = 3{,}275$~m) siendo $|q_2|$ solo un 40\% mayor,
+    se requiere una separaci\'on sustancial.
+
+    \item Este tipo de problema, en que se busca el punto de campo el\'ectrico nulo de un sistema
+    de cargas, es equivalente a hallar los \textbf{puntos de equilibrio del campo} $\vec{E} = \vec{0}$,
+    y tiene aplicaci\'on directa en el dise\~no de trampas electrost\'aticas y en el an\'alisis
+    de la distribuci\'on de carga en conductores.
+\end{itemize}
+
+\end{document}

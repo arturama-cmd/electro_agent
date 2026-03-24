@@ -1,0 +1,477 @@
+\documentclass[12pt,letterpaper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[spanish,es-noshorthands]{babel}
+\usepackage{amsmath,amssymb}
+\usepackage{graphicx}
+\usepackage{xcolor}
+\usepackage{tikz}
+\usetikzlibrary{calc,arrows.meta,decorations.markings,patterns}
+\usepackage[top=2.5cm, bottom=4cm, left=2cm, right=2cm, footskip=40pt]{geometry}
+\usepackage{fancyhdr}
+\usepackage{lastpage}
+
+% Colores
+\definecolor{ubbblue}{RGB}{0,51,102}
+\definecolor{cargazul}{RGB}{50,50,220}
+\definecolor{cargarojo}{RGB}{220,50,50}
+\definecolor{cargaverde}{RGB}{50,160,50}
+
+% Encabezado y pie de pagina
+\pagestyle{fancy}
+\fancyhf{}
+\renewcommand{\headrulewidth}{0pt}
+\renewcommand{\footrulewidth}{0.4pt}
+\fancyfoot[L]{\raisebox{-0.5cm}{\includegraphics[height=1.2cm]{logo ubb.png}}}
+\fancyfoot[C]{%
+    \begin{minipage}[b]{8cm}
+        \centering
+        \footnotesize\textcolor{ubbblue}{\textbf{Dr. Arturo Fern\'andez P\'erez}}\\
+        \scriptsize Departamento de F\'isica -- Universidad del B\'io-B\'io\\
+        \scriptsize\textit{Electro\_Asistente\_AI-UBB}\\
+        \tiny P\'agina \thepage\ de \pageref{LastPage}
+    \end{minipage}}
+\fancyfoot[R]{\raisebox{-0.5cm}{\includegraphics[height=1.2cm]{logo dfis.png}}}
+\fancypagestyle{plain}{%
+    \fancyhf{}
+    \renewcommand{\headrulewidth}{0pt}
+    \renewcommand{\footrulewidth}{0.4pt}
+    \fancyfoot[L]{\raisebox{-0.5cm}{\includegraphics[height=1.2cm]{logo ubb.png}}}
+    \fancyfoot[C]{%
+        \begin{minipage}[b]{8cm}
+            \centering
+            \footnotesize\textcolor{ubbblue}{\textbf{Dr. Arturo Fern\'andez P\'erez}}\\
+            \scriptsize Departamento de F\'isica -- Universidad del B\'io-B\'io\\
+            \scriptsize\textit{Electro\_Asistente\_AI-UBB}\\
+            \tiny P\'agina \thepage\ de \pageref{LastPage}
+        \end{minipage}}
+    \fancyfoot[R]{\raisebox{-0.5cm}{\includegraphics[height=1.2cm]{logo dfis.png}}}
+}
+
+\begin{document}
+
+%========================================
+% ENCABEZADO INSTITUCIONAL
+%========================================
+\begin{center}
+    \includegraphics[height=2cm]{logo ubb.png}\\[0.3cm]
+    {\large\textcolor{ubbblue}{\textbf{UNIVERSIDAD DEL B\'IO-B\'IO}}}\\[0.1cm]
+    {\normalsize Facultad de Ciencias -- Departamento de F\'isica}\\[0.1cm]
+    {\normalsize\textbf{Dr. Arturo Fern\'andez P\'erez}}
+\end{center}
+
+\vspace{0.3cm}
+\hrule height 1pt
+\vspace{0.5cm}
+
+{\centering\Large\textbf{Soluciones a los problemas de la Gu\'ia 1}\par}
+{\centering\normalsize Fuerza El\'ectrica entre Cargas Puntuales\par}
+
+\vspace{0.5cm}
+
+%========================================
+% PROBLEMA UNIDIMENSIONAL 3
+%========================================
+\section*{Problema 3 (Unidimensional)}
+
+\subsection*{Enunciado}
+
+Dado el sistema de la Fig.~1, determine la fuerza el\'ectrica que siente una carga $q = 5$~[nC], si \'esta se ubica en el punto $A$ y luego en el punto $B$.
+
+Los datos del sistema son:
+\[
+q_1 = -12{,}5\ \text{[nC]}, \quad q_2 = -6{,}25\ \text{[nC]}, \quad d_{12} = 0{,}25\ \text{[m]}
+\]
+\[
+\text{Punto }A:\ 0{,}10\ \text{m de }q_1 \quad(\text{entre las cargas})
+\qquad
+\text{Punto }B:\ 0{,}35\ \text{m de }q_1 \quad(\text{a la izquierda de }q_2)
+\]
+
+\subsection*{Diagrama}
+
+\begin{center}
+\begin{tikzpicture}[scale=1.1, >=Stealth]
+    % Eje x (extendido para incluir B a la izquierda de q2)
+    \draw[->, gray, thin] (-1.8,0) -- (3.2,0) node[right]{\small $x$};
+
+    % Cargas fuente (negativas: izquierda q2, derecha q1)
+    \fill[cargarojo] (0,0) circle (5pt) node[above=5pt]{\small $q_2{=}{-}6{,}25\ \text{nC}$};
+    \fill[cargarojo] (2.5,0) circle (5pt) node[above=5pt]{\small $q_1{=}{-}12{,}5\ \text{nC}$};
+
+    % Punto A (entre cargas: 0.15 m de q2, 0.10 m de q1)
+    \fill[cargaverde] (1.5,0) circle (4pt) node[below=5pt]{\small $A$};
+    % Punto B (izquierda de q2: 0.10 m de q2, 0.35 m de q1)
+    \fill[cargaverde] (-1.0,0) circle (4pt) node[below=5pt]{\small $B$};
+
+    % Cotas
+    \draw[<->, black, thin] (-1.0,-0.55) -- (0,-0.55) node[midway, below]{\small $0{,}10$~m};
+    \draw[<->, black, thin] (1.5,-0.55) -- (2.5,-0.55) node[midway, below]{\small $0{,}10$~m};
+    \draw[<->, black, thin] (0,-0.90) -- (2.5,-0.90) node[midway, below]{\small $0{,}25$~m};
+
+    % Flechas de fuerza en A (ambas cargas negativas atraen a q>0)
+    % F2: q2 atrae q hacia la izquierda (-x), menor magnitud
+    \draw[->, cargarojo!70, very thick] (1.5,0.90) -- (0.9,0.90) node[left]{\small $\vec{F}_2$};
+    % F1: q1 atrae q hacia la derecha (+x), mayor magnitud
+    \draw[->, cargarojo, very thick] (1.5,1.20) -- (2.3,1.20) node[right]{\small $\vec{F}_1$};
+\end{tikzpicture}
+\end{center}
+
+\subsection*{An\'alisis Cualitativo}
+
+Ambas cargas fuente son negativas y $q$ es positiva, por lo que $q$ es atra\'ida por ambas cargas fuente.
+\begin{itemize}
+    \item \textbf{Punto A} (entre $q_1$ y $q_2$): $\vec{F}_1$ atrae hacia la derecha ($+\hat{\imath}$) y $\vec{F}_2$ atrae hacia la izquierda ($-\hat{\imath}$). Como $|q_1| > |q_2|$ y $q$ est\'a m\'as cerca de $q_1$, la fuerza neta es hacia la derecha.
+    \item \textbf{Punto B} (a la izquierda de $q_2$): ambas cargas atraen $q$ hacia la derecha ($+\hat{\imath}$).
+\end{itemize}
+
+\subsection*{Desarrollo Matem\'atico}
+
+Se usa la Ley de Coulomb en forma vectorial:
+\[
+\vec{F} = K\frac{|q_{\text{fuente}}|\,|q|}{|\vec{r}\,|^3}\,\vec{r}
+\]
+donde $\vec{r}$ apunta desde la carga fuente en la direcci\'on de la fuerza y $K = 9\times10^9\ \text{[N\,m}^2/\text{C}^2\text{]}$.
+
+\vspace{0.3cm}
+\textbf{Punto A} ($q$ a $0{,}10$~m de $q_1$ y a $0{,}15$~m de $q_2$):
+
+\begin{align*}
+\vec{F}_1 &= 9\times10^9\,\frac{(12{,}5\times10^{-9})(5\times10^{-9})}{(0{,}10)^3}\,(0{,}10\,\hat{\imath})
+           = 5{,}625\times10^{-5}\,(\hat{\imath})\ \text{[N]}\\[6pt]
+\vec{F}_2 &= 9\times10^9\,\frac{(6{,}25\times10^{-9})(5\times10^{-9})}{(0{,}15)^3}\,(-0{,}15\,\hat{\imath})
+           = 1{,}25\times10^{-5}\,(-\hat{\imath})\ \text{[N]}\\[6pt]
+\vec{F}_T &= \vec{F}_1 + \vec{F}_2 = (5{,}625 - 1{,}25)\times10^{-5}\,\hat{\imath}
+\end{align*}
+
+\[
+\boxed{\vec{F}_T^{(A)} = 4{,}375\times10^{-5}\,\hat{\imath}\ \ \text{[N]}}
+\]
+
+\vspace{0.3cm}
+\textbf{Punto B} ($q$ a $0{,}35$~m de $q_1$ y a $0{,}10$~m de $q_2$):
+
+\begin{align*}
+\vec{F}_1 &= 9\times10^9\,\frac{(12{,}5\times10^{-9})(5\times10^{-9})}{(0{,}35)^3}\,(0{,}35\,\hat{\imath})
+           = 4{,}592\times10^{-6}\,(\hat{\imath})\ \text{[N]}\\[6pt]
+\vec{F}_2 &= 9\times10^9\,\frac{(6{,}25\times10^{-9})(5\times10^{-9})}{(0{,}10)^3}\,(0{,}10\,\hat{\imath})
+           = 2{,}813\times10^{-5}\,(\hat{\imath})\ \text{[N]}\\[6pt]
+\vec{F}_T &= \vec{F}_1 + \vec{F}_2 = (0{,}4592 + 2{,}813)\times10^{-5}\,\hat{\imath}
+\end{align*}
+
+\[
+\boxed{\vec{F}_T^{(B)} = 3{,}272\times10^{-5}\,\hat{\imath}\ \ \text{[N]}}
+\]
+
+\subsection*{Interpretaci\'on F\'isica}
+
+En el punto $A$, la atracci\'on de $q_1$ (m\'as cercana y de mayor magnitud) domina sobre la de $q_2$, resultando en fuerza neta hacia la derecha. En el punto $B$, ambas cargas negativas atraen $q$ en la misma direcci\'on ($+\hat{\imath}$), por lo que la fuerza neta es mayor en magnitud que cualquiera de las fuerzas individuales.
+
+
+\newpage
+%========================================
+% PROBLEMA BIDIMENSIONAL 1
+%========================================
+\section*{Problema 1 (Bidimensional)}
+
+\subsection*{Enunciado}
+
+En los v\'ertices de un cuadrado de lado $a = 5{,}5$~[cm] se ubican cuatro cargas puntuales id\'enticas $q = -5\ [\mu\text{C}]$. Determine la fuerza el\'ectrica sobre la carga ubicada en la esquina inferior izquierda.
+
+\subsection*{Diagrama}
+
+\begin{center}
+\begin{tikzpicture}[scale=2.5, >=Stealth]
+    % Cargas en las esquinas (cuadrado de lado 1)
+    \coordinate (BL) at (0,0);   % inferior izquierda (carga q4, la de interes)
+    \coordinate (BR) at (1,0);   % inferior derecha (q3)
+    \coordinate (TL) at (0,1);   % superior izquierda (q1)
+    \coordinate (TR) at (1,1);   % superior derecha (q2)
+
+    % Cuadrado
+    \draw[gray, dashed, thin] (BL) -- (BR) -- (TR) -- (TL) -- cycle;
+    % Diagonal
+    \draw[gray, dashed, very thin] (BL) -- (TR);
+
+    % Cotas
+    \draw[<->, black, thin] (0,-0.18) -- (1,-0.18) node[midway, below]{\small $a = 5{,}5$~cm};
+    \draw[<->, black, thin] (1.18,0) -- (1.18,1) node[midway, right]{\small $a$};
+    \draw[<->, black!50, thin] (-0.05,0.05) -- (0.95,1.05) node[midway, above left]{\small $a\sqrt{2}$};
+
+    % Cargas
+    \foreach \pos/\lbl in {(BR)/$-q_3$, (TL)/$-q_1$, (TR)/$-q_2$} {
+        \fill[cargarojo] \pos circle (2.5pt);
+        \node[cargarojo, font=\small] at \pos [above right=2pt] {\lbl};
+    }
+    \fill[cargazul] (BL) circle (3pt);
+    \node[cargazul, font=\small, below left=2pt] at (BL) {$-q_4$};
+
+    % Vectores de fuerza sobre q4
+    \draw[->, cargarojo, very thick] (0,0) -- (-0.38,0) node[left]{\small $\vec{F}_{43}$};
+    \draw[->, cargarojo, very thick] (0,0) -- (0,-0.38) node[below]{\small $\vec{F}_{41}$};
+    \draw[->, cargarojo, very thick] (0,0) -- (-0.27,-0.27) node[below left]{\small $\vec{F}_{42}$};
+\end{tikzpicture}
+\end{center}
+
+\subsection*{An\'alisis Cualitativo}
+
+Todas las cargas son negativas e iguales. La carga $q_4$ (inferior izquierda) es \textbf{repelida} por las otras tres. Las fuerzas apuntan:
+\begin{itemize}
+    \item $\vec{F}_{41}$: desde $q_1$ (superior izquierda) $\rightarrow$ hacia abajo ($-\hat{\jmath}$)
+    \item $\vec{F}_{43}$: desde $q_3$ (inferior derecha) $\rightarrow$ hacia la izquierda ($-\hat{\imath}$)
+    \item $\vec{F}_{42}$: desde $q_2$ (diagonal superior derecha) $\rightarrow$ hacia $(-\hat{\imath}-\hat{\jmath})$
+\end{itemize}
+
+\subsection*{Desarrollo Matem\'atico}
+
+\begin{align*}
+\vec{F}_{41} &= K\frac{q^2}{a^2}(-\hat{\jmath})\\[6pt]
+\vec{F}_{43} &= K\frac{q^2}{a^2}(-\hat{\imath})\\[6pt]
+\vec{F}_{42} &= K\frac{q^2}{(a\sqrt{2})^3}\,\bigl[a(-\hat{\imath})+a(-\hat{\jmath})\bigr]
+             = K\frac{q^2}{a^2\cdot 2^{3/2}}\bigl[(-\hat{\imath})+(-\hat{\jmath})\bigr]
+\end{align*}
+
+Sumando las tres fuerzas:
+\[
+\vec{F}_T = K\frac{q^2}{a^2}\left[-\hat{\imath} - \hat{\jmath} - \frac{\hat{\imath}}{2^{3/2}} - \frac{\hat{\jmath}}{2^{3/2}}\right]
+= K\frac{q^2}{a^2}\left[-\left(1+\frac{1}{2^{3/2}}\right)\hat{\imath} - \left(1+\frac{1}{2^{3/2}}\right)\hat{\jmath}\right]
+\]
+
+Notando que $1/2^{3/2} = 0{,}3536$:
+
+\[
+\vec{F}_T = 9\times10^9\,\frac{(5\times10^{-6})^2}{(0{,}055)^2}\left[-1{,}3536\,\hat{\imath} - 1{,}3536\,\hat{\jmath}\right]
+\]
+\[
+= 9\times10^9\,\frac{25\times10^{-12}}{3{,}025\times10^{-3}}\times(-1{,}3536)\,(\hat{\imath}+\hat{\jmath})
+\]
+\[
+= 9\times10^9 \times 8{,}264\times10^{-9} \times (-1{,}3536)\,(\hat{\imath}+\hat{\jmath})
+= 74{,}38 \times (-1{,}3536)\,(\hat{\imath}+\hat{\jmath})
+\]
+
+\[
+\boxed{\vec{F}_T = 100{,}678\,(-\hat{\imath}-\hat{\jmath})\ \ \text{[N]}}
+\]
+
+\subsection*{Interpretaci\'on F\'isica}
+
+Por la simetr\'ia del cuadrado, la fuerza neta apunta exactamente en la direcci\'on de la diagonal que pasa por $q_4$ (hacia el exterior del cuadrado, a $225^\circ$ del eje $+x$). La carga diagonal $q_2$ contribuye menos que $q_1$ y $q_3$ debido a la mayor distancia ($a\sqrt{2}$), pero su direcci\'on refuerza el resultado.
+
+\newpage
+%========================================
+% PROBLEMA BIDIMENSIONAL 2
+%========================================
+\section*{Problema 2 (Bidimensional)}
+
+\subsection*{Enunciado}
+
+Dos cargas puntuales de igual magnitud ($|q_1|=|q_2|=5$~[nC]) y signos contrarios (dipolo el\'ectrico, $q_1=+5$~nC, $q_2=-5$~nC) separadas $d=0{,}10$~m. Determine la fuerza sobre $q_0=3$~[nC] en los puntos $a$, $b$ y $c$.
+
+\subsection*{Diagrama}
+
+\begin{center}
+\begin{tikzpicture}[scale=2.0, >=Stealth]
+    % Dipolo en eje x (q1 en 0, q2 en 1)
+    \fill[cargazul]  (0,0) circle (2.5pt) node[below=5pt]{\small $q_1{=}{+}5$~nC};
+    \fill[cargarojo] (1,0) circle (2.5pt) node[below=5pt]{\small $q_2{=}{-}5$~nC};
+    \draw[gray, dashed, thin] (-0.7,0) -- (1.5,0) node[right]{\small $x$};
+
+    % Punto a (entre cargas, 0.06 de q1)
+    \fill[cargaverde] (0.6,0) circle (2pt) node[above=4pt]{\small $a$};
+    \draw[<->, black!50, thin] (0,0.28) -- (0.6,0.28) node[midway,above]{\scriptsize $0{,}06$~m};
+    \draw[<->, black!50, thin] (0.6,0.28) -- (1.0,0.28) node[midway,above]{\scriptsize $0{,}04$~m};
+
+    % Punto b (izquierda de q1, 0.04 de q1)
+    \fill[cargaverde] (-0.4,0) circle (2pt) node[above=4pt]{\small $b$};
+    \draw[<->, black!50, thin] (-0.4,-0.44) -- (0,-0.44) node[midway,below]{\scriptsize $0{,}04$~m};
+
+    % Punto c (arriba del punto medio, r=0.13 de cada carga)
+    \fill[cargaverde] (0.5, 0.96) circle (2pt) node[right=3pt]{\small $c$};
+    \draw[black!40, thin] (0,0) -- (0.5,0.96);
+    \draw[black!40, thin] (1,0) -- (0.5,0.96);
+    \node[black!60, font=\scriptsize] at (0.07,0.55) {$0{,}13$~m};
+    \node[black!60, font=\scriptsize] at (0.93,0.55) {$0{,}13$~m};
+    \node[font=\scriptsize] at (0.5, -0.62) {$\underbrace{\hspace{2.2cm}}_{d=0{,}10\ \text{m}}$};
+\end{tikzpicture}
+\end{center}
+
+\subsection*{Desarrollo Matem\'atico}
+
+\vspace{0.2cm}
+\textbf{Punto $a$} ($q_0$ a $0{,}06$~m de $q_1$ y $0{,}04$~m de $q_2$, entre las cargas):
+
+\begin{align*}
+\vec{F}_1 &= 9\times10^9\,\frac{(5\times10^{-9})(3\times10^{-9})}{(0{,}06)^3}\,(0{,}06\,\hat{\imath})
+           = 3{,}75\times10^{-5}\,\hat{\imath}\ \text{[N]}
+\quad\text{($q_1$ repele hacia }+\hat{\imath}\text{)}\\[6pt]
+\vec{F}_2 &= 9\times10^9\,\frac{(5\times10^{-9})(3\times10^{-9})}{(0{,}04)^3}\,(0{,}04\,\hat{\imath})
+           = 8{,}44\times10^{-5}\,\hat{\imath}\ \text{[N]}
+\quad\text{($q_2$ atrae hacia }+\hat{\imath}\text{)}
+\end{align*}
+
+\[
+\vec{F}_T^{(a)} = \vec{F}_1 + \vec{F}_2 = (3{,}75 + 8{,}44)\times10^{-5}\,\hat{\imath}
+\quad\Rightarrow\quad
+\boxed{\vec{F}_T^{(a)} = 1{,}219\times10^{-4}\,\hat{\imath}\ \ \text{[N]}}
+\]
+
+\vspace{0.4cm}
+\textbf{Punto $b$} ($q_0$ a $0{,}04$~m de $q_1$ y $0{,}14$~m de $q_2$, a la izquierda del dipolo):
+
+\begin{align*}
+\vec{F}_1 &= 9\times10^9\,\frac{(5\times10^{-9})(3\times10^{-9})}{(0{,}04)^3}\,(-0{,}04\,\hat{\imath})
+           = 8{,}438\times10^{-5}\,(-\hat{\imath})\ \text{[N]}
+\quad\text{($q_1$ repele hacia }-\hat{\imath}\text{)}\\[6pt]
+\vec{F}_2 &= 9\times10^9\,\frac{(5\times10^{-9})(3\times10^{-9})}{(0{,}14)^3}\,(0{,}14\,\hat{\imath})
+           = 6{,}888\times10^{-6}\,(+\hat{\imath})\ \text{[N]}
+\quad\text{($q_2$ atrae hacia }+\hat{\imath}\text{)}
+\end{align*}
+
+\[
+\vec{F}_T^{(b)} = (-8{,}438 + 0{,}6888)\times10^{-5}\,\hat{\imath}
+\quad\Rightarrow\quad
+\boxed{\vec{F}_T^{(b)} = 7{,}749\times10^{-5}\,(-\hat{\imath})\ \ \text{[N]}}
+\]
+
+\vspace{0.4cm}
+\textbf{Punto $c$} ($q_0$ a $r=0{,}13$~m de cada carga, sobre la mediatriz del dipolo):
+
+El \'angulo $\alpha$ entre el eje $x$ y el vector $\vec{r}_1$ (de $q_1$ a $c$):
+\[
+\cos\alpha = \frac{0{,}05}{0{,}13} \quad\Rightarrow\quad \alpha = 67{,}38^\circ
+\qquad
+\sin\alpha = \frac{0{,}12}{0{,}13} = 0{,}9231
+\]
+
+Vectores de posici\'on (desde cada carga hasta $c$):
+\[
+\vec{r}_1 = 0{,}13\cos\alpha\,\hat{\imath} + 0{,}13\sin\alpha\,\hat{\jmath}
+\qquad
+\vec{r}_2 = 0{,}13\cos\alpha\,\hat{\imath} - 0{,}13\sin\alpha\,\hat{\jmath}
+\]
+
+\begin{align*}
+\vec{F}_1 &= 9\times10^9\,\frac{(5\times10^{-9})(3\times10^{-9})}{(0{,}13)^3}\,(0{,}13)[\cos\alpha\,\hat{\imath}+\sin\alpha\,\hat{\jmath}]
+           = 3{,}072\times10^{-6}\,\hat{\imath} + 7{,}374\times10^{-6}\,\hat{\jmath}\ \text{[N]}\\[6pt]
+\vec{F}_2 &= 9\times10^9\,\frac{(5\times10^{-9})(3\times10^{-9})}{(0{,}13)^3}\,(0{,}13)[\cos\alpha\,\hat{\imath}-\sin\alpha\,\hat{\jmath}]
+           = 3{,}072\times10^{-6}\,\hat{\imath} - 7{,}374\times10^{-6}\,\hat{\jmath}\ \text{[N]}
+\end{align*}
+
+Las componentes $\hat{\jmath}$ se cancelan:
+\[
+\vec{F}_T^{(c)} = (3{,}072 + 3{,}072)\times10^{-6}\,\hat{\imath}
+\quad\Rightarrow\quad
+\boxed{\vec{F}_T^{(c)} = 6{,}144\times10^{-6}\,\hat{\imath}\ \ \text{[N]}}
+\]
+
+\subsection*{Interpretaci\'on F\'isica}
+
+En el punto $a$ (entre las cargas), la repulsi\'on de $q_1$ y la atracci\'on de $q_2$ act\'uan en la misma direcci\'on, produciendo la mayor fuerza. En $b$ (exterior izquierdo), la repulsi\'on de $q_1$ domina levemente sobre la atracci\'on de $q_2$. En $c$ (sobre la mediatriz), las componentes verticales se anulan por simetr\'ia y solo subsiste la componente horizontal, que resulta la m\'as peque\~na de las tres.
+
+\newpage
+%========================================
+% PROBLEMA BIDIMENSIONAL 4
+%========================================
+\section*{Problema 4 (Bidimensional)}
+
+\subsection*{Enunciado}
+
+Dos cargas puntuales $q_1$ y $q_2$ est\'an ubicadas a $4{,}5$~[cm] de distancia. Una tercera carga $Q = -1{,}75\ [\mu\text{C}]$ de masa $m = 5$~[g], equidistante a $3$~[cm] de cada una, se suelta desde el reposo y adquiere una aceleraci\'on $a_y = 324\ [\text{m/s}^2]$ hacia arriba. Determine $q_1$ y $q_2$.
+
+\subsection*{Diagrama}
+
+\begin{center}
+\begin{tikzpicture}[scale=3.5, >=Stealth]
+    % Cargas q1 y q2
+    \fill[cargazul]  (-0.5, 0) circle (2pt) node[below=5pt]{\small $q_1(+)$};
+    \fill[cargarojo] ( 0.5, 0) circle (2pt) node[below=5pt]{\small $q_2(-)$};
+
+    % Carga Q arriba
+    \coordinate (Q) at (0, 0.661);
+    \fill[black] (Q) circle (2pt) node[right=4pt]{\small $Q{=}{-}1{,}75\ \mu$C};
+
+    % Lineas de distancia
+    \draw[black!50, thin] (-0.5,0) -- (Q);
+    \draw[black!50, thin] ( 0.5,0) -- (Q);
+
+    % Cotas
+    \draw[<->, black, thin] (-0.5,-0.18) -- (0.5,-0.18) node[midway,below]{\small $4{,}5$~cm};
+    \node[font=\small] at (-0.32, 0.38) {$r{=}3$~cm};
+    \node[font=\small] at ( 0.32, 0.38) {$r{=}3$~cm};
+
+    % Angulo alpha
+    \draw[black!60] (0, 0.661) -- (0, 0.22);
+    \draw[->, black!60, thin] (0, 0.45) arc (270:242:0.22) node[below left, font=\scriptsize]{$\alpha$};
+
+    % Vectores fuerza
+    \draw[->, cargazul, very thick] (Q) -- +(-0.28,-0.45) node[left]{\small $\vec{F}_1$};
+    \draw[->, cargarojo, very thick] (Q) -- +(0.28,-0.45) node[right]{\small $\vec{F}_2$};
+    \draw[->, black, very thick] (Q) -- +(0,0.35) node[right]{\small $\vec{F}_T{=}m\vec{a}$};
+\end{tikzpicture}
+\end{center}
+
+\subsection*{An\'alisis Cualitativo}
+
+$Q$ es negativa; $q_1$ es positiva (atrae a $Q$) y $q_2$ es negativa (repele a $Q$). Ambas fuerzas tienen componentes hacia abajo que se cancelan horizontalmente por simetr\'ia (ya que $|q_1|=|q_2|$ y las distancias son iguales), y componentes verticales hacia arriba que se suman, generando la aceleraci\'on observada.
+
+\subsection*{Desarrollo Matem\'atico}
+
+\textbf{Geometr\'ia:}
+\[
+\sin\alpha = \frac{d/2}{r} = \frac{0{,}0225}{0{,}03} = 0{,}75 \quad\Rightarrow\quad \alpha = 48{,}59^\circ
+\qquad
+\cos\alpha = \sqrt{1 - 0{,}75^2} = 0{,}6614
+\]
+
+\textbf{Vectores de posici\'on} (de cada carga hasta $Q$):
+\[
+\vec{r}_1 = 0{,}03\cos\alpha\,\hat{\imath} + 0{,}03\sin\alpha\,\hat{\jmath}
+\qquad
+\vec{r}_2 = 0{,}03\cos\alpha\,(-\hat{\imath}) + 0{,}03\sin\alpha\,\hat{\jmath}
+\]
+
+\textbf{Fuerza de $q_1$ sobre $Q$:}
+\[
+\vec{F}_1 = K\frac{|Q|\,q_1}{(0{,}03)^3}\,\vec{r}_1
+= 9\times10^9\,\frac{(1{,}75\times10^{-6})\,q_1}{(0{,}03)^2}\,(\cos\alpha\,\hat{\imath} + \sin\alpha\,\hat{\jmath})
+= 1{,}75\times10^7\,q_1\,(\cos\alpha\,\hat{\imath} + \sin\alpha\,\hat{\jmath})
+\]
+\[
+= 1{,}158\times10^7\,q_1\,\hat{\imath} + 1{,}3125\times10^7\,q_1\,\hat{\jmath}\ \text{[N]}
+\]
+
+\textbf{Fuerza de $q_2$ sobre $Q$:}
+\[
+\vec{F}_2 = K\frac{|Q|\,q_2}{(0{,}03)^2}\,(-\cos\alpha\,\hat{\imath} + \sin\alpha\,\hat{\jmath})
+= 1{,}75\times10^7\,q_2\,(-\cos\alpha\,\hat{\imath} + \sin\alpha\,\hat{\jmath})
+\]
+\[
+= -1{,}158\times10^7\,q_2\,\hat{\imath} + 1{,}3125\times10^7\,q_2\,\hat{\jmath}\ \text{[N]}
+\]
+
+\textbf{Fuerza total} $\vec{F}_T = \vec{F}_1 + \vec{F}_2$:
+
+Las componentes $\hat{\imath}$ se cancelan si $q_1 = q_2 \equiv q$:
+\[
+\vec{F}_T = 2\times1{,}3125\times10^7\,q\,\hat{\jmath}\ \text{[N]}
+\]
+
+\textbf{Condici\'on din\'amica:} $\vec{F}_T = m\,\vec{a}$
+
+\[
+2\times1{,}3125\times10^7\,q = m\,a_y = (0{,}005)(324) = 1{,}62\ \text{[N]}
+\]
+
+\[
+q = \frac{1{,}62}{2\times1{,}3125\times10^7} = \frac{1{,}62}{2{,}625\times10^7}
+\]
+
+\[
+\boxed{|q_1| = |q_2| = 6{,}171\times10^{-8}\ \text{[C]} \approx 61{,}74\ \text{[nC]}}
+\]
+
+\subsection*{Interpretaci\'on F\'isica}
+
+La simetr\'ia de la configuraci\'on impone que $|q_1|=|q_2|$, ya que de otro modo existir\'ia una componente horizontal neta en la aceleraci\'on, contradiciendo lo observado. La carga $Q$ act\'ua como sensor del campo combinado: su trayectoria vertical permite determinar la magnitud de las cargas laterales.
+
+\end{document}

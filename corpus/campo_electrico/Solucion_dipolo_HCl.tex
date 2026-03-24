@@ -1,0 +1,365 @@
+\documentclass[12pt,letterpaper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[spanish,es-noshorthands]{babel}
+\usepackage{amsmath,amssymb}
+\usepackage{graphicx}
+\usepackage{xcolor}
+\usepackage{tikz}
+\usetikzlibrary{calc,arrows.meta,decorations.markings,patterns}
+\usepackage[top=2.5cm, bottom=4cm, left=2cm, right=2cm, footskip=40pt]{geometry}
+\usepackage{fancyhdr}
+\usepackage{lastpage}
+
+% Colores
+\definecolor{ubbblue}{RGB}{0,51,102}
+\definecolor{cargazul}{RGB}{50,50,220}
+\definecolor{cargarojo}{RGB}{220,50,50}
+\definecolor{cargaverde}{RGB}{50,160,50}
+\definecolor{cargamorado}{RGB}{140,0,180}
+
+% Encabezado y pie de pagina
+\pagestyle{fancy}
+\fancyhf{}
+\renewcommand{\headrulewidth}{0pt}
+\renewcommand{\footrulewidth}{0.4pt}
+\fancyfoot[L]{\raisebox{-0.5cm}{\includegraphics[height=1.2cm]{logo ubb.png}}}
+\fancyfoot[C]{%
+    \begin{minipage}[b]{8cm}
+        \centering
+        \footnotesize\textcolor{ubbblue}{\textbf{Dr. Arturo Fern\'andez P\'erez}}\\
+        \scriptsize Departamento de F\'isica -- Universidad del B\'io-B\'io\\
+        \scriptsize\textit{Electro\_Asistente\_AI-UBB}\\
+        \tiny P\'agina \thepage\ de \pageref{LastPage}
+    \end{minipage}}
+\fancyfoot[R]{\raisebox{-0.5cm}{\includegraphics[height=1.2cm]{logo dfis.png}}}
+\fancypagestyle{plain}{%
+    \fancyhf{}
+    \renewcommand{\headrulewidth}{0pt}
+    \renewcommand{\footrulewidth}{0.4pt}
+    \fancyfoot[L]{\raisebox{-0.5cm}{\includegraphics[height=1.2cm]{logo ubb.png}}}
+    \fancyfoot[C]{%
+        \begin{minipage}[b]{8cm}
+            \centering
+            \footnotesize\textcolor{ubbblue}{\textbf{Dr. Arturo Fern\'andez P\'erez}}\\
+            \scriptsize Departamento de F\'isica -- Universidad del B\'io-B\'io\\
+            \scriptsize\textit{Electro\_Asistente\_AI-UBB}\\
+            \tiny P\'agina \thepage\ de \pageref{LastPage}
+        \end{minipage}}
+    \fancyfoot[R]{\raisebox{-0.5cm}{\includegraphics[height=1.2cm]{logo dfis.png}}}
+}
+
+\begin{document}
+
+%========================================
+% ENCABEZADO INSTITUCIONAL
+%========================================
+\begin{center}
+    \includegraphics[height=2cm]{logo ubb.png}\\[0.3cm]
+    {\large\textcolor{ubbblue}{\textbf{UNIVERSIDAD DEL B\'IO-B\'IO}}}\\[0.1cm]
+    {\normalsize Facultad de Ciencias -- Departamento de F\'isica}\\[0.1cm]
+    {\normalsize\textbf{Dr. Arturo Fern\'andez P\'erez}}
+\end{center}
+
+\vspace{0.3cm}
+\hrule height 1pt
+\vspace{0.5cm}
+
+{\centering\Large\textbf{Soluci\'on: Campo El\'ectrico del Dipolo HCl}\par}
+{\centering\normalsize Campo El\'ectrico -- Dipolo El\'ectrico\par}
+
+\vspace{0.5cm}
+
+%========================================
+% ENUNCIADO
+%========================================
+\section*{Enunciado del Problema}
+
+La mol\'ecula de \'acido clorh\'idrico (HCl) se modela como un dipolo el\'ectrico
+formado por el ion Cl$^-$ (carga $-q$) y el ion H$^+$ (carga $+q$), separados por
+$d = 0{,}127$~nm. Determinar el \textbf{campo el\'ectrico resultante} en el punto~$P$,
+ubicado a $a = 0{,}5$~nm del ion Cl$^-$, siendo la recta $P$--Cl$^-$ inclinada
+$20^\circ$ respecto a la vertical (v\'ease diagrama).
+
+%========================================
+% DATOS NUMERICOS
+%========================================
+\section*{Datos Num\'ericos}
+
+\[
+q = 1{,}6\times10^{-19}\ [\text{C}],\qquad
+d = 0{,}127\times10^{-9}\ [\text{m}],\qquad
+a = 0{,}5\times10^{-9}\ [\text{m}],\qquad
+K = 9\times10^{9}\ \left[\frac{\text{N\,m}^2}{\text{C}^2}\right]
+\]
+
+%========================================
+% DIAGRAMA DE LA CONFIGURACION
+%========================================
+\section*{Diagrama de la Configuraci\'on}
+
+\begin{center}
+\begin{tikzpicture}[scale=1.0, >=Stealth]
+    % Geometria del punto P respecto a Cl- (escala 1 nm = 5 ud. TikZ):
+    %   Cl- en (0,0),  P en (-0.855, 2.350)
+    % H+ separado visualmente en (2.2, 0) para claridad del diagrama
+    % (la cota indica la separacion real d = 0.127 nm)
+
+    % Linea diagonal de P a Cl-
+    \draw[thin, black!55] (-0.855, 2.350) -- (0, 0);
+
+    % Linea vertical punteada desde P hacia abajo
+    \draw[dashed, gray!65, thin] (-0.855, 2.350) -- (-0.855, -0.55);
+
+    % Linea horizontal punteada de referencia
+    \draw[dashed, gray!65, thin] (-0.855, 0) -- (2.6, 0);
+
+    % Arco de 20° en P
+    \draw (-0.855, 1.850) arc[start angle=270, end angle=290, radius=0.5];
+    \node[font=\small] at (-0.66, 2.04) {$20^\circ$};
+
+    % Etiqueta de distancia a sobre la linea diagonal
+    \node[left, font=\small] at (-1.06, 1.18) {$a = 0{,}5$\,nm};
+
+    % Punto P
+    \fill[black] (-0.855, 2.350) circle (4pt);
+    \node[above left, font=\normalsize\bfseries] at (-0.855, 2.350) {$P$};
+
+    % Ion Cl- (grande, rojo, carga negativa) en (0,0)
+    \fill[cargarojo] (0, 0) circle (9pt);
+    \node[cargarojo, below=14pt, font=\small\bfseries] at (0, 0) {Cl$^-$};
+    \node[cargarojo, above=12pt, font=\scriptsize] at (0, 0) {$-q$};
+
+    % Ion H+ (pequeno, azul, carga positiva) en (2.2, 0)
+    \fill[cargazul] (2.2, 0) circle (5pt);
+    \node[cargazul, below=12pt, font=\small\bfseries] at (2.2, 0) {H$^+$};
+    \node[cargazul, above=10pt, font=\scriptsize] at (2.2, 0) {$+q$};
+
+    % Cota de separacion real d (con flecha doble)
+    \draw[<->, black!60, thin] (0, -0.90) -- (2.2, -0.90)
+        node[midway, below, font=\scriptsize]{$d = 0{,}127$\,nm};
+
+    % Momento dipolar
+    \draw[->, thick, black!40] (0, 0.70) -- (2.2, 0.70)
+        node[midway, above, font=\small]{$\vec{p}$};
+
+\end{tikzpicture}
+\end{center}
+
+%========================================
+% DESARROLLO
+%========================================
+\section*{Desarrollo}
+
+\subsection*{1.\; Sistema de coordenadas y posici\'on de $P$}
+
+Se ubica Cl$^-$ en el origen y H$^+$ sobre el eje $+x$:
+\[
+\text{Cl}^-:\;(0,\,0)\quad[\text{nm}],\qquad
+\text{H}^+:\;(d,\,0) = (0{,}127,\,0)\quad[\text{nm}]
+\]
+
+El punto $P$ se encuentra a distancia $a = 0{,}5$~nm de Cl$^-$, con la recta
+$P$--Cl$^-$ inclinada $20^\circ$ a la izquierda de la vertical:
+\[
+P = \bigl(-a\sin20^\circ,\;\;a\cos20^\circ\bigr)
+= \bigl(-0{,}5\times0{,}342,\;\;0{,}5\times0{,}940\bigr)\ \text{nm}
+= (-0{,}171,\;\;0{,}470)\ \text{nm}
+\]
+
+\subsection*{2.\; Campo el\'ectrico de Cl$^-$ en $P$}
+
+El vector de desplazamiento de Cl$^-$ a $P$ es (con $|\vec{r}_{-\to P}| = a$):
+\[
+\vec{r}_{-\to P} = P - \text{Cl}^-
+= (-a\sin20^\circ,\;a\cos20^\circ)
+= (-0{,}171,\;0{,}470)\times10^{-9}\ [\text{m}]
+\]
+
+Aplicando la Ley de Coulomb vectorial con $q_- = -1{,}6\times10^{-19}$~C:
+\[
+\vec{E}_{\text{Cl}^-}
+= K\frac{q_-}{|\vec{r}_{-\to P}|^3}\,\vec{r}_{-\to P}
+= \frac{9\times10^{9}\cdot(-1{,}6\times10^{-19})}{(0{,}5\times10^{-9})^3}
+  \cdot(-0{,}171,\;0{,}470)\times10^{-9}
+\]
+\[
+= \frac{-14{,}4\times10^{-10}}{1{,}25\times10^{-28}}
+  \cdot(-0{,}171,\;0{,}470)\times10^{-9}
+= -11{,}52\times10^{18}\cdot(-0{,}171,\;0{,}470)\times10^{-9}
+\]
+\[
+\vec{E}_{\text{Cl}^-}
+= \bigl(+1{,}97,\;-5{,}41\bigr)\times10^{9}\ [\text{N/C}]
+\]
+
+\subsection*{3.\; Distancia de H$^+$ a $P$}
+
+\[
+\vec{r}_{H^+\to P}
+= P - H^+
+= (-0{,}171 - 0{,}127,\;\;0{,}470 - 0)\times10^{-9}
+= (-0{,}298,\;\;0{,}470)\times10^{-9}\ [\text{m}]
+\]
+
+\[
+r_+
+= \sqrt{(0{,}298)^2 + (0{,}470)^2}\times10^{-9}
+= \sqrt{0{,}0888 + 0{,}2209}\times10^{-9}
+= \sqrt{0{,}3097}\times10^{-9}
+= 0{,}5565\times10^{-9}\ [\text{m}]
+\]
+
+Vector unitario de H$^+$ hacia $P$:
+\[
+\hat{r}_{H^+\to P}
+= \frac{(-0{,}298,\;\;0{,}470)}{0{,}5565}
+= (-0{,}536,\;\;0{,}845)
+\]
+
+\subsection*{4.\; Campo el\'ectrico de H$^+$ en $P$}
+
+Aplicando la Ley de Coulomb vectorial con $q_+ = +1{,}6\times10^{-19}$~C:
+\[
+\vec{E}_{H^+}
+= K\frac{q_+}{|\vec{r}_{H^+\to P}|^3}\,\vec{r}_{H^+\to P}
+= \frac{9\times10^{9}\cdot1{,}6\times10^{-19}}{(0{,}5565\times10^{-9})^3}
+  \cdot(-0{,}298,\;0{,}470)\times10^{-9}
+\]
+
+Con $(0{,}5565)^3 = 0{,}1724$, es decir $(0{,}5565\times10^{-9})^3 = 1{,}724\times10^{-28}$~m$^3$:
+\[
+= \frac{14{,}4\times10^{-10}}{1{,}724\times10^{-28}}
+  \cdot(-0{,}298,\;0{,}470)\times10^{-9}
+= 8{,}354\times10^{18}\cdot(-0{,}298,\;0{,}470)\times10^{-9}
+\]
+\[
+\vec{E}_{H^+}
+= \bigl(-2{,}49,\;+3{,}93\bigr)\times10^{9}\ [\text{N/C}]
+\]
+
+\subsection*{5.\; Campo el\'ectrico total en $P$}
+
+Por el principio de superposici\'on:
+
+\begin{align*}
+\vec{E}_P
+&= \vec{E}_{\text{Cl}^-} + \vec{E}_{H^+} \\[6pt]
+&= \bigl(+1{,}97 + (-2{,}49)\bigr)\,\hat{\imath}\times10^{9}
+   \;+\; \bigl(-5{,}41 + 3{,}93\bigr)\,\hat{\jmath}\times10^{9}\ [\text{N/C}]\\[6pt]
+&= \bigl(-0{,}52\,\hat{\imath} - 1{,}48\,\hat{\jmath}\bigr)\times10^{9}\ [\text{N/C}]
+\end{align*}
+
+%========================================
+% RESULTADO FINAL
+%========================================
+\section*{Resultado Final}
+
+\[
+\boxed{
+\vec{E}_P
+= \bigl(-0{,}52\,\hat{\imath} - 1{,}48\,\hat{\jmath}\bigr)\times10^{9}\ [\text{N/C}]
+}
+\]
+
+\vspace{0.4cm}
+
+\textbf{M\'odulo:}
+\[
+|\vec{E}_P|
+= \sqrt{(0{,}52)^2+(1{,}48)^2}\times10^{9}
+= \sqrt{0{,}270 + 2{,}190}\times10^{9}
+= \sqrt{2{,}460}\times10^{9}
+\approx \boxed{1{,}57\times10^{9}\ [\text{N/C}]}
+\]
+
+\textbf{Direcci\'on} (\'angulo respecto a la vertical descendente $-\hat{\jmath}$,
+hacia el lado de Cl$^-$):
+\[
+\alpha
+= \arctan\!\left(\frac{|E_x|}{|E_y|}\right)
+= \arctan\!\left(\frac{0{,}52}{1{,}48}\right)
+= \arctan(0{,}351)
+\approx \boxed{19{,}4^\circ}
+\]
+
+\vspace{0.5cm}
+
+%========================================
+% DIAGRAMA DE VECTORES DE CAMPO EN P
+%========================================
+\begin{center}
+\begin{tikzpicture}[scale=1.0, >=Stealth]
+    % Escala de campo: E_Cl- (5.76 GN/C) -> 2.5 unidades TikZ
+    % E_H+  (4.65 GN/C) -> 2.017 unidades
+    % E_P   (1.57 GN/C) -> 0.683 unidades
+    %
+    % Extremos:
+    %   E_Cl-  :  (0.342x2.5,  -0.940x2.5) = ( 0.855, -2.350)
+    %   E_H+   :  (-0.536x2.017, 0.845x2.017) = (-1.081,  1.704)
+    %   E_P    :  (-0.330x0.683, -0.944x0.683) = (-0.225, -0.645)
+    %   Cierre del paralelogramo: (0.855-1.081, -2.350+1.704) = (-0.226, -0.646) OK
+
+    % Punto P
+    \fill[black] (0,0) circle (4pt);
+    \node[above right, font=\normalsize\bfseries] at (0.08, 0.08) {$P$};
+
+    % Campo de Cl- (rojo): apunta hacia abajo-derecha
+    \draw[->, cargarojo, very thick] (0,0) -- (0.855, -2.350);
+    \node[cargarojo, right, font=\small\bfseries] at (0.855, -2.350)
+        {$\vec{E}_{\text{Cl}^-}$};
+    \node[cargarojo, font=\scriptsize, right] at (0.48, -1.28)
+        {$5{,}76\times10^{9}$\,N/C};
+
+    % Campo de H+ (azul): apunta hacia arriba-izquierda
+    \draw[->, cargazul, very thick] (0,0) -- (-1.081, 1.704);
+    \node[cargazul, left, font=\small\bfseries] at (-1.081, 1.704)
+        {$\vec{E}_{H^+}$};
+    \node[cargazul, font=\scriptsize, left] at (-0.60, 0.95)
+        {$4{,}65\times10^{9}$\,N/C};
+
+    % Lineas punteadas del paralelogramo
+    \draw[dashed, cargarojo!45, thin] (-1.081, 1.704) -- (-0.226, -0.646);
+    \draw[dashed, cargazul!45, thin]  (0.855, -2.350) -- (-0.226, -0.646);
+
+    % Campo total (morado): apunta hacia abajo-izquierda
+    \draw[->, cargamorado, ultra thick] (0,0) -- (-0.225, -0.645);
+    \node[cargamorado, left, font=\small\bfseries] at (-0.30, -0.65)
+        {$\vec{E}_P$};
+    \node[cargamorado, font=\scriptsize, right] at (-0.20, -0.28)
+        {$1{,}57\times10^{9}$\,N/C};
+
+\end{tikzpicture}
+\end{center}
+
+%========================================
+% INTERPRETACION FISICA
+%========================================
+\section*{Interpretaci\'on F\'isica}
+
+\begin{itemize}
+    \item $\vec{E}_P$ apunta principalmente en la direcci\'on $-\hat{\jmath}$
+    (hacia abajo) porque la componente vertical de $\vec{E}_{\text{Cl}^-}$
+    ($-5{,}41\times10^{9}$~N/C) supera en m\'odulo a la de $\vec{E}_{H^+}$
+    ($+3{,}93\times10^{9}$~N/C), al ser Cl$^-$ el ion m\'as cercano a $P$.
+
+    \item La componente horizontal neta es peque\~na y negativa
+    ($-0{,}52\times10^{9}$~N/C): H$^+$ est\'a m\'as alejado y con mayor
+    inclinaci\'on respecto a $P$, lo que hace que su campo ``jale'' hacia la
+    izquierda m\'as de lo que el de Cl$^-$ empuja hacia la derecha.
+
+    \item Aunque $|\vec{E}_{\text{Cl}^-}|$ es solo un $24\%$ mayor que
+    $|\vec{E}_{H^+}|$, el m\'odulo resultante ($1{,}57\times10^{9}$~N/C) es
+    m\'as de \textit{tres veces} menor que cada campo individual: esto ilustra
+    la fuerte \textbf{cancelaci\'on vectorial} caracter\'istica de los dipolos.
+
+    \item El \'angulo del campo resultante ($\approx 19{,}4^\circ$ de la vertical)
+    pr\'acticamente coincide con el \'angulo geom\'etrico de la configuraci\'on
+    ($20^\circ$), revelando la fuerte influencia de la carga m\'as cercana
+    (Cl$^-$) en la direcci\'on del campo neto.
+
+    \item \textbf{Nota metodol\'ogica}: no se usa la aproximaci\'on de dipolo
+    ($r \gg d$) porque $a/d \approx 4$ no es suficientemente grande. Se aplica
+    la \textbf{superposici\'on exacta} de los campos de las dos cargas puntuales.
+\end{itemize}
+
+\end{document}
