@@ -1,0 +1,751 @@
+\documentclass[12pt,letterpaper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[spanish,es-noshorthands]{babel}
+\usepackage{amsmath,amssymb}
+\usepackage{graphicx}
+\usepackage{xcolor}
+\usepackage{tikz}
+\usetikzlibrary{calc,arrows.meta,decorations.markings,patterns}
+\usepackage{enumerate}
+\usepackage[top=2.5cm, bottom=4cm, left=2cm, right=2cm, footskip=40pt]{geometry}
+\usepackage{fancyhdr}
+\usepackage{lastpage}
+\usepackage{booktabs}
+
+% Colores institucionales
+\definecolor{ubbblue}{RGB}{0,51,102}
+\definecolor{cargazul}{RGB}{50,50,220}
+\definecolor{cargarojo}{RGB}{220,50,50}
+\definecolor{cargaverde}{RGB}{30,140,30}
+\definecolor{carganaranja}{RGB}{200,100,0}
+
+% Encabezado y pie de pagina
+\pagestyle{fancy}
+\fancyhf{}
+\renewcommand{\headrulewidth}{0pt}
+\renewcommand{\footrulewidth}{0.4pt}
+\fancyfoot[L]{\raisebox{-0.5cm}{\includegraphics[height=1.2cm]{logo ubb.png}}}
+\fancyfoot[C]{%
+    \begin{minipage}[b]{8cm}\centering
+        \footnotesize\textcolor{ubbblue}{\textbf{Dr.\ Arturo Fern\'andez P\'erez}}\\
+        \scriptsize Departamento de F\'isica -- Universidad del B\'io-B\'io\\
+        \scriptsize\textit{Electro\_Asistente\_AI-UBB}\\
+        \tiny P\'agina \thepage\ de \pageref{LastPage}
+    \end{minipage}}
+\fancyfoot[R]{\raisebox{-0.5cm}{\includegraphics[height=1.2cm]{logo dfis.png}}}
+
+\fancypagestyle{plain}{%
+  \fancyhf{}
+  \renewcommand{\headrulewidth}{0pt}
+  \renewcommand{\footrulewidth}{0.4pt}
+  \fancyfoot[L]{\raisebox{-0.5cm}{\includegraphics[height=1.2cm]{logo ubb.png}}}
+  \fancyfoot[C]{%
+    \begin{minipage}[b]{8cm}\centering
+        \footnotesize\textcolor{ubbblue}{\textbf{Dr.\ Arturo Fern\'andez P\'erez}}\\
+        \scriptsize Departamento de F\'isica -- Universidad del B\'io-B\'io\\
+        \scriptsize\textit{Electro\_Asistente\_AI-UBB}\\
+        \tiny P\'agina \thepage\ de \pageref{LastPage}
+    \end{minipage}}
+  \fancyfoot[R]{\raisebox{-0.5cm}{\includegraphics[height=1.2cm]{logo dfis.png}}}
+}
+
+\begin{document}
+
+%========================================
+% ENCABEZADO INSTITUCIONAL
+%========================================
+\begin{center}
+    \includegraphics[height=2cm]{logo ubb.png}\\[0.3cm]
+    {\large\textcolor{ubbblue}{\textbf{UNIVERSIDAD DEL B\'IO-B\'IO}}}\\[0.1cm]
+    {\normalsize Facultad de Ciencias -- Departamento de F\'isica}\\[0.1cm]
+    {\normalsize\textbf{Dr.\ Arturo Fern\'andez P\'erez}}
+\end{center}
+
+\vspace{0.3cm}\hrule height 1pt\vspace{0.5cm}
+
+{\centering\Large\textbf{Soluciones: Gu\'ia 2 -- Campo El\'ectrico de Cargas Puntuales}\par}
+{\centering\normalsize Problemas 1.1, 2.1 y 2.2\par}
+
+\vspace{0.6cm}
+
+%################################################################
+\section*{\textcolor{ubbblue}{Problema 1.1 \;--\; Secci\'on Unidimensional}}
+%################################################################
+
+\subsection*{Enunciado}
+
+Dos cargas puntuales est\'an sobre el eje $X$: la primera, $+Q$, en $x = -a$;
+la segunda, $q_2$ desconocida, en $x = 3a$.
+El campo el\'ectrico total en el origen tiene magnitud $2K_e Q/a^2$.
+?`Qu\'e valores puede tomar $q_2$?
+
+\subsection*{Datos y sistema de coordenadas}
+
+\[
+    q_1 = +Q\ \text{en}\ (-a,\,0), \qquad q_2 = ?\ \text{en}\ (3a,\,0),
+    \qquad |\vec{E}_T| = \frac{2K_e Q}{a^2}
+\]
+
+\subsection*{Diagrama}
+
+\begin{center}
+\begin{tikzpicture}[scale=1.0,>=Stealth]
+    % Eje x
+    \draw[->,gray,thin] (-4.5,0)--(5.5,0) node[right]{$x$};
+    % Marcas en el eje
+    \draw[gray,thin] (-3,0.1)--(-3,-0.1) node[below]{\footnotesize$-a$};
+    \draw[gray,thin] (0,0.1)--(0,-0.1)   node[below]{\footnotesize$0$};
+    \draw[gray,thin] (3,0.1)--(3,-0.1)   node[below]{\footnotesize$3a$};
+    % Carga +Q
+    \fill[cargazul] (-3,0) circle(7pt);
+    \node[cargazul,above=8pt,font=\small\bfseries] at (-3,0) {$+Q$};
+    % Carga desconocida
+    \fill[gray!60] (3,0) circle(7pt);
+    \node[gray!70,above=8pt,font=\small\bfseries] at (3,0) {$q_2=?$};
+    % Origen
+    \fill[black] (0,0) circle(3.5pt);
+    \node[above=8pt,font=\small\bfseries] at (0,0) {$O$};
+    % E1 en origen (apunta +x, de +Q hacia la derecha)
+    \draw[->,cargazul,very thick] (0,0.6)--(1.4,0.6)
+        node[above,font=\small]{$\vec{E}_1$};
+    % E2 depende del signo de q2 (flecha doble con ?)
+    \draw[->,gray!70,very thick] (0,-0.6)--(-1.4,-0.6)
+        node[below,font=\small]{$\vec{E}_2$ (si $q_2<0$)};
+\end{tikzpicture}
+\end{center}
+
+\subsection*{Campos individuales en el origen}
+
+Usando la ley de Coulomb vectorial $\vec{E} = K\,q\,\vec{r}/r^3$,
+donde $\vec{r}$ va de la carga fuente al punto de inter\'es:
+
+\medskip
+\noindent\textbf{Campo de $q_1=+Q$ en $x=-a$:}
+\[
+    \vec{r}_1 = 0 - (-a)\,\hat{\imath} = a\,\hat{\imath}, \quad r_1 = a
+\]
+\[
+    \vec{E}_1 = K\frac{Q}{a^3}(a\,\hat{\imath}) = \frac{KQ}{a^2}\,\hat{\imath}
+\]
+
+\noindent\textbf{Campo de $q_2$ en $x=3a$:}
+\[
+    \vec{r}_2 = 0 - 3a\,\hat{\imath} = -3a\,\hat{\imath}, \quad r_2 = 3a
+\]
+\[
+    \vec{E}_2 = K\frac{q_2}{(3a)^3}(-3a\,\hat{\imath})
+             = -\frac{Kq_2}{9a^2}\,\hat{\imath}
+\]
+
+\subsection*{Condici\'on de magnitud}
+
+\[
+    \vec{E}_T = \vec{E}_1 + \vec{E}_2
+    = \frac{K}{a^2}\!\left(Q - \frac{q_2}{9}\right)\hat{\imath}
+\]
+
+\[
+    |\vec{E}_T| = \frac{K}{a^2}\left|Q - \frac{q_2}{9}\right| = \frac{2KQ}{a^2}
+    \qquad\Longrightarrow\qquad
+    \left|Q - \frac{q_2}{9}\right| = 2Q
+\]
+
+\subsection*{Dos casos}
+
+\noindent\textbf{Caso 1:}
+\[
+    Q - \frac{q_2}{9} = +2Q \;\Rightarrow\; \frac{q_2}{9} = -Q
+    \;\Rightarrow\; \boxed{q_2 = -9Q}
+\]
+El campo total apunta en $+\hat{\imath}$. La carga negativa $q_2$ atrae
+el campo hacia $+x$, sum\'andose a $\vec{E}_1$. \checkmark
+
+\medskip
+\noindent\textbf{Caso 2:}
+\[
+    Q - \frac{q_2}{9} = -2Q \;\Rightarrow\; \frac{q_2}{9} = 3Q
+    \;\Rightarrow\; \boxed{q_2 = +27Q}
+\]
+El campo total apunta en $-\hat{\imath}$: la repulsi\'on de la carga positiva
+$q_2$ domina y revierte la direcci\'on del campo neto. \checkmark
+
+\medskip
+\noindent\textbf{Verificaci\'on (Caso 2):}
+\[
+    \vec{E}_T = \frac{K}{a^2}\!\left(Q - \frac{27Q}{9}\right)\hat{\imath}
+    = \frac{KQ}{a^2}(1-3)\,\hat{\imath} = -\frac{2KQ}{a^2}\,\hat{\imath}
+    \quad\Rightarrow\quad |\vec{E}_T| = \frac{2KQ}{a^2} \;\checkmark
+\]
+
+\clearpage
+
+%################################################################
+\section*{\textcolor{ubbblue}{Problema 1.2 \;--\; Secci\'on Unidimensional (Fig.\ 1)}}
+%################################################################
+
+\subsection*{Enunciado}
+
+Para la configuraci\'on de la Fig.\ 1 ($q_1 = -2{,}50\,[\mu\text{C}]$ y
+$q_2 = +6{,}00\,[\mu\text{C}]$ separadas $L = 1{,}00\,[\text{m}]$),
+determinar el punto (aparte del infinito) donde el campo el\'ectrico se anula.
+
+\subsection*{Datos}
+
+\[
+    q_1 = -2{,}50\;[\mu\text{C}]\;\text{en}\; x=0, \qquad
+    q_2 = +6{,}00\;[\mu\text{C}]\;\text{en}\; x = L = 1{,}00\;[\text{m}]
+\]
+
+\subsection*{An\'alisis de regiones}
+
+Se identifican tres regiones y se estudia la direcci\'on de los campos en
+un punto de prueba P en cada una:
+
+\begin{center}
+\begin{tikzpicture}[scale=1.0,>=Stealth]
+    % eje x
+    \draw[->,gray,thin] (-5.0,0)--(7.2,0) node[right]{$x$};
+
+    % marcas del eje
+    \draw[gray,thin] (0, 0.12)--(0,-0.12) node[below,font=\scriptsize]{$0$};
+    \draw[gray,thin] (4, 0.12)--(4,-0.12) node[below,font=\scriptsize]{$L$};
+
+    % === CARGAS FUENTE: etiquetas DEBAJO del eje ===
+    \fill[cargarojo] (0,0) circle(7pt);
+    \node[cargarojo, below=14pt, font=\small\bfseries] at (0,0)
+        {$q_1{=}{-}2{,}5\,\mu$C};
+
+    \fill[cargazul] (4,0) circle(7pt);
+    \node[cargazul, below=14pt, font=\small\bfseries] at (4,0)
+        {$q_2{=}{+}6{,}0\,\mu$C};
+
+    % cota L (más abajo para no chocar con etiquetas)
+    \draw[<->,black!55] (0,-1.0)--(4,-1.0)
+        node[midway,below,font=\scriptsize]{$L=1{,}00$\,m};
+
+    % =====================
+    % REGION A  (x=-3)
+    % =====================
+    \fill[cargaverde!50] (-3,0) circle(5pt);
+    \node[font=\small\bfseries, cargaverde!80, below=14pt] at (-3,0) {A};
+
+    % Vectores E ARRIBA del eje
+    \draw[->, cargarojo, thick] (-3, 1.55)--(-1.8, 1.55)
+        node[right, font=\scriptsize]{$\vec{E}_1 \,(+x)$};
+    \draw[->, cargazul, thick] (-3, 0.90)--(-4.2, 0.90)
+        node[left, font=\scriptsize]{$\vec{E}_2 \,(-x)$};
+
+    % =====================
+    % REGION B  (x=2)
+    % =====================
+    \fill[gray!50] (2,0) circle(5pt);
+    \node[font=\small\bfseries, gray!70, below=14pt] at (2,0) {B};
+
+    % Vectores E ARRIBA del eje
+    \draw[->, cargarojo!70, thick] (2, 1.55)--(0.8, 1.55)
+        node[left, font=\scriptsize]{$\vec{E}_1 \,(-x)$};
+    \draw[->, cargazul!70, thick] (2, 0.90)--(0.8, 0.90)
+        node[left, font=\scriptsize]{$\vec{E}_2 \,(-x)$};
+
+    % =====================
+    % REGION C  (x=6)
+    % =====================
+    \fill[gray!50] (6,0) circle(5pt);
+    \node[font=\small\bfseries, gray!70, below=14pt] at (6,0) {C};
+
+    % Vectores E ARRIBA del eje
+    \draw[->, cargarojo!70, thick] (6, 1.55)--(4.8, 1.55)
+        node[left, font=\scriptsize]{$\vec{E}_1 \,(-x)$};
+    \draw[->, cargazul!70, thick] (6, 0.90)--(7.2, 0.90)
+        node[right, font=\scriptsize]{$\vec{E}_2 \,(+x)$};
+
+\end{tikzpicture}
+\end{center}
+
+\begin{itemize}
+    \item \textbf{Regi\'on A} (izquierda de $q_1$):
+    $\vec{E}_1$ apunta en $+\hat{\imath}$ (hacia la carga negativa $q_1$);
+    $\vec{E}_2$ apunta en $-\hat{\imath}$ (alejandose de la carga positiva $q_2$).
+    Sentidos \textbf{opuestos} $\Rightarrow$ cancelaci\'on posible. Se procede a calcular.
+
+    \item \textbf{Regi\'on B} (entre las cargas):
+    $\vec{E}_1$ apunta en $-\hat{\imath}$ (hacia $q_1$, a la izquierda) y
+    $\vec{E}_2$ tambi\'en en $-\hat{\imath}$ (alejandose de $q_2$, a la derecha).
+    Ambos campos son \textbf{paralelos y del mismo sentido} $\Rightarrow$
+    la suma nunca puede ser cero. Se descarta sin necesidad de calcular. $\times$
+
+    \item \textbf{Regi\'on C} (derecha de $q_2$):
+    $\vec{E}_1$ apunta en $-\hat{\imath}$ (hacia $q_1$) y
+    $\vec{E}_2$ apunta en $+\hat{\imath}$ (alejandose de $q_2$).
+    Sentidos \textbf{opuestos} $\Rightarrow$ cancelaci\'on posible en principio.
+    Se debe calcular para verificar si existe soluci\'on f\'isica ($d>0$).
+\end{itemize}
+
+%-----------------------------
+\subsection*{C\'alculo en la Regi\'on A}
+%-----------------------------
+
+Sea P a distancia $d_A > 0$ a la izquierda de $q_1$, es decir, en $x = -d_A$:
+
+\[
+    \vec{r}_1 = -d_A\,\hat{\imath},\quad r_1 = d_A \qquad
+    \vec{r}_2 = -(d_A+L)\,\hat{\imath},\quad r_2 = d_A+L
+\]
+
+\[
+    \vec{E}_1 = K\frac{(-2{,}5\times10^{-6})}{d_A^3}(-d_A\,\hat{\imath})
+    = +\frac{K\cdot2{,}5\times10^{-6}}{d_A^2}\,\hat{\imath}
+    \qquad
+    \vec{E}_2 = K\frac{6{,}0\times10^{-6}}{(d_A+L)^3}\bigl(-(d_A+L)\hat{\imath}\bigr)
+    = -\frac{K\cdot6{,}0\times10^{-6}}{(d_A+L)^2}\,\hat{\imath}
+\]
+
+Condici\'on $\vec{E}_T = \vec{0}$:
+\[
+    \frac{2{,}5}{d_A^2} = \frac{6{,}0}{(d_A+L)^2}
+    \;\Rightarrow\;
+    \frac{(d_A+L)^2}{d_A^2} = \frac{6{,}0}{2{,}5} = 2{,}4
+    \;\Rightarrow\;
+    \frac{d_A+L}{d_A} = \sqrt{2{,}4}
+    \;\Rightarrow\;
+    d_A = \frac{L}{\sqrt{2{,}4}-1} = \frac{1{,}00}{1{,}5492-1}
+\]
+
+\[
+    \boxed{d_A \approx 1{,}821\;[\text{m}]
+    \quad\text{a la izquierda de }q_1 = -2{,}5\;[\mu\text{C}]}
+    \quad \checkmark
+\]
+
+%-----------------------------
+\subsection*{C\'alculo en la Regi\'on C}
+%-----------------------------
+
+Sea P a distancia $d_C > 0$ a la derecha de $q_2$, es decir, en $x = L + d_C$:
+
+\[
+    \vec{r}_1 = (L+d_C)\,\hat{\imath},\quad r_1 = L+d_C \qquad
+    \vec{r}_2 = d_C\,\hat{\imath},\quad r_2 = d_C
+\]
+
+\[
+    \vec{E}_1 = K\frac{(-2{,}5\times10^{-6})}{(L+d_C)^3}(L+d_C)\,\hat{\imath}
+    = -\frac{K\cdot2{,}5\times10^{-6}}{(L+d_C)^2}\,\hat{\imath}
+    \qquad
+    \vec{E}_2 = K\frac{6{,}0\times10^{-6}}{d_C^3}(d_C\,\hat{\imath})
+    = +\frac{K\cdot6{,}0\times10^{-6}}{d_C^2}\,\hat{\imath}
+\]
+
+Condici\'on $\vec{E}_T = \vec{0}$:
+\[
+    \frac{6{,}0}{d_C^2} = \frac{2{,}5}{(L+d_C)^2}
+    \;\Rightarrow\;
+    6{,}0\,(d_C+L)^2 = 2{,}5\,d_C^2
+\]
+
+Expandiendo con $L = 1{,}00$\,m:
+\[
+    6{,}0\,d_C^2 + 12{,}0\,d_C + 6{,}0 = 2{,}5\,d_C^2
+    \;\Rightarrow\;
+    3{,}5\,d_C^2 + 12{,}0\,d_C + 6{,}0 = 0
+\]
+
+Discriminante:
+\[
+    \Delta = (12{,}0)^2 - 4\,(3{,}5)\,(6{,}0) = 144 - 84 = 60 > 0
+\]
+
+Ra\'ices:
+\[
+    d_C = \frac{-12{,}0 \pm \sqrt{60}}{2\times3{,}5}
+    = \frac{-12{,}0 \pm 7{,}746}{7}
+\]
+\[
+    d_{C1} = \frac{-12{,}0 + 7{,}746}{7} \approx -0{,}608\;[\text{m}] < 0
+    \qquad
+    d_{C2} = \frac{-12{,}0 - 7{,}746}{7} \approx -2{,}821\;[\text{m}] < 0
+\]
+
+Ambas ra\'ices son negativas, por lo que \textbf{no existe soluci\'on f\'isica en la
+Regi\'on C}. $\times$
+
+%-----------------------------
+\subsection*{Diagrama de la soluci\'on}
+%-----------------------------
+
+\begin{center}
+\begin{tikzpicture}[scale=0.85,>=Stealth]
+    \draw[->,gray,thin] (-8.5,0)--(4.5,0) node[right]{$x$};
+    \draw[gray,thin] (0,0.1)--(0,-0.1)  node[below]{\footnotesize$x{=}0$};
+    \draw[gray,thin] (3,0.1)--(3,-0.1)  node[below]{\footnotesize$x{=}1$\,m};
+    % Cargas
+    \fill[cargarojo] (0,0) circle(7pt);
+    \node[cargarojo,above=10pt,font=\small\bfseries] at (0,0){$q_1{=}{-}2{,}5\,\mu$C};
+    \fill[cargazul]  (3,0) circle(7pt);
+    \node[cargazul,above=10pt,font=\small\bfseries]  at (3,0){$q_2{=}{+}6{,}0\,\mu$C};
+    % Punto P
+    \fill[cargaverde] (-7.28,0) circle(5pt);
+    \node[cargaverde,above=10pt,font=\small\bfseries] at (-7.28,0){P};
+    % Cota d_A
+    \draw[<->,cargaverde!70,thick] (-7.28,-0.7)--(0,-0.7)
+        node[midway,below,font=\small]{$d_A=1{,}821$\,m};
+    % Cota d_A+L
+    \draw[<->,gray!60] (-7.28,-1.4)--(3,-1.4)
+        node[midway,below,font=\scriptsize]{$d_A+L=2{,}821$\,m};
+    % Flechas E en P (equilibradas, mismo tamano)
+    \draw[->,cargarojo,ultra thick] (-7.28,0.75)--(-6.15,0.75)
+        node[right,font=\small]{$\vec{E}_1$};
+    \draw[->,cargazul,ultra thick]  (-7.28,0.75)--(-8.41,0.75)
+        node[left,font=\small]{$\vec{E}_2$};
+    \node[font=\normalsize\bfseries] at (-7.28,1.45)
+        {$\displaystyle\sum\vec{E}=\vec{0}$};
+\end{tikzpicture}
+\end{center}
+
+\subsection*{Verificaci\'on}
+
+\[
+    |\vec{E}_1| = K\frac{|q_1|}{d_A^2}
+    = \frac{9\times10^9\times2{,}5\times10^{-6}}{(1{,}821)^2}
+    = \frac{22\,500}{3{,}316} \approx 6\,787\;[\text{N/C}]
+\]
+\[
+    |\vec{E}_2| = K\frac{|q_2|}{(d_A+L)^2}
+    = \frac{9\times10^9\times6{,}0\times10^{-6}}{(2{,}821)^2}
+    = \frac{54\,000}{7{,}958} \approx 6\,787\;[\text{N/C}]
+\quad\checkmark
+\]
+
+\clearpage
+
+%################################################################
+\section*{\textcolor{ubbblue}{Problema 2.1 \;--\; Secci\'on Bidimensional (Fig.\ 2)}}
+%################################################################
+
+\subsection*{Enunciado}
+
+Tres cargas puntuales negativas se ubican como muestra la Fig.\ 2.
+Determinar el campo el\'ectrico resultante en P y la fuerza sobre una
+carga $q = -1\,[\mu\text{C}]$ colocada en P.
+
+\subsection*{Datos}
+
+\[
+    q_1 = -5{,}00\;[\mu\text{C}],\quad
+    q_2 = -2{,}00\;[\mu\text{C}],\quad
+    q_3 = -5{,}00\;[\mu\text{C}]
+\]
+\[
+    a = 8{,}00\;[\text{cm}] = 0{,}08\;[\text{m}], \qquad
+    b = 6{,}00\;[\text{cm}] = 0{,}06\;[\text{m}]
+\]
+\[
+    K = 9\times10^9\;\left[\frac{\text{N\,m}^2}{\text{C}^2}\right]
+\]
+
+\subsection*{Sistema de coordenadas y diagrama}
+
+Se coloca el origen en la carga $q_2$ (central):
+
+\begin{center}
+\begin{tikzpicture}[scale=1.1,>=Stealth]
+    % Ejes
+    \draw[->,gray,thin] (-0.5,0)--(4.0,0) node[right]{$x$};
+    \draw[->,gray,thin] (0,-2.5)--(0,2.5)  node[above]{$y$};
+    \node[gray,below left=2pt,font=\small] at (0,0){$O$};
+
+    % Cargas
+    \fill[cargarojo] (0, 1.8) circle(7pt);
+    \node[cargarojo,left=8pt,font=\small\bfseries] at (0,1.8){$q_1{=}{-}5\,\mu$C};
+    \node[gray,right=5pt,font=\scriptsize] at (0,1.8){$(0,\,a)$};
+
+    \fill[cargarojo] (0, 0) circle(7pt);
+    \node[cargarojo,left=8pt,font=\small\bfseries] at (0,0){$q_2{=}{-}2\,\mu$C};
+
+    \fill[cargarojo] (0,-1.8) circle(7pt);
+    \node[cargarojo,left=8pt,font=\small\bfseries] at (0,-1.8){$q_3{=}{-}5\,\mu$C};
+    \node[gray,right=5pt,font=\scriptsize] at (0,-1.8){$(0,\,-a)$};
+
+    % Punto P
+    \coordinate (P) at (2.7,0);
+    \fill[black] (P) circle(4pt);
+    \node[above right=3pt,font=\small\bfseries] at (P){P};
+    \node[gray,below right=2pt,font=\scriptsize] at (P){$(b,\,0)$};
+
+    % Cotas
+    \draw[<->,black!70] (0,2.3)--(0,0.3) node[midway,right,font=\scriptsize]{$a{=}8$\,cm};
+    \draw[<->,black!70] (0,-0.3)--(0,-2.3) node[midway,right,font=\scriptsize]{$a{=}8$\,cm};
+    \draw[<->,black!70] (0,0.3)--(2.7,0.3) node[midway,above,font=\scriptsize]{$b{=}6$\,cm};
+
+    % Vectores r
+    \draw[->,cargarojo!50,dashed] (0,1.8)--(P)
+        node[midway,above right,font=\scriptsize]{$\vec{r}_1$};
+    \draw[->,cargarojo!50,dashed] (0,0)--(P)
+        node[midway,above,font=\scriptsize]{$\vec{r}_2$};
+    \draw[->,cargarojo!50,dashed] (0,-1.8)--(P)
+        node[midway,below right,font=\scriptsize]{$\vec{r}_3$};
+\end{tikzpicture}
+\end{center}
+
+\[
+    \text{Posici\'on de P:}\quad (b,\,0) = (0{,}06;\;0)\;[\text{m}]
+\]
+
+\subsection*{Vectores de posici\'on y distancias}
+
+\[
+    \vec{r}_1 = (b-0)\,\hat{\imath} + (0-a)\,\hat{\jmath}
+    = 0{,}06\,\hat{\imath} - 0{,}08\,\hat{\jmath}\;[\text{m}]
+    \qquad r_1 = \sqrt{b^2+a^2} = \sqrt{0{,}06^2+0{,}08^2} = 0{,}10\;[\text{m}]
+\]
+\[
+    \vec{r}_2 = b\,\hat{\imath} = 0{,}06\,\hat{\imath}\;[\text{m}]
+    \hspace{6.5cm} r_2 = 0{,}06\;[\text{m}]
+\]
+\[
+    \vec{r}_3 = 0{,}06\,\hat{\imath} + 0{,}08\,\hat{\jmath}\;[\text{m}]
+    \hspace{5.3cm} r_3 = 0{,}10\;[\text{m}]
+\]
+
+\subsection*{Campos en P}
+
+\noindent\textbf{Aporte de $q_1$:}
+\[
+    \vec{E}_1 = K\frac{q_1}{r_1^3}\,\vec{r}_1
+    = \frac{9\times10^9\times(-5\times10^{-6})}{(0{,}10)^3}
+      \bigl(0{,}06\,\hat{\imath}-0{,}08\,\hat{\jmath}\bigr)
+    = -45\times10^6\bigl(0{,}06\,\hat{\imath}-0{,}08\,\hat{\jmath}\bigr)
+\]
+\[
+    \vec{E}_1 = -2{,}7\times10^6\,\hat{\imath} + 3{,}6\times10^6\,\hat{\jmath}
+    \;[\text{N/C}]
+\]
+
+\noindent\textbf{Aporte de $q_2$:}
+\[
+    \vec{E}_2 = K\frac{q_2}{r_2^3}\,\vec{r}_2
+    = \frac{9\times10^9\times(-2\times10^{-6})}{(0{,}06)^3}\,(0{,}06\,\hat{\imath})
+    = \frac{-18\times10^3}{2{,}16\times10^{-4}}\times0{,}06\;\hat{\imath}
+\]
+\[
+    \vec{E}_2 = -5{,}0\times10^6\,\hat{\imath}
+    \;[\text{N/C}]
+\]
+
+\noindent\textbf{Aporte de $q_3$:}
+\[
+    \vec{E}_3 = K\frac{q_3}{r_3^3}\,\vec{r}_3
+    = \frac{9\times10^9\times(-5\times10^{-6})}{(0{,}10)^3}
+      \bigl(0{,}06\,\hat{\imath}+0{,}08\,\hat{\jmath}\bigr)
+    = -45\times10^6\bigl(0{,}06\,\hat{\imath}+0{,}08\,\hat{\jmath}\bigr)
+\]
+\[
+    \vec{E}_3 = -2{,}7\times10^6\,\hat{\imath} - 3{,}6\times10^6\,\hat{\jmath}
+    \;[\text{N/C}]
+\]
+
+\subsection*{Campo resultante en P}
+
+\begin{align*}
+    E_x &= -2{,}7 - 5{,}0 - 2{,}7 = -10{,}4\;\times10^6\;[\text{N/C}]\\
+    E_y &= +3{,}6 + 0 - 3{,}6 = 0\;[\text{N/C}]
+\end{align*}
+
+\[
+    \boxed{\vec{E}_P = 1{,}04\times10^7\,(-\hat{\imath})\;[\text{N/C}]}
+\]
+
+La simetr\'ia de $q_1$ y $q_3$ respecto al eje $x$ cancela perfectamente las
+componentes verticales; el campo resultante es puramente horizontal hacia la
+izquierda (hacia las cargas negativas).
+
+\subsection*{Fuerza sobre $q = -1\,[\mu\text{C}]$ en P}
+
+\[
+    \vec{F} = q\,\vec{E}_P
+    = (-1\times10^{-6})\times\bigl(-1{,}04\times10^7\,\hat{\imath}\bigr)
+\]
+
+\[
+    \boxed{\vec{F} = +10{,}4\,\hat{\imath}\;[\text{N}]}
+\]
+
+La fuerza es positiva en $\hat{\imath}$: la carga negativa de prueba es
+repelida en sentido contrario al campo (hacia $+x$).
+
+\clearpage
+
+%################################################################
+\section*{\textcolor{ubbblue}{Problema 2.2 \;--\; Secci\'on Bidimensional (Fig.\ 3)}}
+%################################################################
+
+\subsection*{Enunciado}
+
+Se muestran cuatro cargas: $q_1 = q_2 = +5q$, $q_3 = +3q$, $q_4 = -12q$
+con $q = 5\,[\mu\text{C}]$ y $d = 5\,[\text{mm}]$.
+Determinar el campo el\'ectrico resultante en P.
+
+\subsection*{Datos}
+
+\[
+    q = 5\,[\mu\text{C}] = 5\times10^{-6}\;[\text{C}], \qquad
+    d = 5\,[\text{mm}] = 5\times10^{-3}\;[\text{m}]
+\]
+\[
+    q_1 = q_2 = +5q = +25\;[\mu\text{C}], \quad
+    q_3 = +3q = +15\;[\mu\text{C}], \quad
+    q_4 = -12q = -60\;[\mu\text{C}]
+\]
+
+\subsection*{Sistema de coordenadas y diagrama}
+
+Se coloca el origen en P, con las cargas sobre los ejes coordenados:
+
+\begin{center}
+\begin{tikzpicture}[scale=1.1,>=Stealth]
+    % Ejes
+    \draw[->,gray,thin] (-2.5,0)--(2.5,0) node[right]{$x$};
+    \draw[->,gray,thin] (0,-1.5)--(0,3.8)  node[above]{$y$};
+    \node[gray,below left=3pt,font=\small] at (0,0){P};
+    \fill[black] (0,0) circle(4pt);
+
+    % q1 en (-d, 0)
+    \fill[cargazul] (-2,0) circle(7pt);
+    \node[cargazul,below left=4pt,font=\small\bfseries] at (-2,0){$q_1{=}+5q$};
+    \node[gray,above=6pt,font=\scriptsize] at (-2,0){$(-d,0)$};
+
+    % q2 en (+d, 0)
+    \fill[cargazul] (2,0) circle(7pt);
+    \node[cargazul,below right=4pt,font=\small\bfseries] at (2,0){$q_2{=}+5q$};
+    \node[gray,above=6pt,font=\scriptsize] at (2,0){$(+d,0)$};
+
+    % q3 en (0, +d)
+    \fill[cargazul] (0,1.5) circle(7pt);
+    \node[cargazul,right=8pt,font=\small\bfseries] at (0,1.5){$q_3{=}+3q$};
+    \node[gray,left=5pt,font=\scriptsize] at (0,1.5){$(0,d)$};
+
+    % q4 en (0, +2d)
+    \fill[cargarojo] (0,3.0) circle(7pt);
+    \node[cargarojo,right=8pt,font=\small\bfseries] at (0,3.0){$q_4{=}-12q$};
+    \node[gray,left=5pt,font=\scriptsize] at (0,3.0){$(0,2d)$};
+
+    % Cotas
+    \draw[<->,black!60] (-2,-0.55)--(0,-0.55)
+        node[midway,below,font=\scriptsize]{$d$};
+    \draw[<->,black!60] (0,-0.55)--(2,-0.55)
+        node[midway,below,font=\scriptsize]{$d$};
+    \draw[<->,black!60] (0.6,0)--(0.6,1.5)
+        node[midway,right,font=\scriptsize]{$d$};
+    \draw[<->,black!60] (0.6,1.5)--(0.6,3.0)
+        node[midway,right,font=\scriptsize]{$d$};
+
+    % Vectores E en P
+    \draw[->,cargazul,very thick] (0,0)--(0.9,0)
+        node[above right,font=\small]{$\vec{E}_1$};
+    \draw[->,cargazul,very thick] (0,0)--(-0.9,0)
+        node[above left,font=\small]{$\vec{E}_2$};
+    \draw[->,cargazul,very thick] (0,0)--(0,-0.9)
+        node[right,font=\small]{$\vec{E}_3$};
+    \draw[->,cargarojo,very thick] (0,0)--(0,0.9)
+        node[right,font=\small]{$\vec{E}_4$};
+\end{tikzpicture}
+\end{center}
+
+\subsection*{Vectores de posici\'on desde cada carga hasta P}
+
+\[
+    \vec{r}_1 = P - q_1 = (0,0)-(-d,0) = +d\,\hat{\imath}
+    \qquad\Rightarrow\qquad r_1 = d
+\]
+\[
+    \vec{r}_2 = P - q_2 = (0,0)-(+d,0) = -d\,\hat{\imath}
+    \qquad\Rightarrow\qquad r_2 = d
+\]
+\[
+    \vec{r}_3 = P - q_3 = (0,0)-(0,d) = -d\,\hat{\jmath}
+    \qquad\Rightarrow\qquad r_3 = d
+\]
+\[
+    \vec{r}_4 = P - q_4 = (0,0)-(0,2d) = -2d\,\hat{\jmath}
+    \qquad\Rightarrow\qquad r_4 = 2d
+\]
+
+\subsection*{Campos en P}
+
+\noindent\textbf{Aporte de $q_1 = +5q$ en $(-d,0)$:}
+\[
+    \vec{E}_1 = K\frac{q_1}{d^3}(+d\,\hat{\imath})
+    = \frac{Kq_1}{d^2}\,\hat{\imath} = \frac{5Kq}{d^2}\,\hat{\imath}
+\]
+
+\noindent\textbf{Aporte de $q_2 = +5q$ en $(+d,0)$:}
+\[
+    \vec{E}_2 = K\frac{q_2}{d^3}(-d\,\hat{\imath})
+    = -\frac{Kq_2}{d^2}\,\hat{\imath} = -\frac{5Kq}{d^2}\,\hat{\imath}
+\]
+
+\noindent\textbf{Aporte de $q_3 = +3q$ en $(0,d)$:}
+\[
+    \vec{E}_3 = K\frac{q_3}{d^3}(-d\,\hat{\jmath})
+    = -\frac{Kq_3}{d^2}\,\hat{\jmath} = -\frac{3Kq}{d^2}\,\hat{\jmath}
+\]
+
+\noindent\textbf{Aporte de $q_4 = -12q$ en $(0,2d)$:}
+\[
+    \vec{E}_4 = K\frac{q_4}{(2d)^3}(-2d\,\hat{\jmath})
+    = K\frac{(-12q)(-2d)}{8d^3}\,\hat{\jmath}
+    = \frac{12Kq}{4d^2}\,\hat{\jmath}
+    = \frac{3Kq}{d^2}\,\hat{\jmath}
+\]
+
+\subsection*{Campo resultante}
+
+\[
+    \vec{E}_P = \vec{E}_1+\vec{E}_2+\vec{E}_3+\vec{E}_4
+    = \frac{K}{d^2}\Bigl[
+        \underbrace{5q\,\hat{\imath} - 5q\,\hat{\imath}}_{=\,0}
+        +\underbrace{(-3q+3q)}_{{=\,0}}\,\hat{\jmath}
+    \Bigr]
+\]
+
+\[
+    \boxed{\vec{E}_P = \vec{0}}
+\]
+
+\subsection*{Verificaci\'on num\'erica}
+
+\[
+    \frac{Kq}{d^2} = \frac{9\times10^9\times5\times10^{-6}}{(5\times10^{-3})^2}
+    = \frac{45\times10^3}{25\times10^{-6}} = 1{,}8\times10^9\;[\text{N/C}]
+\]
+
+\medskip
+\begin{center}
+\begin{tabular}{lrr}
+\toprule
+\textbf{Fuente} & $E_x\;[\text{N/C}]$ & $E_y\;[\text{N/C}]$ \\
+\midrule
+$\vec{E}_1$ ($+5q$ en $-x$) & $+5\times1{,}8\times10^9 = +9{,}0\times10^9$ & $0$ \\
+$\vec{E}_2$ ($+5q$ en $+x$) & $-9{,}0\times10^9$                           & $0$ \\
+$\vec{E}_3$ ($+3q$ en $+y$) & $0$                                          & $-3\times1{,}8\times10^9 = -5{,}4\times10^9$ \\
+$\vec{E}_4$ ($-12q$ en $+2y$) & $0$                                        & $+\frac{12}{4}\times1{,}8\times10^9 = +5{,}4\times10^9$ \\
+\midrule
+\textbf{Total}   & $\mathbf{0}$ & $\mathbf{0}$ \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\medskip
+\noindent\textbf{Interpretaci\'on f\'isica:}
+\begin{itemize}
+    \item Las cargas $q_1 = q_2 = +5q$ son sim\'etricas respecto a P en el eje $x$:
+    sus campos en P son iguales y opuestos, cancelandose exactamente.
+
+    \item La carga $q_3 = +3q$ genera un campo en $-\hat{\jmath}$ (alej\'andose de
+    carga positiva arriba). La carga $q_4 = -12q$, aunque est\'a al doble de
+    distancia, tiene cuatro veces la magnitud de $q_3$ y genera campo en $+\hat{\jmath}$
+    (atrayendo hacia ella). La intensidad efectiva es $12q/(2^2) = 3q$, exactamente
+    igual a la de $q_3$, logrando la cancelaci\'on.
+\end{itemize}
+
+\end{document}

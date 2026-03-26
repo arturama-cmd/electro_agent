@@ -27,8 +27,9 @@ python add_single_pdf.py
 # Test PDF processor (outputs chunk count and preview)
 python pdf_processor.py "path/to/file.pdf"
 
-# Compile LaTeX solutions (from project root)
-pdflatex -interaction=nonstopmode -output-directory=corpus/campo_electrico corpus/campo_electrico/Solucion_Tema_I.tex
+# Compile a LaTeX solution (from project root) — works for any Solucion_*.tex
+pdflatex -interaction=nonstopmode -output-directory=corpus/campo_electrico corpus/campo_electrico/Solucion_vec1.tex
+# Pattern: replace the filename; output dir must match the source dir
 
 # Force reindex: delete chroma_db/ folder and restart app
 # Or use UI "Reindexar todo el corpus" button in Upload tab -> Advanced options
@@ -130,7 +131,7 @@ Documents in `corpus/` by topic (categories defined in `rag_system.py:13-19` -> 
 | Retrieved chunk count | `rag_system.py:73` -> `n_results` parameter (default: 3) |
 | Context chars per doc | `rag_system.py:99` -> `[:1500]` slice |
 | Max response tokens | `rag_system.py:124` -> `max_tokens` (default: 4096) |
-| Model | `rag_system.py:123` -> `claude-sonnet-4-20250514` |
+| Model | `rag_system.py:123` -> `claude-sonnet-4-6` |
 | Add new category | `rag_system.py:13-19` -> `CATEGORIES` dict + create folder in `corpus/` |
 | Conversation history limit | `app.py:631` -> slicing `[-10:]` (last 10 messages) |
 | Single PDF add paths | `add_single_pdf.py:74-75` -> `pdf_path` and `category` variables |
@@ -147,6 +148,8 @@ Documents in `corpus/` by topic (categories defined in `rag_system.py:13-19` -> 
 | tessdata | Spanish OCR models | `tessdata/` (included) |
 
 ## Solution Generator (LaTeX/PDF)
+
+**Physics convention**: Coulomb's law in vector form must be written as **K·q·r_vec/r³** (not K·q·r̂/r²). These are mathematically equivalent but the r_vec/r³ form is required for consistency with the existing solutions.
 
 Solutions in `corpus/*/Solucion_*.tex` follow this structure:
 1. Problem statement with TikZ diagram (2D or 3D)
@@ -166,6 +169,7 @@ Solutions in `corpus/*/Solucion_*.tex` follow this structure:
 - API key: `.env` file with `ANTHROPIC_API_KEY`
 - Session logs: `.claude/logs/YYYY-MM-DD_session_log.md`
 - Textbook PDFs (Sears, Serway) are gitignored due to copyright
+- LaTeX auxiliary files `.bbl`, `.blg`, `.bak` are **not** in `.gitignore` — add them manually or they will appear as untracked
 - Git remote must include the username to avoid 403 auth errors:
   ```bash
   git remote set-url origin https://arturama-cmd@github.com/arturama-cmd/electro_agent.git

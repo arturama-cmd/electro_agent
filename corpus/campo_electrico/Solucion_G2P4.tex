@@ -1,0 +1,385 @@
+\documentclass[12pt,letterpaper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[spanish,es-noshorthands]{babel}
+\usepackage{amsmath,amssymb}
+\usepackage{graphicx}
+\usepackage{xcolor}
+\usepackage{tikz}
+\usetikzlibrary{calc,arrows.meta,decorations.markings,patterns}
+\usepackage{enumerate}
+\usepackage[top=2.5cm, bottom=4cm, left=2cm, right=2cm, footskip=40pt]{geometry}
+\usepackage{fancyhdr}
+\usepackage{lastpage}
+
+% Colores institucionales
+\definecolor{ubbblue}{RGB}{0,51,102}
+\definecolor{cargazul}{RGB}{50,50,220}
+\definecolor{cargarojo}{RGB}{220,50,50}
+\definecolor{campoverde}{RGB}{30,140,30}
+
+% Encabezado y pie de pagina
+\pagestyle{fancy}
+\fancyhf{}
+\renewcommand{\headrulewidth}{0pt}
+\renewcommand{\footrulewidth}{0.4pt}
+
+\fancyfoot[L]{%
+    \raisebox{-0.5cm}{\includegraphics[height=1.2cm]{logo ubb.png}}%
+}
+\fancyfoot[C]{%
+    \begin{minipage}[b]{8cm}
+        \centering
+        \footnotesize
+        \textcolor{ubbblue}{\textbf{Dr. Arturo Fern\'andez P\'erez}}\\
+        \scriptsize Departamento de F\'isica -- Universidad del B\'io-B\'io\\
+        \scriptsize \textit{Electro\_Asistente\_AI-UBB}\\
+        \tiny P\'agina \thepage\ de \pageref{LastPage}
+    \end{minipage}%
+}
+\fancyfoot[R]{%
+    \raisebox{-0.5cm}{\includegraphics[height=1.2cm]{logo dfis.png}}%
+}
+
+\fancypagestyle{plain}{%
+    \fancyhf{}
+    \renewcommand{\headrulewidth}{0pt}
+    \renewcommand{\footrulewidth}{0.4pt}
+    \fancyfoot[L]{%
+        \raisebox{-0.5cm}{\includegraphics[height=1.2cm]{logo ubb.png}}%
+    }
+    \fancyfoot[C]{%
+        \begin{minipage}[b]{8cm}
+            \centering
+            \footnotesize
+            \textcolor{ubbblue}{\textbf{Dr. Arturo Fern\'andez P\'erez}}\\
+            \scriptsize Departamento de F\'isica -- Universidad del B\'io-B\'io\\
+            \scriptsize \textit{Electro\_Asistente\_AI-UBB}\\
+            \tiny P\'agina \thepage\ de \pageref{LastPage}
+        \end{minipage}%
+    }
+    \fancyfoot[R]{%
+        \raisebox{-0.5cm}{\includegraphics[height=1.2cm]{logo dfis.png}}%
+    }
+}
+
+\begin{document}
+
+%========================================
+% ENCABEZADO INSTITUCIONAL
+%========================================
+\begin{center}
+    \includegraphics[height=2cm]{logo ubb.png}\\[0.3cm]
+    {\large\textcolor{ubbblue}{\textbf{UNIVERSIDAD DEL B\'IO-B\'IO}}}\\[0.1cm]
+    {\normalsize Facultad de Ciencias -- Departamento de F\'isica}\\[0.1cm]
+    {\normalsize\textbf{Dr. Arturo Fern\'andez P\'erez}}
+\end{center}
+
+\vspace{0.3cm}
+\hrule height 1pt
+\vspace{0.5cm}
+
+{\centering\Large\textbf{Soluci\'on: Campo El\'ectrico de dos Cargas Puntuales}\par}
+{\centering\normalsize Gu\'ia 2 -- Problema 4 Bidimensional\par}
+
+\vspace{0.5cm}
+
+%========================================
+% ENUNCIADO
+%========================================
+\section*{Enunciado del Problema}
+
+En la configuraci\'on de la Figura~5, una carga $+q$ se ubica en la esquina superior
+izquierda y una carga $-2q$ directamente debajo de ella, separadas verticalmente
+por $a = 10$~[cm]. El punto P se encuentra a distancia horizontal $b = 15$~[cm]
+de la carga $+q$, en el mismo nivel vertical que ella. Con $q = 8{,}0$~[nC]:
+
+\begin{enumerate}[(a)]
+    \item Determinar el campo el\'ectrico resultante en el punto P.
+    \item Si una carga puntual $q_2 = -30$~[nC] se ubica en P, determinar la fuerza
+          el\'ectrica neta ejercida sobre ella.
+\end{enumerate}
+
+%========================================
+% DATOS
+%========================================
+\section*{Datos del problema}
+
+\[
+    q = 8{,}0\ [\text{nC}] = 8{,}0 \times 10^{-9}\ [\text{C}], \qquad
+    a = 0{,}10\ [\text{m}], \qquad
+    b = 0{,}15\ [\text{m}]
+\]
+\[
+    K = 9 \times 10^{9}\ \left[\frac{\text{N\,m}^2}{\text{C}^2}\right]
+\]
+
+%========================================
+% SISTEMA DE COORDENADAS
+%========================================
+\section*{Sistema de Coordenadas}
+
+Se ubica el \textbf{origen en la carga $-2q$}. Las posiciones quedan:
+
+\begin{center}
+\begin{tabular}{lll}
+    \hline
+    \textbf{Elemento} & \textbf{Carga} & \textbf{Posici\'on} \\
+    \hline
+    Carga 1 & $-2q = -16{,}0\ [\text{nC}]$ & $(0,\ 0)\ [\text{m}]$ \\
+    Carga 2 & $+q = +8{,}0\ [\text{nC}]$   & $(0,\ a) = (0;\ 0{,}10)\ [\text{m}]$ \\
+    Punto P &  ---                           & $(b,\ a) = (0{,}15;\ 0{,}10)\ [\text{m}]$ \\
+    \hline
+\end{tabular}
+\end{center}
+
+%========================================
+% DIAGRAMA DE LA CONFIGURACION
+%========================================
+\section*{Diagrama de la Configuraci\'on}
+
+\begin{center}
+\begin{tikzpicture}[scale=1.15, >=Stealth]
+
+    % Ejes con origen en -2q
+    \draw[->, gray, thin] (-0.6,0) -- (5.2,0) node[right, font=\small]{$x$};
+    \draw[->, gray, thin] (0,-0.6) -- (0,3.2) node[above, font=\small]{$y$};
+    \node[gray, below left=2pt, font=\small] at (0,0) {$O$};
+
+    % === CARGA -2q en el ORIGEN ===
+    \coordinate (Q2) at (0,0);
+    \fill[cargarojo] (Q2) circle (8pt);
+    \node[cargarojo, below left=4pt, font=\small\bfseries] at (Q2) {$-2q$};
+    \node[gray, right=6pt, font=\scriptsize] at (Q2) {$(0,\ 0)$};
+
+    % === CARGA +q encima ===
+    \coordinate (Q) at (0,2.0);
+    \fill[cargazul] (Q) circle (8pt);
+    \node[cargazul, above left=4pt, font=\small\bfseries] at (Q) {$+q$};
+    \node[gray, right=6pt, font=\scriptsize] at (Q) {$(0,\ a)$};
+
+    % === PUNTO P ===
+    \coordinate (P) at (4.5,2.0);
+    \fill[black] (P) circle (4pt);
+    \node[above right=4pt, font=\small\bfseries] at (P) {P};
+    \node[gray, below right=2pt, font=\scriptsize] at (P) {$(b,\ a)$};
+
+    % Linea horizontal +q -> P (cota b)
+    \draw[dashed, gray!60] (Q) -- (P);
+    \draw[<->, black!70] (0, 2.55) -- (4.5, 2.55)
+        node[midway, above, font=\small]{$b = 15\ \text{cm}$};
+
+    % Linea vertical -2q -> +q (cota a)
+    \draw[dashed, gray!60] (Q2) -- (Q);
+    \draw[<->, black!70] (-0.55, 0) -- (-0.55, 2.0)
+        node[midway, left, font=\small]{$a = 10\ \text{cm}$};
+
+    % Linea horizontal -2q -> P (cota b, en y=0)
+    \draw[dotted, gray!50] (Q2) -- (4.5,0);
+    \draw[<->, black!50] (0,-0.4) -- (4.5,-0.4)
+        node[midway, below, font=\scriptsize]{$b = 15\ \text{cm}$};
+
+    % Linea vertical P -> eje x (cota a, en x=b)
+    \draw[dotted, gray!50] (P) -- (4.5,0);
+    \draw[<->, black!50] (4.8,0) -- (4.8,2.0)
+        node[midway, right, font=\scriptsize]{$a = 10\ \text{cm}$};
+
+    % Vector r2 (de -2q a P)
+    \draw[->, cargarojo!60, dashed, thick] (Q2) -- (P);
+    \node[cargarojo!80, font=\scriptsize, rotate=24] at (2.4,0.85)
+        {$\vec{r}_2 = b\,\hat{\imath}+a\,\hat{\jmath}$};
+
+    % Vector r1 (de +q a P)
+    \draw[->, cargazul!60, dashed, thick] (Q) -- (P);
+    \node[cargazul!80, font=\scriptsize, above=3pt] at (2.25,2.0)
+        {$\vec{r}_1 = b\,\hat{\imath}$};
+
+\end{tikzpicture}
+\end{center}
+
+%========================================
+% ANALISIS CUALITATIVO
+%========================================
+\section*{An\'alisis Cualitativo}
+
+En el punto P act\'uan dos campos el\'ectricos:
+
+\begin{itemize}
+    \item $\vec{E}_1$ producido por $+q$ en $(0,a)$: P est\'a directamente a la derecha
+    de $+q$ (mismo nivel $y$), por lo que $\vec{E}_1$ apunta en direcci\'on $+\hat{\imath}$.
+
+    \item $\vec{E}_2$ producido por $-2q$ en el origen: el campo apunta \textit{hacia}
+    la carga negativa, es decir, desde P hacia el origen. Como el origen est\'a
+    abajo-izquierda respecto a P, $\vec{E}_2$ tiene componentes $-\hat{\imath}$
+    y $-\hat{\jmath}$.
+\end{itemize}
+
+Se espera un campo resultante con componente $x$ negativa (pues $|-2q| > |{+q}|$)
+y componente $y$ negativa (solo aportada por $-2q$).
+
+%========================================
+% PARTE (a): CAMPO ELECTRICO EN P
+%========================================
+\section*{Parte (a): Campo el\'ectrico en P}
+
+\subsection*{Vectores de posici\'on hacia P}
+
+Desde la carga $+q$ en $(0,\ a)$ hasta P en $(b,\ a)$:
+\[
+    \vec{r}_1 = (b-0)\,\hat{\imath} + (a-a)\,\hat{\jmath} = b\,\hat{\imath}
+    = 0{,}15\,\hat{\imath}\ [\text{m}]
+    \qquad \Rightarrow \qquad r_1 = 0{,}15\ [\text{m}]
+\]
+
+Desde la carga $-2q$ en $(0,\ 0)$ hasta P en $(b,\ a)$:
+\[
+    \vec{r}_2 = b\,\hat{\imath} + a\,\hat{\jmath}
+    = 0{,}15\,\hat{\imath} + 0{,}10\,\hat{\jmath}\ [\text{m}]
+\]
+\[
+    r_2 = \sqrt{b^2 + a^2} = \sqrt{(0{,}15)^2 + (0{,}10)^2}
+    = \sqrt{0{,}0325} \approx 0{,}18\ [\text{m}]
+    \qquad \Rightarrow \qquad r_2^3 = (0{,}18)^3 = 5{,}832\times10^{-3}\ [\text{m}^3]
+\]
+
+\subsection*{Campo $\vec{E}_1$ (aporte de $+q$)}
+
+\[
+    \vec{E}_1 = K\,\frac{q}{r_1^3}\,\vec{r}_1
+    = K\,\frac{q}{r_1^2}\,\hat{\imath}
+    = \frac{9\times10^9 \times 8{,}0\times10^{-9}}{(0{,}15)^2}\,\hat{\imath}
+    = \frac{72}{0{,}0225}\,\hat{\imath}
+\]
+
+\[
+    \boxed{\vec{E}_1 = 3\,200\,\hat{\imath}\ [\text{N/C}]}
+\]
+
+\subsection*{Campo $\vec{E}_2$ (aporte de $-2q$)}
+
+\[
+    \vec{E}_2 = K\,\frac{(-2q)}{r_2^3}\,\vec{r}_2
+    = \frac{9\times10^9 \times (-16{,}0\times10^{-9})}{5{,}832\times10^{-3}}
+      \left(0{,}15\,\hat{\imath} + 0{,}10\,\hat{\jmath}\right)
+\]
+
+\[
+    \vec{E}_2 = \frac{-144}{5{,}832\times10^{-3}}
+      \left(0{,}15\,\hat{\imath} + 0{,}10\,\hat{\jmath}\right)
+    = -24\,691{,}4\left(0{,}15\,\hat{\imath} + 0{,}10\,\hat{\jmath}\right)
+\]
+
+\begin{align*}
+    E_{2x} &= -24\,691{,}4 \times 0{,}15 = -3\,703{,}7\ [\text{N/C}]\\[4pt]
+    E_{2y} &= -24\,691{,}4 \times 0{,}10 = -2\,469{,}1\ [\text{N/C}]
+\end{align*}
+
+\[
+    \boxed{\vec{E}_2 = -3\,703{,}7\,\hat{\imath} - 2\,469{,}1\,\hat{\jmath}\ [\text{N/C}]}
+\]
+
+\subsection*{Campo resultante en P}
+
+\[
+    \vec{E}_P = \vec{E}_1 + \vec{E}_2
+    = \bigl(3\,200 - 3\,703{,}7\bigr)\,\hat{\imath}
+    + \bigl(0 - 2\,469{,}1\bigr)\,\hat{\jmath}
+\]
+
+\[
+    \boxed{\vec{E}_P = -503{,}7\,\hat{\imath} - 2\,469{,}1\,\hat{\jmath}\ [\text{N/C}]}
+\]
+
+%========================================
+% DIAGRAMA DE CAMPOS EN P
+%========================================
+\section*{Diagrama de Campos en P}
+
+\begin{center}
+\begin{tikzpicture}[scale=0.90, >=Stealth]
+
+    % Ejes en P
+    \draw[->, gray, thin] (-0.4,0) -- (3.2,0) node[right, font=\small]{$x$};
+    \draw[->, gray, thin] (0,-3.5) -- (0,1.0) node[above, font=\small]{$y$};
+    \fill[black] (0,0) circle (4pt);
+    \node[above right=3pt, font=\small\bfseries] at (0,0) {P};
+
+    % E1 (hacia la derecha, solo componente x)
+    \draw[->, cargazul, very thick] (0,0) -- (2.5,0);
+    \node[cargazul, above=5pt, font=\small\bfseries] at (1.25,0) {$\vec{E}_1$};
+    \node[cargazul, below=4pt, font=\scriptsize] at (2.5,0) {$3\,200\,\hat{\imath}$};
+
+    % E2 resultante (abajo-izquierda)
+    \draw[->, cargarojo, very thick] (0,0) -- (-1.15,-1.95);
+    \node[cargarojo, left=5pt, font=\small\bfseries] at (-0.65,-0.9) {$\vec{E}_2$};
+
+    % Componentes de E2 (punteadas)
+    \draw[->, cargarojo!55, dashed, thick] (0,0) -- (-1.15,0);
+    \node[cargarojo!80, above=3pt, font=\scriptsize] at (-0.58,0) {$E_{2x}$};
+    \draw[->, cargarojo!55, dashed, thick] (-1.15,0) -- (-1.15,-1.95);
+    \node[cargarojo!80, right=3pt, font=\scriptsize] at (-1.15,-0.98) {$E_{2y}$};
+
+    % Campo resultante total
+    \draw[->, campoverde, ultra thick] (0,0) -- (-0.40,-1.95);
+    \node[campoverde, right=5pt, font=\small\bfseries] at (-0.15,-1.0) {$\vec{E}_P$};
+
+    % Angulo del resultante con eje -x
+    \draw[campoverde!50, thin] (-0.4,0) arc(180:258:0.4);
+    \node[campoverde!80, font=\scriptsize] at (-0.55,-0.32) {$\alpha$};
+
+\end{tikzpicture}
+\end{center}
+
+\[
+    |\vec{E}_P| = \sqrt{(503{,}7)^2 + (2\,469{,}1)^2} \approx 2\,519{,}6\ [\text{N/C}]
+\]
+\[
+    \alpha = \arctan\!\left(\frac{|E_{Py}|}{|E_{Px}|}\right)
+           = \arctan\!\left(\frac{2\,469{,}1}{503{,}7}\right) \approx 78{,}5^\circ
+    \quad\text{bajo el eje }(-x)
+\]
+
+%========================================
+% PARTE (b): FUERZA SOBRE q2 EN P
+%========================================
+\section*{Parte (b): Fuerza el\'ectrica sobre $q_2 = -30$~[nC] en P}
+
+\[
+    \vec{F} = q_2\,\vec{E}_P
+    = (-30\times10^{-9})\times\left(-503{,}7\,\hat{\imath} - 2\,469{,}1\,\hat{\jmath}\right)
+\]
+
+\begin{align*}
+    F_x &= (-30\times10^{-9})\times(-503{,}7) = +15{,}1\times10^{-6}\ [\text{N}] = +15{,}1\ [\mu\text{N}]\\[4pt]
+    F_y &= (-30\times10^{-9})\times(-2\,469{,}1) = +74{,}1\times10^{-6}\ [\text{N}] = +74{,}1\ [\mu\text{N}]
+\end{align*}
+
+\[
+    \boxed{\vec{F} = 15{,}1\,\hat{\imath} + 74{,}1\,\hat{\jmath}\ [\mu\text{N}]}
+\]
+
+%========================================
+% INTERPRETACION FISICA
+%========================================
+\section*{Interpretaci\'on F\'isica}
+
+\begin{itemize}
+    \item Con el origen en $-2q$, el vector $\vec{r}_1 = b\,\hat{\imath}$ es puramente
+    horizontal (no tiene componente $y$) porque $+q$ y P est\'an a la misma altura $y = a$.
+    Esto simplifica el c\'alculo de $\vec{E}_1$, que resulta solo en direcci\'on
+    $+\hat{\imath}$.
+
+    \item El vector $\vec{r}_2 = b\,\hat{\imath} + a\,\hat{\jmath}$ apunta desde el
+    origen hacia P, con ambas componentes positivas. Sin embargo, como $-2q$ es negativa,
+    $\vec{E}_2$ resulta en direcci\'on $-\hat{\imath}$ y $-\hat{\jmath}$: el campo
+    apunta \textit{hacia} la carga fuente negativa.
+
+    \item La componente $E_{Px} = -503{,}7$~[N/C] es negativa porque el aporte de
+    $-2q$ en $x$ supera al de $+q$: aunque $-2q$ est\'a m\'as lejos ($r_2 \approx 0{,}18$~m
+    vs.\ $r_1 = 0{,}15$~m), su magnitud es el doble.
+
+    \item La fuerza sobre $q_2 = -30$~nC apunta en sentido contrario al campo
+    (signos positivos en $\hat{\imath}$ y $\hat{\jmath}$): las cargas negativas son
+    aceleradas en direcci\'on opuesta al campo el\'ectrico.
+\end{itemize}
+
+\end{document}
