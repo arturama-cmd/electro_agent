@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-**electro_agent** is a RAG-based conversational AI assistant for electromagnetics education at Universidad del Bio-Bio. It uses Claude Sonnet 4, Streamlit, and ChromaDB to answer engineering students' questions using retrieved context from solved problems (LaTeX/PDF). UI and corpus content are in Spanish.
+**electro_agent** is a RAG-based conversational AI assistant for electromagnetics education at Universidad del Bio-Bio. It uses `claude-sonnet-4-6`, Streamlit, and ChromaDB to answer engineering students' questions using retrieved context from solved problems (LaTeX/PDF). UI and corpus content are in Spanish.
 
 ## Commands
 
@@ -169,7 +169,6 @@ Solutions in `corpus/*/Solucion_*.tex` follow this structure:
 - API key: `.env` file with `ANTHROPIC_API_KEY`
 - Session logs: `.claude/logs/YYYY-MM-DD_session_log.md`
 - Textbook PDFs (Sears, Serway) are gitignored due to copyright
-- LaTeX auxiliary files `.bbl`, `.blg`, `.bak` are **not** in `.gitignore` — add them manually or they will appear as untracked
 - Git remote must include the username to avoid 403 auth errors:
   ```bash
   git remote set-url origin https://arturama-cmd@github.com/arturama-cmd/electro_agent.git

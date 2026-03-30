@@ -51,6 +51,9 @@ Thumbs.db
 
 # LaTeX auxiliaries
 *.aux
+*.bbl
+*.blg
+*.bak
 *.synctex.gz
 *.fdb_latexmk
 *.fls

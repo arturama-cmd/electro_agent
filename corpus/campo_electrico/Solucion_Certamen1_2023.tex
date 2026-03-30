@@ -1,0 +1,448 @@
+\documentclass[12pt,letterpaper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[spanish,es-noshorthands]{babel}
+\usepackage{amsmath,amssymb}
+\usepackage{graphicx}
+\usepackage{xcolor}
+\usepackage{tikz}
+\usetikzlibrary{3d,calc,arrows.meta,decorations.markings,patterns}
+\usepackage[top=2.5cm, bottom=5cm, left=2cm, right=2cm, footskip=50pt]{geometry}
+\usepackage{fancyhdr}
+\usepackage{lastpage}
+
+% Colores institucionales
+\definecolor{ubbblue}{RGB}{0,51,102}
+\definecolor{cargazul}{RGB}{0,0,180}
+\definecolor{cargarojo}{RGB}{180,0,0}
+\definecolor{cargaverde}{RGB}{50,160,50}
+
+% Encabezado y pie de pagina
+\pagestyle{fancy}
+\fancyhf{}
+\renewcommand{\headrulewidth}{0pt}
+\renewcommand{\footrulewidth}{0.4pt}
+\fancyfoot[L]{\raisebox{-0.5cm}{\includegraphics[height=1.2cm]{logo ubb.png}}}
+\fancyfoot[C]{%
+    \begin{minipage}[b]{8cm}
+        \centering
+        \footnotesize\textcolor{ubbblue}{\textbf{Dr. Arturo Fern\'andez P\'erez}}\\
+        \scriptsize Departamento de F\'isica -- Universidad del B\'io-B\'io\\
+        \scriptsize\textit{Electro\_Asistente\_AI-UBB}\\
+        \tiny P\'agina \thepage\ de \pageref{LastPage}
+    \end{minipage}}
+\fancyfoot[R]{\raisebox{-0.5cm}{\includegraphics[height=1.2cm]{logo dfis.png}}}
+\fancypagestyle{plain}{%
+    \fancyhf{}
+    \renewcommand{\headrulewidth}{0pt}
+    \renewcommand{\footrulewidth}{0.4pt}
+    \fancyfoot[L]{\raisebox{-0.5cm}{\includegraphics[height=1.2cm]{logo ubb.png}}}
+    \fancyfoot[C]{%
+        \begin{minipage}[b]{8cm}
+            \centering
+            \footnotesize\textcolor{ubbblue}{\textbf{Dr. Arturo Fern\'andez P\'erez}}\\
+            \scriptsize Departamento de F\'isica -- Universidad del B\'io-B\'io\\
+            \scriptsize\textit{Electro\_Asistente\_AI-UBB}\\
+            \tiny P\'agina \thepage\ de \pageref{LastPage}
+        \end{minipage}}
+    \fancyfoot[R]{\raisebox{-0.5cm}{\includegraphics[height=1.2cm]{logo dfis.png}}}
+}
+
+\begin{document}
+
+%========================================
+% ENCABEZADO INSTITUCIONAL
+%========================================
+\begin{center}
+    \includegraphics[height=2cm]{logo ubb.png}\\[0.3cm]
+    {\large\textcolor{ubbblue}{\textbf{UNIVERSIDAD DEL B\'IO-B\'IO}}}\\[0.1cm]
+    {\normalsize Facultad de Ciencias -- Departamento de F\'isica}\\[0.1cm]
+    {\normalsize\textbf{Dr. Arturo Fern\'andez P\'erez}}
+\end{center}
+
+\vspace{0.3cm}
+\hrule height 1pt
+\vspace{0.5cm}
+
+{\centering\Large\textbf{Soluci\'on --- Certamen 1 de Electromagnetismo}\par}
+{\centering\normalsize 18 de octubre de 2023\par}
+
+\vspace{0.5cm}
+
+%==========================================================
+\section*{Problema 1: Tres Cargas Puntuales (29 puntos)}
+%==========================================================
+
+Tres cargas puntuales: $q_1 = 11{,}8$ nC, $q_2 = -31{,}5$ nC, $q_3 = -10{,}3$ nC.
+La carga $q_1$ se encuentra a $8{,}0$ cm del origen, $20^\circ$ del eje $y$;
+$q_2$ en $(5,2)$ cm; $q_3$ en $(-3,-4)$ cm.
+
+\begin{center}
+\begin{tikzpicture}[scale=0.6, >=Stealth]
+    \draw[step=1cm, gray!20, very thin] (-6,-6) grid (8,10);
+    \draw[black, thick, ->] (-6,0) -- (8,0) node[right] {$x$};
+    \draw[black, thick, ->] (0,-6) -- (0,10) node[above] {$y$};
+    \foreach \x in {-5,-4,-3,-2,-1,1,2,3,4,5,6,7} \draw[gray] (\x,0.15)--(\x,-0.15);
+    \foreach \y in {-5,-4,-3,-2,-1,1,2,3,4,5,6,7,8,9} \draw[gray] (0.15,\y)--(-0.15,\y);
+
+    % q1: 8 cm del origen, 20° del eje y (2do cuadrante)
+    \coordinate (q1) at ({-8*sin(20)},{8*cos(20)});
+    \draw[gray, dashed] (0,0) -- (q1);
+    \draw[gray] (0,1.8) arc (90:110:1.8) node[midway, above left, scale=0.8] {$20^\circ$};
+
+    % Etiqueta "8 cm" en el punto medio de la linea punteada
+    \node[scale=0.75, right=2pt] at ({-8*sin(20)/2},{8*cos(20)/2}) {$8\,\text{cm}$};
+
+    % Cargas
+    \fill[cargarojo] (q1) circle (0.25) node[above left, black, scale=0.9] {$q_1$};
+    \fill[cargazul]  (5,2)   circle (0.25) node[above right, black, scale=0.9] {$q_2$};
+    \fill[cargazul]  (-3,-4) circle (0.25) node[below left,  black, scale=0.9] {$q_3$};
+
+    % Etiquetas de posicion
+    \node[scale=0.75] at (5,  2.8)  {$(5,2)$};
+    \node[scale=0.75] at (-3,-4.8) {$(-3,-4)$};
+
+    % Punto P
+    \fill[cargaverde] (1,0) circle (0.18)
+        node[below right, black, scale=0.9] {$P(1,0)$};
+\end{tikzpicture}
+\end{center}
+
+\subsection*{Datos Numéricos}
+
+Posición de $q_1$ (a $8{,}0$ cm del origen, $20^\circ$ del eje $y$ hacia el 2do cuadrante):
+\begin{align*}
+    x_1 &= -8{,}0\sin(20^\circ) = -2{,}74\ \text{cm} = -0{,}0274\ \text{m}\\
+    y_1 &= +8{,}0\cos(20^\circ) = +7{,}52\ \text{cm} \approx 0{,}075\ \text{m}
+\end{align*}
+
+\begin{align*}
+    \vec{r}_1 &= (-0{,}0274\,\hat{\imath} + 0{,}075\,\hat{\jmath})\ \text{m} \qquad
+    q_1 = +11{,}8\times10^{-9}\ \text{C}\\
+    \vec{r}_2 &= (+0{,}05\,\hat{\imath} + 0{,}02\,\hat{\jmath})\ \text{m} \qquad
+    q_2 = -31{,}5\times10^{-9}\ \text{C}\\
+    \vec{r}_3 &= (-0{,}03\,\hat{\imath} - 0{,}04\,\hat{\jmath})\ \text{m} \qquad
+    q_3 = -10{,}3\times10^{-9}\ \text{C}\\
+    K &= 9\times10^9\ \text{N·m}^2/\text{C}^2
+\end{align*}
+
+%----------------------------------------------------------
+\subsection*{Parte (a): Fuerza eléctrica neta sobre $q_2$ — 16 puntos}
+
+\[
+    \vec{F}_2 = \vec{F}_{21} + \vec{F}_{23}
+    \qquad \text{donde}\qquad
+    \vec{F}_{ij} = K\frac{q_i\,q_j}{\|\vec{r}_{ij}\|^3}\,\vec{r}_{ij},
+    \quad \vec{r}_{ij} = \vec{r}_j - \vec{r}_i
+\]
+
+\subsubsection*{Análisis Cualitativo}
+\begin{itemize}
+    \item $q_1>0$, $q_2<0$ $\Rightarrow$ \textbf{atracción}: $\vec{F}_{21}$ apunta de $q_2$ hacia $q_1$.
+    \item $q_3<0$, $q_2<0$ $\Rightarrow$ \textbf{repulsión}: $\vec{F}_{23}$ apunta de $q_3$ alejándose (dirección $q_3\to q_2$).
+\end{itemize}
+
+\subsubsection*{Fuerza $\vec{F}_{21}$ (de $q_1$ sobre $q_2$)}
+
+\begin{align*}
+    \vec{r}_{21} &= \vec{r}_2 - \vec{r}_1
+        = \bigl(0{,}05-(-0{,}0274)\bigr)\,\hat{\imath} + \bigl(0{,}02-0{,}075\bigr)\,\hat{\jmath}
+        = 0{,}0774\,\hat{\imath} - 0{,}055\,\hat{\jmath}\ \text{m}\\
+    \|\vec{r}_{21}\| &= \sqrt{(0{,}0774)^2+(0{,}055)^2} \approx 0{,}095\ \text{m}
+\end{align*}
+
+\begin{align*}
+    \vec{F}_{21} &= K\frac{q_1\,q_2}{\|\vec{r}_{21}\|^3}\,\vec{r}_{21}
+    = \frac{9\times10^9\cdot(11{,}8\times10^{-9})\cdot(-31{,}5\times10^{-9})}{(0{,}095)^3}
+      \,(0{,}0774\,\hat{\imath} - 0{,}055\,\hat{\jmath})\\[4pt]
+    &= \frac{-3{,}345\times10^{-6}}{8{,}574\times10^{-4}}\,(0{,}0774\,\hat{\imath} - 0{,}055\,\hat{\jmath})
+    = -3{,}902\times10^{-3}\,(0{,}0774\,\hat{\imath} - 0{,}055\,\hat{\jmath})\\[4pt]
+    \vec{F}_{21} &= \bigl(-3{,}02\,\hat{\imath} + 2{,}15\,\hat{\jmath}\bigr)\times10^{-4}\ \text{N}
+\end{align*}
+
+\subsubsection*{Fuerza $\vec{F}_{23}$ (de $q_3$ sobre $q_2$)}
+
+\begin{align*}
+    \vec{r}_{23} &= \vec{r}_2 - \vec{r}_3
+        = \bigl(0{,}05-(-0{,}03)\bigr)\,\hat{\imath} + \bigl(0{,}02-(-0{,}04)\bigr)\,\hat{\jmath}
+        = 0{,}08\,\hat{\imath} + 0{,}06\,\hat{\jmath}\ \text{m}\\
+    \|\vec{r}_{23}\| &= \sqrt{(0{,}08)^2+(0{,}06)^2} = 0{,}10\ \text{m}
+\end{align*}
+
+\begin{align*}
+    \vec{F}_{23} &= K\frac{q_3\,q_2}{\|\vec{r}_{23}\|^3}\,\vec{r}_{23}
+    = \frac{9\times10^9\cdot(-10{,}3\times10^{-9})\cdot(-31{,}5\times10^{-9})}{(0{,}10)^3}
+      \,(0{,}08\,\hat{\imath} + 0{,}06\,\hat{\jmath})\\[4pt]
+    &= \frac{+2{,}920\times10^{-6}}{1{,}0\times10^{-3}}\,(0{,}08\,\hat{\imath}+0{,}06\,\hat{\jmath})
+    = 2{,}920\times10^{-3}\,(0{,}08\,\hat{\imath}+0{,}06\,\hat{\jmath})\\[4pt]
+    \vec{F}_{23} &= \bigl(+2{,}34\,\hat{\imath} + 1{,}75\,\hat{\jmath}\bigr)\times10^{-4}\ \text{N}
+\end{align*}
+
+\subsubsection*{Superposición}
+
+\begin{align*}
+    F_{2x} &= (-3{,}02 + 2{,}34)\times10^{-4} = -0{,}68\times10^{-4}\ \text{N}\\
+    F_{2y} &= (+2{,}15 + 1{,}75)\times10^{-4} = +3{,}90\times10^{-4}\ \text{N}
+\end{align*}
+
+\[
+\boxed{\vec{F}_2 = \bigl(-6{,}68\times10^{-5}\,\hat{\imath} + 3{,}90\times10^{-4}\,\hat{\jmath}\bigr)\ \text{N}
+\qquad \|\vec{F}_2\| \approx 3{,}96\times10^{-4}\ \text{N}}
+\]
+
+\newpage
+%----------------------------------------------------------
+\subsection*{Parte (b): Campo eléctrico neto en $P(1,0)$ cm — 13 puntos}
+
+El punto campo es $\vec{r}_P = 0{,}01\,\hat{\imath}$ m. Se aplica superposición:
+\[
+    \vec{E} = \vec{E}_1 + \vec{E}_2 + \vec{E}_3,
+    \qquad \vec{E}_i = K\frac{q_i}{\|\vec{r}_P - \vec{r}_i\|^3}\,(\vec{r}_P - \vec{r}_i)
+\]
+
+\subsubsection*{Campo $\vec{E}_1$ (de $q_1 = +11{,}8$ nC)}
+
+\begin{align*}
+    \vec{r}_P - \vec{r}_1 &= \bigl(0{,}01-(-0{,}0274)\bigr)\,\hat{\imath} + (0-0{,}075)\,\hat{\jmath}
+        = 0{,}037\,\hat{\imath} - 0{,}075\,\hat{\jmath}\ \text{m}
+        \qquad \|\cdot\| \approx 0{,}084\ \text{m}
+\end{align*}
+\begin{align*}
+    \vec{E}_1 &= \frac{9\times10^9\cdot11{,}8\times10^{-9}}{(0{,}084)^3}
+               \,(0{,}037\,\hat{\imath}-0{,}075\,\hat{\jmath})\\
+              &= 1{,}790\times10^5\,(0{,}037\,\hat{\imath}-0{,}075\,\hat{\jmath})\\
+              &= \bigl(6{,}62\times10^{3}\,\hat{\imath} - 1{,}34\times10^{4}\,\hat{\jmath}\bigr)\ \text{N/C}
+\end{align*}
+
+\subsubsection*{Campo $\vec{E}_2$ (de $q_2 = -31{,}5$ nC)}
+
+\begin{align*}
+    \vec{r}_P - \vec{r}_2 &= (0{,}01-0{,}05)\,\hat{\imath} + (0-0{,}02)\,\hat{\jmath}
+        = -0{,}04\,\hat{\imath} - 0{,}02\,\hat{\jmath}\ \text{m}
+        \qquad \|\cdot\| \approx 0{,}045\ \text{m}
+\end{align*}
+\begin{align*}
+    \vec{E}_2 &= \frac{9\times10^9\cdot(-31{,}5\times10^{-9})}{(0{,}045)^3}
+               \,(-0{,}04\,\hat{\imath}-0{,}02\,\hat{\jmath})\\
+              &= (-3{,}111\times10^6)\,(-0{,}04\,\hat{\imath}-0{,}02\,\hat{\jmath})\\
+              &= \bigl(1{,}244\times10^{5}\,\hat{\imath} + 6{,}222\times10^{4}\,\hat{\jmath}\bigr)\ \text{N/C}
+\end{align*}
+
+\subsubsection*{Campo $\vec{E}_3$ (de $q_3 = -10{,}3$ nC)}
+
+\begin{align*}
+    \vec{r}_P - \vec{r}_3 &= \bigl(0{,}01-(-0{,}03)\bigr)\,\hat{\imath} + \bigl(0-(-0{,}04)\bigr)\,\hat{\jmath}
+        = 0{,}04\,\hat{\imath} + 0{,}04\,\hat{\jmath}\ \text{m}
+        \qquad \|\cdot\| \approx 0{,}057\ \text{m}
+\end{align*}
+\begin{align*}
+    \vec{E}_3 &= \frac{9\times10^9\cdot(-10{,}3\times10^{-9})}{(0{,}057)^3}
+               \,(0{,}04\,\hat{\imath}+0{,}04\,\hat{\jmath})\\
+              &= (-5{,}008\times10^5)\,(0{,}04\,\hat{\imath}+0{,}04\,\hat{\jmath})\\
+              &= \bigl(-2{,}00\times10^{4}\,\hat{\imath} - 2{,}00\times10^{4}\,\hat{\jmath}\bigr)\ \text{N/C}
+\end{align*}
+
+\subsubsection*{Superposición}
+
+\begin{align*}
+    E_x &= 6{,}62\times10^3 + 1{,}244\times10^5 - 2{,}00\times10^4 = 1{,}11\times10^5\ \text{N/C}\\
+    E_y &= -1{,}34\times10^4 + 6{,}222\times10^4 - 2{,}00\times10^4 = 2{,}88\times10^4\ \text{N/C}
+\end{align*}
+
+\[
+\boxed{\vec{E} = \bigl(1{,}11\times10^5\,\hat{\imath} + 2{,}88\times10^4\,\hat{\jmath}\bigr)\ \text{N/C}
+\qquad \|\vec{E}\| \approx 1{,}15\times10^5\ \text{N/C}}
+\]
+
+\newpage
+%==========================================================
+\section*{Problema 2: Anillo con Dos Densidades Lineales (30 puntos)}
+%==========================================================
+
+Anillo de radio $R = 14{,}0$ cm en el plano $xy$: semianillo superior ($0\leq\theta\leq\pi$)
+con $\lambda_1 = +3{,}6$ nC/m; semianillo inferior ($\pi\leq\theta\leq2\pi$) con
+$\lambda_2 = -5{,}8$ nC/m. El punto $P$ se ubica en el eje del anillo ($\hat{k}$) a
+distancia $D = 8{,}0$ cm de su centro.
+
+\begin{center}
+\begin{tikzpicture}[scale=1.25, >=Stealth]
+    % Ejes
+    \draw[->, thick] (-3.2,0) -- (3.2,0) node[right] {$x$};
+    \draw[->, thick] (0,-1.2) -- (0,3.4) node[above] {$z$};
+
+    % Semianillo inferior (negativo) -- trazado primero para que el superior lo tape
+    \draw[cargazul, very thick, dashed] (-2.4,0) arc(180:360:2.4 and 0.65);
+
+    % Semianillo superior (positivo)
+    \draw[cargarojo, very thick] (-2.4,0) arc(180:0:2.4 and 0.65);
+
+    % Signos + en el arco superior
+    \foreach \a in {25,50,75,100,125,155} {
+        \node[cargarojo, font=\small] at ({2.4*cos(\a)},{0.65*sin(\a)}) {$+$};
+    }
+    % Signos - en el arco inferior
+    \foreach \a in {205,230,255,280,305,335} {
+        \node[cargazul, font=\small] at ({2.4*cos(\a)},{0.65*sin(\a)}) {$-$};
+    }
+
+    % Etiquetas lambda
+    \node[cargarojo, font=\small] at (3.0, 0.55) {$\lambda_1$};
+    \node[cargazul,  font=\small] at (3.0,-0.55) {$\lambda_2$};
+
+    % Radio R
+    \draw[black!50] (0,0) -- (2.4,0);
+    \node[below, font=\small, black!70] at (1.2,-0.12) {$R$};
+
+    % Vector r_q (fuente) y r_P (campo)
+    \coordinate (src) at ({2.4*cos(55)},{0.65*sin(55)});
+    \fill[gray!70] (src) circle (0.06);
+    \draw[->, gray, thick] (0,0) -- (src)
+        node[midway, above left, font=\scriptsize] {$\vec{r}_q$};
+    \draw[->, gray!80, dashed] (src) -- (0,2.5)
+        node[midway, right, font=\scriptsize] {$\vec{r}_P - \vec{r}_q$};
+
+    % Punto P
+    \fill[cargaverde] (0,2.5) circle (0.09) node[right, black] {$P$};
+    \draw[->, thick] (0,0) -- (0,2.7);
+
+    % Vector r_P
+    \node[left, font=\scriptsize, black] at (-0.05,1.3) {$\vec{r}_P$};
+
+    % Distancia D
+    \draw[<->, gray] (-0.4,0) -- (-0.4,2.5) node[midway, left, font=\small] {$D$};
+
+    % Origen
+    \node[below left, font=\small] at (0,0) {$O$};
+\end{tikzpicture}
+\end{center}
+
+\subsection*{Datos Numéricos}
+
+\begin{align*}
+    R &= 0{,}14\ \text{m} \qquad D = 0{,}08\ \text{m} \qquad K = 9\times10^9\ \text{N·m}^2/\text{C}^2\\
+    \lambda_1 &= +3{,}6\times10^{-9}\ \text{C/m} \qquad \lambda_2 = -5{,}8\times10^{-9}\ \text{C/m}
+\end{align*}
+
+%----------------------------------------------------------
+\subsection*{Parte (a): Campo eléctrico en $P$ — 22 puntos}
+
+\subsubsection*{Configuración del sistema}
+
+\begin{align*}
+    \vec{r}_P &= D\,\hat{k} \quad\text{(vector al punto campo)}\\
+    \vec{r}_q &= R\cos\theta\,\hat{\imath} + R\sin\theta\,\hat{\jmath} \quad\text{(vector al elemento fuente)}\\
+    dq &= \lambda\,dl = \lambda R\,d\theta
+\end{align*}
+
+Vector de separación del elemento fuente al punto campo:
+\[
+    \vec{r}_P - \vec{r}_q = -R\cos\theta\,\hat{\imath} - R\sin\theta\,\hat{\jmath} + D\,\hat{k}
+    \qquad \|\vec{r}_P - \vec{r}_q\| = \sqrt{R^2+D^2} = \text{cte.}
+\]
+
+Campo diferencial:
+\[
+    d\vec{E} = K\frac{\lambda R\,d\theta}{(R^2+D^2)^{3/2}}
+               \bigl(-R\cos\theta\,\hat{\imath} - R\sin\theta\,\hat{\jmath} + D\,\hat{k}\bigr)
+\]
+
+\subsubsection*{Contribución del semianillo 1 ($0\leq\theta\leq\pi$, $\lambda=\lambda_1$)}
+
+\[
+    \vec{E}_1 = \frac{K\lambda_1 R}{(R^2+D^2)^{3/2}}
+    \left(-R\!\int_0^\pi\!\cos\theta\,d\theta\;\hat{\imath}
+          -R\!\int_0^\pi\!\sin\theta\,d\theta\;\hat{\jmath}
+          +D\!\int_0^\pi\!d\theta\;\hat{k}\right)
+\]
+
+Evaluando las integrales:
+\begin{align*}
+    \int_0^\pi \cos\theta\,d\theta &= [\sin\theta]_0^\pi = 0\\
+    \int_0^\pi \sin\theta\,d\theta &= [-\cos\theta]_0^\pi = -(-1)+(1) = 2\\
+    \int_0^\pi d\theta &= \pi
+\end{align*}
+
+\[
+    \vec{E}_1 = \frac{K\lambda_1 R}{(R^2+D^2)^{3/2}}\bigl(-2R\,\hat{\jmath} + \pi D\,\hat{k}\bigr)
+\]
+
+Factor numérico:
+\[
+    (R^2+D^2)^{3/2} = (0{,}14^2+0{,}08^2)^{3/2} = (0{,}026)^{3/2}
+    = 0{,}026\times\sqrt{0{,}026} = 4{,}191\times10^{-3}\ \text{m}^3
+\]
+\[
+    \frac{K\lambda_1 R}{(R^2+D^2)^{3/2}}
+    = \frac{9\times10^9\times3{,}6\times10^{-9}\times0{,}14}{4{,}191\times10^{-3}}
+    = \frac{4{,}536}{4{,}191\times10^{-3}} = 1082\ \frac{\text{N}}{\text{C·m}^2}
+\]
+
+\begin{align*}
+    \vec{E}_1 &= 1082\times\bigl(-2\times0{,}14\;\hat{\jmath} + \pi\times0{,}08\;\hat{k}\bigr)
+               = 1082\times\bigl(-0{,}28\;\hat{\jmath} + 0{,}2513\;\hat{k}\bigr)\\
+    \vec{E}_1 &= -303{,}0\;\hat{\jmath} + 271{,}9\;\hat{k} \quad\text{[N/C]}
+\end{align*}
+
+\subsubsection*{Contribución del semianillo 2 ($\pi\leq\theta\leq2\pi$, $\lambda=\lambda_2$)}
+
+\[
+    \vec{E}_2 = \frac{K\lambda_2 R}{(R^2+D^2)^{3/2}}
+    \left(-R\!\int_\pi^{2\pi}\!\cos\theta\,d\theta\;\hat{\imath}
+          -R\!\int_\pi^{2\pi}\!\sin\theta\,d\theta\;\hat{\jmath}
+          +D\!\int_\pi^{2\pi}\!d\theta\;\hat{k}\right)
+\]
+
+Evaluando las integrales:
+\begin{align*}
+    \int_\pi^{2\pi}\cos\theta\,d\theta &= [\sin\theta]_\pi^{2\pi} = 0 - 0 = 0\\
+    \int_\pi^{2\pi}\sin\theta\,d\theta &= [-\cos\theta]_\pi^{2\pi}
+        = -\cos(2\pi)+\cos(\pi) = -1+(-1) = -2\\
+    \int_\pi^{2\pi}d\theta &= \pi
+\end{align*}
+
+\[
+    \vec{E}_2 = \frac{K\lambda_2 R}{(R^2+D^2)^{3/2}}\bigl(+2R\,\hat{\jmath} + \pi D\,\hat{k}\bigr)
+\]
+
+\[
+    \frac{K\lambda_2 R}{(R^2+D^2)^{3/2}}
+    = \frac{9\times10^9\times(-5{,}8\times10^{-9})\times0{,}14}{4{,}191\times10^{-3}}
+    = \frac{-7{,}308}{4{,}191\times10^{-3}} = -1744\ \frac{\text{N}}{\text{C·m}^2}
+\]
+
+\begin{align*}
+    \vec{E}_2 &= -1744\times\bigl(+2\times0{,}14\;\hat{\jmath} + \pi\times0{,}08\;\hat{k}\bigr)
+               = -1744\times\bigl(0{,}28\;\hat{\jmath} + 0{,}2513\;\hat{k}\bigr)\\
+    \vec{E}_2 &= -488{,}3\;\hat{\jmath} - 438{,}3\;\hat{k} \quad\text{[N/C]}
+\end{align*}
+
+\subsubsection*{Campo total en $P$}
+
+\begin{align*}
+    E_j &= -303{,}0 + (-488{,}3) = -791{,}3\ \text{N/C}\\
+    E_k &= +271{,}9 + (-438{,}3) = -166{,}4\ \text{N/C}
+\end{align*}
+
+\[
+\boxed{\vec{E} = \bigl(-791\;\hat{\jmath} - 166\;\hat{k}\bigr)\ \text{N/C}
+\qquad \|\vec{E}\| = \sqrt{791^2+166^2} \approx 810\ \text{N/C}}
+\]
+
+\vspace{0.2cm}
+\textit{Nota: la componente $\hat{\imath}$ es nula porque las contribuciones de $\cos\theta$ se cancelan al integrar sobre cada semianillo completo.}
+
+%----------------------------------------------------------
+\subsection*{Parte (b): Fuerza sobre $q = -88{,}0$ nC en $P$ — 8 puntos}
+
+\begin{align*}
+    \vec{F} &= q\,\vec{E} = (-88{,}0\times10^{-9})\,\bigl(-791\;\hat{\jmath} - 166\;\hat{k}\bigr)\\
+            &= 69{,}6\times10^{-6}\;\hat{\jmath} + 14{,}6\times10^{-6}\;\hat{k}
+\end{align*}
+
+\[
+\boxed{\vec{F} = \bigl(6{,}96\times10^{-5}\;\hat{\jmath} + 1{,}46\times10^{-5}\;\hat{k}\bigr)\ \text{N}}
+\]
+
+\vspace{0.2cm}
+\textit{La carga negativa experimenta una fuerza opuesta al campo: hacia $+\hat{\jmath}$ y $+\hat{k}$.}
+
+\end{document}

@@ -1,0 +1,454 @@
+\documentclass[12pt,letterpaper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[spanish,es-noshorthands]{babel}
+\usepackage{amsmath,amssymb}
+\usepackage{graphicx}
+\usepackage{xcolor}
+\usepackage{tikz}
+\usetikzlibrary{calc,arrows.meta,decorations.markings,patterns}
+\usepackage[top=2.5cm, bottom=4cm, left=2cm, right=2cm, footskip=40pt]{geometry}
+\usepackage{fancyhdr}
+\usepackage{lastpage}
+
+% Colores institucionales y fisicos
+\definecolor{ubbblue}{RGB}{0,51,102}
+\definecolor{cargazul}{RGB}{50,50,220}
+\definecolor{cargarojo}{RGB}{220,50,50}
+\definecolor{campoverde}{RGB}{30,140,30}
+\definecolor{puntoP}{RGB}{180,0,180}
+
+% Encabezado y pie de pagina
+\pagestyle{fancy}
+\fancyhf{}
+\renewcommand{\headrulewidth}{0pt}
+\renewcommand{\footrulewidth}{0.4pt}
+
+\fancyfoot[L]{%
+    \raisebox{-0.5cm}{\includegraphics[height=1.2cm]{logo ubb.png}}%
+}
+\fancyfoot[C]{%
+    \begin{minipage}[b]{8cm}
+        \centering
+        \footnotesize
+        \textcolor{ubbblue}{\textbf{Dr. Arturo Fern\'andez P\'erez}}\\
+        \scriptsize Departamento de F\'isica -- Universidad del B\'io-B\'io\\
+        \scriptsize \textit{Electro\_Asistente\_AI-UBB}\\
+        \tiny P\'agina \thepage\ de \pageref{LastPage}
+    \end{minipage}%
+}
+\fancyfoot[R]{%
+    \raisebox{-0.5cm}{\includegraphics[height=1.2cm]{logo dfis.png}}%
+}
+
+\fancypagestyle{plain}{%
+    \fancyhf{}
+    \renewcommand{\headrulewidth}{0pt}
+    \renewcommand{\footrulewidth}{0.4pt}
+    \fancyfoot[L]{%
+        \raisebox{-0.5cm}{\includegraphics[height=1.2cm]{logo ubb.png}}%
+    }
+    \fancyfoot[C]{%
+        \begin{minipage}[b]{8cm}
+            \centering
+            \footnotesize
+            \textcolor{ubbblue}{\textbf{Dr. Arturo Fern\'andez P\'erez}}\\
+            \scriptsize Departamento de F\'isica -- Universidad del B\'io-B\'io\\
+            \scriptsize \textit{Electro\_Asistente\_AI-UBB}\\
+            \tiny P\'agina \thepage\ de \pageref{LastPage}
+        \end{minipage}%
+    }
+    \fancyfoot[R]{%
+        \raisebox{-0.5cm}{\includegraphics[height=1.2cm]{logo dfis.png}}%
+    }
+}
+
+\begin{document}
+
+%========================================
+% ENCABEZADO INSTITUCIONAL
+%========================================
+\begin{center}
+    \includegraphics[height=2cm]{logo ubb.png}\\[0.3cm]
+    {\large\textcolor{ubbblue}{\textbf{UNIVERSIDAD DEL B\'IO-B\'IO}}}\\[0.1cm]
+    {\normalsize Facultad de Ciencias -- Departamento de F\'isica}\\[0.1cm]
+    {\normalsize\textbf{Dr. Arturo Fern\'andez P\'erez}}
+\end{center}
+
+\vspace{0.3cm}
+\hrule height 1pt
+\vspace{0.5cm}
+
+{\centering\Large\textbf{Soluci\'on: Campo El\'ectrico Neto de Tres Cargas Puntuales}\par}
+
+\vspace{0.5cm}
+
+%========================================
+% ENUNCIADO
+%========================================
+\section*{Enunciado del Problema}
+
+Determinar el campo el\'ectrico neto $\vec{E}_{\text{neto}}$ en el punto $P$, producido por tres cargas puntuales. Datos:
+
+\begin{center}
+\begin{tabular}{|c|c|c|}
+\hline
+\textbf{Carga} & \textbf{Valor} & \textbf{Posici\'on} \\
+\hline
+$q_1$ & $+1\;\mu\text{C}$ & $(7,\;14)$ cm \\
+\hline
+$q_2$ & $-2\;\mu\text{C}$ & $(-2,\;8)$ cm \\
+\hline
+$q_3$ & $-3\;\mu\text{C}$ & $(-13,\;-17)$ cm \\
+\hline
+$P$ & (punto de inter\'es) & $(15,\;-3)$ cm \\
+\hline
+\end{tabular}
+\end{center}
+
+%========================================
+% DIAGRAMA DE SITUACION
+%========================================
+\section*{Diagrama de la Situaci\'on}
+
+\begin{center}
+\begin{tikzpicture}[scale=0.30,
+    eje/.style={-{Stealth[length=3mm]}, thick},
+    cargapos/.style={circle, fill=cargazul, minimum size=10pt, inner sep=0pt},
+    carganeg/.style={circle, fill=cargarojo, minimum size=10pt, inner sep=0pt}]
+
+    % Grilla de fondo
+    \draw[gray!20, very thin, step=2] (-6,-7) grid (7,6);
+
+    % Ejes coordenados
+    \draw[eje] (-6,0) -- (7,0) node[right] {$x$ [cm]};
+    \draw[eje] (0,-7) -- (0,6) node[above] {$y$ [cm]};
+
+    % Marcas en ejes (cada 5 cm -> cada 1.5 unidades)
+    \foreach \x in {-5,5,10,15} {
+        \draw[thick] ({0.3*\x},0.12) -- ({0.3*\x},-0.12)
+            node[below, scale=0.65, black] {\x};
+    }
+    \foreach \y in {-15,-10,-5,5,10} {
+        \draw[thick] (0.12,{0.3*\y}) -- (-0.12,{0.3*\y})
+            node[left, scale=0.65, black] {\y};
+    }
+    \node[below left, scale=0.7] at (0,0) {$O$};
+
+    % --- Carga q1 (+) en (7,14) cm ---
+    \node[cargapos] (q1) at ({0.3*7},{0.3*14}) {};
+    \node[cargazul, above right, scale=0.85, font=\bfseries] at ({0.3*7},{0.3*14})
+        {$q_1(+)$};
+    \node[cargazul, below right, scale=0.75] at ({0.3*7},{0.3*14})
+        {$(7,14)$};
+
+    % --- Carga q2 (-) en (-2,8) cm ---
+    \node[carganeg] (q2) at ({0.3*(-2)},{0.3*8}) {};
+    \node[cargarojo, above left, scale=0.85, font=\bfseries] at ({0.3*(-2)},{0.3*8})
+        {$q_2(-)$};
+    \node[cargarojo, below left, scale=0.75] at ({0.3*(-2)},{0.3*8})
+        {$(-2,8)$};
+
+    % --- Carga q3 (-) en (-13,-17) cm ---
+    \node[carganeg] (q3) at ({0.3*(-13)},{0.3*(-17)}) {};
+    \node[cargarojo, below right, scale=0.85, font=\bfseries] at ({0.3*(-13)},{0.3*(-17)})
+        {$q_3(-)$};
+    \node[cargarojo, above left, scale=0.75] at ({0.3*(-13)},{0.3*(-17)})
+        {$(-13,-17)$};
+
+    % --- Punto P en (15,-3) cm ---
+    \fill[puntoP] ({0.3*15},{0.3*(-3)}) circle (5pt);
+    \node[puntoP, above right, scale=0.9, font=\bfseries] at ({0.3*15},{0.3*(-3)})
+        {$P$};
+    \node[puntoP, below right, scale=0.75] at ({0.3*15},{0.3*(-3)})
+        {$(15,-3)$};
+
+    % Vectores de posicion r_{iP} (lineas punteadas de cada carga a P)
+    \draw[dashed, cargazul!60, thin] ({0.3*7},{0.3*14}) -- ({0.3*15},{0.3*(-3)})
+        node[midway, right, scale=0.65, cargazul] {$\vec{r}_{1P}$};
+    \draw[dashed, cargarojo!60, thin] ({0.3*(-2)},{0.3*8}) -- ({0.3*15},{0.3*(-3)})
+        node[midway, above, scale=0.65, cargarojo] {$\vec{r}_{2P}$};
+    \draw[dashed, cargarojo!40, thin] ({0.3*(-13)},{0.3*(-17)}) -- ({0.3*15},{0.3*(-3)})
+        node[midway, below, scale=0.65, cargarojo!80] {$\vec{r}_{3P}$};
+
+\end{tikzpicture}
+\end{center}
+
+%========================================
+% DATOS NUMERICOS
+%========================================
+\section*{Datos Num\'ericos}
+
+\begin{itemize}
+    \item $K = 8{,}99 \times 10^9\;\text{N}\cdot\text{m}^2/\text{C}^2$
+    \item $q_1 = +1\;\mu\text{C} = +1\times10^{-6}\;\text{C}$;\quad $q_2 = -2\;\mu\text{C} = -2\times10^{-6}\;\text{C}$;\quad $q_3 = -3\;\mu\text{C} = -3\times10^{-6}\;\text{C}$
+    \item Coordenadas en metros: $\vec{r}_1=(0{,}07;\,0{,}14)$ m;\; $\vec{r}_2=(-0{,}02;\,0{,}08)$ m;\; $\vec{r}_3=(-0{,}13;\,-0{,}17)$ m;\; $P=(0{,}15;\,-0{,}03)$ m
+\end{itemize}
+
+%========================================
+% ANALISIS CUALITATIVO
+%========================================
+\section*{An\'alisis Cualitativo}
+
+El campo el\'ectrico neto se obtiene por \textbf{superposici\'on}:
+$\vec{E}_{\text{neto}} = \vec{E}_1 + \vec{E}_2 + \vec{E}_3$.
+
+Usando la forma vectorial:
+\begin{equation*}
+    \vec{E}_i = K \frac{q_i\,\vec{r}_{iP}}{|\vec{r}_{iP}|^3}
+    \qquad \text{donde } \vec{r}_{iP} = P - \vec{r}_i
+\end{equation*}
+
+\begin{itemize}
+    \item $q_1 > 0$: el campo $\vec{E}_1$ en $P$ apunta \textbf{alejandose} de $q_1$ (hacia $P$).
+    \item $q_2 < 0$: el campo $\vec{E}_2$ en $P$ apunta \textbf{hacia} $q_2$ (opuesto a $\vec{r}_{2P}$).
+    \item $q_3 < 0$: el campo $\vec{E}_3$ en $P$ apunta \textbf{hacia} $q_3$ (opuesto a $\vec{r}_{3P}$).
+\end{itemize}
+
+%========================================
+% PASO 1: VECTORES DE POSICION
+%========================================
+\section*{Paso 1: Vectores de Posici\'on $\vec{r}_{iP} = P - \vec{r}_i$}
+
+\subsection*{De $q_1$ a $P$}
+\begin{equation*}
+\vec{r}_{1P} = (0{,}15 - 0{,}07)\,\hat{\imath} + (-0{,}03 - 0{,}14)\,\hat{\jmath}
+= 0{,}08\,\hat{\imath} - 0{,}17\,\hat{\jmath} \;\text{[m]}
+\end{equation*}
+\begin{equation*}
+|\vec{r}_{1P}| = \sqrt{(0{,}08)^2 + (0{,}17)^2}
+= \sqrt{0{,}0064 + 0{,}0289}
+= \sqrt{0{,}0353}
+= 0{,}18788\;\text{m}
+\end{equation*}
+\begin{equation*}
+|\vec{r}_{1P}|^3 = (0{,}18788)^3 = 0{,}006630\;\text{m}^3
+\end{equation*}
+
+\subsection*{De $q_2$ a $P$}
+\begin{equation*}
+\vec{r}_{2P} = (0{,}15 - (-0{,}02))\,\hat{\imath} + (-0{,}03 - 0{,}08)\,\hat{\jmath}
+= 0{,}17\,\hat{\imath} - 0{,}11\,\hat{\jmath} \;\text{[m]}
+\end{equation*}
+\begin{equation*}
+|\vec{r}_{2P}| = \sqrt{(0{,}17)^2 + (0{,}11)^2}
+= \sqrt{0{,}0289 + 0{,}0121}
+= \sqrt{0{,}0410}
+= 0{,}20248\;\text{m}
+\end{equation*}
+\begin{equation*}
+|\vec{r}_{2P}|^3 = (0{,}20248)^3 = 0{,}008302\;\text{m}^3
+\end{equation*}
+
+\subsection*{De $q_3$ a $P$}
+\begin{equation*}
+\vec{r}_{3P} = (0{,}15 - (-0{,}13))\,\hat{\imath} + (-0{,}03 - (-0{,}17))\,\hat{\jmath}
+= 0{,}28\,\hat{\imath} + 0{,}14\,\hat{\jmath} \;\text{[m]}
+\end{equation*}
+\begin{equation*}
+|\vec{r}_{3P}| = \sqrt{(0{,}28)^2 + (0{,}14)^2}
+= \sqrt{0{,}0784 + 0{,}0196}
+= \sqrt{0{,}0980}
+= 0{,}31305\;\text{m}
+\end{equation*}
+\begin{equation*}
+|\vec{r}_{3P}|^3 = (0{,}31305)^3 = 0{,}030679\;\text{m}^3
+\end{equation*}
+
+%========================================
+% PASO 2: CAMPO DE CADA CARGA EN P
+%========================================
+\section*{Paso 2: Campo El\'ectrico de Cada Carga en $P$}
+
+\subsection*{Campo de $q_1$ en $P$}
+
+\begin{equation*}
+\vec{E}_1 = K\,\frac{q_1\,\vec{r}_{1P}}{|\vec{r}_{1P}|^3}
+= (8{,}99\times10^9)\,\frac{(+1\times10^{-6})(0{,}08\,\hat{\imath} - 0{,}17\,\hat{\jmath})}{0{,}006630}
+\end{equation*}
+
+\begin{equation*}
+\vec{E}_1 = \frac{8990\,(0{,}08\,\hat{\imath} - 0{,}17\,\hat{\jmath})}{0{,}006630}
+= \frac{719{,}2\,\hat{\imath} - 1528{,}3\,\hat{\jmath}}{0{,}006630}
+\end{equation*}
+
+\begin{equation*}
+\boxed{\vec{E}_1 = 108{,}5\,\hat{\imath} - 230{,}5\,\hat{\jmath} \;\;\text{[kN/C]}}
+\end{equation*}
+
+\subsection*{Campo de $q_2$ en $P$}
+
+\begin{equation*}
+\vec{E}_2 = K\,\frac{q_2\,\vec{r}_{2P}}{|\vec{r}_{2P}|^3}
+= (8{,}99\times10^9)\,\frac{(-2\times10^{-6})(0{,}17\,\hat{\imath} - 0{,}11\,\hat{\jmath})}{0{,}008302}
+\end{equation*}
+
+\begin{equation*}
+\vec{E}_2 = \frac{-17980\,(0{,}17\,\hat{\imath} - 0{,}11\,\hat{\jmath})}{0{,}008302}
+= \frac{-3056{,}6\,\hat{\imath} + 1977{,}8\,\hat{\jmath}}{0{,}008302}
+\end{equation*}
+
+\begin{equation*}
+\boxed{\vec{E}_2 = -368{,}1\,\hat{\imath} + 238{,}2\,\hat{\jmath} \;\;\text{[kN/C]}}
+\end{equation*}
+
+\subsection*{Campo de $q_3$ en $P$}
+
+\begin{equation*}
+\vec{E}_3 = K\,\frac{q_3\,\vec{r}_{3P}}{|\vec{r}_{3P}|^3}
+= (8{,}99\times10^9)\,\frac{(-3\times10^{-6})(0{,}28\,\hat{\imath} + 0{,}14\,\hat{\jmath})}{0{,}030679}
+\end{equation*}
+
+\begin{equation*}
+\vec{E}_3 = \frac{-26970\,(0{,}28\,\hat{\imath} + 0{,}14\,\hat{\jmath})}{0{,}030679}
+= \frac{-7551{,}6\,\hat{\imath} - 3775{,}8\,\hat{\jmath}}{0{,}030679}
+\end{equation*}
+
+\begin{equation*}
+\boxed{\vec{E}_3 = -246{,}1\,\hat{\imath} - 123{,}1\,\hat{\jmath} \;\;\text{[kN/C]}}
+\end{equation*}
+
+%========================================
+% PASO 3: SUPERPOSICION
+%========================================
+\section*{Paso 3: Campo El\'ectrico Neto por Superposici\'on}
+
+\begin{equation*}
+\vec{E}_{\text{neto}} = \vec{E}_1 + \vec{E}_2 + \vec{E}_3
+\end{equation*}
+
+\textbf{Componente $\hat{\imath}$:}
+\begin{equation*}
+E_x = 108{,}5 + (-368{,}1) + (-246{,}1) = 108{,}5 - 368{,}1 - 246{,}1 = -505{,}7\;\text{kN/C}
+\end{equation*}
+
+\textbf{Componente $\hat{\jmath}$:}
+\begin{equation*}
+E_y = -230{,}5 + 238{,}2 + (-123{,}1) = -230{,}5 + 238{,}2 - 123{,}1 = -115{,}4\;\text{kN/C}
+\end{equation*}
+
+\begin{equation*}
+\boxed{\vec{E}_{\text{neto}} = -505{,}7\,\hat{\imath} - 115{,}4\,\hat{\jmath} \;\;\text{[kN/C]}}
+\end{equation*}
+
+%========================================
+% PASO 4: MAGNITUD Y DIRECCION
+%========================================
+\section*{Paso 4: Magnitud y Direcci\'on del Campo Neto}
+
+\subsection*{Magnitud}
+
+\begin{equation*}
+|\vec{E}_{\text{neto}}| = \sqrt{E_x^2 + E_y^2}
+= \sqrt{(-505{,}7)^2 + (-115{,}4)^2}
+= \sqrt{255{,}733 + 13{,}317}
+\end{equation*}
+
+\begin{equation*}
+|\vec{E}_{\text{neto}}| = \sqrt{269{,}050}\;\text{[kN/C]}
+\end{equation*}
+
+\begin{equation*}
+\boxed{|\vec{E}_{\text{neto}}| \approx 518{,}7\;\text{kN/C}}
+\end{equation*}
+
+\subsection*{Direcci\'on}
+
+Como $E_x < 0$ y $E_y < 0$, el vector $\vec{E}_{\text{neto}}$ apunta al \textbf{tercer cuadrante}.
+
+El \'angulo de referencia respecto al eje $-x$ es:
+\begin{equation*}
+\alpha = \arctan\!\left(\frac{|E_y|}{|E_x|}\right)
+= \arctan\!\left(\frac{115{,}4}{505{,}7}\right)
+= \arctan(0{,}2282)
+\approx 12{,}84^\circ
+\end{equation*}
+
+El \'angulo medido desde el eje $+x$ (sentido antihorario) es:
+\begin{equation*}
+\boxed{\theta = 180^\circ + 12{,}84^\circ = 192{,}84^\circ}
+\end{equation*}
+
+%========================================
+% DIAGRAMA DEL CAMPO NETO EN P
+%========================================
+\section*{Diagrama Vectorial en el Punto $P$}
+
+\begin{center}
+\begin{tikzpicture}[scale=1.0,
+    eje/.style={-{Stealth[length=3mm]}, thick},
+    campo/.style={-{Stealth[length=4mm]}, very thick}]
+
+    % Ejes en P
+    \draw[eje, gray] (-3.2,0) -- (2.5,0) node[right, scale=0.8] {$\hat{\imath}$};
+    \draw[eje, gray] (0,-2.2) -- (0,2.5) node[above, scale=0.8] {$\hat{\jmath}$};
+    \node[below right, scale=0.8] at (0,0) {$P$};
+    \fill[puntoP] (0,0) circle (4pt);
+
+    % Escala: 1 unidad = 200 kN/C; campos escalados /200
+    % E1 = (108.5, -230.5) -> (0.543, -1.153)
+    \draw[campo, cargazul] (0,0) -- (0.543,-1.153)
+        node[right, scale=0.8, cargazul] {$\vec{E}_1$};
+
+    % E2 = (-368.1, 238.2) -> (-1.841, 1.191)
+    \draw[campo, cargarojo] (0,0) -- (-1.841,1.191)
+        node[above left, scale=0.8, cargarojo] {$\vec{E}_2$};
+
+    % E3 = (-246.1, -123.1) -> (-1.231, -0.616)
+    \draw[campo, cargarojo!70] (0,0) -- (-1.231,-0.616)
+        node[below left, scale=0.8, cargarojo!80] {$\vec{E}_3$};
+
+    % Eneto = (-505.7, -115.4) -> (-2.529, -0.577)
+    \draw[campo, campoverde, line width=2pt] (0,0) -- (-2.529,-0.577)
+        node[below, scale=0.9, campoverde, font=\bfseries] {$\vec{E}_{\text{neto}}$};
+
+    % Angulo de referencia
+    \draw[->, thin, black!60] (-1.5,0) arc (180:192.84:1.5);
+    \node[scale=0.7, black!70] at (-1.7,-0.4) {$12{,}84^\circ$};
+
+    % Leyenda de escala
+    \node[scale=0.65, gray] at (2.0,-1.8) {Escala: 1 ud = 200 kN/C};
+
+\end{tikzpicture}
+\end{center}
+
+%========================================
+% RESUMEN
+%========================================
+\section*{Resumen de Resultados}
+
+\begin{center}
+\renewcommand{\arraystretch}{1.4}
+\begin{tabular}{|l|c|c|}
+\hline
+\textbf{Campo} & \textbf{Componentes [kN/C]} & \textbf{Magnitud [kN/C]} \\
+\hline
+$\vec{E}_1$ (por $q_1=+1\,\mu$C) & $108{,}5\,\hat{\imath} - 230{,}5\,\hat{\jmath}$ & 254{,}7 \\
+\hline
+$\vec{E}_2$ (por $q_2=-2\,\mu$C) & $-368{,}1\,\hat{\imath} + 238{,}2\,\hat{\jmath}$ & 438{,}5 \\
+\hline
+$\vec{E}_3$ (por $q_3=-3\,\mu$C) & $-246{,}1\,\hat{\imath} - 123{,}1\,\hat{\jmath}$ & 275{,}2 \\
+\hline
+\hline
+$\vec{E}_{\text{neto}}$ & $-505{,}7\,\hat{\imath} - 115{,}4\,\hat{\jmath}$ & $\mathbf{518{,}7}$ \\
+\hline
+\multicolumn{2}{|l|}{Direcci\'on desde eje $+x$} & $192{,}84^\circ$ \\
+\hline
+\end{tabular}
+\end{center}
+
+%========================================
+% INTERPRETACION FISICA
+%========================================
+\section*{Interpretaci\'on F\'isica}
+
+\begin{itemize}
+    \item El campo neto apunta predominantemente en la direcci\'on $-\hat{\imath}$ (tercer cuadrante), lo que refleja la influencia dominante de las cargas negativas $q_2$ y $q_3$, cuyo campo en $P$ se orienta \textbf{hacia} ellas.
+
+    \item $q_3$ est\'a m\'as lejos de $P$ que $q_2$ ($r_{3P} \approx 31{,}3$ cm vs.\ $r_{2P} \approx 20{,}2$ cm), pero su mayor valor $|q_3|=3\,\mu$C la mantiene como contribuyente significativa.
+
+    \item La carga positiva $q_1$ genera el \'unico campo con componente $+\hat{\imath}$, pero no logra compensar la suma de las dos negativas.
+
+    \item Una carga de prueba positiva colocada en $P$ experimentar\'ia una fuerza de magnitud $F = qE_{\text{neto}}$, orient\'andose hacia el tercer cuadrante (hacia las cargas negativas).
+\end{itemize}
+
+\end{document}

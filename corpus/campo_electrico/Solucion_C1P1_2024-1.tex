@@ -1,0 +1,405 @@
+\documentclass[12pt,letterpaper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[spanish,es-noshorthands]{babel}
+\usepackage{amsmath,amssymb}
+\usepackage{graphicx}
+\usepackage{xcolor}
+\usepackage{tikz}
+\usetikzlibrary{calc,arrows.meta,decorations.markings,patterns}
+\usepackage[top=2.5cm, bottom=3cm, left=2cm, right=2cm, footskip=40pt]{geometry}
+\usepackage{fancyhdr}
+\usepackage{lastpage}
+
+% Colores institucionales y fisicos
+\definecolor{ubbblue}{RGB}{0,51,102}
+\definecolor{cargazul}{RGB}{50,50,220}
+\definecolor{cargarojo}{RGB}{220,50,50}
+\definecolor{campoverde}{RGB}{30,140,30}
+\definecolor{puntoP}{RGB}{180,0,180}
+\definecolor{lineacarga}{RGB}{200,100,0}
+
+% Encabezado y pie de pagina
+\pagestyle{fancy}
+\fancyhf{}
+\renewcommand{\headrulewidth}{0pt}
+\renewcommand{\footrulewidth}{0.4pt}
+
+\fancyfoot[L]{%
+    \raisebox{-0.5cm}{\includegraphics[height=1.2cm]{logo ubb.png}}%
+}
+\fancyfoot[C]{%
+    \begin{minipage}[b]{8cm}
+        \centering
+        \footnotesize
+        \textcolor{ubbblue}{\textbf{Dr. Arturo Fern\'andez P\'erez}}\\
+        \scriptsize Departamento de F\'isica -- Universidad del B\'io-B\'io\\
+        \scriptsize \textit{Electro\_Asistente\_AI-UBB}\\
+        \tiny P\'agina \thepage\ de \pageref{LastPage}
+    \end{minipage}%
+}
+\fancyfoot[R]{%
+    \raisebox{-0.5cm}{\includegraphics[height=1.2cm]{logo dfis.png}}%
+}
+
+\fancypagestyle{plain}{%
+    \fancyhf{}
+    \renewcommand{\headrulewidth}{0pt}
+    \renewcommand{\footrulewidth}{0.4pt}
+    \fancyfoot[L]{%
+        \raisebox{-0.5cm}{\includegraphics[height=1.2cm]{logo ubb.png}}%
+    }
+    \fancyfoot[C]{%
+        \begin{minipage}[b]{8cm}
+            \centering
+            \footnotesize
+            \textcolor{ubbblue}{\textbf{Dr. Arturo Fern\'andez P\'erez}}\\
+            \scriptsize Departamento de F\'isica -- Universidad del B\'io-B\'io\\
+            \scriptsize \textit{Electro\_Asistente\_AI-UBB}\\
+            \tiny P\'agina \thepage\ de \pageref{LastPage}
+        \end{minipage}%
+    }
+    \fancyfoot[R]{%
+        \raisebox{-0.5cm}{\includegraphics[height=1.2cm]{logo dfis.png}}%
+    }
+}
+
+\begin{document}
+
+%========================================
+% ENCABEZADO INSTITUCIONAL
+%========================================
+\begin{center}
+    \includegraphics[height=2cm]{logo ubb.png}\\[0.3cm]
+    {\large\textcolor{ubbblue}{\textbf{UNIVERSIDAD DEL B\'IO-B\'IO}}}\\[0.1cm]
+    {\normalsize Facultad de Ciencias -- Departamento de F\'isica}\\[0.1cm]
+    {\normalsize\textbf{Dr. Arturo Fern\'andez P\'erez}}
+\end{center}
+
+\vspace{0.3cm}
+\hrule height 1pt
+\vspace{0.5cm}
+
+{\centering\Large\textbf{Soluci\'on: Campo El\'ectrico de una L\'inea de Carga Uniforme}\par}
+{\centering\normalsize Certamen 1 -- 2024-1, Problema 1\par}
+
+\vspace{0.5cm}
+
+%========================================
+% ENUNCIADO
+%========================================
+\section*{Enunciado del Problema}
+
+Una l\'inea de carga positiva con densidad lineal uniforme $\lambda = 5{,}30$ [nC/m] est\'a ubicada sobre el eje $X$, entre $x = 0{,}10$ [m] y $x = 0{,}30$ [m]. Determinar:
+\begin{enumerate}
+    \item El campo el\'ectrico $\vec{E}$ inducido por la l\'inea de carga en el punto $P(-0{,}07;\,-0{,}01)$ [m].
+    \item La fuerza el\'ectrica $\vec{F}$ sobre una carga $q = -4{,}5\;[\mu\text{C}]$ ubicada en $P$.
+\end{enumerate}
+
+%========================================
+% DIAGRAMA DE SITUACION
+%========================================
+\section*{Diagrama de la Situaci\'on}
+
+\begin{center}
+\begin{tikzpicture}[x=2.2cm, y=5cm,
+    eje/.style={-{Stealth[length=3mm]}, thick},
+    campo/.style={-{Stealth[length=3.5mm]}, very thick},
+    rvec/.style={-{Stealth[length=3mm]}, thick, dashed}]
+
+    % Ejes coordenados (coordenadas en decimetros, 1 unidad = 10 cm)
+    \draw[eje] (-1.0,0) -- (3.5,0) node[right] {$x$ [m]};
+    \draw[eje] (0,-0.22) -- (0,0.25) node[above] {$y$ [m]};
+    \node[below right, scale=0.75] at (0,0) {$O$};
+
+    % Marcas en eje x
+    \foreach \xv/\xl in {1/0{,}10, 2/0{,}20, 3/0{,}30} {
+        \draw (\xv,0.012) -- (\xv,-0.012) node[below, scale=0.65] {\xl};
+    }
+    \foreach \xv/\xl in {-0.7/-0{,}07} {
+        \draw (\xv,0.012) -- (\xv,-0.012) node[below, scale=0.65] {\xl};
+    }
+    % Marca en eje y
+    \draw (0.03,-0.1) -- (-0.03,-0.1) node[left, scale=0.65] {$-0{,}01$};
+
+    % Linea de carga (segmento grueso naranja sobre el eje x)
+    \draw[lineacarga, line width=4pt] (1.0,0) -- (3.0,0);
+    \node[lineacarga, above, scale=0.85, font=\bfseries] at (2.0,0.04)
+        {$\lambda > 0$\quad ($0{,}10 \le x \le 0{,}30$ [m])};
+
+    % Elemento de carga dq en x0 = 0.20 m (unidad = 2)
+    \fill[lineacarga] (2.0,0) circle (2.5pt);
+    \node[lineacarga, above right, scale=0.75] at (2.0,0) {$dq = \lambda\,dx$};
+
+    % Punto P
+    \fill[puntoP] (-0.7,-0.1) circle (3pt);
+    \node[puntoP, below left, scale=0.9, font=\bfseries] at (-0.7,-0.1) {$P$};
+    \node[puntoP, above left, scale=0.75] at (-0.7,-0.1) {$(-0{,}07;\,-0{,}01)$};
+
+    % Vector r_q: origen -> dq
+    \draw[rvec, cargazul] (0,0) -- (2.0,0)
+        node[midway, above, scale=0.8, cargazul] {$\vec{r}_q = x\,\hat{\imath}$};
+
+    % Vector r_P: origen -> P
+    \draw[rvec, puntoP] (0,0) -- (-0.7,-0.1)
+        node[midway, left, scale=0.8, puntoP] {$\vec{r}_P$};
+
+    % Vector r_P - r_q: dq -> P
+    \draw[campo, campoverde] (2.0,0) -- (-0.7,-0.1)
+        node[midway, below, scale=0.8, campoverde]
+            {$\vec{r}_P - \vec{r}_q$};
+
+\end{tikzpicture}
+\end{center}
+
+%========================================
+% DATOS NUMERICOS
+%========================================
+\section*{Datos Num\'ericos}
+
+\begin{itemize}
+    \item $K = 9{,}00 \times 10^9\;\text{N}\cdot\text{m}^2/\text{C}^2$
+    \item $\lambda = 5{,}30\;\text{nC/m} = 5{,}30 \times 10^{-9}\;\text{C/m}$
+    \quad$\Rightarrow$\quad $K\lambda = 9{,}00\times10^{9} \times 5{,}30\times10^{-9} = 47{,}70\;\text{N/C\,m}^{-1}$
+    \item L\'inea de carga: $0{,}10\;\text{m} \le x \le 0{,}30\;\text{m}$
+    \item $\vec{r}_P = -0{,}07\,\hat{\imath} - 0{,}01\,\hat{\jmath}\;\text{[m]}$
+    \item $q = -4{,}5\;\mu\text{C} = -4{,}5\times10^{-6}\;\text{C}$
+\end{itemize}
+
+%========================================
+% ANALISIS CUALITATIVO
+%========================================
+\section*{An\'alisis Cualitativo}
+
+Se trata de una distribuci\'on \textbf{continua} de carga. El campo total en $P$ se obtiene integrando la contribuci\'on de cada elemento $dq = \lambda\,dx$:
+\begin{equation*}
+    d\vec{E}(\vec{r}_P) = K\,\frac{dq}{\|\vec{r}_P - \vec{r}_q\|^3}\,(\vec{r}_P - \vec{r}_q)
+\end{equation*}
+
+\begin{itemize}
+    \item El punto $P$ est\'a a la \textbf{izquierda} de toda la l\'inea de carga ($x_P = -0{,}07\;\text{m}$ frente a $x \in [0{,}10;\,0{,}30]\;\text{m}$): la componente $\hat{\imath}$ del campo debe ser \textbf{negativa} (el campo se aleja de la carga positiva, empujando hacia la izquierda).
+    \item $P$ est\'a \textbf{ligeramente por debajo} del eje $X$ ($y_P = -0{,}01\;\text{m}$): la componente $\hat{\jmath}$ tambi\'en debe ser \textbf{negativa} (el campo apunta levemente hacia abajo, alejandose de la l\'inea).
+\end{itemize}
+
+%========================================
+% PASO 1: VECTORES DE POSICION
+%========================================
+\section*{Paso 1: Vectores de Posici\'on}
+
+El elemento de carga se encuentra en $\vec{r}_q = x\,\hat{\imath}$ (sobre el eje $X$). El punto de campo es:
+\begin{equation*}
+    \vec{r}_P = -0{,}07\,\hat{\imath} - 0{,}01\,\hat{\jmath}\;\text{[m]}
+\end{equation*}
+
+El vector desplazamiento de la fuente al punto de campo es:
+\begin{equation*}
+    \vec{r}_P - \vec{r}_q
+    = \bigl(-0{,}07 - x\bigr)\,\hat{\imath} + \bigl(-0{,}01\bigr)\,\hat{\jmath}
+    \quad\text{[m]}
+\end{equation*}
+
+Su norma al cubo:
+\begin{equation*}
+    \|\vec{r}_P - \vec{r}_q\|^3
+    = \Bigl[(-0{,}07 - x)^2 + 0{,}01^2\Bigr]^{3/2}
+\end{equation*}
+
+%========================================
+% PASO 2: PLANTEAMIENTO DE LA INTEGRAL
+%========================================
+\section*{Paso 2: Planteamiento de la Integral}
+
+Sustituyendo $dq = \lambda\,dx$ e integrando entre los l\'imites de la l\'inea de carga:
+
+\begin{equation*}
+    \vec{E}
+    = \int_{0{,}10}^{0{,}30}
+      K\lambda\,
+      \frac{\bigl(-0{,}07 - x\bigr)\,\hat{\imath} - 0{,}01\,\hat{\jmath}}
+           {\bigl[(-0{,}07 - x)^2 + 0{,}01^2\bigr]^{3/2}}\,dx
+\end{equation*}
+
+Separando por componente:
+
+\begin{align*}
+    E_x &= K\lambda
+    \int_{0{,}10}^{0{,}30}
+    \frac{(-0{,}07 - x)\,dx}{\bigl[(-0{,}07 - x)^2 + 0{,}01^2\bigr]^{3/2}}
+    \\[8pt]
+    E_y &= K\lambda\,(-0{,}01)
+    \int_{0{,}10}^{0{,}30}
+    \frac{dx}{\bigl[(-0{,}07 - x)^2 + 0{,}01^2\bigr]^{3/2}}
+\end{align*}
+
+%========================================
+% PASO 3: CAMBIO DE VARIABLE
+%========================================
+\section*{Paso 3: Cambio de Variable}
+
+Se define:
+\begin{equation*}
+    \mu = -0{,}07 - x \qquad \Rightarrow \qquad d\mu = -dx
+\end{equation*}
+
+L\'imites transformados:
+\begin{align*}
+    x = 0{,}10\;\text{m} &\;\Rightarrow\; \mu = -0{,}17\;\text{m}\\
+    x = 0{,}30\;\text{m} &\;\Rightarrow\; \mu = -0{,}37\;\text{m}
+\end{align*}
+
+Las integrales resultan (con $a = 0{,}01\;\text{m}$):
+
+\begin{align*}
+    E_x &= K\lambda\int_{-0{,}37}^{-0{,}17}
+            \frac{\mu\,d\mu}{(\mu^2 + a^2)^{3/2}}
+    \\[8pt]
+    E_y &= K\lambda\,(0{,}01)\int_{-0{,}17}^{-0{,}37}
+            \frac{d\mu}{(\mu^2 + a^2)^{3/2}}
+\end{align*}
+
+donde el factor $(0{,}01)$ en $E_y$ proviene de combinar el $(-0{,}01)$ del numerador con el $(-1)$ de $dx = -d\mu$, y la reorientaci\'on del intervalo de integraci\'on.
+
+%========================================
+% PASO 4: ANTIDERIVADAS
+%========================================
+\section*{Paso 4: Antiderivadas}
+
+Se utilizan las primitivas est\'andar:
+
+\begin{equation*}
+    \int \frac{\mu\,d\mu}{(\mu^2+a^2)^{3/2}} = \frac{-1}{\sqrt{\mu^2+a^2}} + C
+    \qquad\qquad
+    \int \frac{d\mu}{(\mu^2+a^2)^{3/2}} = \frac{\mu}{a^2\sqrt{\mu^2+a^2}} + C
+\end{equation*}
+
+\subsection*{Componente $\hat{\imath}$}
+
+\begin{equation*}
+    E_x = K\lambda \left[\frac{-1}{\sqrt{\mu^2 + a^2}}\right]_{-0{,}37}^{-0{,}17}
+        = K\lambda \left(\frac{-1}{\sqrt{0{,}17^2+0{,}01^2}}
+                        + \frac{1}{\sqrt{0{,}37^2+0{,}01^2}}\right)
+\end{equation*}
+
+\begin{align*}
+    \sqrt{0{,}17^2 + 0{,}01^2} &= \sqrt{0{,}0290} = 0{,}17029\;\text{m}
+    \quad\Rightarrow\quad \frac{1}{0{,}17029} = 5{,}872\;\text{m}^{-1}\\
+    \sqrt{0{,}37^2 + 0{,}01^2} &= \sqrt{0{,}1370} = 0{,}37014\;\text{m}
+    \quad\Rightarrow\quad \frac{1}{0{,}37014} = 2{,}702\;\text{m}^{-1}
+\end{align*}
+
+\begin{equation*}
+    E_x = K\lambda\,(-5{,}872 + 2{,}702) = K\lambda\,(-3{,}170\;\text{m}^{-1})
+\end{equation*}
+
+\subsection*{Componente $\hat{\jmath}$}
+
+\begin{equation*}
+    E_y = K\lambda\,(0{,}01)\left[\frac{\mu}{a^2\sqrt{\mu^2 + a^2}}\right]_{-0{,}17}^{-0{,}37}
+        = K\lambda\,(0{,}01)\left[\frac{\mu}{0{,}0001\,\sqrt{\mu^2 + 0{,}0001}}\right]_{-0{,}17}^{-0{,}37}
+\end{equation*}
+
+Evaluando en cada l\'imite:
+\begin{align*}
+    \mu = -0{,}37:\quad
+    &\frac{-0{,}37}{0{,}0001\times 0{,}37014} = \frac{-0{,}37}{3{,}7014\times10^{-5}}
+    = -9{.}996{,}35\;\text{m}^{-1}\\
+    \mu = -0{,}17:\quad
+    &\frac{-0{,}17}{0{,}0001\times 0{,}17029} = \frac{-0{,}17}{1{,}7029\times10^{-5}}
+    = -9{.}982{,}74\;\text{m}^{-1}
+\end{align*}
+
+\begin{equation*}
+    E_y = K\lambda\,(0{,}01)\,\bigl(-9{.}996{,}35 - (-9{.}982{,}74)\bigr)
+        = K\lambda\,(0{,}01)\,(-13{,}61\;\text{m}^{-1})
+        = K\lambda\,(-0{,}1361\;\text{m}^{-1})
+\end{equation*}
+
+%========================================
+% PASO 5: RESULTADO - CAMPO ELECTRICO
+%========================================
+\section*{Paso 5: Campo El\'ectrico en $P$}
+
+Usando $K\lambda = 47{,}70\;\text{N/C\,m}^{-1}$:
+
+\begin{align*}
+    E_x &= 47{,}70 \times (-3{,}170) = -151{,}2\;\text{N/C}\\
+    E_y &= 47{,}70 \times (-0{,}1361) = -\phantom{0}6{,}49\;\text{N/C}
+\end{align*}
+
+\begin{equation*}
+    \boxed{\vec{E} = -151{,}2\,\hat{\imath} - 6{,}49\,\hat{\jmath}\;\;\text{[N/C]}}
+\end{equation*}
+
+Verificaci\'on cualitativa: ambas componentes son negativas, consistente con que $P$ est\'a a la izquierda y por debajo de la l\'inea de carga positiva.
+
+%========================================
+% PASO 6: FUERZA ELECTRICA SOBRE q
+%========================================
+\section*{Paso 6: Fuerza El\'ectrica sobre $q$ en $P$}
+
+La fuerza sobre la carga $q = -4{,}5\times10^{-6}\;\text{C}$ es:
+\begin{equation*}
+    \vec{F} = q\,\vec{E}
+    = (-4{,}5\times10^{-6})\,(-151{,}2\,\hat{\imath} - 6{,}49\,\hat{\jmath})
+\end{equation*}
+
+\begin{align*}
+    F_x &= (-4{,}5\times10^{-6})\times(-151{,}2) = +6{,}805\times10^{-4}\;\text{N}\\
+    F_y &= (-4{,}5\times10^{-6})\times(-6{,}49) = +2{,}921\times10^{-5}\;\text{N}
+\end{align*}
+
+\begin{equation*}
+    \boxed{\vec{F} = 6{,}805\times10^{-4}\,\hat{\imath} + 2{,}921\times10^{-5}\,\hat{\jmath}\;\;\text{[N]}}
+\end{equation*}
+
+%========================================
+% DIAGRAMA VECTORIAL EN P
+%========================================
+\section*{Diagrama Vectorial en $P$}
+
+\begin{center}
+\begin{tikzpicture}[scale=1.0,
+    eje/.style={-{Stealth[length=3mm]}, thick},
+    campo/.style={-{Stealth[length=4mm]}, very thick},
+    fuerza/.style={-{Stealth[length=4mm]}, very thick, dashed}]
+
+    % Ejes locales en P
+    \draw[eje, gray] (-2.8,0) -- (1.5,0) node[right, scale=0.8] {$\hat{\imath}$};
+    \draw[eje, gray] (0,-0.5) -- (0,1.2) node[above, scale=0.8] {$\hat{\jmath}$};
+    \node[below right, scale=0.8] at (0,0) {$P$};
+    \fill[puntoP] (0,0) circle (4pt);
+
+    % Campo E (escala: 1 unidad = 70 N/C)
+    % E = (-151.2, -6.49) -> (-2.16, -0.093) aprox (-2.16, -0.09)
+    \draw[campo, campoverde, line width=2pt] (0,0) -- (-2.16,-0.093)
+        node[below, scale=0.9, campoverde, font=\bfseries] {$\vec{E}$};
+    \node[campoverde, above left, scale=0.75] at (-1.1,-0.04)
+        {$\vec{E}{=}{-}151{,}2\,\hat{\imath}{-}6{,}49\,\hat{\jmath}$ [N/C]};
+
+    % Fuerza F: escala ampliada para visibilidad (F ~ 6.8e-4 N, escala 1 ud = 3e-4 N)
+    % F = (6.805e-4, 2.921e-5) -> (2.27, 0.097)
+    \draw[fuerza, cargarojo, line width=2pt] (0,0) -- (2.27,0.097)
+        node[right, scale=0.9, cargarojo, font=\bfseries] {$\vec{F}$};
+    \node[cargarojo, above right, scale=0.75] at (1.1,0.03)
+        {$\vec{F}{=}6{,}8{\times}10^{-4}\hat{\imath}{+}2{,}9{\times}10^{-5}\hat{\jmath}$ [N]};
+
+    % Leyenda de escala
+    \node[scale=0.65, gray] at (0,-0.45) {Escala $\vec{E}$: 1 ud = 70 N/C
+        \quad|\quad Escala $\vec{F}$: 1 ud = $3\times10^{-4}$ N};
+
+\end{tikzpicture}
+\end{center}
+
+%========================================
+% INTERPRETACION FISICA
+%========================================
+\section*{Interpretaci\'on F\'isica}
+
+\begin{itemize}
+    \item El campo $\vec{E}$ es predominantemente en la direcci\'on $-\hat{\imath}$: la separaci\'on horizontal entre la l\'inea y $P$ ($0{,}17$ a $0{,}37$ m) es mucho mayor que la separaci\'on vertical ($0{,}01$ m), de modo que la componente $\hat{\imath}$ domina abrumadoramente ($|E_x| \approx 23\,|E_y|$).
+
+    \item La fuerza $\vec{F}$ es \textbf{opuesta} al campo $\vec{E}$ porque $q < 0$: la carga negativa es \textbf{atra\'ida} hacia la l\'inea de carga positiva.
+
+    \item La magnitud del campo es $|\vec{E}| = \sqrt{151{,}2^2 + 6{,}49^2} \approx 151{,}3\;\text{N/C}$ y la magnitud de la fuerza es $|\vec{F}| \approx 6{,}81\times10^{-4}\;\text{N}$.
+\end{itemize}
+
+\end{document}
