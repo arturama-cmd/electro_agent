@@ -1,0 +1,393 @@
+\documentclass[12pt,letterpaper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[spanish,es-noshorthands]{babel}
+\usepackage{amsmath,amssymb}
+\usepackage{graphicx}
+\usepackage{xcolor}
+\usepackage{tikz}
+\usetikzlibrary{calc,arrows.meta,decorations.markings,patterns}
+\usepackage[top=2.5cm, bottom=3cm, left=2cm, right=2cm, footskip=40pt]{geometry}
+\usepackage{fancyhdr}
+\usepackage{lastpage}
+
+% Colores institucionales y fisicos
+\definecolor{ubbblue}{RGB}{0,51,102}
+\definecolor{cargazul}{RGB}{50,50,220}
+\definecolor{cargarojo}{RGB}{220,50,50}
+\definecolor{campoverde}{RGB}{30,140,30}
+\definecolor{puntoP}{RGB}{180,0,180}
+\definecolor{lineacarga}{RGB}{200,100,0}
+
+% Encabezado y pie de pagina
+\pagestyle{fancy}
+\fancyhf{}
+\renewcommand{\headrulewidth}{0pt}
+\renewcommand{\footrulewidth}{0.4pt}
+
+\fancyfoot[L]{%
+    \raisebox{-0.5cm}{\includegraphics[height=1.2cm]{logo ubb.png}}%
+}
+\fancyfoot[C]{%
+    \begin{minipage}[b]{8cm}
+        \centering
+        \footnotesize
+        \textcolor{ubbblue}{\textbf{Dr. Arturo Fern\'andez P\'erez}}\\
+        \scriptsize Departamento de F\'isica -- Universidad del B\'io-B\'io\\
+        \scriptsize \textit{Electro\_Asistente\_AI-UBB}\\
+        \tiny P\'agina \thepage\ de \pageref{LastPage}
+    \end{minipage}%
+}
+\fancyfoot[R]{%
+    \raisebox{-0.5cm}{\includegraphics[height=1.2cm]{logo dfis.png}}%
+}
+
+\fancypagestyle{plain}{%
+    \fancyhf{}
+    \renewcommand{\headrulewidth}{0pt}
+    \renewcommand{\footrulewidth}{0.4pt}
+    \fancyfoot[L]{%
+        \raisebox{-0.5cm}{\includegraphics[height=1.2cm]{logo ubb.png}}%
+    }
+    \fancyfoot[C]{%
+        \begin{minipage}[b]{8cm}
+            \centering
+            \footnotesize
+            \textcolor{ubbblue}{\textbf{Dr. Arturo Fern\'andez P\'erez}}\\
+            \scriptsize Departamento de F\'isica -- Universidad del B\'io-B\'io\\
+            \scriptsize \textit{Electro\_Asistente\_AI-UBB}\\
+            \tiny P\'agina \thepage\ de \pageref{LastPage}
+        \end{minipage}%
+    }
+    \fancyfoot[R]{%
+        \raisebox{-0.5cm}{\includegraphics[height=1.2cm]{logo dfis.png}}%
+    }
+}
+
+\begin{document}
+
+%========================================
+% ENCABEZADO INSTITUCIONAL
+%========================================
+\begin{center}
+    \includegraphics[height=2cm]{logo ubb.png}\\[0.3cm]
+    {\large\textcolor{ubbblue}{\textbf{UNIVERSIDAD DEL B\'IO-B\'IO}}}\\[0.1cm]
+    {\normalsize Facultad de Ciencias -- Departamento de F\'isica}
+\end{center}
+
+\vspace{0.3cm}
+\hrule height 1pt
+\vspace{0.5cm}
+
+{\centering\Large\textbf{Soluci\'on: Campo El\'ectrico de una Barra Cargada}\par}
+{\centering\normalsize Problema de Clase -- 30 de marzo\par}
+
+\vspace{0.5cm}
+
+%========================================
+% ENUNCIADO
+%========================================
+\section*{Enunciado del Problema}
+
+Una barra con densidad lineal de carga positiva uniforme $\lambda = 8{,}00$ [nC/m] y longitud $L = 20{,}0$ [cm] est\'a ubicada sobre el eje $X$, con su extremo izquierdo a distancia $d = 5{,}00$ [cm] del origen. Determinar el campo el\'ectrico $\vec{E}_P$ en el punto $P(x_0,\,y_0) = (3{,}00;\;4{,}00)$ [cm].
+
+%========================================
+% DIAGRAMA DE SITUACION
+%========================================
+\section*{Diagrama de la Situaci\'on}
+
+\begin{center}
+\begin{tikzpicture}[x=3.0cm, y=3.0cm,
+    eje/.style={-{Stealth[length=3mm]}, thick},
+    rvec/.style={-{Stealth[length=3mm]}, dashed, thick}]
+
+    % Ejes coordenados (1 unidad TikZ = 0,10 m)
+    \draw[eje] (-0.40,0) -- (3.10,0) node[right] {$x$ [m]};
+    \draw[eje] (0,-0.55) -- (0,0.72) node[above] {$y$ [m]};
+    \node[below right, scale=0.75] at (0,0) {$O$};
+
+    % Marcas en eje x
+    \foreach \xv/\xl in {0.5/0{,}05, 1.0/0{,}10, 1.5/0{,}15, 2.0/0{,}20, 2.5/0{,}25} {
+        \draw (\xv,0.013) -- (\xv,-0.013) node[below, scale=0.60] {\xl};
+    }
+    \draw (0.30,0.013) -- (0.30,-0.013) node[below, scale=0.60] {$0{,}03$};
+
+    % Marca en eje y
+    \draw (0.02,0.40) -- (-0.02,0.40) node[left, scale=0.60] {$0{,}04$};
+
+    % Barra de carga (naranja gruesa, sin etiqueta encima)
+    \draw[lineacarga, line width=5pt] (0.50,0) -- (2.50,0);
+
+    % Cotas d y L (bajo el eje x)
+    \draw[<->, gray, thin] (0.00,-0.13) -- (0.50,-0.13)
+        node[midway, below, scale=0.65, gray] {$d=0{,}05$ m};
+    \draw[<->, gray, thin] (0.50,-0.17) -- (2.50,-0.17)
+        node[midway, below, scale=0.65, gray] {$L=0{,}20$ m};
+
+    % Etiquetas naranjas debajo de la cota L
+    \node[lineacarga, scale=0.78, font=\bfseries] at (1.50,-0.33)
+        {$\lambda = 8{,}00$ nC/m \quad ($0{,}05 \le x \le 0{,}25$ [m])};
+    \node[lineacarga, scale=0.75] at (1.50,-0.44)
+        {$dq = \lambda\,dx$};
+
+    % Elemento diferencial dq en x = 0,15 m (TikZ: 1.5)
+    \fill[lineacarga] (1.50,0) circle (2.8pt);
+
+    % Punto P
+    \fill[puntoP] (0.30,0.40) circle (3pt);
+    \node[puntoP, right, scale=0.90, font=\bfseries] at (0.34,0.43)
+        {$P\;(0{,}03;\;0{,}04)$ m};
+
+    % Lineas de referencia punteadas para P
+    \draw[puntoP, very thin, dotted] (0.30,0) -- (0.30,0.40);
+    \draw[puntoP, very thin, dotted] (0,0.40) -- (0.30,0.40);
+
+    % Vector r_q: origen -> elemento dq
+    \draw[rvec, cargazul] (0,0) -- (1.48,0)
+        node[midway, below, scale=0.75, cargazul, yshift=-5pt] {$\vec{r}_q = x\,\hat{\imath}$};
+
+    % Vector r_P: origen -> P
+    \draw[rvec, puntoP] (0,0) -- (0.29,0.39)
+        node[pos=0.52, left, scale=0.75, puntoP] {$\vec{r}_P$};
+
+    % Vector r_P - r_q: dq -> P
+    \draw[-{Stealth[length=3.5mm]}, campoverde, very thick] (1.50,0) -- (0.30,0.40)
+        node[midway, right, scale=0.80, campoverde] {$\vec{r}_P - \vec{r}_q$};
+
+\end{tikzpicture}
+\end{center}
+
+%========================================
+% DATOS NUMERICOS
+%========================================
+\section*{Datos Num\'ericos}
+
+\begin{itemize}
+    \item $K = 9{,}00 \times 10^9\;\text{N}\cdot\text{m}^2/\text{C}^2$
+    \item $\lambda = 8{,}00\;\text{nC/m} = 8{,}00\times10^{-9}\;\text{C/m}$
+    \quad$\Rightarrow$\quad
+    $K\lambda = 9{,}00\times10^9 \times 8{,}00\times10^{-9} = 72{,}0\;\text{N}\cdot\text{m}/\text{C}$
+    \item Barra: $0{,}05\;\text{m} \le x \le 0{,}25\;\text{m}$ \quad(desde $x = d$ hasta $x = d + L$)
+    \item $\vec{r}_P = 0{,}03\,\hat{\imath} + 0{,}04\,\hat{\jmath}\;\text{[m]}$
+\end{itemize}
+
+%========================================
+% ANALISIS CUALITATIVO
+%========================================
+\section*{An\'alisis Cualitativo}
+
+Se trata de una distribuci\'on \textbf{continua} de carga. El campo en $P$ se obtiene integrando la contribuci\'on de cada elemento $dq = \lambda\,dx$:
+\begin{equation*}
+    d\vec{E}_P
+    = K\,\frac{dq}{\|\vec{r}_P - \vec{r}_q\|^3}\,\bigl(\vec{r}_P - \vec{r}_q\bigr)
+    = K\lambda\,\frac{\vec{r}_P - \vec{r}_q}{\|\vec{r}_P - \vec{r}_q\|^3}\,dx
+\end{equation*}
+
+\begin{itemize}
+    \item $P$ est\'a a la \textbf{izquierda} de toda la barra ($x_0 = 0{,}03$ m frente a $x \in [0{,}05;\,0{,}25]$ m):
+    la componente $\hat{\imath}$ del vector $\vec{r}_P - \vec{r}_q$ es $(0{,}03 - x) < 0$ para todo $x$ en la barra,
+    por lo que $E_x$ debe ser \textbf{negativo}.
+
+    \item $P$ est\'a \textbf{por encima} de la barra ($y_0 = 0{,}04$ m $> 0$):
+    la componente $\hat{\jmath}$ es siempre $y_0 = +0{,}04$ m $> 0$,
+    por lo que $E_y$ debe ser \textbf{positivo}.
+\end{itemize}
+
+%========================================
+% PASO 1: VECTORES DE POSICION
+%========================================
+\section*{Paso 1: Vectores de Posici\'on}
+
+El elemento de carga se encuentra en $\vec{r}_q = x\,\hat{\imath}$ (sobre el eje $X$). El punto de campo es:
+\begin{equation*}
+    \vec{r}_P = 0{,}03\,\hat{\imath} + 0{,}04\,\hat{\jmath}\;\text{[m]}
+\end{equation*}
+
+El vector desplazamiento de la fuente al punto de campo:
+\begin{equation*}
+    \vec{r}_P - \vec{r}_q
+    = \bigl(0{,}03 - x\bigr)\,\hat{\imath} + 0{,}04\,\hat{\jmath}
+    \quad\text{[m]}
+\end{equation*}
+
+Su norma al cubo:
+\begin{equation*}
+    \|\vec{r}_P - \vec{r}_q\|^3
+    = \Bigl[\bigl(0{,}03 - x\bigr)^2 + 0{,}04^2\Bigr]^{3/2}
+    = \Bigl[\bigl(0{,}03 - x\bigr)^2 + 0{,}0016\Bigr]^{3/2}
+\end{equation*}
+
+%========================================
+% PASO 2: PLANTEAMIENTO DE LA INTEGRAL
+%========================================
+\section*{Paso 2: Planteamiento de la Integral}
+
+Sustituyendo $dq = \lambda\,dx$ e integrando a lo largo de la barra:
+\begin{equation*}
+    \vec{E}_P
+    = \int_{0{,}05}^{0{,}25}
+      K\lambda\,
+      \frac{\bigl(0{,}03 - x\bigr)\,\hat{\imath} + 0{,}04\,\hat{\jmath}}
+           {\bigl[\bigl(0{,}03 - x\bigr)^2 + 0{,}0016\bigr]^{3/2}}\,dx
+\end{equation*}
+
+Separando por componente:
+\begin{align*}
+    E_x &= K\lambda
+    \int_{0{,}05}^{0{,}25}
+    \frac{\bigl(0{,}03 - x\bigr)\,dx}{\bigl[\bigl(0{,}03 - x\bigr)^2 + 0{,}0016\bigr]^{3/2}}
+    \\[8pt]
+    E_y &= K\lambda\,(0{,}04)
+    \int_{0{,}05}^{0{,}25}
+    \frac{dx}{\bigl[\bigl(0{,}03 - x\bigr)^2 + 0{,}0016\bigr]^{3/2}}
+\end{align*}
+
+%========================================
+% PASO 3: CAMBIO DE VARIABLE
+%========================================
+\section*{Paso 3: Cambio de Variable}
+
+Se define:
+\begin{equation*}
+    \mu = 0{,}03 - x \qquad \Rightarrow \qquad d\mu = -dx
+\end{equation*}
+
+L\'imites transformados:
+\begin{align*}
+    x = 0{,}05\;\text{m} &\;\Rightarrow\; \mu = 0{,}03 - 0{,}05 = -0{,}02\;\text{m}\\
+    x = 0{,}25\;\text{m} &\;\Rightarrow\; \mu = 0{,}03 - 0{,}25 = -0{,}22\;\text{m}
+\end{align*}
+
+El signo negativo de $d\mu = -dx$ invierte los l\'imites de integraci\'on en ambas componentes. Las integrales quedan, con $a = y_0 = 0{,}04\;\text{m}$:
+\begin{align*}
+    E_x &= K\lambda\int_{-0{,}22}^{-0{,}02}
+            \frac{\mu\,d\mu}{\bigl(\mu^2 + a^2\bigr)^{3/2}}
+    \\[8pt]
+    E_y &= K\lambda\,(0{,}04)\int_{-0{,}22}^{-0{,}02}
+            \frac{d\mu}{\bigl(\mu^2 + a^2\bigr)^{3/2}}
+\end{align*}
+
+%========================================
+% PASO 4: ANTIDERIVADAS
+%========================================
+\section*{Paso 4: Antiderivadas}
+
+Se utilizan las primitivas est\'andar:
+\begin{equation*}
+    \int \frac{\mu\,d\mu}{(\mu^2+a^2)^{3/2}} = \frac{-1}{\sqrt{\mu^2+a^2}} + C
+    \qquad\qquad
+    \int \frac{d\mu}{(\mu^2+a^2)^{3/2}} = \frac{\mu}{a^2\sqrt{\mu^2+a^2}} + C
+\end{equation*}
+
+\subsection*{Componente $\hat{\imath}$}
+
+\begin{equation*}
+    E_x = K\lambda \left[\frac{-1}{\sqrt{\mu^2 + a^2}}\right]_{-0{,}22}^{-0{,}02}
+        = K\lambda \left(\frac{-1}{\sqrt{0{,}02^2 + 0{,}04^2}}
+                        + \frac{1}{\sqrt{0{,}22^2 + 0{,}04^2}}\right)
+\end{equation*}
+
+\begin{align*}
+    \sqrt{0{,}02^2 + 0{,}04^2} &= \sqrt{0{,}0020} = 0{,}044721\;\text{m}
+    \quad\Rightarrow\quad \frac{1}{0{,}044721} = 22{,}361\;\text{m}^{-1}\\[4pt]
+    \sqrt{0{,}22^2 + 0{,}04^2} &= \sqrt{0{,}0500} = 0{,}22361\;\text{m}
+    \quad\Rightarrow\quad \frac{1}{0{,}22361} = 4{,}4721\;\text{m}^{-1}
+\end{align*}
+
+\begin{equation*}
+    E_x = K\lambda\,(-22{,}361 + 4{,}472) = K\lambda\,(-17{,}889\;\text{m}^{-1})
+\end{equation*}
+
+\subsection*{Componente $\hat{\jmath}$}
+
+\begin{equation*}
+    E_y = K\lambda\,(0{,}04)\left[\frac{\mu}{a^2\sqrt{\mu^2 + a^2}}\right]_{-0{,}22}^{-0{,}02}
+\end{equation*}
+
+Evaluando en cada l\'imite ($a^2 = 0{,}0016\;\text{m}^2$):
+\begin{align*}
+    \mu = -0{,}02:\quad
+    &\frac{-0{,}02}{0{,}0016\times 0{,}044721}
+    = \frac{-0{,}02}{7{,}1554\times10^{-5}}
+    = -279{,}5\;\text{m}^{-1}\\[4pt]
+    \mu = -0{,}22:\quad
+    &\frac{-0{,}22}{0{,}0016\times 0{,}22361}
+    = \frac{-0{,}22}{3{,}5778\times10^{-4}}
+    = -614{,}9\;\text{m}^{-1}
+\end{align*}
+
+\begin{equation*}
+    E_y = K\lambda\,(0{,}04)\,\bigl[-279{,}5 - (-614{,}9)\bigr]
+        = K\lambda\,(0{,}04)\,(335{,}4\;\text{m}^{-1})
+        = K\lambda\,(13{,}416\;\text{m}^{-1})
+\end{equation*}
+
+%========================================
+% PASO 5: CAMPO ELECTRICO EN P
+%========================================
+\section*{Paso 5: Campo El\'ectrico en $P$}
+
+Usando $K\lambda = 72{,}0\;\text{N/C\,m}^{-1}$:
+
+\begin{align*}
+    E_x &= 72{,}0 \times (-17{,}889) = -1288\;\text{N/C}\\
+    E_y &= 72{,}0 \times \phantom{-}13{,}416 = +966\;\text{N/C}
+\end{align*}
+
+\begin{equation*}
+    \boxed{\vec{E}_P = -1288\,\hat{\imath} + 966\,\hat{\jmath}\;\;\text{[N/C]}}
+\end{equation*}
+
+Magnitud: $|\vec{E}_P| = \sqrt{1288^2 + 966^2} = \sqrt{1\,658\,944 + 933\,156} = \sqrt{2\,592\,100} = 1610\;\text{N/C}$
+
+%========================================
+% DIAGRAMA VECTORIAL EN P
+%========================================
+\section*{Diagrama Vectorial en $P$}
+
+\begin{center}
+\begin{tikzpicture}[scale=1.0,
+    eje/.style={-{Stealth[length=3mm]}, thick},
+    campo/.style={-{Stealth[length=4mm]}, very thick}]
+
+    % Ejes locales centrados en P
+    \draw[eje, gray] (-3.2,0) -- (1.5,0) node[right, scale=0.8] {$\hat{\imath}$};
+    \draw[eje, gray] (0,-0.4) -- (0,2.3) node[above, scale=0.8] {$\hat{\jmath}$};
+    \node[below right, scale=0.8] at (0,0) {$P$};
+    \fill[puntoP] (0,0) circle (4pt);
+
+    % Campo E: escala 1 unidad = 500 N/C
+    % E = (-1288, +966) -> (-2.576, +1.932)
+    \draw[campo, campoverde, line width=2pt] (0,0) -- (-2.576,1.932)
+        node[above left, scale=0.85, campoverde, font=\bfseries] {$\vec{E}_P$};
+    \node[campoverde, right, scale=0.75] at (-1.3,1.0)
+        {$-1288\,\hat{\imath} + 966\,\hat{\jmath}$ [N/C]};
+
+    % Componentes auxiliares (lineas de trazado)
+    \draw[campoverde, thin, dashed] (-2.576,0) -- (-2.576,1.932);
+    \draw[campoverde, thin, dashed] (0,1.932) -- (-2.576,1.932);
+    \node[below, scale=0.70, campoverde] at (-2.576,0) {$E_x$};
+    \node[left,  scale=0.70, campoverde] at (0,1.932) {$E_y$};
+
+    % Escala
+    \node[scale=0.65, gray] at (0,-0.32)
+        {Escala: 1 unidad $= 500$ N/C};
+
+\end{tikzpicture}
+\end{center}
+
+%========================================
+% INTERPRETACION FISICA
+%========================================
+\section*{Interpretaci\'on F\'isica}
+
+\begin{itemize}
+    \item $E_x < 0$: el campo apunta en $-\hat{\imath}$ porque $P$ est\'a a la \textbf{izquierda} de toda la barra. La carga positiva repele a la izquierda.
+
+    \item $E_y > 0$: el campo apunta en $+\hat{\jmath}$ porque $P$ est\'a \textbf{por encima} del eje $X$ donde se ubica la barra.
+
+    \item $P$ se encuentra muy pr\'oximo al extremo izquierdo de la barra ($\Delta x = 0{,}02$ m, $\Delta y = 0{,}04$ m), lo que explica la elevada magnitud $|\vec{E}_P| = 1610$ N/C.
+
+    \item La raz\'on $|E_x|/|E_y| = 1288/966 \approx 4/3$ refleja que la componente horizontal domina ligeramente: la integraci\'on sobre la longitud total de la barra ($L = 0{,}20$ m) contribuye m\'as en la direcci\'on $-\hat{\imath}$ que en la direcci\'on $+\hat{\jmath}$.
+\end{itemize}
+
+\end{document}

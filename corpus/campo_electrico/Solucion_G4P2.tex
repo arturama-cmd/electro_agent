@@ -1,0 +1,364 @@
+\documentclass[12pt,letterpaper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[spanish,es-noshorthands]{babel}
+\usepackage{amsmath,amssymb}
+\usepackage{graphicx}
+\usepackage{xcolor}
+\usepackage{tikz}
+\usetikzlibrary{calc,arrows.meta,decorations.markings,patterns}
+\usepackage[top=2.5cm, bottom=3cm, left=2cm, right=2cm, footskip=40pt]{geometry}
+\usepackage{fancyhdr}
+\usepackage{lastpage}
+
+\definecolor{ubbblue}{RGB}{0,51,102}
+\definecolor{cargazul}{RGB}{50,50,220}
+\definecolor{cargarojo}{RGB}{220,50,50}
+\definecolor{campoverde}{RGB}{30,140,30}
+\definecolor{puntoP}{RGB}{180,0,180}
+\definecolor{lineacarga}{RGB}{200,100,0}
+
+\pagestyle{fancy}
+\fancyhf{}
+\renewcommand{\headrulewidth}{0pt}
+\renewcommand{\footrulewidth}{0.4pt}
+\fancyfoot[L]{\raisebox{-0.5cm}{\includegraphics[height=1.2cm]{logo ubb.png}}}
+\fancyfoot[C]{%
+    \begin{minipage}[b]{8cm}\centering
+        \footnotesize\textcolor{ubbblue}{\textbf{Dr. Arturo Fern\'andez P\'erez}}\\
+        \scriptsize Departamento de F\'isica -- Universidad del B\'io-B\'io\\
+        \scriptsize\textit{Electro\_Asistente\_AI-UBB}\\
+        \tiny P\'agina \thepage\ de \pageref{LastPage}
+    \end{minipage}}
+\fancyfoot[R]{\raisebox{-0.5cm}{\includegraphics[height=1.2cm]{logo dfis.png}}}
+\fancypagestyle{plain}{%
+    \fancyhf{}
+    \renewcommand{\headrulewidth}{0pt}
+    \renewcommand{\footrulewidth}{0.4pt}
+    \fancyfoot[L]{\raisebox{-0.5cm}{\includegraphics[height=1.2cm]{logo ubb.png}}}
+    \fancyfoot[C]{%
+        \begin{minipage}[b]{8cm}\centering
+            \footnotesize\textcolor{ubbblue}{\textbf{Dr. Arturo Fern\'andez P\'erez}}\\
+            \scriptsize Departamento de F\'isica -- Universidad del B\'io-B\'io\\
+            \scriptsize\textit{Electro\_Asistente\_AI-UBB}\\
+            \tiny P\'agina \thepage\ de \pageref{LastPage}
+        \end{minipage}}
+    \fancyfoot[R]{\raisebox{-0.5cm}{\includegraphics[height=1.2cm]{logo dfis.png}}}}
+
+\begin{document}
+
+%========================================
+% ENCABEZADO INSTITUCIONAL
+%========================================
+\begin{center}
+    \includegraphics[height=2cm]{logo ubb.png}\\[0.3cm]
+    {\large\textcolor{ubbblue}{\textbf{UNIVERSIDAD DEL B\'IO-B\'IO}}}\\[0.1cm]
+    {\normalsize Facultad de Ciencias -- Departamento de F\'isica}
+\end{center}
+
+\vspace{0.3cm}
+\hrule height 1pt
+\vspace{0.5cm}
+
+{\centering\Large\textbf{Soluci\'on: L\'inea de Carga y Carga Puntual}\par}
+{\centering\normalsize Gu\'ia N$^\circ$4 -- Campo El\'ectrico de Distribuciones Continuas, Problema 2\par}
+
+\vspace{0.5cm}
+
+%========================================
+% ENUNCIADO
+%========================================
+\section*{Enunciado del Problema}
+
+Una l\'inea de carga con densidad lineal uniforme $\lambda = 4$ [nC/m] se encuentra sobre el eje $y$, entre $y = 0$ e $y = 30$ [cm]. Adem\'as hay una carga puntual negativa $q = -5$ [mC] sobre el eje $x$, a 50 cm del origen. Determinar el campo el\'ectrico total en el punto $P = (0{,}15;\;0)$ [m].
+
+%========================================
+% DIAGRAMA DE SITUACION
+%========================================
+\section*{Diagrama de la Situaci\'on}
+
+\begin{center}
+\begin{tikzpicture}[x=3.5cm, y=3.5cm,
+    eje/.style={-{Stealth[length=3mm]}, thick},
+    rvec/.style={-{Stealth[length=3mm]}, dashed, thick}]
+
+    % Ejes (1 unidad TikZ = 0,10 m)
+    \draw[eje] (-0.30,0) -- (3.00,0) node[right] {$x$ [m]};
+    \draw[eje] (0,-0.25) -- (0,2.00) node[above] {$y$ [m]};
+    \node[below right, scale=0.75] at (0,0) {$O$};
+
+    % Marcas eje x
+    \foreach \xv/\xl in {1.0/0{,}10, 1.5/0{,}15, 2.0/0{,}20, 2.5/0{,}25} {
+        \draw (\xv,0.013) -- (\xv,-0.013) node[below, scale=0.60] {\xl};
+    }
+    \draw (5.0/3.5*0.50/0.10*0.10,0.013);  % dummy
+    \draw (0.50/0.10*1.0/10,0.013);         % dummy
+
+    % Marca especial x = 0.50 m (TikZ = 5.0)  -> fuera del rango, usar 5/10=0.5*3.5 = nope
+    % x = 0.50 m -> 5 unidades TikZ... demasiado. Escala 1 unidad = 0.10 m -> 0.50 m = 5.0 unid
+    % Reescalo: voy a usar 1 unidad = 0.10 m pero dibujar hasta x=5.5 queda grande.
+    % Mejor poner la carga puntual en el borde del diagrama con una nota.
+    \draw (5.0/1.0*0.10,0.013); % dummy
+
+    % Marcas eje y
+    \foreach \yv/\yl in {1.0/0{,}10, 2.0/0{,}20, 3.0/0{,}30} {
+        \draw (0.02,\yv*0.50) -- (-0.02,\yv*0.50) node[left, scale=0.60] {\yl};
+    }
+
+    % Linea de carga sobre eje y (de y=0 a y=0.30 m -> TikZ 0 a 1.5)
+    \draw[lineacarga, line width=5pt] (0,0) -- (0,1.50);
+    \node[lineacarga, left, scale=0.78, font=\bfseries] at (-0.08,0.75)
+        {$\lambda = 4$ nC/m};
+    \node[lineacarga, left, scale=0.70] at (-0.08,0.40)
+        {$0 \le y \le 0{,}30$ m};
+
+    % Elemento dy en y = 0.15 m (TikZ: 0.75)
+    \fill[lineacarga] (0,0.75) circle (2.5pt);
+    \node[lineacarga, right, scale=0.72] at (0.03,0.75) {$dq = \lambda\,dy$};
+
+    % Punto P sobre eje x en x = 0.15 m (TikZ: 1.5)
+    \fill[puntoP] (1.50,0) circle (3pt);
+    \node[puntoP, above, scale=0.90, font=\bfseries] at (1.50,0.06) {$P$};
+    \node[puntoP, below, scale=0.72] at (1.50,-0.06) {$(0{,}15;\;0)$ m};
+
+    % Carga puntual q sobre eje x en x = 0.50 m
+    % TikZ: 5.0 unidades -> fuera. Dibujar en borde con flecha indicativa.
+    \node[cargarojo, right, scale=0.80, font=\bfseries] at (2.60,0.12)
+        {$q = -5$ mC};
+    \node[cargarojo, right, scale=0.70] at (2.60,-0.06) {en $x = 0{,}50$ m};
+    \fill[cargarojo] (2.70,0) circle (3pt);
+    \draw[-{Stealth[length=2mm]}, cargarojo, thin, dashed]
+        (2.65,0) -- (1.52,0) node[midway, above, scale=0.65, cargarojo] {$\vec{E}_2$};
+
+    % Vector r_P (origen -> P)
+    \draw[rvec, puntoP] (0,0) -- (1.48,0)
+        node[midway, below, scale=0.75, puntoP, yshift=-5pt] {$\vec{r}_{P} = 0{,}15\,\hat{\imath}$};
+
+    % Vector r_q (elemento sobre eje y)
+    \draw[rvec, cargazul] (0,0) -- (0,0.73)
+        node[pos=0.55, right, scale=0.75, cargazul] {$\vec{r}_{q}\!=y\hat{\jmath}$};
+
+    % Vector r_P - r_q (elemento -> P)
+    \draw[-{Stealth[length=3.5mm]}, campoverde, very thick] (0,0.75) -- (1.50,0)
+        node[midway, above, scale=0.78, campoverde] {$\vec{r}_{P}-\vec{r}_{q}$};
+
+\end{tikzpicture}
+\end{center}
+
+%========================================
+% DATOS NUMERICOS
+%========================================
+\section*{Datos Num\'ericos}
+
+\begin{itemize}
+    \item $K = 9{,}00\times10^9\;\text{N}\cdot\text{m}^2/\text{C}^2$
+    \item $\lambda = 4{,}00\;\text{nC/m} = 4{,}00\times10^{-9}\;\text{C/m}$
+    \quad$\Rightarrow$\quad
+    $K\lambda = 9{,}00\times10^9\times4{,}00\times10^{-9} = 36{,}0\;\text{N}\cdot\text{m}/\text{C}$
+    \item L\'inea de carga: $0 \le y \le 0{,}30\;\text{m}$ sobre el eje $y$
+    \item $\vec{r}_P = 0{,}15\,\hat{\imath}\;\text{[m]}$ \quad$\Rightarrow$\quad $a^2 = 0{,}15^2 = 0{,}0225\;\text{m}^2$
+    \item $q = -5{,}00\;\text{mC} = -5{,}00\times10^{-3}\;\text{C}$ en $(0{,}50;\,0)$ m
+\end{itemize}
+
+%========================================
+% ANALISIS CUALITATIVO
+%========================================
+\section*{An\'alisis Cualitativo}
+
+El campo total en $P$ tiene dos contribuciones:
+
+\begin{itemize}
+    \item \textbf{L\'inea de carga} ($\vec{E}_1$): la l\'inea est\'a sobre el eje $y$, a la \textbf{izquierda} de $P$ ($x=0$ frente a $x_P = 0{,}15$ m). Cada elemento $dq$ contribuye con una componente $+\hat{\imath}$ (empuja hacia la derecha). La componente $\hat{\jmath}$ no se cancela por ser una l\'inea finita: los elementos en $y > 0$ empujan hacia $-\hat{\jmath}$, de modo que $E_{1y} < 0$.
+
+    \item \textbf{Carga puntual} ($\vec{E}_2$): $q < 0$ est\'a a la \textbf{derecha} de $P$ ($x=0{,}50$ m). El campo de una carga negativa apunta \textbf{hacia} la carga, es decir en $+\hat{\imath}$, contribuyendo positivamente y dominando por su gran magnitud.
+\end{itemize}
+
+%========================================
+% PASO 1: CAMPO DE LA LINEA DE CARGA
+%========================================
+\section*{Paso 1: Campo de la L\'inea de Carga $\vec{E}_1$}
+
+\subsection*{Vectores de posici\'on}
+
+El elemento en la l\'inea est\'a en $\vec{r}_{q} = y\,\hat{\jmath}$, el punto de campo en $\vec{r}_{P} = 0{,}15\,\hat{\imath}$:
+\begin{equation*}
+    \vec{r}_{P} - \vec{r}_{q} = 0{,}15\,\hat{\imath} - y\,\hat{\jmath}
+    \qquad
+    \|\vec{r}_{P}-\vec{r}_{q}\|^3 = \bigl(0{,}15^2 + y^2\bigr)^{3/2}
+    = \bigl(0{,}0225 + y^2\bigr)^{3/2}
+\end{equation*}
+
+\subsection*{Planteamiento de la integral}
+
+\begin{equation*}
+    \vec{E}_1
+    = K\lambda\int_0^{0{,}30}
+    \frac{0{,}15\,\hat{\imath} - y\,\hat{\jmath}}
+         {(0{,}0225 + y^2)^{3/2}}\,dy
+\end{equation*}
+
+Separando por componente ($a^2 = 0{,}0225\;\text{m}^2$):
+\begin{align*}
+    E_{1x} &= K\lambda\,(0{,}15)
+    \int_0^{0{,}30}\frac{dy}{(0{,}0225+y^2)^{3/2}}
+    \\[6pt]
+    E_{1y} &= -K\lambda
+    \int_0^{0{,}30}\frac{y\,dy}{(0{,}0225+y^2)^{3/2}}
+\end{align*}
+
+\subsection*{Antiderivadas est\'andar}
+
+\begin{equation*}
+    \int\frac{dy}{(a^2+y^2)^{3/2}} = \frac{y}{a^2\sqrt{a^2+y^2}}+C
+    \qquad\qquad
+    \int\frac{y\,dy}{(a^2+y^2)^{3/2}} = \frac{-1}{\sqrt{a^2+y^2}}+C
+\end{equation*}
+
+\subsection*{Componente $\hat{\imath}$ de la l\'inea}
+
+\begin{equation*}
+    E_{1x} = K\lambda\,(0{,}15)
+    \left[\frac{y}{0{,}0225\,\sqrt{0{,}0225+y^2}}\right]_0^{0{,}30}
+\end{equation*}
+
+Evaluando:
+\begin{align*}
+    y = 0{,}30:\quad
+    &\frac{0{,}30}{0{,}0225\times\sqrt{0{,}0225+0{,}09}}
+    = \frac{0{,}30}{0{,}0225\times\sqrt{0{,}1125}}
+    = \frac{0{,}30}{0{,}0225\times0{,}33541}
+    = \frac{0{,}30}{7{,}547\times10^{-3}}
+    = 39{,}752\;\text{m}^{-1}\\[4pt]
+    y = 0:\quad &\frac{0}{(\ldots)} = 0
+\end{align*}
+
+\begin{equation*}
+    E_{1x} = 36{,}0\times0{,}15\times39{,}752 = 5{,}40\times39{,}752
+    = 214{,}66\;\text{N/C}
+\end{equation*}
+
+\subsection*{Componente $\hat{\jmath}$ de la l\'inea}
+
+\begin{equation*}
+    E_{1y} = -K\lambda
+    \left[\frac{-1}{\sqrt{0{,}0225+y^2}}\right]_0^{0{,}30}
+    = K\lambda
+    \left[\frac{1}{\sqrt{0{,}0225+y^2}}\right]_0^{0{,}30}
+\end{equation*}
+
+Evaluando:
+\begin{align*}
+    y = 0{,}30:\quad &\frac{1}{\sqrt{0{,}1125}} = \frac{1}{0{,}33541} = 2{,}981\;\text{m}^{-1}\\[4pt]
+    y = 0:\quad &\frac{1}{\sqrt{0{,}0225}} = \frac{1}{0{,}15} = 6{,}667\;\text{m}^{-1}
+\end{align*}
+
+\begin{equation*}
+    E_{1y} = K\lambda\,(2{,}981 - 6{,}667) = 36{,}0\times(-3{,}686) = -132{,}70\;\text{N/C}
+\end{equation*}
+
+\subsection*{Campo de la l\'inea}
+
+\begin{equation*}
+    \vec{E}_1 = 214{,}66\,\hat{\imath} - 132{,}70\,\hat{\jmath}\;\;\text{[N/C]}
+\end{equation*}
+
+%========================================
+% PASO 2: CAMPO DE LA CARGA PUNTUAL
+%========================================
+\section*{Paso 2: Campo de la Carga Puntual $\vec{E}_2$}
+
+La carga $q = -5{,}00\times10^{-3}$ C est\'a en $\vec{r}_q = 0{,}50\,\hat{\imath}$. El vector de la fuente al punto de campo:
+\begin{equation*}
+    \vec{r}_P - \vec{r}_q = (0{,}15 - 0{,}50)\,\hat{\imath} = -0{,}35\,\hat{\imath}
+    \qquad
+    \|\vec{r}_P - \vec{r}_q\|^3 = (0{,}35)^3 = 0{,}042875\;\text{m}^3
+\end{equation*}
+
+\begin{equation*}
+    \vec{E}_2
+    = K\,\frac{q\,(\vec{r}_P - \vec{r}_q)}{\|\vec{r}_P - \vec{r}_q\|^3}
+    = 9{,}00\times10^9\,\frac{(-5{,}00\times10^{-3})\times(-0{,}35\,\hat{\imath})}{0{,}042875}
+\end{equation*}
+
+\begin{equation*}
+    \vec{E}_2
+    = 9{,}00\times10^9\times\frac{5{,}00\times10^{-3}\times0{,}35}{0{,}042875}\,\hat{\imath}
+    = 9{,}00\times10^9\times\frac{1{,}75\times10^{-3}}{0{,}042875}\,\hat{\imath}
+\end{equation*}
+
+\begin{equation*}
+    \boxed{\vec{E}_2 = 3{,}673\times10^{8}\,\hat{\imath}\;\;\text{[N/C]}}
+\end{equation*}
+
+La carga negativa est\'a a la derecha de $P$; su campo en $P$ apunta hacia ella ($+\hat{\imath}$), consistente con el an\'alisis cualitativo.
+
+%========================================
+% PASO 3: CAMPO TOTAL
+%========================================
+\section*{Paso 3: Campo El\'ectrico Total en $P$}
+
+\begin{equation*}
+    \vec{E}_T = \vec{E}_1 + \vec{E}_2
+    = \bigl(214{,}66 + 3{,}673\times10^{8}\bigr)\,\hat{\imath} - 132{,}70\,\hat{\jmath}
+\end{equation*}
+
+El t\'ermino 214,66 N/C es despreciable frente a $3{,}673\times10^{8}$ N/C:
+
+\begin{equation*}
+    \boxed{\vec{E}_T = 3{,}673\times10^{8}\,\hat{\imath} - 132{,}70\,\hat{\jmath}\;\;\text{[N/C]}}
+\end{equation*}
+
+%========================================
+% DIAGRAMA VECTORIAL EN P
+%========================================
+\section*{Diagrama Vectorial en $P$}
+
+\begin{center}
+\begin{tikzpicture}[scale=1.0,
+    eje/.style={-{Stealth[length=3mm]}, thick},
+    campo/.style={-{Stealth[length=4mm]}, very thick}]
+
+    % Ejes
+    \draw[eje, gray] (-0.5,0) -- (3.8,0) node[right, scale=0.8] {$\hat{\imath}$};
+    \draw[eje, gray] (0,-1.5) -- (0,1.2) node[above, scale=0.8] {$\hat{\jmath}$};
+    \fill[puntoP] (0,0) circle (4pt);
+    \node[above left, scale=0.8] at (0,0) {$P$};
+
+    % E1 (escala 1 unidad = 100 N/C): (214.66, -132.70) -> (2.147, -1.327)
+    \draw[campo, lineacarga, line width=1.5pt] (0,0) -- (2.147,-1.327)
+        node[below right, scale=0.80, lineacarga, font=\bfseries] {$\vec{E}_1$};
+    \node[lineacarga, below, scale=0.68] at (1.07,-0.66)
+        {$214\,\hat{\imath}-133\,\hat{\jmath}$ [N/C]};
+
+    % E2 (escala 1 unidad = 1e8 N/C): (3.673, 0) -> (3.673, 0)
+    \draw[campo, cargarojo, line width=2pt] (0,0) -- (3.30,0)
+        node[above right, scale=0.85, cargarojo, font=\bfseries] {$\vec{E}_2$};
+    \node[cargarojo, above, scale=0.70] at (1.65,0.05)
+        {$3{,}673\times10^8\,\hat{\imath}$ [N/C]};
+
+    % ET = E1 + E2 (aproximadamente igual a E2)
+    \draw[campo, campoverde, line width=2.5pt, dashed] (0,0) -- (3.30,-1.327)
+        node[below right, scale=0.85, campoverde, font=\bfseries] {$\vec{E}_T$};
+    \node[campoverde, right, scale=0.68] at (3.35,-0.66)
+        {$\approx 3{,}673\times10^8\,\hat{\imath}-132{,}7\,\hat{\jmath}$ [N/C]};
+
+    % Escala
+    \node[scale=0.60, gray] at (1.5,-1.45)
+        {Escala $\vec{E}_1$: 1 ud $= 100$ N/C \;|\; Escala $\vec{E}_2,\vec{E}_T$: 1 ud $= 1{,}1\times10^8$ N/C};
+
+\end{tikzpicture}
+\end{center}
+
+%========================================
+% INTERPRETACION FISICA
+%========================================
+\section*{Interpretaci\'on F\'isica}
+
+\begin{itemize}
+    \item El campo de la carga puntual $|\vec{E}_2| = 3{,}673\times10^8$ N/C domina completamente sobre el de la l\'inea $|\vec{E}_1| \approx 250$ N/C: la raz\'on es $\approx 1{,}5\times10^6$. Esto se debe a que $|q| = 5$ mC es enormemente mayor que $\lambda\cdot L = 4\;\text{nC/m}\times0{,}30\;\text{m} = 1{,}2\;\text{nC}$.
+
+    \item La componente $\hat{\jmath}$ del campo total proviene \textbf{\'unicamente} de la l\'inea de carga, pues la carga puntual est\'a sobre el eje $x$ y su campo en $P$ (tambi\'en sobre el eje $x$) no tiene componente $\hat{\jmath}$.
+
+    \item El signo negativo de $E_{1y}$ indica que la l\'inea, ubicada sobre el eje $+y$, empuja el campo en $P$ hacia $-\hat{\jmath}$ (hacia abajo), lo que es f\'isicamente correcto: la carga positiva de la l\'inea repele en direcci\'on contraria.
+\end{itemize}
+
+\end{document}

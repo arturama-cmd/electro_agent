@@ -55,8 +55,7 @@
 \begin{center}
     \includegraphics[height=2cm]{logo ubb.png}\\[0.3cm]
     {\large\textcolor{ubbblue}{\textbf{UNIVERSIDAD DEL B\'IO-B\'IO}}}\\[0.1cm]
-    {\normalsize Facultad de Ciencias -- Departamento de F\'isica}\\[0.1cm]
-    {\normalsize\textbf{Dr. Arturo Fern\'andez P\'erez}}
+    {\normalsize Facultad de Ciencias -- Departamento de F\'isica}
 \end{center}
 
 \vspace{0.3cm}
@@ -381,32 +380,53 @@ Dos cargas puntuales $q_1$ y $q_2$ est\'an ubicadas a $4{,}5$~[cm] de distancia.
 \subsection*{Diagrama}
 
 \begin{center}
-\begin{tikzpicture}[scale=3.5, >=Stealth]
-    % Cargas q1 y q2
-    \fill[cargazul]  (-0.5, 0) circle (2pt) node[below=5pt]{\small $q_1(+)$};
-    \fill[cargarojo] ( 0.5, 0) circle (2pt) node[below=5pt]{\small $q_2(-)$};
+\begin{tikzpicture}[scale=1, >=Stealth]
+    % Geometria (coordenadas en cm):
+    % Q en el origen (izquierda); q1 arriba-derecha; q2 abajo-derecha
+    % dist(Q,q1) = dist(Q,q2) = 3,00 cm;  sep. vertical q1-q2 = 4,50 cm
+    % dist. horizontal Q a eje q1-q2: sqrt(3^2 - 2.25^2) = 1,984 cm
+    \coordinate (Qpos)  at (0,     0);
+    \coordinate (q1pos) at (1.984, 2.25);
+    \coordinate (q2pos) at (1.984,-2.25);
 
-    % Carga Q arriba
-    \coordinate (Q) at (0, 0.661);
-    \fill[black] (Q) circle (2pt) node[right=4pt]{\small $Q{=}{-}1{,}75\ \mu$C};
+    % Lineas Q -- cargas
+    \draw[black!40, thin] (Qpos) -- (q1pos);
+    \draw[black!40, thin] (Qpos) -- (q2pos);
 
-    % Lineas de distancia
-    \draw[black!50, thin] (-0.5,0) -- (Q);
-    \draw[black!50, thin] ( 0.5,0) -- (Q);
+    % Lineas auxiliares punteadas
+    \draw[dashed, black!25, thin] (Qpos) -- (1.984, 0);   % horizontal
+    \draw[dashed, black!25, thin] (q1pos) -- (q2pos);     % vertical q1-q2
 
-    % Cotas
-    \draw[<->, black, thin] (-0.5,-0.18) -- (0.5,-0.18) node[midway,below]{\small $4{,}5$~cm};
-    \node[font=\small] at (-0.32, 0.38) {$r{=}3$~cm};
-    \node[font=\small] at ( 0.32, 0.38) {$r{=}3$~cm};
+    % Angulo alpha en Q (de horizontal a linea Q-q1)
+    \draw[gray!70, thin] (0.50, 0) arc (0:48.6:0.50);
+    \node[font=\scriptsize, gray] at (0.62, 0.26) {$\alpha$};
 
-    % Angulo alpha
-    \draw[black!60] (0, 0.661) -- (0, 0.22);
-    \draw[->, black!60, thin] (0, 0.45) arc (270:242:0.22) node[below left, font=\scriptsize]{$\alpha$};
+    % Cota vertical 4,50 cm (a la derecha)
+    \draw[<->, thin, black!60] (2.65,-2.25) -- (2.65, 2.25)
+        node[midway, right, font=\small]{$4{,}50$~cm};
 
-    % Vectores fuerza
-    \draw[->, cargazul, very thick] (Q) -- +(-0.28,-0.45) node[left]{\small $\vec{F}_1$};
-    \draw[->, cargarojo, very thick] (Q) -- +(0.28,-0.45) node[right]{\small $\vec{F}_2$};
-    \draw[->, black, very thick] (Q) -- +(0,0.35) node[right]{\small $\vec{F}_T{=}m\vec{a}$};
+    % Etiquetas de distancia sobre las lineas
+    \node[above left, font=\small] at (0.99, 1.13) {$3{,}00$~cm};
+    \node[below left, font=\small] at (0.99,-1.13) {$3{,}00$~cm};
+
+    % Cargas
+    \fill[cargazul]  (Qpos)  circle (3pt)
+        node[left=5pt,  font=\small]{$Q{=}{-}1{,}75\;\mu$C};
+    \fill[cargazul!60!white] (q1pos) circle (3pt)
+        node[right=4pt, font=\small]{$q_1(+)$};
+    \fill[cargarojo!60!white] (q2pos) circle (3pt)
+        node[right=4pt, font=\small]{$q_2(-)$};
+
+    % Vectores fuerza sobre Q
+    % F1 (atractiva, Q jalado hacia q1): dir = (1.984,2.25)/3 = (0.661,0.750), escala 0.8 cm
+    \draw[->, cargazul, very thick] (Qpos) -- +(0.529, 0.600)
+        node[right, font=\small]{$\vec{F}_1$};
+    % F2 (repulsiva, Q empujado lejos de q2): dir = -(1.984,-2.25)/3 = (-0.661,0.750), escala 0.8 cm
+    \draw[->, cargarojo, very thick] (Qpos) -- +(-0.529, 0.600)
+        node[left,  font=\small]{$\vec{F}_2$};
+    % F_T = F1 + F2: resultante hacia arriba (componentes x se cancelan)
+    \draw[->, cargaverde, very thick] (Qpos) -- +(0, 1.10)
+        node[right, font=\small]{$\vec{F}_T{=}m\vec{a}$};
 \end{tikzpicture}
 \end{center}
 

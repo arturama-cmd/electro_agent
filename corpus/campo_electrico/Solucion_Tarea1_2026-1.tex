@@ -1,0 +1,981 @@
+\documentclass[12pt,letterpaper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[spanish,es-noshorthands]{babel}
+\usepackage{amsmath,amssymb}
+\usepackage{graphicx}
+\usepackage{xcolor}
+\usepackage{tikz}
+\usetikzlibrary{3d,calc,arrows.meta,decorations.markings,patterns}
+\usepackage[top=2.5cm, bottom=3cm, left=2cm, right=2cm, footskip=40pt]{geometry}
+\usepackage{fancyhdr}
+\usepackage{lastpage}
+\usepackage{enumerate}
+
+\definecolor{ubbblue}{RGB}{0,51,102}
+\definecolor{cargazul}{RGB}{50,50,220}
+\definecolor{cargarojo}{RGB}{220,50,50}
+\definecolor{campoverde}{RGB}{30,140,30}
+\definecolor{puntoP}{RGB}{180,0,180}
+\definecolor{lineacarga}{RGB}{200,100,0}
+
+\pagestyle{fancy}
+\fancyhf{}
+\renewcommand{\headrulewidth}{0pt}
+\renewcommand{\footrulewidth}{0.4pt}
+\fancyfoot[L]{\raisebox{-0.5cm}{\includegraphics[height=1.2cm]{logo ubb.png}}}
+\fancyfoot[C]{%
+    \begin{minipage}[b]{8cm}\centering
+        \footnotesize\textcolor{ubbblue}{\textbf{Dr. Arturo Fern\'andez P\'erez}}\\
+        \scriptsize Departamento de F\'isica -- Universidad del B\'io-B\'io\\
+        \scriptsize\textit{Electro\_Asistente\_AI-UBB}\\
+        \tiny P\'agina \thepage\ de \pageref{LastPage}
+    \end{minipage}}
+\fancyfoot[R]{\raisebox{-0.5cm}{\includegraphics[height=1.2cm]{logo dfis.png}}}
+\fancypagestyle{plain}{%
+    \fancyhf{}
+    \renewcommand{\headrulewidth}{0pt}
+    \renewcommand{\footrulewidth}{0.4pt}
+    \fancyfoot[L]{\raisebox{-0.5cm}{\includegraphics[height=1.2cm]{logo ubb.png}}}
+    \fancyfoot[C]{%
+        \begin{minipage}[b]{8cm}\centering
+            \footnotesize\textcolor{ubbblue}{\textbf{Dr. Arturo Fern\'andez P\'erez}}\\
+            \scriptsize Departamento de F\'isica -- Universidad del B\'io-B\'io\\
+            \scriptsize\textit{Electro\_Asistente\_AI-UBB}\\
+            \tiny P\'agina \thepage\ de \pageref{LastPage}
+        \end{minipage}}
+    \fancyfoot[R]{\raisebox{-0.5cm}{\includegraphics[height=1.2cm]{logo dfis.png}}}}
+
+\begin{document}
+
+%========================================
+% ENCABEZADO INSTITUCIONAL
+%========================================
+\begin{center}
+    \includegraphics[height=2cm]{logo ubb.png}\\[0.3cm]
+    {\large\textcolor{ubbblue}{\textbf{UNIVERSIDAD DEL B\'IO-B\'IO}}}\\[0.1cm]
+    {\normalsize Facultad de Ciencias -- Departamento de F\'isica}
+\end{center}
+
+\vspace{0.3cm}
+\hrule height 1pt
+\vspace{0.5cm}
+
+{\centering\Large\textbf{Pauta Tarea 1 -- F\'isica II (2026-1)}\par}
+{\centering\normalsize Fuerza y Campo El\'ectrico de Cargas Puntuales y Distribuciones Continuas\par}
+
+\vspace{0.5cm}
+
+%################################################################
+%  PROBLEMA 1
+%################################################################
+\section*{\textcolor{ubbblue}{Problema 1 \;--\; Tres Cargas Puntuales}}
+
+\subsection*{Enunciado del Problema}
+
+Tres cargas puntuales $q_1 = 11{,}8$ [nC], $q_2 = -31{,}5$ [nC] y $q_3 = -10{,}3$ [nC] se ubican
+en las coordenadas (en cm): $\vec{r}_2=(5;\,2)$, $\vec{r}_3=(-3;\,-4)$.
+La carga $q_1$ se encuentra a $8{,}0$ cm del origen, con su vector posici\'on a $20{,}0^\circ$
+del eje $y^+$ hacia el segundo cuadrante: $\vec{r}_1=(-2{,}74;\,7{,}52)$ [cm]. Determine:
+\begin{enumerate}[(a)]
+  \item La fuerza el\'ectrica neta $\vec{F}$ ejercida sobre la carga $q_2$.
+  \item El campo el\'ectrico neto $\vec{E}$ en el punto $P=(1;\,0)$ [cm].
+\end{enumerate}
+
+\subsection*{Diagrama de la Situaci\'on}
+
+\begin{center}
+\begin{tikzpicture}[x=0.52cm, y=0.52cm,
+    eje/.style={-{Stealth[length=3mm]}, thick},
+    rvec/.style={-{Stealth[length=2.5mm]}, dashed, thick}]
+
+    % Ejes (coordenadas directamente en cm)
+    \draw[eje] (-8,0) -- (7,0) node[right] {$x$ [cm]};
+    \draw[eje] (0,-6) -- (0,10) node[above] {$y$ [cm]};
+    \node[below right, scale=0.70] at (0,0) {$O$};
+
+    % Marcas eje x
+    \foreach \xv in {-7,-6,-5,-4,-3,-2,-1,1,2,3,4,5,6} {
+        \draw (\xv,0.20) -- (\xv,-0.20) node[below, scale=0.52] {\xv};
+    }
+    % Marcas eje y
+    \foreach \yv in {-5,-4,-3,-2,-1,1,2,3,4,5,6,7,8,9} {
+        \draw (0.20,\yv) -- (-0.20,\yv) node[left, scale=0.52] {\yv};
+    }
+
+    % Indicador angulo 20° desde eje y+ hacia 2do cuadrante (posicion de q1)
+    \draw[gray, dashed, thin] (0,0) -- (-2.736,7.518);
+    \draw[gray, thin] (0,1.5) arc (90:110:1.5);
+    \node[gray, scale=0.65] at (-0.68,1.90) {$20^\circ$};
+
+    % q1 = +11.8 nC en (-2.736, 7.518)  [segundo cuadrante]
+    \fill[cargazul] (-2.736,7.518) circle (5.5pt);
+    \node[cargazul, left, scale=0.80, font=\bfseries] at (-3.0,8.0) {$q_1{=}+11{,}8$ nC};
+    \node[cargazul, left, scale=0.66] at (-3.0,7.1) {$(-2{,}74;\,7{,}52)$};
+
+    % q2 = -31.5 nC en (5, 2)  [primer cuadrante]
+    \fill[cargarojo] (5,2) circle (5.5pt);
+    \node[cargarojo, right, scale=0.80, font=\bfseries] at (5.3,2.7) {$q_2{=}{-}31{,}5$ nC};
+    \node[cargarojo, right, scale=0.66] at (5.3,1.4) {$(5;\,2)$};
+
+    % q3 = -10.3 nC en (-3, -4)
+    \fill[cargarojo] (-3,-4) circle (5.5pt);
+    \node[cargarojo, left, scale=0.80, font=\bfseries] at (-3.3,-3.3) {$q_3{=}{-}10{,}3$ nC};
+    \node[cargarojo, left, scale=0.66] at (-3.3,-4.7) {$(-3;\,-4)$};
+
+    % Punto P = (1, 0)
+    \fill[puntoP] (1,0) circle (4pt);
+    \node[puntoP, below, scale=0.82, font=\bfseries] at (1,-0.7) {$P\,(1;\,0)$};
+
+    % Vectores desplazamiento r12 y r32
+    \draw[rvec, cargazul!80] (-2.736,7.518) -- (5,2)
+        node[midway, above, scale=0.66, cargazul!80] {$\vec{r}_{12}$};
+    \draw[rvec, cargarojo!80] (-3,-4) -- (5,2)
+        node[midway, right, scale=0.66, cargarojo!80] {$\vec{r}_{32}$};
+
+    % F12 = (-3.016e-4, 2.151e-4): dir (-0.814,0.581), escala 2.5 -> (-2.04,+1.45)
+    \draw[-{Stealth[length=3.5mm]}, cargazul, very thick]
+        (5,2) -- +(-2.04, 1.45)
+        node[left, scale=0.80, cargazul, font=\bfseries] {$\vec{F}_{12}$};
+    % F32 = (2.336e-4, 1.752e-4): dir (0.800,0.600), escala 2 -> (+1.60,+1.20)
+    \draw[-{Stealth[length=3.5mm]}, cargarojo, very thick]
+        (5,2) -- +(1.60, 1.20)
+        node[right, scale=0.80, cargarojo, font=\bfseries] {$\vec{F}_{32}$};
+    % F_neta = (-0.680e-4, 3.903e-4): dir (-0.172,0.985), escala 3 -> (-0.52,+2.96)
+    \draw[-{Stealth[length=4mm]}, campoverde, very thick, line width=1.5pt]
+        (5,2) -- +(-0.52, 2.96)
+        node[left, scale=0.82, campoverde, font=\bfseries] {$\vec{F}_{\rm neta}$};
+
+\end{tikzpicture}
+\end{center}
+
+\subsection*{Datos Num\'ericos}
+
+\begin{itemize}
+    \item $K = 9{,}00\times10^9\;\text{N}\cdot\text{m}^2/\text{C}^2$
+    \item $q_1 = +11{,}8\times10^{-9}$ C;\quad $\vec{r}_1 = (-0{,}02736;\;0{,}07518)$ m
+          \quad[$8{,}0$ cm a $20{,}0^\circ$ del eje $y^+$ (2do cuadrante): $x_1=-8\,\text{sen}\,20^\circ$, $y_1=8\cos20^\circ$]
+    \item $q_2 = -31{,}5\times10^{-9}$ C;\quad $\vec{r}_2 = (0{,}05;\;0{,}02)$ m
+    \item $q_3 = -10{,}3\times10^{-9}$ C;\quad $\vec{r}_3 = (-0{,}03;\;-0{,}04)$ m
+    \item Punto de campo: $P = (0{,}01;\;0)$ m
+\end{itemize}
+
+\subsection*{An\'alisis Cualitativo}
+
+\begin{itemize}
+    \item $q_1 > 0$, $q_2 < 0$: $\vec{F}_{12}$ es \textbf{atractiva}; $q_2$ es jalada hacia
+          $q_1$ (arriba-izquierda, pues $q_1$ est\'a en el segundo cuadrante, a la izquierda
+          y arriba de $q_2$).
+    \item $q_3 < 0$, $q_2 < 0$: $\vec{F}_{32}$ es \textbf{repulsiva}; $q_2$ es empujada lejos de
+          $q_3$ (arriba-derecha, pues $q_3$ est\'a abajo-izquierda de $q_2$).
+    \item En $P$: el campo de $q_2 < 0$ apunta \textbf{hacia} $q_2$ (derecha-arriba, pues
+          $q_2$ est\'a a la derecha y arriba de $P$);
+          el de $q_1 > 0$ se aleja de $q_1$ (derecha-abajo desde $P$, pues $q_1$ est\'a
+          arriba-izquierda de $P$);
+          el de $q_3 < 0$ apunta hacia $q_3$ (izquierda-abajo).
+\end{itemize}
+
+%-------- Parte (a) --------
+\section*{Parte (a): Fuerza neta sobre $q_2$}
+
+Se usa la Ley de Coulomb vectorial: $\vec{F}_{ij} = K\dfrac{q_i\,q_j}{\|\vec{r}_{ij}\|^3}\,\vec{r}_{ij}$
+con $\vec{r}_{ij} = \vec{r}_j - \vec{r}_i$.
+
+\subsection*{Fuerza de $q_1$ sobre $q_2$ \;($\vec{F}_{12}$)}
+
+\begin{align*}
+    \vec{r}_{12} &= \vec{r}_2-\vec{r}_1
+                   = (0{,}05-(-0{,}02736);\;0{,}02-0{,}07518)
+                   = (0{,}07736\,\hat{\imath}-0{,}05518\,\hat{\jmath})\;\text{m}\\
+    \|\vec{r}_{12}\|^2 &= (0{,}07736)^2+(0{,}05518)^2
+                         = 5{,}985\times10^{-3}+3{,}045\times10^{-3} = 9{,}030\times10^{-3}\;\text{m}^2\\
+    \|\vec{r}_{12}\|^3 &= (9{,}030\times10^{-3})^{3/2}
+                         = 9{,}030\times10^{-3}\times9{,}503\times10^{-2} = 8{,}582\times10^{-4}\;\text{m}^3\\
+    K\,q_1\,q_2 &= 9{,}00\times10^9\times(11{,}8\times10^{-9})\times(-31{,}5\times10^{-9})
+                 = -3{,}345\times10^{-6}\;\text{N\,m}^2
+\end{align*}
+
+\begin{align*}
+    \vec{F}_{12}
+    &= \frac{-3{,}345\times10^{-6}}{8{,}582\times10^{-4}}
+       \,(0{,}07736\,\hat{\imath}-0{,}05518\,\hat{\jmath})\\
+    &= -3{,}898\times10^{-3}\,(0{,}07736\,\hat{\imath}-0{,}05518\,\hat{\jmath})
+\end{align*}
+
+\begin{equation*}
+    \boxed{\vec{F}_{12} = (-3{,}016\,\hat{\imath}+2{,}151\,\hat{\jmath})\times10^{-4}\;\text{[N]}}
+\end{equation*}
+
+El factor escalar es negativo ($q_1 q_2 < 0$): fuerza atractiva, apunta en sentido contrario a
+$\vec{r}_{12}$, jalando $q_2$ hacia $q_1$.
+
+\subsection*{Fuerza de $q_3$ sobre $q_2$ \;($\vec{F}_{32}$)}
+
+\begin{align*}
+    \vec{r}_{32} &= \vec{r}_2-\vec{r}_3
+                   = (0{,}05-(-0{,}03);\;0{,}02-(-0{,}04))
+                   = (0{,}08\,\hat{\imath}+0{,}06\,\hat{\jmath})\;\text{m}\\
+    \|\vec{r}_{32}\|^2 &= (0{,}08)^2+(0{,}06)^2
+                         = 6{,}400\times10^{-3}+3{,}600\times10^{-3} = 1{,}000\times10^{-2}\;\text{m}^2\\
+    \|\vec{r}_{32}\|^3 &= (1{,}000\times10^{-2})^{3/2}
+                         = 1{,}000\times10^{-2}\times1{,}000\times10^{-1} = 1{,}000\times10^{-3}\;\text{m}^3\\
+    K\,q_3\,q_2 &= 9{,}00\times10^9\times(-10{,}3\times10^{-9})\times(-31{,}5\times10^{-9})
+                 = +2{,}920\times10^{-6}\;\text{N\,m}^2
+\end{align*}
+
+\begin{align*}
+    \vec{F}_{32}
+    &= \frac{2{,}920\times10^{-6}}{1{,}000\times10^{-3}}
+       \,(0{,}08\,\hat{\imath}+0{,}06\,\hat{\jmath})\\
+    &= 2{,}920\times10^{-3}\,(0{,}08\,\hat{\imath}+0{,}06\,\hat{\jmath})
+\end{align*}
+
+\begin{equation*}
+    \boxed{\vec{F}_{32} = (2{,}336\,\hat{\imath}+1{,}752\,\hat{\jmath})\times10^{-4}\;\text{[N]}}
+\end{equation*}
+
+El factor positivo ($q_3 q_2 > 0$): fuerza repulsiva, misma direcci\'on que $\vec{r}_{32}$.
+
+\subsection*{Fuerza neta sobre $q_2$}
+
+\begin{align*}
+    F_x &= -3{,}016\times10^{-4}+2{,}336\times10^{-4} = -0{,}680\times10^{-4}\;\text{N}\\
+    F_y &= \phantom{-}2{,}151\times10^{-4}+1{,}752\times10^{-4} = +3{,}903\times10^{-4}\;\text{N}
+\end{align*}
+
+\begin{equation*}
+    \boxed{\vec{F}_{\rm neta} = (-0{,}680\,\hat{\imath}+3{,}903\,\hat{\jmath})\times10^{-4}\;\text{[N]}}
+\end{equation*}
+
+\begin{equation*}
+    |\vec{F}_{\rm neta}|
+    = \sqrt{(0{,}680)^2+(3{,}903)^2}\times10^{-4}
+    = \sqrt{0{,}4624+15{,}23}\times10^{-4}
+    = 3{,}961\times10^{-4}\;\text{N}
+\end{equation*}
+
+\begin{equation*}
+    \theta = 180^\circ - \arctan\!\Bigl(\tfrac{3{,}903}{0{,}680}\Bigr) = 180^\circ - 80{,}1^\circ = 99{,}9^\circ
+    \quad\text{(segundo cuadrante: }F_x<0,\;F_y>0\text{)}
+\end{equation*}
+
+%-------- Parte (b) --------
+\section*{Parte (b): Campo el\'ectrico en $P=(0{,}01;\,0)$ m}
+
+Campo de cada carga: $\vec{E}_i = K\,\dfrac{q_i}{\|\vec{r}_{Pi}\|^3}\,\vec{r}_{Pi}$,\quad
+$\vec{r}_{Pi} = \vec{r}_P-\vec{r}_i$.
+
+\subsection*{Campo de $q_1$ en $P$}
+
+\begin{align*}
+    \vec{r}_{P1} &= \vec{r}_P-\vec{r}_1
+                   = (0{,}01-(-0{,}02736);\;0-0{,}07518)
+                   = (0{,}03736\,\hat{\imath}-0{,}07518\,\hat{\jmath})\;\text{m}\\
+    \|\vec{r}_{P1}\|^2 &= (0{,}03736)^2+(0{,}07518)^2
+                         = 1{,}396\times10^{-3}+5{,}652\times10^{-3} = 7{,}048\times10^{-3}\;\text{m}^2\\
+    \|\vec{r}_{P1}\|^3 &= (7{,}048\times10^{-3})^{3/2}
+                         = 7{,}048\times10^{-3}\times8{,}395\times10^{-2} = 5{,}917\times10^{-4}\;\text{m}^3
+\end{align*}
+\begin{align*}
+    \vec{E}_1
+    &= \frac{9{,}00\times10^9\times11{,}8\times10^{-9}}{5{,}917\times10^{-4}}
+       \,(0{,}03736\,\hat{\imath}-0{,}07518\,\hat{\jmath})\\
+    &= 1{,}795\times10^5\,(0{,}03736\,\hat{\imath}-0{,}07518\,\hat{\jmath})\\
+    &= (6{,}706\times10^3\,\hat{\imath}-1{,}349\times10^4\,\hat{\jmath})\;\text{[N/C]}
+\end{align*}
+
+\subsection*{Campo de $q_2$ en $P$}
+
+\begin{align*}
+    \vec{r}_{P2} &= (-0{,}04\,\hat{\imath}-0{,}02\,\hat{\jmath})\;\text{m}\\
+    \|\vec{r}_{P2}\|^3 &= (0{,}0016+0{,}0004)^{3/2} = (0{,}002)^{3/2}
+                         = 0{,}002\times0{,}04472 = 8{,}944\times10^{-5}\;\text{m}^3
+\end{align*}
+\begin{align*}
+    \vec{E}_2
+    &= \frac{9{,}00\times10^9\times(-31{,}5\times10^{-9})}{8{,}944\times10^{-5}}
+       \,(-0{,}04\,\hat{\imath}-0{,}02\,\hat{\jmath})\\
+    &= (-3{,}169\times10^6)\,(-0{,}04\,\hat{\imath}-0{,}02\,\hat{\jmath})\\
+    &= (1{,}268\times10^5\,\hat{\imath}+6{,}338\times10^4\,\hat{\jmath})\;\text{[N/C]}
+\end{align*}
+
+\subsection*{Campo de $q_3$ en $P$}
+
+\begin{align*}
+    \vec{r}_{P3} &= (0{,}04\,\hat{\imath}+0{,}04\,\hat{\jmath})\;\text{m}\\
+    \|\vec{r}_{P3}\|^3 &= (0{,}0016+0{,}0016)^{3/2} = (0{,}0032)^{3/2}
+                         = 0{,}0032\times0{,}05657 = 1{,}810\times10^{-4}\;\text{m}^3
+\end{align*}
+\begin{align*}
+    \vec{E}_3
+    &= \frac{9{,}00\times10^9\times(-10{,}3\times10^{-9})}{1{,}810\times10^{-4}}
+       \,(0{,}04\,\hat{\imath}+0{,}04\,\hat{\jmath})\\
+    &= (-5{,}121\times10^5)\,(0{,}04\,\hat{\imath}+0{,}04\,\hat{\jmath})\\
+    &= (-2{,}048\times10^4\,\hat{\imath}-2{,}048\times10^4\,\hat{\jmath})\;\text{[N/C]}
+\end{align*}
+
+\subsection*{Campo neto en $P$}
+
+\begin{align*}
+    E_x &= 6{,}706\times10^3+1{,}268\times10^5-2{,}048\times10^4
+         = (0{,}6706+12{,}68-2{,}048)\times10^4 = 1{,}130\times10^5\;\text{N/C}\\
+    E_y &= -1{,}349\times10^4+6{,}338\times10^4-2{,}048\times10^4
+         = (-1{,}349+6{,}338-2{,}048)\times10^4 = 2{,}941\times10^4\;\text{N/C}
+\end{align*}
+
+\begin{equation*}
+    \boxed{\vec{E}_P = (1{,}130\times10^5\,\hat{\imath}+2{,}941\times10^4\,\hat{\jmath})\;\;[\text{N/C}]}
+\end{equation*}
+
+\begin{equation*}
+    |\vec{E}_P|
+    = \sqrt{(1{,}130)^2+(0{,}2941)^2}\times10^5
+    = \sqrt{1{,}277+0{,}08650}\times10^5
+    = 1{,}168\times10^5\;\text{N/C}
+\end{equation*}
+
+\begin{equation*}
+    \theta = \arctan\!\Bigl(\tfrac{2{,}941}{11{,}30}\Bigr) = 14{,}6^\circ
+    \quad\text{(primer cuadrante: }E_x>0,\;E_y>0\text{)}
+\end{equation*}
+
+\subsection*{Interpretaci\'on F\'isica}
+
+\begin{itemize}
+    \item El campo en $P$ est\'a dominado por $\vec{E}_2$: $q_2$ es la carga m\'as grande en
+          valor absoluto y la m\'as cercana a $P$ ($d = \sqrt{(0{,}04)^2+(0{,}02)^2} = 4{,}47$ cm).
+          Al ser negativa, su campo apunta \textbf{hacia} $q_2$ (en direcci\'on $+\hat{\imath}$,
+          $+\hat{\jmath}$), consistente con el resultado.
+    \item La fuerza neta sobre $q_2$ est\'a dominada por $\vec{F}_{12}$ (atracci\'on de $q_1$,
+          ubicada en el segundo cuadrante a la izquierda y arriba de $q_2$). $F_y \gg |F_x|$
+          refleja que el desplazamiento vertical entre $q_1$ y $q_2$ (5{,}52 cm) supera al
+          horizontal (7{,}74 cm proyectado resulta casi cancelado por $\vec{F}_{32}$).
+\end{itemize}
+
+%################################################################
+%  PROBLEMA 2
+%################################################################
+\newpage
+\section*{\textcolor{ubbblue}{Problema 2 \;--\; Configuraci\'on Circular de Cargas}}
+
+\subsection*{Enunciado del Problema}
+
+Dada la configuraci\'on de la Fig.~2, con $q_1=q_2=2Q$ y $q_3=-Q$, determinar la fuerza neta
+que experimenta una part\'icula $q_0=Q$ ubicada en el punto~P. Considere $Q=10$ [nC] y $R=25$ [cm].
+Dibuje las l\'ineas de fuerza que cada carga induce sobre $q_0$.
+
+\subsection*{Diagrama de la Situaci\'on y L\'ineas de Fuerza}
+
+\begin{center}
+\begin{tikzpicture}[scale=2.8,
+    eje/.style={-{Stealth[length=3mm]}, thick}]
+
+    % Grilla
+    \draw[step=0.5cm, gray!15, very thin] (-1.35,-1.35) grid (1.55,1.35);
+
+    % Circulo de referencia
+    \draw[dashed, gray!50] (0,0) circle (1);
+
+    % Ejes
+    \draw[eje] (-1.4,0) -- (1.55,0) node[right] {$\hat{\imath}$};
+    \draw[eje] (0,-1.4) -- (0,1.4) node[above] {$\hat{\jmath}$};
+    \node[below right, scale=0.70] at (0,0) {$O$};
+
+    % Radio R y angulo
+    \draw[gray, dashed, thin] (0,0) -- (-0.707,0.707);
+    \node[gray, scale=0.72] at (-0.30,0.52) {$R$};
+    \draw[gray, thin] (0,0.28) arc (90:135:0.28);
+    \node[gray, scale=0.68] at (-0.13,0.36) {$45^\circ$};
+
+    % -------- CARGAS --------
+    % q0 = Q en P = (1, 0)
+    \fill[cargazul] (1,0) circle (0.055);
+    \node[cargazul, above right, scale=0.82, font=\bfseries] at (1.05,0.09) {$q_0=Q$};
+    \node[scale=0.62] at (1,-0.15) {$P\;(R,\,0)$};
+
+    % q1 = 2Q en (0, -1)
+    \fill[cargarojo] (0,-1) circle (0.065);
+    \node[cargarojo, below, scale=0.82, font=\bfseries] at (0,-1.13) {$q_1=2Q$};
+
+    % q2 = 2Q en (-1, 0)
+    \fill[cargarojo] (-1,0) circle (0.065);
+    \node[cargarojo, left, scale=0.82, font=\bfseries] at (-1.13,0) {$q_2=2Q$};
+
+    % q3 = -Q en (-0.707, 0.707)
+    \fill[cargazul!55!white] (-0.707,0.707) circle (0.055);
+    \node[cargazul!80!black, above left, scale=0.82, font=\bfseries] at (-0.78,0.79)
+        {$q_3{=}{-}Q$};
+
+    % -------- LINEAS DE FUERZA --------
+    % q1->q0 repulsiva (flecha saliendo de q1 hacia fuera, pasando por q0)
+    \draw[cargarojo!65, dashed, thin, -{Stealth[length=2mm]}] (0,-1) -- (1,0);
+    % q2->q0 repulsiva
+    \draw[cargarojo!65, dashed, thin, -{Stealth[length=2mm]}] (-1,0) -- (1,0);
+    % q0->q3 atractiva (sale de q0 hacia q3)
+    \draw[cargazul!60, dashed, thin, -{Stealth[length=2mm]}] (1,0) -- (-0.707,0.707);
+
+    % -------- VECTORES DE FUERZA EN q0 --------
+    % F10: dir (0.707, 0.707), escala 0.32
+    \draw[-{Stealth[length=3.5mm]}, cargarojo, very thick]
+        (1,0) -- +(0.226, 0.226)
+        node[right, scale=0.80, cargarojo, font=\bfseries] {$\vec{F}_{10}$};
+    % F20: dir (1, 0), escala 0.24
+    \draw[-{Stealth[length=3.5mm]}, cargarojo!70, very thick]
+        (1,0) -- +(0.24, 0)
+        node[above right, scale=0.80, cargarojo!80, font=\bfseries] {$\vec{F}_{20}$};
+    % F30: atractiva hacia q3. dir de r30 = (0.427,-0.177) normalizado = (0.924,-0.383)
+    % fuerza atractiva -> direccion -r30 = (-0.924, 0.383), escala 0.20
+    \draw[-{Stealth[length=3.5mm]}, cargazul!70!black, very thick]
+        (1,0) -- +(-0.185, 0.077)
+        node[above, scale=0.80, cargazul!80, font=\bfseries] {$\vec{F}_{30}$};
+    % F_neta: dir (1.349, 1.179) normalizado = (0.752, 0.659), escala 0.40
+    \draw[-{Stealth[length=4mm]}, campoverde, very thick, line width=1.5pt]
+        (1,0) -- +(0.301, 0.264)
+        node[right, scale=0.85, campoverde, font=\bfseries] {$\vec{F}_{\rm neta}$};
+
+\end{tikzpicture}
+\end{center}
+
+\subsection*{Datos Num\'ericos}
+
+\begin{itemize}
+    \item $K = 9{,}00\times10^9\;\text{N}\cdot\text{m}^2/\text{C}^2$
+    \item $Q = 10\;\text{nC} = 1{,}00\times10^{-8}\;\text{C}$;\quad $R = 0{,}250\;\text{m}$
+    \item $q_0 = Q$;\quad $q_1 = q_2 = 2Q = 2{,}00\times10^{-8}\;\text{C}$;\quad
+          $q_3 = -Q = -1{,}00\times10^{-8}\;\text{C}$
+    \item Posiciones:\\
+          $\vec{r}_0 = R\,\hat{\imath} = (0{,}250;\,0)$ m;\quad
+          $\vec{r}_1 = -R\,\hat{\jmath} = (0;\,-0{,}250)$ m;\quad
+          $\vec{r}_2 = -R\,\hat{\imath} = (-0{,}250;\,0)$ m;\quad
+          $\vec{r}_3 = \dfrac{-R}{\sqrt{2}}\hat{\imath}+\dfrac{R}{\sqrt{2}}\hat{\jmath}
+                     = (-0{,}1768;\,0{,}1768)$ m
+\end{itemize}
+
+\subsection*{An\'alisis Cualitativo}
+
+\begin{itemize}
+    \item $q_1 > 0$, $q_0 > 0$ $\;\to\;$ $\vec{F}_{10}$ \textbf{repulsiva} (hacia arriba-derecha).
+    \item $q_2 > 0$, $q_0 > 0$ $\;\to\;$ $\vec{F}_{20}$ \textbf{repulsiva} (hacia la derecha).
+    \item $q_3 < 0$, $q_0 > 0$ $\;\to\;$ $\vec{F}_{30}$ \textbf{atractiva} (hacia $q_3$,
+          arriba-izquierda).
+\end{itemize}
+
+\subsection*{C\'alculo de $\vec{F}_{10}$}
+
+\begin{align*}
+    \vec{r}_{10} &= \vec{r}_0 - \vec{r}_1 = (0{,}250\,\hat{\imath}+0{,}250\,\hat{\jmath})\;\text{m}\\
+    \|\vec{r}_{10}\| &= 0{,}250\sqrt{2} = 0{,}3536\;\text{m}
+    \quad\Rightarrow\quad
+    \|\vec{r}_{10}\|^3 = (0{,}250\sqrt{2})^3 = 0{,}04419\;\text{m}^3\\
+    \vec{F}_{10} &= \frac{9{,}00\times10^9\times2{,}00\times10^{-8}\times1{,}00\times10^{-8}}{0{,}04419}
+                   \,(0{,}250\,\hat{\imath}+0{,}250\,\hat{\jmath})
+    = 4{,}073\times10^{-5}\,(0{,}250\,\hat{\imath}+0{,}250\,\hat{\jmath})
+\end{align*}
+
+\begin{equation*}
+    \boxed{\vec{F}_{10} = (1{,}018\times10^{-5}\,\hat{\imath}+1{,}018\times10^{-5}\,\hat{\jmath})\;\;[\text{N}]}
+\end{equation*}
+
+\subsection*{C\'alculo de $\vec{F}_{20}$}
+
+\begin{align*}
+    \vec{r}_{20} &= \vec{r}_0 - \vec{r}_2 = 2R\,\hat{\imath} = 0{,}500\,\hat{\imath}\;\text{m}
+    \quad\Rightarrow\quad \|\vec{r}_{20}\|^3 = (0{,}500)^3 = 0{,}1250\;\text{m}^3\\
+    \vec{F}_{20} &= \frac{9{,}00\times10^9\times2{,}00\times10^{-8}\times1{,}00\times10^{-8}}{0{,}1250}
+                   \,(0{,}500\,\hat{\imath})
+    = 1{,}440\times10^{-5}\times0{,}500\,\hat{\imath}
+\end{align*}
+
+\begin{equation*}
+    \boxed{\vec{F}_{20} = 7{,}200\times10^{-6}\,\hat{\imath}\;\;[\text{N}]}
+\end{equation*}
+
+\subsection*{C\'alculo de $\vec{F}_{30}$}
+
+\begin{align*}
+    \vec{r}_{30} &= \vec{r}_0 - \vec{r}_3
+    = \bigl(0{,}250+0{,}1768\bigr)\hat{\imath}+\bigl(0-0{,}1768\bigr)\hat{\jmath}
+    = (0{,}4268\,\hat{\imath}-0{,}1768\,\hat{\jmath})\;\text{m}\\
+    \|\vec{r}_{30}\| &= \sqrt{(0{,}4268)^2+(0{,}1768)^2}
+    = \sqrt{0{,}18216+0{,}03126} = 0{,}4622\;\text{m}
+    \quad\Rightarrow\quad
+    \|\vec{r}_{30}\|^3 = 0{,}09878\;\text{m}^3\\
+    K\,q_3\,q_0 &= 9{,}00\times10^9\times(-1{,}00\times10^{-8})\times(1{,}00\times10^{-8})
+                 = -9{,}00\times10^{-7}\;\text{N\,m}^2\\
+    \vec{F}_{30} &= \frac{-9{,}00\times10^{-7}}{0{,}09878}
+                   \,(0{,}4268\,\hat{\imath}-0{,}1768\,\hat{\jmath})
+    = -9{,}109\times10^{-6}\,(0{,}4268\,\hat{\imath}-0{,}1768\,\hat{\jmath})
+\end{align*}
+
+\begin{equation*}
+    \boxed{\vec{F}_{30} = (-3{,}888\times10^{-6}\,\hat{\imath}+1{,}610\times10^{-6}\,\hat{\jmath})\;\;[\text{N}]}
+\end{equation*}
+
+\subsection*{Fuerza Neta sobre $q_0$}
+
+\begin{align*}
+    F_x &= 1{,}018\times10^{-5}+7{,}200\times10^{-6}+(-3{,}888\times10^{-6}) = 1{,}349\times10^{-5}\;\text{N}\\
+    F_y &= 1{,}018\times10^{-5}+0+1{,}610\times10^{-6} = 1{,}179\times10^{-5}\;\text{N}
+\end{align*}
+
+\begin{equation*}
+    \boxed{\vec{F}_{\rm neta} = (1{,}349\times10^{-5}\,\hat{\imath}+1{,}179\times10^{-5}\,\hat{\jmath})\;\;[\text{N}]}
+\end{equation*}
+
+\begin{equation*}
+    |\vec{F}_{\rm neta}|
+    = \sqrt{(1{,}349)^2+(1{,}179)^2}\times10^{-5}
+    = \sqrt{1{,}820+1{,}390}\times10^{-5}
+    = 1{,}793\times10^{-5}\;\text{N}
+    \qquad
+    \theta = \arctan\!\Bigl(\tfrac{1{,}179}{1{,}349}\Bigr) = 41{,}2^\circ
+\end{equation*}
+
+\subsection*{Interpretaci\'on F\'isica}
+
+\begin{itemize}
+    \item Las fuerzas repulsivas de $q_1$ y $q_2$ empujan $q_0$ principalmente hacia $+\hat{\imath}$
+          (fuera del c\'irculo). La fuerza atractiva de $q_3$ reduce levemente la componente $+\hat{\imath}$
+          e incrementa la $+\hat{\jmath}$, dando un \'angulo resultante de $41{,}2^\circ$.
+    \item El par $(q_1, q_2)$ aporta la mayor magnitud por ser cargas dobles $2Q$.
+\end{itemize}
+
+%################################################################
+%  PROBLEMA 3
+%################################################################
+\newpage
+\section*{\textcolor{ubbblue}{Problema 3 \;--\; Barra Finita y Carga Puntual}}
+
+\subsection*{Enunciado del Problema}
+
+Una barra con densidad lineal de carga uniforme $\lambda = -3{,}6$ [nC/m] se ubica sobre el eje $x$,
+entre $x=5$ [cm] e $x=18$ [cm]. Adem\'as, en el punto $(-2;\,6)$ [cm] se ubica una carga puntual
+$q = -16$ [nC]. Determine:
+\begin{enumerate}[(a)]
+    \item El campo el\'ectrico $\vec{E}$ inducido por la barra en el punto $(-2;\,6)$ [cm].
+    \item La fuerza el\'ectrica $\vec{F}$ sobre la carga $q$.
+\end{enumerate}
+
+\subsection*{Diagrama de la Situaci\'on}
+
+\begin{center}
+\begin{tikzpicture}[x=0.48cm, y=0.48cm,
+    eje/.style={-{Stealth[length=3mm]}, thick},
+    rvec/.style={-{Stealth[length=2.5mm]}, dashed, thick}]
+
+    % Ejes (coordenadas en cm)
+    \draw[eje] (-5,0) -- (22,0) node[right] {$x$ [cm]};
+    \draw[eje] (0,-2) -- (0,9)  node[above] {$y$ [cm]};
+    \node[below right, scale=0.70] at (0,0) {$O$};
+
+    % Marcas eje x
+    \foreach \xv in {-4,-2,2,4,6,8,10,12,14,16,18,20} {
+        \draw (\xv,0.22) -- (\xv,-0.22) node[below, scale=0.55] {\xv};
+    }
+    % Marcas eje y
+    \foreach \yv in {2,4,6,8} {
+        \draw (0.22,\yv) -- (-0.22,\yv) node[left, scale=0.55] {\yv};
+    }
+
+    % Barra sobre eje x de x=5 a x=18
+    \fill[lineacarga!30] (5,-0.55) rectangle (18,0.55);
+    \draw[lineacarga, line width=2pt] (5,0) -- (18,0);
+    \node[lineacarga, above, scale=0.78, font=\bfseries] at (11.5,0.65)
+        {$\lambda = -3{,}6\;\text{nC/m}$};
+    \draw[lineacarga, thick] (5,-0.65) -- (5,0.65)
+        node[above, scale=0.64, lineacarga] {$5$};
+    \draw[lineacarga, thick] (18,-0.65) -- (18,0.65)
+        node[above, scale=0.64, lineacarga] {$18$};
+
+    % Elemento dq en x=11
+    \fill[lineacarga] (11,0) circle (3.5pt);
+    \node[lineacarga, below, scale=0.68] at (11,-0.80) {$dq = \lambda\,dx$};
+
+    % Carga puntual q en (-2, 6)
+    \fill[cargazul] (-2,6) circle (4.5pt);
+    \node[cargazul, above left, scale=0.82, font=\bfseries] at (-2.3,6.3)
+        {$q = -16\;\text{nC}$};
+    \node[cargazul, left, scale=0.68] at (-2.5,5.4) {$(-2;\,6)\;\text{cm}$};
+
+    % Vector r desde elemento (11,0) al punto (-2,6)
+    \draw[rvec, campoverde] (11,0) -- (-2,6)
+        node[midway, above left, scale=0.70, campoverde] {$\vec{r}_P - \vec{r}_q$};
+
+    % Vector posicion del elemento
+    \draw[rvec, cargazul!60] (0,0) -- (10.7,0)
+        node[midway, below, scale=0.66, cargazul!70] {$\vec{r}_q = x\,\hat{\imath}$};
+
+    % Campo E en el punto (-2,6): apunta hacia la barra (+x, -y)
+    % Magnitud proporcional: Ex=196.3, Ey=-107.2 -> ratio Ey/Ex = 0.546; escala 3 cm
+    \draw[-{Stealth[length=3.5mm]}, campoverde, very thick]
+        (-2,6) -- +(3.00,-1.64)
+        node[right, scale=0.82, campoverde, font=\bfseries] {$\vec{E}_{\rm barra}$};
+
+    % Indicacion de la distancia perpendicular a = 6 cm
+    \draw[<->, gray, thin] (-2.8,0) -- (-2.8,6)
+        node[midway, left, scale=0.62, gray] {$a=6$ cm};
+
+\end{tikzpicture}
+\end{center}
+
+\subsection*{Datos Num\'ericos}
+
+\begin{itemize}
+    \item $K = 9{,}00\times10^9\;\text{N}\cdot\text{m}^2/\text{C}^2$
+    \item $\lambda = -3{,}6\times10^{-9}\;\text{C/m}$\quad$\Rightarrow$\quad
+          $K\lambda = 9{,}00\times10^9\times(-3{,}6\times10^{-9}) = -32{,}4\;\text{N/C}$
+    \item Barra: $x_1 = 0{,}05\;\text{m}$,\; $x_2 = 0{,}18\;\text{m}$, sobre el eje $x$
+    \item Punto de campo: $P = (-0{,}02;\;0{,}06)\;\text{m}$
+    \item Distancia perpendicular: $a = 0{,}06\;\text{m}$,\; $a^2 = 3{,}600\times10^{-3}\;\text{m}^2$
+    \item $q = -16\times10^{-9}\;\text{C}$
+\end{itemize}
+
+\subsection*{An\'alisis Cualitativo}
+
+La barra tiene carga \textbf{negativa} ($\lambda < 0$). El punto $P$ est\'a a la izquierda
+($x_P=-2$ cm) y arriba ($y_P=6$ cm) respecto a la barra (eje $x$, $x\in[5,18]$ cm).
+El campo de una distribuci\'on negativa apunta \textbf{hacia} ella:
+\begin{itemize}
+    \item Componente $+\hat{\imath}$: la barra est\'a a la derecha de $P$.
+    \item Componente $-\hat{\jmath}$: la barra est\'a debajo de $P$.
+\end{itemize}
+La fuerza sobre $q < 0$ ser\'a opuesta al campo: $-\hat{\imath}$, $+\hat{\jmath}$
+(repulsi\'on entre $q$ y $\lambda$, ambas negativas).
+
+\subsection*{Planteamiento de la Integral}
+
+Elemento $dq = \lambda\,dx$ en $\vec{r}_q = x\,\hat{\imath}$. Vector del elemento al campo:
+\begin{equation*}
+    \vec{r}_P - \vec{r}_q = (-0{,}02-x)\,\hat{\imath} + 0{,}06\,\hat{\jmath}
+\end{equation*}
+
+\textbf{Sustituci\'on:} $u = x + 0{,}02$ (distancia en $x$ de $P$ al elemento):
+\begin{equation*}
+    x = 0{,}05\;\text{m}\;\to\; u = 0{,}07\;\text{m}
+    \qquad
+    x = 0{,}18\;\text{m}\;\to\; u = 0{,}20\;\text{m}
+\end{equation*}
+
+Con $a = 0{,}06$ m:
+\begin{equation*}
+    \vec{E}_{\rm barra} = K\lambda\int_{0{,}07}^{0{,}20}
+    \frac{-u\,\hat{\imath}+a\,\hat{\jmath}}{(u^2+a^2)^{3/2}}\,du
+\end{equation*}
+
+\subsection*{Antiderivadas Est\'andar}
+
+\begin{equation*}
+    \int\frac{u\,du}{(u^2+a^2)^{3/2}} = \frac{-1}{\sqrt{u^2+a^2}}+C
+    \qquad\qquad
+    \int\frac{du}{(u^2+a^2)^{3/2}} = \frac{u}{a^2\sqrt{u^2+a^2}}+C
+\end{equation*}
+
+\subsection*{Componente $\hat{\imath}$}
+
+\begin{equation*}
+    E_x = K\lambda\times(-1)\left[\frac{-1}{\sqrt{u^2+a^2}}\right]_{0{,}07}^{0{,}20}
+    = K\lambda\times(-1)\left(-\frac{1}{\sqrt{0{,}0436}}+\frac{1}{\sqrt{0{,}0085}}\right)
+\end{equation*}
+
+\begin{equation*}
+    \frac{1}{\sqrt{0{,}0436}} = \frac{1}{0{,}2088} = 4{,}789\;\text{m}^{-1}
+    \qquad
+    \frac{1}{\sqrt{0{,}0085}} = \frac{1}{0{,}09220} = 10{,}847\;\text{m}^{-1}
+\end{equation*}
+
+\begin{equation*}
+    E_x = (-32{,}4)\times(-1)\times(-4{,}789+10{,}847)
+    = (-32{,}4)\times(-6{,}058) = \mathbf{196{,}3}\;\text{N/C}
+\end{equation*}
+
+\subsection*{Componente $\hat{\jmath}$}
+
+\begin{equation*}
+    E_y = K\lambda\times a\times\frac{1}{a^2}\left[\frac{u}{\sqrt{u^2+a^2}}\right]_{0{,}07}^{0{,}20}
+    = K\lambda\times\frac{1}{a}\left[\frac{u}{\sqrt{u^2+a^2}}\right]_{0{,}07}^{0{,}20}
+\end{equation*}
+
+\begin{equation*}
+    \frac{u}{\sqrt{u^2+a^2}}\Bigg|_{u=0{,}20} = \frac{0{,}20}{\sqrt{0{,}0436}} = \frac{0{,}20}{0{,}2088} = 0{,}9578
+    \qquad
+    \frac{u}{\sqrt{u^2+a^2}}\Bigg|_{u=0{,}07} = \frac{0{,}07}{\sqrt{0{,}0085}} = \frac{0{,}07}{0{,}09220} = 0{,}7593
+\end{equation*}
+
+\begin{equation*}
+    E_y = (-32{,}4)\times\frac{1}{0{,}06}\times(0{,}9578-0{,}7593)
+    = (-32{,}4)\times16{,}667\times0{,}1985 = -107{,}2\;\text{N/C}
+\end{equation*}
+
+\subsection*{Campo de la Barra en $P$}
+
+\begin{equation*}
+    \boxed{\vec{E}_{\rm barra} = (196{,}3\,\hat{\imath}-107{,}2\,\hat{\jmath})\;\;[\text{N/C}]}
+\end{equation*}
+
+Consistente con el an\'alisis cualitativo: $E_x > 0$ (hacia la derecha, donde est\'a la barra)
+y $E_y < 0$ (hacia abajo, donde est\'a la barra).
+
+\subsection*{Fuerza El\'ectrica sobre $q$}
+
+\begin{equation*}
+    \vec{F} = q\,\vec{E}_{\rm barra}
+    = (-16\times10^{-9})\,(196{,}3\,\hat{\imath}-107{,}2\,\hat{\jmath})
+\end{equation*}
+
+\begin{equation*}
+    \boxed{\vec{F} = (-3{,}141\,\hat{\imath}+1{,}715\,\hat{\jmath})\;\;\mu\text{N}}
+\end{equation*}
+
+\begin{equation*}
+    |\vec{F}| = \sqrt{(3{,}141)^2+(1{,}715)^2}\;\mu\text{N}
+    = \sqrt{9{,}866+2{,}941}\;\mu\text{N} = 3{,}579\;\mu\text{N}
+    \qquad
+    \theta = 180^\circ - \arctan\!\Bigl(\tfrac{1{,}715}{3{,}141}\Bigr) = 151{,}4^\circ
+\end{equation*}
+
+\subsection*{Interpretaci\'on F\'isica}
+
+\begin{itemize}
+    \item El campo $\vec{E}_{\rm barra}$ apunta \textbf{hacia} la barra ($+\hat{\imath}$, $-\hat{\jmath}$),
+          comportamiento t\'ipico de una distribuci\'on negativa que atrae las l\'ineas de campo.
+    \item La fuerza sobre $q < 0$ es contraria a $\vec{E}$: apunta \textbf{alejándose} de la barra
+          ($-\hat{\imath}$, $+\hat{\jmath}$). Coherente con la repulsi\'on entre $q$ y $\lambda$,
+          ambas negativas.
+    \item La componente $E_x$ supera a $|E_y|$ porque la barra se extiende a lo largo de $x$,
+          acumulando contribuciones en esa direcci\'on.
+\end{itemize}
+
+%################################################################
+%  PROBLEMA 4
+%################################################################
+\newpage
+\section*{\textcolor{ubbblue}{Problema 4 \;--\; Semianillo Cargado}}
+
+\subsection*{Enunciado del Problema}
+
+Considere un \emph{semianillo} (la mitad de una circunferencia) con densidad de carga lineal
+uniforme $\lambda = 18{,}0$ [$\mu$C/m] y radio $R = 30{,}0$ [cm], ubicado en el plano $xy$.
+\begin{itemize}
+    \item Determine el campo el\'ectrico $\vec{E}$ en el eje del semianillo (eje~$z$), a
+          $z = 21{,}0$ [cm] de su centro.
+    \item Si en ese punto se ubica $q = 22{,}0$ [$\mu$C], determine la fuerza $\vec{F}$.
+\end{itemize}
+
+\subsection*{Diagrama de la Situaci\'on}
+
+\begin{center}
+\begin{tikzpicture}[x=4.0cm, y=4.0cm,
+    eje/.style={-{Stealth[length=3mm]}, thick},
+    rvec/.style={-{Stealth[length=2.8mm]}, dashed, thick}]
+
+    % Ejes (1 unidad = 0,10 m)
+    \draw[eje] (-0.92,0) -- (1.05,0) node[right] {$x$};
+    \draw[eje] (0,-0.10) -- (0,0.22) node[right] {$y$};
+    \draw[eje] (0,-1.70) -- (0,2.30) node[above] {$z$ [m]};
+    \node[below right, scale=0.70] at (0,0) {$O$};
+
+    % ---- SEMIANILLO: mitad SUPERIOR del plano xy (cuadrantes I y II, y>0) ----
+    \draw[lineacarga, line width=4pt]
+        (0.70,0) arc[start angle=0, end angle=180,
+                     x radius=0.70, y radius=0.18];
+    % Diametro (linea discontinua)
+    \draw[gray, dashed, thin] (-0.70,0) -- (0.70,0);
+    % Etiqueta lambda
+    \node[lineacarga, above, scale=0.78, font=\bfseries] at (0,0.24)
+        {$\lambda = 18{,}0\;\mu\text{C/m}$};
+    % Radio R
+    \draw[<->, gray, thin] (0,-0.05) -- (0.70,-0.05)
+        node[midway, below, scale=0.64, gray] {$R = 0{,}30\;\text{m}$};
+
+    % Elemento dq en theta = 60 grados (cuadrante I)
+    % (x,y) en elipse: (0.70*cos60, 0.18*sin60) = (0.35, 0.156)
+    \fill[lineacarga] (0.35,0.156) circle (2.8pt);
+    \node[lineacarga, right, scale=0.70] at (0.37,0.175)
+        {$dq = \lambda R\,d\theta$};
+
+    % Vector r_q
+    \draw[rvec, cargazul] (0,0) -- (0.33,0.146)
+        node[midway, right, scale=0.70, cargazul] {$\vec{r}_q$};
+
+    % Vector r_P (sobre eje z)
+    \draw[rvec, puntoP] (0,0) -- (0,2.07)
+        node[pos=0.45, right, scale=0.70, puntoP] {$\vec{r}_P = z\,\hat{k}$};
+
+    % Marca en eje z: z = 0.21 m -> 2.10 unidades TikZ
+    \draw (0.03,2.10) -- (-0.03,2.10) node[left, scale=0.64] {$0{,}21$};
+
+    % Cota z
+    \draw[<->, gray, thin] (0.09,0) -- (0.09,2.10)
+        node[midway, right, scale=0.62, gray] {$z = 0{,}21\;\text{m}$};
+
+    % Punto P
+    \fill[puntoP] (0,2.10) circle (3.5pt);
+    \node[puntoP, right, scale=0.88, font=\bfseries] at (0.06,2.16)
+        {$P\;(q = 22{,}0\;\mu\text{C})$};
+
+    % Vector r_P - r_q (del elemento a P)
+    \draw[-{Stealth[length=3.5mm]}, campoverde, very thick]
+        (0.35,0.156) -- (0,2.10)
+        node[midway, right, scale=0.76, campoverde, xshift=4pt]
+        {$\vec{r}_P - \vec{r}_q$};
+
+    % Vectores de campo en P
+    % E_z (componente axial, hacia arriba), escala 0.50
+    \draw[-{Stealth[length=3.5mm]}, campoverde, very thick]
+        (0,2.10) -- (0,2.60)
+        node[right, scale=0.80, campoverde, font=\bfseries] {$\vec{E}_z$};
+    % E_y (componente transversal, en -y): arco en y>0 -> campo apunta hacia -y
+    \draw[-{Stealth[length=3.5mm]}, cargarojo, very thick]
+        (0,2.10) -- (0.45,1.90)
+        node[right, scale=0.80, cargarojo, font=\bfseries] {$\vec{E}_y$};
+    % E_total (diagonal)
+    \draw[-{Stealth[length=4mm]}, ubbblue, very thick, line width=1.5pt]
+        (0,2.10) -- (0.42,2.57)
+        node[right, scale=0.85, ubbblue, font=\bfseries] {$\vec{E}_P$};
+
+\end{tikzpicture}
+\end{center}
+
+\subsection*{Datos Num\'ericos}
+
+\begin{itemize}
+    \item $K = 9{,}00\times10^9\;\text{N}\cdot\text{m}^2/\text{C}^2$
+    \item $\lambda = 18{,}0\times10^{-6}\;\text{C/m}$\quad$\Rightarrow$\quad
+          $K\lambda = 9{,}00\times10^9\times18{,}0\times10^{-6} = 1{,}620\times10^5\;\text{N/C\,m}$
+    \item $R = 0{,}300\;\text{m}$;\quad $R^2 = 0{,}0900\;\text{m}^2$
+    \item $z = 0{,}210\;\text{m}$;\quad $z^2 = 0{,}0441\;\text{m}^2$
+    \item $R^2+z^2 = 0{,}1341\;\text{m}^2$
+    \item $(R^2+z^2)^{3/2} = 0{,}1341\times\sqrt{0{,}1341}
+          = 0{,}1341\times0{,}3662 = 4{,}911\times10^{-2}\;\text{m}^3$
+    \item $q = 22{,}0\times10^{-6}\;\text{C}$
+\end{itemize}
+
+\subsection*{Parametrizaci\'on del Semianillo}
+
+Se toma la \textbf{mitad superior} del c\'irculo de radio $R$ en el plano $xy$
+(cuadrantes I y II, $y\geq0$):
+\begin{equation*}
+    \vec{r}_q = R\cos\theta\,\hat{\imath}+R\,\text{sen}\,\theta\,\hat{\jmath}
+    \qquad \theta\in[0,\,\pi]
+\end{equation*}
+
+El punto de campo: $\vec{r}_P = z\,\hat{k}$. Vector del elemento al campo:
+\begin{equation*}
+    \vec{r}_P-\vec{r}_q = -R\cos\theta\,\hat{\imath}-R\,\text{sen}\,\theta\,\hat{\jmath}+z\,\hat{k}
+    \quad (\text{sen}\,\theta \geq 0\;\text{para}\;\theta\in[0,\pi])
+    \qquad
+    \|\vec{r}_P-\vec{r}_q\|^3 = (R^2+z^2)^{3/2} = \text{cte.}
+\end{equation*}
+
+Campo diferencial ($dq = \lambda R\,d\theta$):
+\begin{equation*}
+    d\vec{E}
+    = \frac{K\lambda R\,d\theta}{(R^2+z^2)^{3/2}}
+    \Bigl[-R\cos\theta\,\hat{\imath}-R\,\text{sen}\,\theta\,\hat{\jmath}+z\,\hat{k}\Bigr]
+\end{equation*}
+
+\subsection*{An\'alisis de Simetr\'ia -- Componente $\hat{\imath}$}
+
+\begin{equation*}
+    E_x = \frac{K\lambda R(-R)}{(R^2+z^2)^{3/2}}\int_0^{\pi}\cos\theta\,d\theta
+    = \frac{K\lambda R(-R)}{(R^2+z^2)^{3/2}}\,[\text{sen}\,\theta]_0^{\pi}
+    = \frac{K\lambda R(-R)}{(R^2+z^2)^{3/2}}\,(0-0) = \mathbf{0}
+\end{equation*}
+
+La mitad izquierda del semianillo ($\theta\in[\pi/2,\pi]$) y la mitad derecha
+($\theta\in[0,\pi/2]$) generan contribuciones en $\hat{\imath}$ iguales y opuestas.
+
+\subsection*{Integraci\'on -- Componente $\hat{\jmath}$}
+
+\begin{equation*}
+    \int_0^{\pi}\text{sen}\,\theta\,d\theta
+    = [-\cos\theta]_0^{\pi} = (-\cos\pi+\cos 0) = 1+1 = 2
+\end{equation*}
+
+\begin{equation*}
+    E_y = \frac{K\lambda R(-R)}{(R^2+z^2)^{3/2}}\,(+2)
+    = \frac{-2K\lambda R^2}{(R^2+z^2)^{3/2}}
+\end{equation*}
+
+\textbf{Nota clave:} en el anillo completo, $\int_0^{2\pi}\text{sen}\,\theta\,d\theta = 0$ y esta
+componente desaparece. El semianillo \textbf{rompe esa simetr\'ia} y genera $E_y\neq0$.
+El signo negativo indica que el campo apunta en $-\hat{\jmath}$: el arco est\'a en $y>0$
+y el campo se aleja del arco (hacia $-\hat{\jmath}$).
+
+\begin{equation*}
+    E_y = \frac{-2\times1{,}620\times10^5\times(0{,}300)^2}{4{,}911\times10^{-2}}
+    = \frac{-2\times1{,}620\times10^5\times0{,}0900}{4{,}911\times10^{-2}}
+    = \frac{-2{,}916\times10^4}{4{,}911\times10^{-2}}
+    = -5{,}938\times10^5\;\text{N/C}
+\end{equation*}
+
+\subsection*{Integraci\'on -- Componente $\hat{k}$}
+
+\begin{equation*}
+    \int_0^{\pi}d\theta = \pi
+    \qquad\Rightarrow\qquad
+    E_z = \frac{K\lambda R\,z}{(R^2+z^2)^{3/2}}\,\pi
+    = \frac{K\,(\lambda\pi R)\,z}{(R^2+z^2)^{3/2}}
+\end{equation*}
+
+La cantidad $\lambda\pi R = Q_{\rm mitad}$ es la carga total del semianillo. La expresi\'on es
+id\'entica a la del anillo completo con $Q\to Q_{\rm mitad}$.
+
+\begin{equation*}
+    E_z = \frac{1{,}620\times10^5\times\pi\times0{,}300\times0{,}210}{4{,}911\times10^{-2}}
+    = \frac{1{,}620\times10^5\times0{,}19792}{4{,}911\times10^{-2}}
+    = \frac{3{,}206\times10^4}{4{,}911\times10^{-2}}
+    = 6{,}529\times10^5\;\text{N/C}
+\end{equation*}
+
+\subsection*{Campo El\'ectrico en $P$}
+
+\begin{equation*}
+    \boxed{\vec{E}_P = -5{,}938\times10^5\,\hat{\jmath}+6{,}529\times10^5\,\hat{k}\;\;[\text{N/C}]}
+\end{equation*}
+
+\begin{align*}
+    |\vec{E}_P| = \sqrt{(5{,}938)^2+(6{,}529)^2}\times10^5
+    = \sqrt{35{,}26+42{,}63}\times10^5
+    = \sqrt{77{,}89}\times10^5
+    = 8{,}826\times10^5\;\text{N/C}
+    \quad
+\end{align*}
+
+\begin{align*}
+\alpha = \arctan\!\Bigl(\tfrac{|E_y|}{E_z}\Bigr) 
+= \arctan\!\Bigl(\tfrac{5{,}938}{6{,}529}\Bigr) 
+= 42{,}3^\circ\;\text{desde }\hat{k}\text{ hacia }{-\hat{\jmath}}
+\end{align*}
+
+\subsection*{Fuerza El\'ectrica sobre $q$}
+
+\begin{equation*}
+    \vec{F} = q\,\vec{E}_P
+    = 22{,}0\times10^{-6}\times(-5{,}938\times10^5\,\hat{\jmath}+6{,}529\times10^5\,\hat{k})
+\end{equation*}
+
+\begin{equation*}
+    \boxed{\vec{F} = -13{,}06\,\hat{\jmath}+14{,}37\,\hat{k}\;\;[\text{N}]}
+\end{equation*}
+
+\begin{equation*}
+    |\vec{F}| = \sqrt{(13{,}06)^2+(14{,}37)^2} = \sqrt{170{,}6+206{,}5} = 19{,}42\;\text{N}
+\end{equation*}
+
+\subsection*{Interpretaci\'on F\'isica}
+
+\begin{itemize}
+    \item \textbf{Componente $\hat{k}$}: presente en todo arco cargado. Apunta alej\'andose del
+          semianillo positivo (en $+\hat{k}$). Su expresi\'on es equivalente a la del anillo
+          completo con $Q_{\rm mitad} = \lambda\pi R = 1{,}696\times10^{-5}$ C.
+    \item \textbf{Componente $-\hat{\jmath}$}: exclusiva del semianillo (en el anillo completo se
+          cancela por simetr\'ia). Como el arco est\'a en $y\geq0$ (cuadrantes I y II), el campo
+          apunta \textbf{hacia} $-\hat{\jmath}$, alej\'andose del arco positivo en la
+          direcci\'on transversal.
+    \item Las dos componentes son de magnitud comparable ($|E_y| \approx E_z$), resultando en un
+          \'angulo de $42{,}3^\circ$ desde $\hat{k}$ hacia $-\hat{\jmath}$.
+    \item La fuerza sobre $q > 0$ apunta en la misma direcci\'on que $\vec{E}_P$:
+          $-\hat{\jmath}$ (alejándose del arco lateralmente) y $+\hat{k}$ (alejándose axialmente).
+\end{itemize}
+
+\end{document}

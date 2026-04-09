@@ -1,0 +1,330 @@
+\documentclass[12pt,letterpaper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[spanish,es-noshorthands]{babel}
+\usepackage{amsmath,amssymb}
+\usepackage{graphicx}
+\usepackage{xcolor}
+\usepackage{tikz}
+\usetikzlibrary{calc,arrows.meta,decorations.markings,patterns}
+\usepackage[top=2.5cm, bottom=3cm, left=2cm, right=2cm, footskip=40pt]{geometry}
+\usepackage{fancyhdr}
+\usepackage{lastpage}
+
+\definecolor{ubbblue}{RGB}{0,51,102}
+\definecolor{cargazul}{RGB}{50,50,220}
+\definecolor{cargarojo}{RGB}{220,50,50}
+\definecolor{campoverde}{RGB}{30,140,30}
+\definecolor{puntoP}{RGB}{180,0,180}
+\definecolor{lineacarga}{RGB}{200,100,0}
+
+\pagestyle{fancy}
+\fancyhf{}
+\renewcommand{\headrulewidth}{0pt}
+\renewcommand{\footrulewidth}{0.4pt}
+\fancyfoot[L]{\raisebox{-0.5cm}{\includegraphics[height=1.2cm]{logo ubb.png}}}
+\fancyfoot[C]{%
+    \begin{minipage}[b]{8cm}\centering
+        \footnotesize\textcolor{ubbblue}{\textbf{Dr. Arturo Fern\'andez P\'erez}}\\
+        \scriptsize Departamento de F\'isica -- Universidad del B\'io-B\'io\\
+        \scriptsize\textit{Electro\_Asistente\_AI-UBB}\\
+        \tiny P\'agina \thepage\ de \pageref{LastPage}
+    \end{minipage}}
+\fancyfoot[R]{\raisebox{-0.5cm}{\includegraphics[height=1.2cm]{logo dfis.png}}}
+\fancypagestyle{plain}{%
+    \fancyhf{}
+    \renewcommand{\headrulewidth}{0pt}
+    \renewcommand{\footrulewidth}{0.4pt}
+    \fancyfoot[L]{\raisebox{-0.5cm}{\includegraphics[height=1.2cm]{logo ubb.png}}}
+    \fancyfoot[C]{%
+        \begin{minipage}[b]{8cm}\centering
+            \footnotesize\textcolor{ubbblue}{\textbf{Dr. Arturo Fern\'andez P\'erez}}\\
+            \scriptsize Departamento de F\'isica -- Universidad del B\'io-B\'io\\
+            \scriptsize\textit{Electro\_Asistente\_AI-UBB}\\
+            \tiny P\'agina \thepage\ de \pageref{LastPage}
+        \end{minipage}}
+    \fancyfoot[R]{\raisebox{-0.5cm}{\includegraphics[height=1.2cm]{logo dfis.png}}}}
+
+\begin{document}
+
+%========================================
+% ENCABEZADO INSTITUCIONAL
+%========================================
+\begin{center}
+    \includegraphics[height=2cm]{logo ubb.png}\\[0.3cm]
+    {\large\textcolor{ubbblue}{\textbf{UNIVERSIDAD DEL B\'IO-B\'IO}}}\\[0.1cm]
+    {\normalsize Facultad de Ciencias -- Departamento de F\'isica}
+\end{center}
+
+\vspace{0.3cm}
+\hrule height 1pt
+\vspace{0.5cm}
+
+{\centering\Large\textbf{Soluci\'on: Campo El\'ectrico de un Anillo Cargado}\par}
+{\centering\normalsize Gu\'ia N$^\circ$4 -- Campo El\'ectrico de Distribuciones Continuas, Problema 1\par}
+
+\vspace{0.5cm}
+
+%========================================
+% ENUNCIADO
+%========================================
+\section*{Enunciado del Problema}
+
+Un conductor en forma de anillo de radio $R = 7$ [cm] tiene una carga total $Q = 4{,}5\times10^{-4}$ [C] distribuida uniformemente en toda su circunferencia. Determinar la fuerza el\'ectrica ejercida sobre una carga puntual $q = -5\;[\mu\text{C}]$ situada sobre el eje del anillo en el punto $P$, a una distancia $z = 15$ [cm] del centro del anillo.
+
+%========================================
+% DIAGRAMA DE SITUACION
+%========================================
+\section*{Diagrama de la Situaci\'on}
+
+\begin{center}
+\begin{tikzpicture}[x=4.0cm, y=4.0cm,
+    eje/.style={-{Stealth[length=3mm]}, thick},
+    rvec/.style={-{Stealth[length=3mm]}, dashed, thick}]
+
+    % Ejes (1 unidad = 0,10 m)
+    \draw[eje] (-0.90,0) -- (1.10,0) node[right] {$x$};
+    \draw[eje] (0,-0.15) -- (0,2.00) node[above] {$z$ [m]};
+    \node[below right, scale=0.75] at (0,0) {$O$};
+
+    % Anillo representado como elipse (perspectiva del plano XY)
+    \draw[lineacarga, line width=4pt] (0,0) ellipse (0.70 and 0.20);
+    % Etiqueta lambda a la derecha del anillo, bajo el semieje
+    \node[lineacarga, right, scale=0.78, font=\bfseries] at (0.72,-0.14)
+        {$\lambda = Q/(2\pi R)$};
+
+    % Radio R (lado izquierdo del anillo, opuesto a r_q)
+    \draw[<->, gray, thin] (0,0.06) -- (-0.70,0.06)
+        node[midway, above, scale=0.65, gray] {$R = 0{,}07$ m};
+
+    % Marca en eje z: z = 0.15 m (TikZ: 1.5)
+    \draw (0.02,1.50) -- (-0.02,1.50) node[left, scale=0.65] {$0{,}15$};
+
+    % Punto P sobre el eje z
+    \fill[puntoP] (0,1.50) circle (3pt);
+    \node[puntoP, right, scale=0.90, font=\bfseries] at (0.04,1.54)
+        {$P\;(q = -5\;\mu\text{C})$};
+
+    % Cota z
+    \draw[<->, gray, thin] (0.09,0) -- (0.09,1.50)
+        node[midway, right, scale=0.65, gray] {$z = 0{,}15$ m};
+
+    % Elemento dq en theta=40 grados
+    % Coordenadas: (0.70*cos40, 0.20*sin40) = (0.536, 0.129)
+    \fill[lineacarga] (0.536,0.129) circle (2.8pt);
+    \node[lineacarga, above right, scale=0.75] at (0.548,0.140)
+        {$dq = \lambda\,R\,d\theta$};
+
+    % Arco del angulo theta en el plano del anillo (perspectiva)
+    % y-radius = 0.22 * (0.20/0.70) = 0.063, para mantener la misma proporcion que la elipse
+    \draw[gray, thin, -{Stealth[length=2mm]}]
+        (0.22,0) arc[start angle=0, end angle=40, x radius=0.22, y radius=0.063];
+    \node[gray, scale=0.80] at (0.280,0.033) {$\theta$};
+
+    % Vector r_q (origen -> dq en theta=40)
+    \draw[rvec, cargazul] (0,0) -- (0.514,0.124)
+        node[midway, above left, scale=0.80, cargazul] {$\vec{r}_{q}$};
+
+    % Expresion completa de r_q debajo del anillo (espacio libre)
+    \node[cargazul, scale=0.70] at (0.22,-0.32)
+        {$\vec{r}_{q} = R\cos\theta\,\hat{\imath}+R\,\text{sen}\,\theta\,\hat{\jmath}$};
+
+    % Vector r_P (origen -> P, a lo largo del eje z)
+    \draw[rvec, puntoP] (0,0) -- (0,1.48)
+        node[pos=0.45, left, scale=0.75, puntoP] {$\vec{r}_{P} = z\,\hat{k}$};
+
+    % Vector r_P - r_q (dq -> P), etiqueta desplazada a la izquierda
+    \draw[-{Stealth[length=3.5mm]}, campoverde, very thick]
+        (0.536,0.129) -- (0,1.50)
+        node[midway, left, scale=0.80, campoverde, xshift=-4pt]
+        {$\vec{r}_{P}-\vec{r}_{q}$};
+
+\end{tikzpicture}
+\end{center}
+
+%========================================
+% DATOS NUMERICOS
+%========================================
+\section*{Datos Num\'ericos}
+
+\begin{itemize}
+    \item $K = 9{,}00\times10^9\;\text{N}\cdot\text{m}^2/\text{C}^2$
+    \item $R = 7{,}00\;\text{cm} = 0{,}0700\;\text{m}$ \quad $\Rightarrow$ \quad $R^2 = 4{,}90\times10^{-3}\;\text{m}^2$
+    \item $Q = 4{,}50\times10^{-4}\;\text{C}$
+    \item $z = 15{,}0\;\text{cm} = 0{,}150\;\text{m}$ \quad $\Rightarrow$ \quad $z^2 = 2{,}25\times10^{-2}\;\text{m}^2$
+    \item $q = -5{,}00\;\mu\text{C} = -5{,}00\times10^{-6}\;\text{C}$
+    \item $R^2 + z^2 = 0{,}0049 + 0{,}0225 = 0{,}0274\;\text{m}^2$
+\end{itemize}
+
+%========================================
+% ANALISIS CUALITATIVO
+%========================================
+\section*{An\'alisis Cualitativo}
+
+El anillo tiene carga positiva distribuida uniformemente. El punto $P$ est\'a sobre el \textbf{eje de simetr\'ia} del anillo (eje $z$). Por simetr\'ia, las componentes $\hat{\imath}$ y $\hat{\jmath}$ del campo se cancelan al integrar en $\theta \in [0, 2\pi]$: cada elemento $dq$ contribuye con una componente radial que se anula con el elemento opuesto. Solo sobrevive la componente axial $\hat{k}$.
+
+Dado que $Q > 0$ y $z > 0$, el campo en $P$ apunta en $+\hat{k}$. La fuerza sobre $q < 0$ apuntará en $-\hat{k}$ (la carga negativa es atra\'ida hacia el anillo).
+
+%========================================
+% PASO 1: DENSIDAD LINEAL
+%========================================
+\section*{Paso 1: Densidad Lineal de Carga $\lambda$}
+
+La carga est\'a distribuida uniformemente en la circunferencia. El elemento de carga es $dq = \lambda\,R\,d\theta$, y la carga total:
+\begin{equation*}
+    Q = \int_0^{2\pi} \lambda\,R\,d\theta = \lambda\,R\,2\pi
+    \quad\Rightarrow\quad
+    \lambda = \frac{Q}{2\pi R}
+    = \frac{4{,}50\times10^{-4}}{2\pi\times0{,}0700}
+    = 1{,}023\times10^{-3}\;\text{C/m}
+\end{equation*}
+
+%========================================
+% PASO 2: VECTORES DE POSICION
+%========================================
+\section*{Paso 2: Vectores de Posici\'on}
+
+El elemento $dq$ est\'a ubicado en el anillo a \'angulo $\theta$:
+\begin{equation*}
+    \vec{r}_{q} = R\cos\theta\,\hat{\imath} + R\,\text{sen}\,\theta\,\hat{\jmath}
+\end{equation*}
+
+El punto de campo $P$ est\'a sobre el eje $z$:
+\begin{equation*}
+    \vec{r}_{P} = z\,\hat{k}
+\end{equation*}
+
+El vector desplazamiento de la fuente al campo:
+\begin{equation*}
+    \vec{r}_{P} - \vec{r}_{q}
+    = -R\cos\theta\,\hat{\imath} - R\,\text{sen}\,\theta\,\hat{\jmath} + z\,\hat{k}
+\end{equation*}
+
+Su norma al cubo (constante para todo $\theta$, por simetr\'ia del anillo):
+\begin{equation*}
+    \|\vec{r}_{P} - \vec{r}_{q}\|^3
+    = \bigl(R^2\cos^2\theta + R^2\,\text{sen}^2\theta + z^2\bigr)^{3/2}
+    = \bigl(R^2 + z^2\bigr)^{3/2}
+\end{equation*}
+
+%========================================
+% PASO 3: CAMPO DIFERENCIAL
+%========================================
+\section*{Paso 3: Contribuci\'on Diferencial $d\vec{E}$}
+
+Sustituyendo $dq = \lambda R\,d\theta$:
+\begin{equation*}
+    d\vec{E} = K\,\frac{\lambda R\,d\theta}{(R^2+z^2)^{3/2}}
+    \Bigl[-R\cos\theta\,\hat{\imath} - R\,\text{sen}\,\theta\,\hat{\jmath} + z\,\hat{k}\Bigr]
+\end{equation*}
+
+%========================================
+% PASO 4: INTEGRACION
+%========================================
+\section*{Paso 4: Integraci\'on en $\theta \in [0,\,2\pi]$}
+
+\begin{equation*}
+    \vec{E}
+    = \frac{K\lambda R}{(R^2+z^2)^{3/2}}
+    \left[
+        -R\underbrace{\int_0^{2\pi}\cos\theta\,d\theta}_{=\,0}\,\hat{\imath}
+        -R\underbrace{\int_0^{2\pi}\text{sen}\,\theta\,d\theta}_{=\,0}\,\hat{\jmath}
+        +z\underbrace{\int_0^{2\pi}d\theta}_{=\,2\pi}\,\hat{k}
+    \right]
+\end{equation*}
+
+Las integrales de $\cos\theta$ y $\text{sen}\,\theta$ en un per\'iodo completo son nulas. El resultado es:
+\begin{equation*}
+    \vec{E} = \frac{K\lambda R\,z\,2\pi}{(R^2+z^2)^{3/2}}\,\hat{k}
+    = \frac{K\,Q\,z}{(R^2+z^2)^{3/2}}\,\hat{k}
+\end{equation*}
+
+donde se us\'o $\lambda\cdot R\cdot 2\pi = Q$.
+
+%========================================
+% PASO 5: RESULTADO NUMERICO
+%========================================
+\section*{Paso 5: Campo El\'ectrico y Fuerza en $P$}
+
+\subsection*{Campo el\'ectrico}
+
+\begin{equation*}
+    \vec{E}
+    = \frac{9{,}00\times10^9 \times 4{,}50\times10^{-4} \times 0{,}150}
+           {(0{,}0274)^{3/2}}\,\hat{k}
+\end{equation*}
+
+\begin{align*}
+    (0{,}0274)^{3/2} &= 0{,}0274\times\sqrt{0{,}0274} = 0{,}0274\times0{,}16553 = 4{,}5355\times10^{-3}\;\text{m}^3\\
+    K\,Q\,z &= 9{,}00\times10^9 \times 4{,}50\times10^{-4} \times 0{,}150 = 6{,}075\times10^5\;\text{N\,m}^2/\text{C}
+\end{align*}
+
+\begin{equation*}
+    \boxed{\vec{E}_P = \frac{6{,}075\times10^5}{4{,}5355\times10^{-3}}\,\hat{k}
+    = 1{,}3392\times10^{8}\,\hat{k}\;\;\text{[N/C]}}
+\end{equation*}
+
+\subsection*{Fuerza el\'ectrica sobre $q$}
+
+\begin{equation*}
+    \vec{F} = q\,\vec{E}_P
+    = \bigl(-5{,}00\times10^{-6}\bigr)\times1{,}3392\times10^{8}\,\hat{k}
+\end{equation*}
+
+\begin{equation*}
+    \boxed{\vec{F} = -669{,}6\,\hat{k}\;\;\text{[N]}}
+\end{equation*}
+
+%========================================
+% DIAGRAMA VECTORIAL EN P
+%========================================
+\section*{Diagrama Vectorial en $P$}
+
+\begin{center}
+\begin{tikzpicture}[scale=1.0,
+    eje/.style={-{Stealth[length=3mm]}, thick},
+    campo/.style={-{Stealth[length=4mm]}, very thick}]
+
+    % Ejes locales en P
+    \draw[eje, gray] (-0.5,0) -- (0.5,0) node[right, scale=0.8] {$\hat{\imath}$};
+    \draw[eje, gray] (0,-2.5) -- (0,1.5) node[above, scale=0.8] {$\hat{k}$};
+    \node[right, scale=0.8] at (0.05,0) {$P$};
+    \fill[puntoP] (0,0) circle (4pt);
+
+    % Campo E (escala: 1 unidad = 5e7 N/C)
+    % E = +1.3392e8 k -> +2.678
+    \draw[campo, campoverde, line width=2pt] (0,0) -- (0,1.20)
+        node[right, scale=0.85, campoverde, font=\bfseries] {$\vec{E}_P$};
+    \node[campoverde, right, scale=0.75] at (0.05,0.60)
+        {$1{,}34\times10^{8}\,\hat{k}$ [N/C]};
+
+    % Fuerza F (escala ampliada: 1 unidad = 250 N)
+    % F = -669.6 k -> -2.678
+    \draw[campo, cargarojo, line width=2pt] (0,0) -- (0,-2.30)
+        node[right, scale=0.85, cargarojo, font=\bfseries] {$\vec{F}$};
+    \node[cargarojo, right, scale=0.75] at (0.05,-1.15)
+        {$-669{,}6\,\hat{k}$ [N]};
+
+    % Leyenda de escala
+    \node[scale=0.65, gray] at (0,-2.45)
+        {Escala $\vec{E}$: 1 ud $= 5\times10^7$ N/C \quad|\quad
+         Escala $\vec{F}$: 1 ud $= 290$ N};
+
+\end{tikzpicture}
+\end{center}
+
+%========================================
+% INTERPRETACION FISICA
+%========================================
+\section*{Interpretaci\'on F\'isica}
+
+\begin{itemize}
+    \item Por simetr\'ia axial del anillo, las componentes radiales $(\hat{\imath},\,\hat{\jmath})$ del campo se cancelan exactamente: el campo en cualquier punto del eje es estrictamente axial ($\hat{k}$).
+
+    \item $\vec{E}_P$ apunta en $+\hat{k}$ (alejándose del anillo positivo). La fuerza $\vec{F}$ sobre $q < 0$ apunta en $-\hat{k}$: la carga negativa es \textbf{atra\'ida} hacia el anillo.
+
+    \item La magnitud $|\vec{F}| = 669{,}6$ N es elevada porque $Q = 0{,}45$ mC es una carga muy grande y la separaci\'on $z = 15$ cm es peque\~na.
+
+    \item La expresi\'on $\vec{E} = KQz/(R^2+z^2)^{3/2}\,\hat{k}$ tiene un m\'aximo en $z = R/\sqrt{2}$; en este problema $z = 0{,}15$ m $> R/\sqrt{2} \approx 0{,}049$ m, es decir, $P$ est\'a m\'as all\'a del m\'aximo del campo.
+\end{itemize}
+
+\end{document}

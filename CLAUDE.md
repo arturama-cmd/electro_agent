@@ -55,7 +55,7 @@ User Query -> app.py (Streamlit UI)
 
 | File | Purpose |
 |------|---------|
-| `app.py` | Mobile-first Streamlit UI with 3 tabs: Chat, Resolver (step-by-step solver), Subir (upload) |
+| `app.py` | Mobile-first Streamlit UI with 3 tabs: Chat, Resolver (RAG-backed step-by-step solver with structured 6-step prompt), Subir (upload) |
 | `rag_system.py` | `ElectromagnetismRAG` class: ChromaDB + Claude API orchestration |
 | `tex_processor.py` | `clean_latex()` preserves math, `extract_chunks_from_tex()` splits files |
 | `pdf_processor.py` | pdfplumber extraction with Tesseract OCR fallback |
@@ -163,6 +163,29 @@ Solutions in `corpus/*/Solucion_*.tex` follow this structure:
 ```latex
 \usetikzlibrary{3d,calc,decorations.markings,patterns}
 ```
+
+**Solution file naming conventions** (use descriptive names, no strict rule, but these patterns are in use):
+- `Solucion_vec[N].tex` — vector exercises (e.g. `Solucion_vec1.tex`)
+- `Solucion_G[N]P[N][uni|bid].tex` — guide N, problem N (`uni`=unidimensional, `bid`=bidimensional)
+- `Solucion_G[N]_P[list].tex` — guide N, multiple problems in one file
+- `Solucion_C1P[N]_[year]-[semester].tex` — certamen problem breakdown (e.g. `Solucion_C1P1_2024-1.tex`)
+- `Solucion_Certamen1_[year].tex` — full certamen solution
+- `Solucion_[topic].tex` — topic-specific (e.g. `Solucion_dipolo_HCl.tex`, `Solucion_clase_20-03.tex`)
+- `Solucion_DDMM.tex` — date-based shorthand (e.g. `Solucion_2703.tex` = class on March 27)
+- `Solucion_Tarea[N]_[year]-[semester].tex` — homework solution (e.g. `Solucion_Tarea1_2026-1.tex`)
+
+**Other corpus files** (also indexed alongside solutions): `guia[N].tex` and `guia_tarea[N]_[year]-[semester].tex` contain problem statements. Individual problem PDFs follow the pattern `prob [N] guia [N].pdf`.
+
+**Correcting TikZ figures — mandatory workflow:**
+1. Read the PDF enunciado figure first (`guia[N].pdf`, `guia_tarea[N]_*.pdf`, etc.).
+2. Extract ALL charge/object positions from the figure and present them to the user in a table.
+3. Wait for explicit confirmation before doing any recalculation.
+4. Only then rewrite the TikZ and recompute all quantities that depend on the corrected positions.
+> Reason: a single wrong position cascades into errors in every force/field calculation. Fixing only the reported position without verifying the others generates a second round of corrections.
+
+**Long equations — formatting rule**: chains of 3+ chained equalities (fraction → coefficient × vector → component result) must use `align*` with `\\` line breaks between steps, never a single `equation*`. Single-line equation* causes overflow past the right margin in the compiled PDF.
+
+**LaTeX build artifacts** (`.aux`, `.log`, `.bbl`, `.blg`) in `corpus/` are currently tracked in git (committed before gitignore rules were added). Do not delete them manually; leave them as-is unless doing an explicit cleanup with `git rm --cached`.
 
 ## Notes
 
