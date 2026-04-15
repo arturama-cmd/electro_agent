@@ -1,0 +1,402 @@
+\documentclass[12pt,letterpaper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[spanish,es-noshorthands]{babel}
+\usepackage{amsmath,amssymb}
+\usepackage{graphicx}
+\usepackage{xcolor}
+\usepackage{tikz}
+\usetikzlibrary{calc,arrows.meta,decorations.markings,patterns}
+\usepackage{enumerate}
+\usepackage[top=2.5cm, bottom=4cm, left=2cm, right=2cm, footskip=40pt]{geometry}
+\usepackage{fancyhdr}
+\usepackage{lastpage}
+
+% Colores institucionales y auxiliares
+\definecolor{ubbblue}{RGB}{0,51,102}
+\definecolor{gaussred}{RGB}{200,50,50}
+
+% Encabezado y pie de p\'agina
+\pagestyle{fancy}
+\fancyhf{}
+\renewcommand{\headrulewidth}{0pt}
+\renewcommand{\footrulewidth}{0.4pt}
+\fancyfoot[L]{%
+    \raisebox{-0.5cm}{\includegraphics[height=1.2cm]{logo ubb.png}}%
+}
+\fancyfoot[C]{%
+    \begin{minipage}[b]{8cm}
+        \centering
+        \footnotesize
+        \textcolor{ubbblue}{\textbf{Dr. Arturo Fern\'andez P\'erez}}\\
+        \scriptsize Departamento de F\'isica -- Universidad del B\'io-B\'io\\
+        \scriptsize \textit{Electro\_Asistente\_AI-UBB}\\
+        \tiny P\'agina \thepage\ de \pageref{LastPage}
+    \end{minipage}%
+}
+\fancyfoot[R]{%
+    \raisebox{-0.5cm}{\includegraphics[height=1.2cm]{logo dfis.png}}%
+}
+
+\fancypagestyle{plain}{%
+    \fancyhf{}
+    \renewcommand{\headrulewidth}{0pt}
+    \renewcommand{\footrulewidth}{0.4pt}
+    \fancyfoot[L]{%
+        \raisebox{-0.5cm}{\includegraphics[height=1.2cm]{logo ubb.png}}%
+    }
+    \fancyfoot[C]{%
+        \begin{minipage}[b]{8cm}
+            \centering
+            \footnotesize
+            \textcolor{ubbblue}{\textbf{Dr. Arturo Fern\'andez P\'erez}}\\
+            \scriptsize Departamento de F\'isica -- Universidad del B\'io-B\'io\\
+            \scriptsize \textit{Electro\_Asistente\_AI-UBB}\\
+            \tiny P\'agina \thepage\ de \pageref{LastPage}
+        \end{minipage}%
+    }
+    \fancyfoot[R]{%
+        \raisebox{-0.5cm}{\includegraphics[height=1.2cm]{logo dfis.png}}%
+    }
+}
+
+\begin{document}
+
+%========================================
+% ENCABEZADO INSTITUCIONAL
+%========================================
+\begin{center}
+    \includegraphics[height=2cm]{logo ubb.png}\\[0.3cm]
+    {\large\textcolor{ubbblue}{\textbf{UNIVERSIDAD DEL B\'IO-B\'IO}}}\\[0.1cm]
+    {\normalsize Facultad de Ciencias -- Departamento de F\'isica}
+\end{center}
+
+\vspace{0.3cm}
+\hrule height 1pt
+\vspace{0.5cm}
+
+{\centering\Large\textbf{Soluci\'on: Ley de Gauss -- Cascar\'on No Conductor con Esfera Conductora Interior}\par}
+{\centering\normalsize Cascar\'on aislante ($\rho$ constante) + esfera conductora central\par}
+
+\vspace{0.5cm}
+
+%========================================
+% ENUNCIADO
+%========================================
+\section*{Enunciado del Problema}
+
+Un cascar\'on esf\'erico no conductor de radio interior $a = 3$~[cm] y radio exterior $b = 5$~[cm]
+contiene carga positiva uniformemente distribuida en todo su volumen, con densidad volum\'etrica
+$\rho = 9\times10^{-6}$~[C/m$^3$]. En su centro hay una esfera conductora de radio $r_0 = 1$~[cm]
+con carga total $q = -4\times10^{-6}$~[C]. Determine, mediante la Ley de Gauss, la magnitud del
+campo el\'ectrico en las siguientes regiones (5~puntos c/u):
+
+\begin{enumerate}[(a)]
+    \item $r < 1$~[cm]
+    \item $1 < r < 3$~[cm]
+    \item $3 < r < 5$~[cm]
+    \item $r > 5$~[cm]
+\end{enumerate}
+
+\begin{center}
+\begin{tikzpicture}[scale=1.45, >=Stealth]
+    % Cascar\'on no conductor (entre a y b) -- azul claro
+    \fill[blue!15] (0,0) circle (2.0);
+    \fill[white]   (0,0) circle (1.2);
+    % Esfera conductora interior -- gris
+    \fill[gray!50] (0,0) circle (0.4);
+    % Contornos
+    \draw[thick] (0,0) circle (0.4);
+    \draw[thick] (0,0) circle (1.2);
+    \draw[thick] (0,0) circle (2.0);
+    % Centro
+    \fill (0,0) circle (2pt);
+    % Etiqueta carga en esfera conductora
+    \node[font=\small] at (0, 0) {$r_0{=}1$~cm, $q$};
+    % Etiqueta densidad en cascar\'on
+    \node[font=\small] at ({1.6*cos(60)},{1.6*sin(60)}) {$\rho$};
+    % Flechas de radio
+    \draw[->] (0,0) -- (0.4,0)
+        node[midway, above, font=\small]{$r_0$};
+    \draw[->] (0,0) -- (0,-1.2)
+        node[midway, right, font=\small]{$a$};
+    \draw[->] (0,0) -- ({2.0*cos(52)},{2.0*sin(52)})
+        node[midway, above left, font=\small]{$b$};
+\end{tikzpicture}
+\end{center}
+
+%========================================
+% DATOS
+%========================================
+\section*{Datos del Problema}
+
+\[
+    r_0 = 0{,}01\ [\text{m}], \quad
+    a   = 0{,}03\ [\text{m}], \quad
+    b   = 0{,}05\ [\text{m}]
+\]
+\[
+    \rho = 9\times10^{-6}\ [\text{C/m}^3], \quad
+    q    = -4\times10^{-6}\ [\text{C}], \quad
+    K    = \frac{1}{4\pi\varepsilon_0} = 9\times10^{9}\ [\text{N{\cdot}m}^2/\text{C}^2]
+\]
+
+%========================================
+% AN\'ALISIS CUALITATIVO
+%========================================
+\section*{An\'alisis Cualitativo}
+
+Dado que la esfera central es conductora, en su interior el campo el\'ectrico es nulo en
+equilibrio electrost\'atico. La carga negativa $q < 0$ del conductor induce cargas positivas
+sobre la superficie interior del cascar\'on (en $r = a$) y cargas negativas sobre la superficie
+exterior (en $r = b$). La densidad volum\'etrica $\rho > 0$ del cascar\'on aislante aporta
+carga positiva a la regi\'on $a < r < b$.
+
+%========================================
+% DESARROLLO
+%========================================
+\section*{Desarrollo: Aplicaci\'on de la Ley de Gauss}
+
+Por simetr\'ia esf\'erica, $\vec{E} = E(r)\,\hat{r}$ es constante en m\'odulo sobre cualquier
+superficie gaussiana esf\'erica de radio $r$. La Ley de Gauss establece:
+
+\[
+    \oint \vec{E}\cdot d\vec{S} = E\cdot 4\pi r^2 = \frac{q_\text{enc}}{\varepsilon_0}
+\]
+
+Solo cambia $q_\text{enc}$ de una regi\'on a otra.
+
+\bigskip
+
+%--------------------------------------------
+\subsection*{a) $r < r_0 = 0{,}01$~m: Interior de la esfera conductora}
+
+\noindent
+\begin{minipage}[c]{0.30\textwidth}
+\centering
+\begin{tikzpicture}[scale=1.15, >=Stealth]
+    % Cascar\'on no conductor
+    \fill[blue!15] (0,0) circle (1.4);
+    \fill[white]   (0,0) circle (0.80);
+    % Esfera conductora
+    \fill[gray!50] (0,0) circle (0.45);
+    \draw[thick] (0,0) circle (0.45);
+    \draw[thick] (0,0) circle (0.80);
+    \draw[thick] (0,0) circle (1.40);
+    \fill (0,0) circle (2pt);
+    % Superficie gaussiana interior al conductor
+    \draw[gaussred, dashed, thick] (0,0) circle (0.22);
+    \draw[->, gaussred, thick] (0,0) -- (0.22,0)
+        node[right, font=\scriptsize]{$r$};
+    % Etiquetas
+    \node[font=\scriptsize, above right] at ({0.45*cos(45)},{0.45*sin(45)}) {$r_0$};
+    \node[font=\scriptsize, above left]  at ({0.80*cos(130)},{0.80*sin(130)}) {$a$};
+    \node[font=\scriptsize, above left]  at ({1.40*cos(130)},{1.40*sin(130)}) {$b$};
+\end{tikzpicture}
+\end{minipage}%
+\hfill
+\begin{minipage}[c]{0.67\textwidth}
+La superficie gaussiana (radio $r < r_0$) se encuentra \textbf{dentro del material conductor}.
+En equilibrio electrost\'atico no existe campo el\'ectrico en el interior de un conductor,
+independientemente de la carga neta que \'este posea.
+
+\[
+    \boxed{E = 0 \quad [\text{N/C}]}
+\]
+\end{minipage}
+
+\bigskip
+
+%--------------------------------------------
+\subsection*{b) $r_0 < r < a$, es decir $0{,}01 < r < 0{,}03$~[m]: Entre el conductor y el cascar\'on}
+
+\noindent
+\begin{minipage}[c]{0.30\textwidth}
+\centering
+\begin{tikzpicture}[scale=1.15, >=Stealth]
+    % Cascar\'on no conductor
+    \fill[blue!15] (0,0) circle (1.4);
+    \fill[white]   (0,0) circle (0.80);
+    % Esfera conductora
+    \fill[gray!50] (0,0) circle (0.45);
+    \draw[thick] (0,0) circle (0.45);
+    \draw[thick] (0,0) circle (0.80);
+    \draw[thick] (0,0) circle (1.40);
+    \fill (0,0) circle (2pt);
+    % Superficie gaussiana entre conductor y cascar\'on
+    \draw[gaussred, dashed, thick] (0,0) circle (0.63);
+    \draw[->, gaussred, thick] (0,0) -- (0.63,0)
+        node[right, font=\scriptsize]{$r$};
+    % Etiquetas
+    \node[font=\scriptsize, above right] at ({0.45*cos(45)},{0.45*sin(45)}) {$r_0$};
+    \node[font=\scriptsize, above left]  at ({0.80*cos(130)},{0.80*sin(130)}) {$a$};
+    \node[font=\scriptsize, above left]  at ({1.40*cos(130)},{1.40*sin(130)}) {$b$};
+\end{tikzpicture}
+\end{minipage}%
+\hfill
+\begin{minipage}[c]{0.67\textwidth}
+La superficie gaussiana encierra \textbf{\'unicamente} la carga total del conductor:
+\[
+    q_\text{enc} = q = -4\times10^{-6}\ [\text{C}]
+\]
+Sustituyendo en la Ley de Gauss y usando $|q| = 4\times10^{-6}$~[C] para la magnitud:
+\begin{align*}
+    E \cdot 4\pi r^2 &= \frac{q}{\varepsilon_0} \\[6pt]
+    E &= \frac{q}{4\pi\varepsilon_0\,r^2} = \frac{K|q|}{r^2} \\[6pt]
+    E &= \frac{9\times10^{9} \times 4\times10^{-6}}{r^2}
+       = \frac{36\,000}{r^2}
+\end{align*}
+El campo apunta radialmente \textbf{hacia el centro} (pues $q < 0$).
+\end{minipage}
+
+\[
+    \boxed{E = \frac{36\,000}{r^2} \quad [\text{N/C}]}
+\]
+
+\bigskip
+
+%--------------------------------------------
+\subsection*{c) $a < r < b$, es decir $0{,}03 < r < 0{,}05$~[m]: Dentro del cascar\'on no conductor}
+
+\noindent
+\begin{minipage}[c]{0.30\textwidth}
+\centering
+\begin{tikzpicture}[scale=1.15, >=Stealth]
+    % Cascar\'on no conductor
+    \fill[blue!15] (0,0) circle (1.4);
+    \fill[white]   (0,0) circle (0.80);
+    % Esfera conductora
+    \fill[gray!50] (0,0) circle (0.45);
+    \draw[thick] (0,0) circle (0.45);
+    \draw[thick] (0,0) circle (0.80);
+    \draw[thick] (0,0) circle (1.40);
+    \fill (0,0) circle (2pt);
+    % Superficie gaussiana dentro del cascar\'on
+    \draw[gaussred, dashed, thick] (0,0) circle (1.12);
+    \draw[->, gaussred, thick] (0,0) -- ({1.12*cos(-30)},{1.12*sin(-30)})
+        node[right, font=\scriptsize]{$r$};
+    % Etiquetas
+    \node[font=\scriptsize, above right] at ({0.45*cos(45)},{0.45*sin(45)}) {$r_0$};
+    \node[font=\scriptsize, above left]  at ({0.80*cos(130)},{0.80*sin(130)}) {$a$};
+    \node[font=\scriptsize, above left]  at ({1.40*cos(130)},{1.40*sin(130)}) {$b$};
+\end{tikzpicture}
+\end{minipage}%
+\hfill
+\begin{minipage}[c]{0.67\textwidth}
+La superficie gaussiana encierra la carga del conductor m\'as la fracci\'on
+del cascar\'on comprendida entre $a$ y $r$:
+\[
+    q_\text{enc} = q + \rho\cdot\frac{4}{3}\pi\bigl(r^3 - a^3\bigr)
+\]
+Aplicando la Ley de Gauss:
+\begin{align*}
+    E \cdot 4\pi r^2
+        &= \frac{1}{\varepsilon_0}\left[\rho\,\frac{4}{3}\pi\bigl(r^3 - a^3\bigr) + q\right] \\[6pt]
+    E   &= \frac{K}{r^2}\left[\rho\,\frac{4}{3}\pi r^3
+           - \rho\,\frac{4}{3}\pi a^3 + q\right] \\[6pt]
+        &= K\rho\,\frac{4}{3}\pi\, r
+           - \frac{K\rho\,\frac{4}{3}\pi\, a^3}{r^2}
+           + \frac{Kq}{r^2}
+\end{align*}
+Sustituyendo los valores num\'ericos:\\
+T\'ermino~1: $9\!\times\!10^{9}\!\times\!9\!\times\!10^{-6}\!\times\!\tfrac{4\pi}{3}\,r
+    = 108\,000\pi\,r$\\
+T\'ermino~2: $-108\,000\pi\times(0{,}03)^3/r^2
+    = -2{,}916\pi/r^2$\\
+T\'ermino~3: $9\!\times\!10^{9}\!\times\!(-4\!\times\!10^{-6})/r^2
+    = -36\,000/r^2$
+\end{minipage}
+
+\[
+    \boxed{E = 108\,000\pi\, r - \frac{2{,}916\pi}{r^2} - \frac{36\,000}{r^2} \quad [\text{N/C}]}
+\]
+
+\bigskip
+
+%--------------------------------------------
+\subsection*{d) $r > b = 0{,}05$~[m]: Exterior al cascar\'on}
+
+\noindent
+\begin{minipage}[c]{0.30\textwidth}
+\centering
+\begin{tikzpicture}[scale=1.0, >=Stealth]
+    % Cascar\'on no conductor
+    \fill[blue!15] (0,0) circle (1.0);
+    \fill[white]   (0,0) circle (0.58);
+    % Esfera conductora
+    \fill[gray!50] (0,0) circle (0.33);
+    \draw[thick] (0,0) circle (0.33);
+    \draw[thick] (0,0) circle (0.58);
+    \draw[thick] (0,0) circle (1.00);
+    \fill (0,0) circle (2pt);
+    % Superficie gaussiana exterior
+    \draw[gaussred, dashed, thick] (0,0) circle (1.38);
+    \draw[->, gaussred, thick] (0,0) -- (1.38,0)
+        node[right, font=\scriptsize]{$r$};
+    % Etiquetas
+    \node[font=\scriptsize] at (0, 0.48) {$r_0$};
+    \node[font=\scriptsize, right] at (0.59, 0.07) {$a$};
+    \node[font=\scriptsize, above right] at ({cos(45)},{sin(45)}) {$b$};
+\end{tikzpicture}
+\end{minipage}%
+\hfill
+\begin{minipage}[c]{0.67\textwidth}
+La superficie gaussiana encierra la totalidad de las cargas. Primero se calcula
+la carga total del cascar\'on:
+\[
+    \rho\,\frac{4}{3}\pi\bigl(b^3 - a^3\bigr)
+    = 9\!\times\!10^{-6}\!\times\!\frac{4\pi}{3}
+      \times\bigl[(0{,}05)^3-(0{,}03)^3\bigr]
+\]
+$(0{,}05)^3-(0{,}03)^3 = 1{,}25\!\times\!10^{-4}-2{,}7\!\times\!10^{-5}
+    = 9{,}8\!\times\!10^{-5}$~m$^3$, luego:
+\[
+    Q_\rho = 9\!\times\!10^{-6}\!\times\!\frac{4\pi}{3}\!\times\!9{,}8\!\times\!10^{-5}
+           = 1{,}176\!\times\!10^{-9}\pi\ [\text{C}]
+\]
+De modo que $K Q_\rho = 9\!\times\!10^{9}\!\times\!1{,}176\!\times\!10^{-9}\pi
+    = 10{,}584\pi$~[N{\cdot}m$^2$/C]. Entonces:
+\begin{align*}
+    E \cdot 4\pi r^2
+        &= \frac{q_\text{enc}}{\varepsilon_0}
+         = \frac{Q_\rho + q}{\varepsilon_0} \\[6pt]
+    E   &= \frac{1}{r^2}\bigl[K Q_\rho + Kq\bigr] \\[6pt]
+        &= \frac{10{,}584\pi + 9\!\times\!10^{9}\!\times\!(-4\!\times\!10^{-6})}{r^2} \\[6pt]
+        &= \frac{10{,}584\pi - 36\,000}{r^2}
+\end{align*}
+\end{minipage}
+
+\[
+    \boxed{E = \frac{10{,}584\pi - 36\,000}{r^2}
+              \approx \frac{-35\,967}{r^2} \quad [\text{N/C}]}
+\]
+
+%========================================
+% RESUMEN
+%========================================
+\section*{Resumen: Campo el\'ectrico seg\'un la regi\'on}
+
+\[
+E(r) =
+\begin{cases}
+    0
+        & r < r_0 \\[10pt]
+    \dfrac{36\,000}{r^2}
+        & r_0 < r < a \\[10pt]
+    108\,000\pi\, r - \dfrac{2{,}916\pi}{r^2} - \dfrac{36\,000}{r^2}
+        & a < r < b \\[10pt]
+    \dfrac{10{,}584\pi - 36\,000}{r^2}
+        & r > b
+\end{cases}
+\]
+
+\medskip
+\noindent\textit{Nota sobre direcci\'on del campo:}
+\begin{itemize}
+    \item \textbf{Regiones b y d} ($r_0 < r < a$ y $r > b$): la carga neta encerrada es
+          negativa, por lo que $\vec{E}$ apunta radialmente \textbf{hacia el centro}.
+    \item \textbf{Regi\'on c} ($a < r < b$): el signo de $E$ depende de $r$. Para valores
+          grandes de $r$ dentro del cascar\'on, el t\'ermino positivo $108\,000\pi\,r$
+          domina y el campo apunta radialmente \textbf{hacia afuera}.
+\end{itemize}
+
+\end{document}

@@ -1,0 +1,296 @@
+\documentclass[12pt,letterpaper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[spanish,es-noshorthands]{babel}
+\usepackage{amsmath,amssymb}
+\usepackage{graphicx}
+\usepackage{xcolor}
+\usepackage{tikz}
+\usetikzlibrary{3d,calc,arrows.meta,decorations.markings,patterns}
+\usepackage{enumerate}
+\usepackage[top=2.5cm, bottom=4cm, left=2cm, right=2cm, footskip=40pt]{geometry}
+\usepackage{fancyhdr}
+\usepackage{lastpage}
+
+% Colores institucionales y auxiliares
+\definecolor{ubbblue}{RGB}{0,51,102}
+\definecolor{gaussred}{RGB}{200,50,50}
+
+% Encabezado y pie de p\'agina
+\pagestyle{fancy}
+\fancyhf{}
+\renewcommand{\headrulewidth}{0pt}
+\renewcommand{\footrulewidth}{0.4pt}
+\fancyfoot[L]{%
+    \raisebox{-0.5cm}{\includegraphics[height=1.2cm]{logo ubb.png}}%
+}
+\fancyfoot[C]{%
+    \begin{minipage}[b]{8cm}
+        \centering
+        \footnotesize
+        \textcolor{ubbblue}{\textbf{Dr. Arturo Fern\'andez P\'erez}}\\
+        \scriptsize Departamento de F\'isica -- Universidad del B\'io-B\'io\\
+        \scriptsize \textit{Electro\_Asistente\_AI-UBB}\\
+        \tiny P\'agina \thepage\ de \pageref{LastPage}
+    \end{minipage}%
+}
+\fancyfoot[R]{%
+    \raisebox{-0.5cm}{\includegraphics[height=1.2cm]{logo dfis.png}}%
+}
+
+\fancypagestyle{plain}{%
+    \fancyhf{}
+    \renewcommand{\headrulewidth}{0pt}
+    \renewcommand{\footrulewidth}{0.4pt}
+    \fancyfoot[L]{%
+        \raisebox{-0.5cm}{\includegraphics[height=1.2cm]{logo ubb.png}}%
+    }
+    \fancyfoot[C]{%
+        \begin{minipage}[b]{8cm}
+            \centering
+            \footnotesize
+            \textcolor{ubbblue}{\textbf{Dr. Arturo Fern\'andez P\'erez}}\\
+            \scriptsize Departamento de F\'isica -- Universidad del B\'io-B\'io\\
+            \scriptsize \textit{Electro\_Asistente\_AI-UBB}\\
+            \tiny P\'agina \thepage\ de \pageref{LastPage}
+        \end{minipage}%
+    }
+    \fancyfoot[R]{%
+        \raisebox{-0.5cm}{\includegraphics[height=1.2cm]{logo dfis.png}}%
+    }
+}
+
+\begin{document}
+
+%========================================
+% ENCABEZADO INSTITUCIONAL
+%========================================
+\begin{center}
+    \includegraphics[height=2cm]{logo ubb.png}\\[0.3cm]
+    {\large\textcolor{ubbblue}{\textbf{UNIVERSIDAD DEL B\'IO-B\'IO}}}\\[0.1cm]
+    {\normalsize Facultad de Ciencias -- Departamento de F\'isica}
+\end{center}
+
+\vspace{0.3cm}
+\hrule height 1pt
+\vspace{0.5cm}
+
+{\centering\Large\textbf{Soluci\'on: Certamen~2 Recuperaci\'on (2020) -- Potencial El\'ectrico de un Anillo Cargado}\par}
+{\centering\normalsize Potencial sobre el eje y conservaci\'on de energ\'ia\par}
+
+\vspace{0.5cm}
+
+%========================================
+% ENUNCIADO
+%========================================
+\section*{Enunciado del Problema}
+
+Un anillo de radio $R = 30$~[cm] tiene una densidad de carga $\lambda = -3{,}0$~[$\mu$C/m].
+Considerando que el eje $z$ pasa por el centro del anillo:
+
+\begin{enumerate}[(a)]
+    \item \textbf{(10~pts)} Determine el potencial el\'ectrico sobre el eje $z$, a una distancia
+          de $z = 10$~[cm] del anillo.
+    \item \textbf{(10~pts)} Sobre el eje $z$, a una distancia de $20$~[cm] del anillo, se ubica
+          una carga puntual $q = 6{,}0$~[mC] inicialmente en reposo. ?`Qu\'e rapidez tiene la
+          carga puntual cuando est\'a sobre el eje $z$, a $10$~[cm] del anillo?
+\end{enumerate}
+
+\begin{center}
+\begin{tikzpicture}[scale=1.5, >=Stealth]
+    % Anillo: vista en perspectiva (elipse en el plano xy)
+    \draw[thick] (0,0) ellipse (1.5cm and 0.4cm);
+    % Relleno sutil del anillo para dar volumen
+    \draw[gray!50, thin] (0,0) ellipse (1.5cm and 0.4cm);
+
+    % Eje z vertical
+    \draw[->, thick] (0,-0.6) -- (0,2.5) node[right]{$z$};
+
+    % Vector r' desde el origen hasta el elemento del anillo
+    \coordinate (dq) at ({1.5*cos(30)},{0.4*sin(30)});
+    \draw[->, blue!70!black, thick] (0,0) -- (dq)
+        node[midway, below right, font=\small]{$\vec{r}'$};
+
+    % Elemento de longitud d\ell en el anillo
+    \fill[red!70!black] (dq) circle (2.5pt);
+    \node[font=\scriptsize, right=2pt] at (dq) {$dq = \lambda\,d\ell$};
+
+    % Punto P en el eje z (a altura 1.8 ~ representa z=10 cm)
+    \coordinate (P) at (0, 1.8);
+    \fill (P) circle (2.5pt);
+    \node[right=3pt, font=\small] at (P) {$P$};
+
+    % Vector z desde el origen hasta P
+    \draw[->, thick] (0,0) -- (P)
+        node[midway, left, font=\small]{$z$};
+
+    % Vector desde el elemento del anillo hasta P (||r - r'||)
+    \draw[->, dashed, red!70!black, thick] (dq) -- (P)
+        node[midway, right, font=\scriptsize]{$\|\vec{r}-\vec{r}'\|$};
+
+    % Radio del anillo con flecha y etiqueta
+    \draw[<->, thick, blue!60!black] (0,0) -- ({-1.5*cos(20)},{0.4*sin(20)})
+        node[midway, above, font=\small]{$R$};
+
+    % Origen
+    \fill (0,0) circle (2pt);
+    \node[below left, font=\scriptsize] at (0,0) {$O$};
+\end{tikzpicture}
+\end{center}
+
+%========================================
+% DATOS
+%========================================
+\section*{Datos del Problema}
+
+\[
+    R = 0{,}30 \ [\text{m}], \qquad
+    \lambda = -3{,}0 \times 10^{-6} \ [\text{C/m}], \qquad
+    q = 6{,}0 \times 10^{-3} \ [\text{C}]
+\]
+\[
+    K = 9 \times 10^{9} \ \left[\frac{\text{N}\cdot\text{m}^2}{\text{C}^2}\right]
+\]
+
+%========================================
+% PARTE a)
+%========================================
+\section*{Parte a): Potencial el\'ectrico sobre el eje $z$}
+
+La posici\'on del punto de campo $P$ sobre el eje $z$:
+\[
+    \vec{r} = z\,\hat{k}
+\]
+
+La posici\'on del elemento de carga $dq$ en el anillo (en el plano $xy$):
+\[
+    \vec{r}' = R\cos\theta\,\hat{\imath} + R\sin\theta\,\hat{\jmath}
+\]
+
+La distancia entre el elemento $dq$ y el punto $P$:
+\[
+    \|\vec{r} - \vec{r}'\|
+    = \sqrt{(z - 0)^2 + (0 - R\cos\theta)^2 + (0 - R\sin\theta)^2}
+    = \sqrt{z^2 + R^2\cos^2\theta + R^2\sin^2\theta}
+    = \sqrt{R^2 + z^2}
+\]
+
+Esta distancia es \textbf{constante} para todo $\theta$, lo que simplifica enormemente la
+integral. El elemento de longitud del anillo es $d\ell = R\,d\theta$, por lo que
+$dq = \lambda\,d\ell = \lambda R\,d\theta$.
+
+El potencial elemental aportado por $dq$ es:
+\[
+    dV = K\,\frac{dq}{\|\vec{r}-\vec{r}'\|}
+       = K\,\frac{\lambda R\,d\theta}{\sqrt{R^2 + z^2}}
+\]
+
+Integrando sobre todo el anillo ($\theta \in [0, 2\pi]$):
+
+\begin{align*}
+    V(z) &= \int_0^{2\pi} K\,\frac{\lambda R\,d\theta}{\sqrt{R^2 + z^2}} \\[6pt]
+         &= \frac{K\lambda R}{\sqrt{R^2 + z^2}} \int_0^{2\pi} d\theta \\[6pt]
+         &= \frac{K\lambda R}{\sqrt{R^2 + z^2}} \cdot 2\pi
+\end{align*}
+
+Reconociendo que $\lambda(2\pi R)$ es la carga total del anillo $Q_\text{anillo}$:
+
+\[
+    \boxed{V(z) = \frac{K\lambda(2\pi R)}{\sqrt{R^2 + z^2}} \quad [\text{V}]}
+\]
+
+\bigskip
+
+\noindent\textbf{Sustituci\'on num\'erica para $z = 0{,}10$~[m]:}
+
+\begin{align*}
+    V(0{,}10) &= \frac{9\times10^9 \times (-3\times10^{-6}) \times 2\pi \times 0{,}30}
+                      {\sqrt{(0{,}30)^2 + (0{,}10)^2}} \\[8pt]
+              &= \frac{9\times10^9 \times (-3\times10^{-6}) \times 0{,}6\pi}
+                      {\sqrt{0{,}09 + 0{,}01}} \\[8pt]
+              &= \frac{-16\,200\,\pi}{\sqrt{0{,}10}} \\[8pt]
+              &= \frac{-16\,200\,\pi}{0{,}31623} \\[8pt]
+              &\approx -160\,940 \quad [\text{V}]
+\end{align*}
+
+\[
+    \boxed{V(z = 0{,}10\ \text{m}) \approx -160\,940 \ [\text{V}]}
+\]
+
+%========================================
+% PARTE b)
+%========================================
+\section*{Parte b): Rapidez de la carga puntual}
+
+\subsection*{Planteamiento: Conservaci\'on de Energ\'ia}
+
+La carga puntual $q$ parte del reposo en $z_i = 0{,}20$~[m] y se desplaza hasta
+$z_f = 0{,}10$~[m]. Como la fuerza el\'ectrica es conservativa, se aplica la
+\textbf{conservaci\'on de la energ\'ia mec\'anica}:
+
+\[
+    K_i + U_i = K_f + U_f
+\]
+
+Con $K_i = 0$ (carga en reposo) y $U = qV$:
+
+\[
+    0 + q\,V_i = \frac{1}{2}m\,v_f^2 + q\,V_f
+\]
+\[
+    q\,(V_i - V_f) = \frac{1}{2}m\,v_f^2
+\]
+
+\subsection*{C\'alculo de $V_i = V(z = 0{,}20\ \text{m})$}
+
+\begin{align*}
+    V(0{,}20) &= \frac{-16\,200\,\pi}{\sqrt{(0{,}30)^2 + (0{,}20)^2}} \\[8pt]
+              &= \frac{-16\,200\,\pi}{\sqrt{0{,}09 + 0{,}04}} \\[8pt]
+              &= \frac{-16\,200\,\pi}{\sqrt{0{,}13}} \\[8pt]
+              &= \frac{-16\,200\,\pi}{0{,}36056} \\[8pt]
+              &\approx -141\,154 \quad [\text{V}]
+\end{align*}
+
+\subsection*{Despeje de la velocidad final}
+
+Recordando que $V_f = V(0{,}10) \approx -160\,940$~[V] (calculado en la parte~a):
+
+\begin{align*}
+    q\,(V_i - V_f) &= \frac{1}{2}m\,v_f^2 \\[6pt]
+    6\times10^{-3}\,\bigl(-141\,154 - (-160\,940)\bigr) &= \frac{1}{2}m\,v_f^2 \\[6pt]
+    6\times10^{-3} \times 19\,786 &= \frac{1}{2}m\,v_f^2 \\[6pt]
+    118{,}72 &= \frac{1}{2}m\,v_f^2
+\end{align*}
+
+Despejando $v_f$:
+
+\[
+    v_f^2 = \frac{2 \times 118{,}72}{m} = \frac{237{,}43}{m}
+\]
+
+\[
+    \boxed{v_f = \sqrt{\frac{237{,}43}{m}} \quad [\text{m/s}]}
+\]
+
+donde $m$ es la masa de la carga puntual en [kg].
+
+\bigskip
+
+\noindent\textit{Nota:} Si se conoce la masa, por ejemplo $m = 1$~g $= 10^{-3}$~[kg],
+entonces:
+\[
+    v_f = \sqrt{\frac{237{,}43}{10^{-3}}} = \sqrt{237\,430} \approx 487 \quad [\text{m/s}]
+\]
+
+\subsection*{Interpretaci\'on f\'isica}
+
+La carga puntual $q > 0$ se mueve desde $z_i = 0{,}20$~[m] hacia $z_f = 0{,}10$~[m],
+acerci\'andose al anillo de carga negativa. Al disminuir la distancia al anillo, el
+potencial se vuelve m\'as negativo (mayor en magnitud), de modo que
+$V_i > V_f$ y la diferencia de potencial $V_i - V_f > 0$.
+
+Por la conservaci\'on de energ\'ia, la energ\'ia potencial el\'ectrica
+$U = qV$ \textbf{disminuye} y esa diferencia se convierte \'integramente en
+energ\'ia cin\'etica: la carga puntual positiva se \textbf{acelera} hacia el anillo
+negativo, tal como era de esperar por atracci\'on coulombiana.
+
+\end{document}

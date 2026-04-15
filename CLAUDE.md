@@ -119,7 +119,7 @@ Documents in `corpus/` by topic (categories defined in `rag_system.py:13-19` -> 
 - Chunking split points: `---NUEVA PAGINA---` and `## Problema` delimiters (`tex_processor.py:86`)
 - PDF chunks split by page first, then by paragraph if page exceeds `chunk_size` (default 2000 chars)
 
-**Corpus Indexing Limitation**: `process_all_files_in_category()` at `tex_processor.py:112-115` uses `os.listdir` (non-recursive) and skips subdirectories. Files in subfolders (e.g. `corpus/campo_electrico/prob resueltos pdf/`) will **not** be auto-indexed — use `add_single_pdf.py` instead.
+**Corpus Indexing Limitation**: `process_all_files_in_category()` at `tex_processor.py:112-115` uses `os.listdir` (non-recursive) and skips subdirectories. Files in subfolders (e.g. `corpus/campo_electrico/prob resueltos pdf/`, `corpus/campo_electrico/gauss_imgs/`) will **not** be auto-indexed — use `add_single_pdf.py` instead. The `gauss_imgs/` folder holds image assets referenced by Gauss-law solutions via `\includegraphics`; they don't need indexing but must remain alongside the `.tex` files for compilation.
 
 **Caching**: `@st.cache_resource` on `initialize_rag()` at `app.py:514-523` prevents re-init per session. Auto-indexes corpus on first run if collection is empty.
 
@@ -163,6 +163,10 @@ Solutions in `corpus/*/Solucion_*.tex` follow this structure:
 ```latex
 \usetikzlibrary{3d,calc,decorations.markings,patterns}
 ```
+For solutions that draw Gaussian surfaces (sphere/shell cross-sections), also add `arrows.meta`:
+```latex
+\usetikzlibrary{calc,arrows.meta,decorations.markings,patterns}
+```
 
 **Solution file naming conventions** (use descriptive names, no strict rule, but these patterns are in use):
 - `Solucion_vec[N].tex` — vector exercises (e.g. `Solucion_vec1.tex`)
@@ -173,6 +177,7 @@ Solutions in `corpus/*/Solucion_*.tex` follow this structure:
 - `Solucion_[topic].tex` — topic-specific (e.g. `Solucion_dipolo_HCl.tex`, `Solucion_clase_20-03.tex`)
 - `Solucion_DDMM.tex` — date-based shorthand (e.g. `Solucion_2703.tex` = class on March 27)
 - `Solucion_Tarea[N]_[year]-[semester].tex` — homework solution (e.g. `Solucion_Tarea1_2026-1.tex`)
+- `Solucion_[topic]_esf_v[N].tex` — topic + geometry variant (e.g. `Solucion_Gauss_esf_v1.tex` = Gauss law, spherical geometry, version 1)
 
 **Other corpus files** (also indexed alongside solutions): `guia[N].tex` and `guia_tarea[N]_[year]-[semester].tex` contain problem statements. Individual problem PDFs follow the pattern `prob [N] guia [N].pdf`.
 

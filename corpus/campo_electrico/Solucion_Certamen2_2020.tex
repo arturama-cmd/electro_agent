@@ -1,0 +1,296 @@
+\documentclass[12pt,letterpaper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[spanish,es-noshorthands]{babel}
+\usepackage{amsmath,amssymb}
+\usepackage{graphicx}
+\usepackage{xcolor}
+\usepackage{tikz}
+\usetikzlibrary{calc,arrows.meta,decorations.markings,patterns}
+\usepackage{enumerate}
+\usepackage[top=2.5cm, bottom=4cm, left=2cm, right=2cm, footskip=40pt]{geometry}
+\usepackage{fancyhdr}
+\usepackage{lastpage}
+
+% Colores institucionales y auxiliares
+\definecolor{ubbblue}{RGB}{0,51,102}
+\definecolor{gaussred}{RGB}{200,50,50}
+
+% Encabezado y pie de p\'agina
+\pagestyle{fancy}
+\fancyhf{}
+\renewcommand{\headrulewidth}{0pt}
+\renewcommand{\footrulewidth}{0.4pt}
+\fancyfoot[L]{%
+    \raisebox{-0.5cm}{\includegraphics[height=1.2cm]{logo ubb.png}}%
+}
+\fancyfoot[C]{%
+    \begin{minipage}[b]{8cm}
+        \centering
+        \footnotesize
+        \textcolor{ubbblue}{\textbf{Dr. Arturo Fern\'andez P\'erez}}\\
+        \scriptsize Departamento de F\'isica -- Universidad del B\'io-B\'io\\
+        \scriptsize \textit{Electro\_Asistente\_AI-UBB}\\
+        \tiny P\'agina \thepage\ de \pageref{LastPage}
+    \end{minipage}%
+}
+\fancyfoot[R]{%
+    \raisebox{-0.5cm}{\includegraphics[height=1.2cm]{logo dfis.png}}%
+}
+
+\fancypagestyle{plain}{%
+    \fancyhf{}
+    \renewcommand{\headrulewidth}{0pt}
+    \renewcommand{\footrulewidth}{0.4pt}
+    \fancyfoot[L]{%
+        \raisebox{-0.5cm}{\includegraphics[height=1.2cm]{logo ubb.png}}%
+    }
+    \fancyfoot[C]{%
+        \begin{minipage}[b]{8cm}
+            \centering
+            \footnotesize
+            \textcolor{ubbblue}{\textbf{Dr. Arturo Fern\'andez P\'erez}}\\
+            \scriptsize Departamento de F\'isica -- Universidad del B\'io-B\'io\\
+            \scriptsize \textit{Electro\_Asistente\_AI-UBB}\\
+            \tiny P\'agina \thepage\ de \pageref{LastPage}
+        \end{minipage}%
+    }
+    \fancyfoot[R]{%
+        \raisebox{-0.5cm}{\includegraphics[height=1.2cm]{logo dfis.png}}%
+    }
+}
+
+\begin{document}
+
+%========================================
+% ENCABEZADO INSTITUCIONAL
+%========================================
+\begin{center}
+    \includegraphics[height=2cm]{logo ubb.png}\\[0.3cm]
+    {\large\textcolor{ubbblue}{\textbf{UNIVERSIDAD DEL B\'IO-B\'IO}}}\\[0.1cm]
+    {\normalsize Facultad de Ciencias -- Departamento de F\'isica}
+\end{center}
+
+\vspace{0.3cm}
+\hrule height 1pt
+\vspace{0.5cm}
+
+{\centering\Large\textbf{Soluci\'on: Certamen~2 (2020) -- Potencial El\'ectrico de una Barra con Dos Densidades de Carga}\par}
+{\centering\normalsize Barra con carga no uniforme -- integraci\'on directa del potencial\par}
+
+\vspace{0.5cm}
+
+%========================================
+% ENUNCIADO
+%========================================
+\section*{Enunciado del Problema}
+
+Considere una barra muy delgada de longitud $L = 120$~[cm], paralela a la parte negativa del eje $x$, como muestra la figura. La mitad izquierda de la barra tiene una densidad de carga positiva $\lambda_1 = +5$~[nC/m] y la mitad derecha posee una densidad de carga negativa $\lambda_2 = -7$~[nC/m]. Determine el potencial el\'ectrico en el punto $P$, ubicado sobre el eje $y$ a una distancia $d = 15$~[cm] del origen.
+
+\begin{center}
+\begin{tikzpicture}[scale=2.2, >=Stealth]
+    % Ejes
+    \draw[->] (-2.3,0) -- (0.6,0) node[right]{$x$};
+    \draw[->] (0,-0.15) -- (0,0.65) node[above]{$y$};
+    \node[below right, font=\small] at (0,0) {$O$};
+
+    % Mitad izquierda: lambda1 > 0, color rojo, de -2 a -1
+    \draw[red, line width=2.5pt] (-2,0) -- (-1,0);
+    \node[red, above, font=\small] at (-1.5, 0.04) {$+\;+\;+\;+\;+$};
+    \node[red, below, font=\footnotesize] at (-1.5,-0.08) {$\lambda_1 = +5$~[nC/m]};
+
+    % Mitad derecha: lambda2 < 0, color azul, de -1 a 0
+    \draw[blue, line width=2.5pt] (-1,0) -- (0,0);
+    \node[blue, above, font=\small] at (-0.5, 0.04) {$-\;-\;-\;-\;-$};
+    \node[blue, below, font=\footnotesize] at (-0.5,-0.08) {$\lambda_2 = -7$~[nC/m]};
+
+    % Punto P en el eje y a altura d (0.25 unidades = 0.15 m)
+    \fill (0, 0.25) circle (1.5pt);
+    \node[right, font=\small] at (0, 0.25) {$P$};
+
+    % Cota d en el eje y
+    \draw[<->, gray] (0.12, 0) -- (0.12, 0.25)
+        node[midway, right, font=\footnotesize]{$d$};
+
+    % Elemento dq en la barra (en x = -1, frontera entre las dos mitades)
+    \fill[violet] (-1, 0) circle (1.2pt);
+    \node[violet, below, font=\scriptsize] at (-1, -0.02) {$dq$};
+
+    % Vector r desde dq hasta P
+    \draw[->, violet, thick] (-1, 0) -- (0, 0.25)
+        node[midway, above left, font=\scriptsize]
+        {$\|\vec{r}-\vec{r}'\|$};
+
+    % Cotas L/2 abajo de la barra
+    \draw[<->] (-2,-0.22) -- (-1,-0.22)
+        node[midway, below, font=\footnotesize]{$L/2$};
+    \draw[<->] (-1,-0.22) -- (0,-0.22)
+        node[midway, below, font=\footnotesize]{$L/2$};
+    % Marcas verticales de las cotas
+    \draw[thin, gray] (-2,-0.18) -- (-2,-0.26);
+    \draw[thin, gray] (-1,-0.18) -- (-1,-0.26);
+    \draw[thin, gray] ( 0,-0.18) -- ( 0,-0.26);
+
+    % Etiqueta x = -L al extremo izquierdo
+    \node[below, font=\scriptsize] at (-2, 0) {$x{=}{-}L$};
+    % Etiqueta en x = -L/2
+    \node[below, font=\scriptsize] at (-1, 0) {$x{=}{-}L/2$};
+\end{tikzpicture}
+\end{center}
+
+%========================================
+% DATOS
+%========================================
+\section*{Datos del Problema}
+
+\[
+    L = 1{,}2\ [\text{m}], \quad \frac{L}{2} = 0{,}6\ [\text{m}]
+\]
+\[
+    \lambda_1 = 5\times10^{-9}\ [\text{C/m}], \quad
+    \lambda_2 = -7\times10^{-9}\ [\text{C/m}]
+\]
+\[
+    d = 0{,}15\ [\text{m}], \quad
+    K = 9\times10^{9}\ \left[\frac{\text{N}\cdot\text{m}^2}{\text{C}^2}\right]
+\]
+
+%========================================
+% ANÁLISIS
+%========================================
+\section*{An\'alisis del Problema}
+
+La barra se extiende a lo largo del eje $x$ negativo, desde $x = -L$ hasta $x = 0$.
+El punto $P$ se ubica en $(0,\,d)$, sobre el eje $y$.
+Un elemento de carga $dq = \lambda\,dx$ ubicado en la posici\'on $(x,\,0)$
+se encuentra a una distancia del punto $P$ dada por:
+
+\[
+    \|\vec{r}-\vec{r}'\| = \sqrt{x^2 + d^2}, \qquad -L \leq x \leq 0.
+\]
+
+El potencial el\'ectrico es una magnitud escalar, por lo que las contribuciones
+de ambas mitades se suman directamente sin necesidad de descomposici\'on vectorial.
+
+%========================================
+% DESARROLLO MATEMÁTICO
+%========================================
+\section*{Desarrollo Matem\'atico}
+
+El potencial elemental debido a un elemento de carga $dq = \lambda\,dx$ es:
+
+\[
+    dV = K\,\frac{dq}{\|\vec{r}-\vec{r}'\|}
+       = K\,\frac{\lambda\,dx}{\sqrt{x^2+d^2}}
+\]
+
+El potencial total se divide en dos integrales, una por cada mitad de la barra:
+
+\begin{align*}
+    V &= K\int_{-L}^{-L/2} \frac{\lambda_1\,dx}{\sqrt{x^2+d^2}}
+       + K\int_{-L/2}^{0} \frac{\lambda_2\,dx}{\sqrt{x^2+d^2}}
+\end{align*}
+
+Usando la integral est\'andar
+$\displaystyle\int \frac{dx}{\sqrt{x^2+d^2}} = \ln\!\left(x + \sqrt{x^2+d^2}\right) + C$:
+
+\begin{align*}
+    V &= K\lambda_1\left[\ln\!\left(x+\sqrt{x^2+d^2}\right)\right]_{-L}^{-L/2}
+       + K\lambda_2\left[\ln\!\left(x+\sqrt{x^2+d^2}\right)\right]_{-L/2}^{0}
+\end{align*}
+
+Evaluando los l\'imites de cada integral:
+
+\begin{itemize}
+    \item L\'imite superior de la primera ($x=-L/2$):
+          $\quad\ln\!\left(-\tfrac{L}{2}+\sqrt{(L/2)^2+d^2}\right)$
+    \item L\'imite inferior de la primera ($x=-L$):
+          $\quad\ln\!\left(-L+\sqrt{L^2+d^2}\right)$
+    \item L\'imite superior de la segunda ($x=0$):
+          $\quad\ln\!\left(0+\sqrt{d^2}\right)=\ln(d)$
+    \item L\'imite inferior de la segunda ($x=-L/2$):
+          $\quad\ln\!\left(-\tfrac{L}{2}+\sqrt{(L/2)^2+d^2}\right)$
+\end{itemize}
+
+Entonces:
+
+\begin{align*}
+    V &= K\lambda_1\ln\!\left[\frac{-L/2+\sqrt{(L/2)^2+d^2}}{-L+\sqrt{L^2+d^2}}\right]
+       + K\lambda_2\ln\!\left[\frac{d}{-L/2+\sqrt{(L/2)^2+d^2}}\right]
+\end{align*}
+
+%========================================
+% SUSTITUCIÓN NUMÉRICA
+%========================================
+\section*{Sustituci\'on Num\'erica}
+
+Con $L=1{,}2$~[m], $L/2=0{,}6$~[m] y $d=0{,}15$~[m], se calculan primero las ra\'ices:
+
+\begin{align*}
+    \sqrt{(L/2)^2+d^2}
+        &= \sqrt{(0{,}6)^2+(0{,}15)^2}
+         = \sqrt{0{,}36+0{,}0225}
+         = \sqrt{0{,}3825}
+         \approx 0{,}6185\ [\text{m}]\\[6pt]
+    \sqrt{L^2+d^2}
+        &= \sqrt{(1{,}2)^2+(0{,}15)^2}
+         = \sqrt{1{,}44+0{,}0225}
+         = \sqrt{1{,}4625}
+         \approx 1{,}2094\ [\text{m}]
+\end{align*}
+
+\bigskip
+\noindent\textbf{Primera integral} ($\lambda_1$, de $x=-L$ a $x=-L/2$):
+
+\begin{align*}
+    K\lambda_1\ln\!\left[\frac{-0{,}6+0{,}6185}{-1{,}2+1{,}2094}\right]
+        &= 9\times10^{9} \times 5\times10^{-9}
+           \times \ln\!\left[\frac{0{,}0185}{0{,}0094}\right] \\[6pt]
+        &= 45 \times \ln(1{,}9681) \\[6pt]
+        &= 45 \times 0{,}6784 \\[6pt]
+        &\approx 30{,}68\ [\text{V}]
+\end{align*}
+
+\bigskip
+\noindent\textbf{Segunda integral} ($\lambda_2$, de $x=-L/2$ a $x=0$):
+
+\begin{align*}
+    K\lambda_2\ln\!\left[\frac{0{,}15}{-0{,}6+0{,}6185}\right]
+        &= 9\times10^{9} \times (-7\times10^{-9})
+           \times \ln\!\left[\frac{0{,}15}{0{,}0185}\right] \\[6pt]
+        &= -63 \times \ln(8{,}1081) \\[6pt]
+        &= -63 \times 2{,}0927 \\[6pt]
+        &\approx -131{,}84\ [\text{V}]
+\end{align*}
+
+\bigskip
+\noindent\textbf{Resultado final:}
+
+\[
+    \boxed{V = 30{,}68 + (-131{,}84) \approx -101{,}16\ [\text{V}]}
+\]
+
+\textit{Nota:} La pauta escaneada del certamen indica $V = -101{,}29$~[V];
+la peque\~na diferencia se debe al redondeo intermedio en los c\'alculos.
+
+%========================================
+% INTERPRETACIÓN FÍSICA
+%========================================
+\section*{Interpretaci\'on F\'isica}
+
+El potencial resultante es \textbf{negativo}. Esto se debe a que la densidad de carga
+negativa domina sobre la positiva por dos razones:
+
+\begin{enumerate}[(a)]
+    \item \textbf{Mayor magnitud:} $|\lambda_2| = 7$~[nC/m] $>$ $\lambda_1 = 5$~[nC/m].
+    \item \textbf{Mayor proximidad al punto $P$:} La mitad negativa (de $x=-L/2$ a $x=0$)
+          est\'a m\'as cerca del punto $P$ en el eje $y$, por lo que sus elementos
+          de carga contribuyen con mayor peso al potencial (la distancia
+          $\|\vec{r}-\vec{r}'\|$ es menor y, por tanto, $K\,dq/\|\vec{r}-\vec{r}'\|$
+          tiene mayor valor absoluto).
+\end{enumerate}
+
+La combinaci\'on de ambos efectos hace que la contribuci\'on negativa
+($\approx -131{,}84$~[V]) supere ampliamente a la contribuci\'on positiva
+($\approx +30{,}68$~[V]), resultando en un potencial neto negativo.
+
+\end{document}

@@ -1,0 +1,245 @@
+\documentclass[12pt,letterpaper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[spanish,es-noshorthands]{babel}
+\usepackage{amsmath,amssymb}
+\usepackage{graphicx}
+\usepackage{xcolor}
+\usepackage{tikz}
+\usetikzlibrary{calc,arrows.meta,decorations.markings,patterns}
+\usepackage{enumerate}
+\usepackage[top=2.5cm, bottom=4cm, left=2cm, right=2cm, footskip=40pt]{geometry}
+\usepackage{fancyhdr}
+\usepackage{lastpage}
+
+% Colores institucionales y auxiliares
+\definecolor{ubbblue}{RGB}{0,51,102}
+\definecolor{gaussred}{RGB}{200,50,50}
+
+% Encabezado y pie de p\'agina
+\pagestyle{fancy}
+\fancyhf{}
+\renewcommand{\headrulewidth}{0pt}
+\renewcommand{\footrulewidth}{0.4pt}
+\fancyfoot[L]{%
+    \raisebox{-0.5cm}{\includegraphics[height=1.2cm]{logo ubb.png}}%
+}
+\fancyfoot[C]{%
+    \begin{minipage}[b]{8cm}
+        \centering
+        \footnotesize
+        \textcolor{ubbblue}{\textbf{Dr. Arturo Fern\'andez P\'erez}}\\
+        \scriptsize Departamento de F\'isica -- Universidad del B\'io-B\'io\\
+        \scriptsize \textit{Electro\_Asistente\_AI-UBB}\\
+        \tiny P\'agina \thepage\ de \pageref{LastPage}
+    \end{minipage}%
+}
+\fancyfoot[R]{%
+    \raisebox{-0.5cm}{\includegraphics[height=1.2cm]{logo dfis.png}}%
+}
+
+\fancypagestyle{plain}{%
+    \fancyhf{}
+    \renewcommand{\headrulewidth}{0pt}
+    \renewcommand{\footrulewidth}{0.4pt}
+    \fancyfoot[L]{%
+        \raisebox{-0.5cm}{\includegraphics[height=1.2cm]{logo ubb.png}}%
+    }
+    \fancyfoot[C]{%
+        \begin{minipage}[b]{8cm}
+            \centering
+            \footnotesize
+            \textcolor{ubbblue}{\textbf{Dr. Arturo Fern\'andez P\'erez}}\\
+            \scriptsize Departamento de F\'isica -- Universidad del B\'io-B\'io\\
+            \scriptsize \textit{Electro\_Asistente\_AI-UBB}\\
+            \tiny P\'agina \thepage\ de \pageref{LastPage}
+        \end{minipage}%
+    }
+    \fancyfoot[R]{%
+        \raisebox{-0.5cm}{\includegraphics[height=1.2cm]{logo dfis.png}}%
+    }
+}
+
+\begin{document}
+
+%========================================
+% ENCABEZADO INSTITUCIONAL
+%========================================
+\begin{center}
+    \includegraphics[height=2cm]{logo ubb.png}\\[0.3cm]
+    {\large\textcolor{ubbblue}{\textbf{UNIVERSIDAD DEL B\'IO-B\'IO}}}\\[0.1cm]
+    {\normalsize Facultad de Ciencias -- Departamento de F\'isica}
+\end{center}
+
+\vspace{0.3cm}
+\hrule height 1pt
+\vspace{0.5cm}
+
+{\centering\Large\textbf{Soluci\'on: Ley de Gauss -- Esfera Aislante con Carga Uniforme}\par}
+{\centering\normalsize Densidad de carga volum\'etrica y campo interior\par}
+
+\vspace{0.5cm}
+
+%========================================
+% ENUNCIADO
+%========================================
+\section*{Enunciado}
+
+Considere una esfera de material aislante de radio $a$ y carga total $Q$ uniformemente
+distribuida en su volumen.
+
+\begin{enumerate}[(a)]
+    \item Determine su densidad de carga volum\'etrica $\rho$.
+    \item Determine, usando la Ley de Gauss, el campo el\'ectrico dentro de la esfera
+          ($r < a$).
+\end{enumerate}
+
+\begin{center}
+\begin{tikzpicture}[scale=1.3, >=Stealth]
+    % Esfera aislante con hatching azul
+    \fill[blue!15] (0,0) circle (1.5);
+    \draw[thick, blue!60, pattern=north east lines, pattern color=blue!40]
+        (0,0) circle (1.5);
+    \draw[thick] (0,0) circle (1.5);
+    % Centro
+    \fill (0,0) circle (2pt);
+    % Radio a
+    \draw[->] (0,0) -- ({1.5*cos(30)},{1.5*sin(30)})
+        node[midway, above, font=\small]{$a$};
+    % Superficie gaussiana interior (roja punteada, radio ~0.9)
+    \draw[gaussred, dashed, thick] (0,0) circle (0.9);
+    % Radio r de la superficie gaussiana
+    \draw[->, gaussred, thick] (0,0) -- ({0.9*cos(200)},{0.9*sin(200)})
+        node[midway, below left, font=\small, gaussred]{$r$};
+    % Vectores E y dS en la superficie gaussiana
+    \draw[->, thick, blue!70] ({0.9*cos(60)},{0.9*sin(60)})
+        -- ({1.35*cos(60)},{1.35*sin(60)})
+        node[above right, font=\scriptsize]{$\vec{E}$};
+    \draw[->, thick, gaussred!80!black] ({0.9*cos(60)},{0.9*sin(60)})
+        -- ({1.35*cos(60)},{1.35*sin(60)})
+        node[below right, font=\scriptsize, xshift=4pt, yshift=-18pt]{$d\vec{S}$};
+    % Etiqueta carga
+    \node[font=\normalsize] at (0.05, -0.25) {$Q$};
+\end{tikzpicture}
+\end{center}
+
+%========================================
+% DATOS
+%========================================
+\section*{Datos}
+
+\[
+    Q = \text{carga total de la esfera aislante},
+    \qquad
+    a = \text{radio de la esfera},
+    \qquad
+    \varepsilon_0 = 8{,}85 \times 10^{-12}
+    \ \left[\frac{\text{C}^2}{\text{N}\cdot\text{m}^2}\right]
+\]
+
+%========================================
+% PARTE a)
+%========================================
+\section*{Parte a): Densidad de Carga Volum\'etrica}
+
+La carga $Q$ se distribuye de manera uniforme en el volumen de la esfera de radio $a$.
+Por lo tanto, la densidad de carga volum\'etrica $\rho$ es constante y se obtiene
+dividiendo la carga total por el volumen de la esfera:
+
+\[
+    \rho = \frac{Q}{V_\text{esfera}} = \frac{Q}{\dfrac{4}{3}\pi a^3}
+\]
+
+\[
+    \boxed{\rho = \frac{3Q}{4\pi a^3} \quad \left[\text{C/m}^3\right]}
+\]
+
+\bigskip
+
+%========================================
+% PARTE b)
+%========================================
+\section*{Parte b): Campo El\'ectrico para $r < a$}
+
+\noindent
+\begin{minipage}[c]{0.30\textwidth}
+\centering
+\begin{tikzpicture}[scale=1.15, >=Stealth]
+    % Esfera aislante con hatching azul
+    \fill[blue!15] (0,0) circle (1.2);
+    \draw[thick, blue!60, pattern=north east lines, pattern color=blue!40]
+        (0,0) circle (1.2);
+    \draw[thick] (0,0) circle (1.2);
+    % Centro
+    \fill (0,0) circle (2pt);
+    % Radio a
+    \draw[->] (0,0) -- ({1.2*cos(130)},{1.2*sin(130)})
+        node[above left, font=\scriptsize]{$a$};
+    % Superficie gaussiana interior roja punteada
+    \draw[gaussred, dashed, thick] (0,0) circle (0.7);
+    % Radio r
+    \draw[->, gaussred, thick] (0,0) -- (0.7,0)
+        node[right, font=\scriptsize, gaussred]{$r$};
+    % Vectores E y dS
+    \draw[->, thick, blue!70] ({0.7*cos(70)},{0.7*sin(70)})
+        -- ({1.1*cos(70)},{1.1*sin(70)})
+        node[above right, font=\tiny]{$\vec{E},\,d\vec{S}$};
+    % Etiqueta carga
+    \node[font=\scriptsize] at (0, -0.25) {$Q$};
+\end{tikzpicture}
+\end{minipage}%
+\hfill
+\begin{minipage}[c]{0.67\textwidth}
+Por simetr\'ia esf\'erica, el campo $\vec{E} = E(r)\,\hat{r}$ es constante en m\'odulo
+y radial sobre toda la superficie gaussiana esf\'erica de radio $r < a$.
+Los vectores $\vec{E}$ y $d\vec{S}$ son paralelos, por lo que:
+
+\[
+    \oint \vec{E}\cdot d\vec{S} = E \cdot 4\pi r^2
+\]
+
+La carga encerrada dentro de la superficie gaussiana de radio $r$ se calcula a
+partir de $\rho$:
+
+\begin{align*}
+    Q_\text{enc}
+        &= \rho \cdot \frac{4}{3}\pi r^3 \\[6pt]
+        &= \frac{Q}{\dfrac{4}{3}\pi a^3} \cdot \frac{4}{3}\pi r^3 \\[6pt]
+        &= Q\left(\frac{r}{a}\right)^3
+\end{align*}
+\end{minipage}
+
+\bigskip
+
+Aplicando la Ley de Gauss:
+
+\[
+    \oint \vec{E}\cdot d\vec{S} = \frac{Q_\text{enc}}{\varepsilon_0}
+\]
+
+\begin{align*}
+    E \oint dS
+        &= \frac{Q}{\varepsilon_0}\left(\frac{r}{a}\right)^3 \\[8pt]
+    E \cdot 4\pi r^2
+        &= \frac{Q}{\varepsilon_0} \cdot \frac{r^3}{a^3} \\[8pt]
+    E
+        &= \frac{Q}{4\pi\varepsilon_0} \cdot \frac{r}{a^3}
+\end{align*}
+
+\[
+    \boxed{\vec{E} = \frac{Q}{4\pi\varepsilon_0\,a^3}\,r\,\hat{r} \quad [\text{N/C}]}
+\]
+
+\bigskip
+
+\textbf{Interpretaci\'on f\'isica:} El campo el\'ectrico dentro de la esfera aislante
+crece \textit{linealmente} con $r$, siendo cero en el centro ($r = 0$) y m\'aximo en
+la superficie ($r = a$), donde vale:
+\[
+    E(a) = \frac{Q}{4\pi\varepsilon_0\,a^2}
+\]
+Este valor es id\'entico al campo producido por una carga puntual $Q$ a una distancia
+$a$, lo cual es coherente con el principio de superposici\'on: visto desde la
+superficie, la esfera uniformemente cargada se comporta como si toda su carga estuviera
+concentrada en el centro.
+
+\end{document}

@@ -1,0 +1,378 @@
+\documentclass[12pt,letterpaper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[spanish,es-noshorthands]{babel}
+\usepackage{amsmath,amssymb}
+\usepackage{graphicx}
+\usepackage{xcolor}
+\usepackage{tikz}
+\usetikzlibrary{calc,arrows.meta,decorations.markings,patterns}
+\usepackage{enumerate}
+\usepackage[top=2.5cm, bottom=4cm, left=2cm, right=2cm, footskip=40pt]{geometry}
+\usepackage{fancyhdr}
+\usepackage{lastpage}
+
+% Colores institucionales y auxiliares
+\definecolor{ubbblue}{RGB}{0,51,102}
+\definecolor{gaussred}{RGB}{200,50,50}
+
+% Encabezado y pie de p\'agina
+\pagestyle{fancy}
+\fancyhf{}
+\renewcommand{\headrulewidth}{0pt}
+\renewcommand{\footrulewidth}{0.4pt}
+\fancyfoot[L]{%
+    \raisebox{-0.5cm}{\includegraphics[height=1.2cm]{logo ubb.png}}%
+}
+\fancyfoot[C]{%
+    \begin{minipage}[b]{8cm}
+        \centering
+        \footnotesize
+        \textcolor{ubbblue}{\textbf{Dr. Arturo Fern\'andez P\'erez}}\\
+        \scriptsize Departamento de F\'isica -- Universidad del B\'io-B\'io\\
+        \scriptsize \textit{Electro\_Asistente\_AI-UBB}\\
+        \tiny P\'agina \thepage\ de \pageref{LastPage}
+    \end{minipage}%
+}
+\fancyfoot[R]{%
+    \raisebox{-0.5cm}{\includegraphics[height=1.2cm]{logo dfis.png}}%
+}
+
+\fancypagestyle{plain}{%
+    \fancyhf{}
+    \renewcommand{\headrulewidth}{0pt}
+    \renewcommand{\footrulewidth}{0.4pt}
+    \fancyfoot[L]{%
+        \raisebox{-0.5cm}{\includegraphics[height=1.2cm]{logo ubb.png}}%
+    }
+    \fancyfoot[C]{%
+        \begin{minipage}[b]{8cm}
+            \centering
+            \footnotesize
+            \textcolor{ubbblue}{\textbf{Dr. Arturo Fern\'andez P\'erez}}\\
+            \scriptsize Departamento de F\'isica -- Universidad del B\'io-B\'io\\
+            \scriptsize \textit{Electro\_Asistente\_AI-UBB}\\
+            \tiny P\'agina \thepage\ de \pageref{LastPage}
+        \end{minipage}%
+    }
+    \fancyfoot[R]{%
+        \raisebox{-0.5cm}{\includegraphics[height=1.2cm]{logo dfis.png}}%
+    }
+}
+
+\begin{document}
+
+%========================================
+% ENCABEZADO INSTITUCIONAL
+%========================================
+\begin{center}
+    \includegraphics[height=2cm]{logo ubb.png}\\[0.3cm]
+    {\large\textcolor{ubbblue}{\textbf{UNIVERSIDAD DEL B\'IO-B\'IO}}}\\[0.1cm]
+    {\normalsize Facultad de Ciencias -- Departamento de F\'isica}
+\end{center}
+
+\vspace{0.3cm}
+\hrule height 1pt
+\vspace{0.5cm}
+
+{\centering\Large\textbf{Soluci\'on: Ley de Gauss -- Simetr\'ia Esf\'erica}\par}
+{\centering\normalsize Problema~1 (Versi\'on~1): Esfera maciza aislante y cascar\'on esf\'erico conductor\par}
+
+\vspace{0.5cm}
+
+%========================================
+% ENUNCIADO
+%========================================
+\section*{Enunciado del Problema}
+
+Considere una esfera maciza aislante de radio $a$, con carga $q_1 = -3Q$ distribuida de forma homog\'enea. Rodeando esa esfera hay un cascar\'on esf\'erico conductor de radio interior $b$ y radio exterior $c$, con carga total $q_2 = 4Q$ distribuida de forma homog\'enea. Para este sistema, obtener utilizando la Ley de Gauss:
+
+\begin{enumerate}[(a)]
+    \item \textbf{(16~pts)} La magnitud del campo el\'ectrico en las regiones:
+          (i)~$r < a$,\quad (ii)~$a < r < b$,\quad (iii)~$b < r < c$,\quad (iv)~$r > c$.
+    \item \textbf{(3~pts)} Si $a = 10$~[cm], $b = 12$~[cm], $c = 15$~[cm] y $Q = 120$~[$\mu$C],
+          calcular la magnitud del campo el\'ectrico a $r = 11$~[cm].
+\end{enumerate}
+
+\begin{center}
+\begin{tikzpicture}[scale=1.45, >=Stealth]
+    % Cascar\'on conductor (entre b y c) -- gris
+    \fill[gray!30] (0,0) circle (1.5);
+    \fill[white]   (0,0) circle (1.0);
+    % Esfera maciza aislante -- azul claro
+    \fill[blue!12] (0,0) circle (0.6);
+    % Contornos
+    \draw[thick] (0,0) circle (0.6);
+    \draw[thick] (0,0) circle (1.0);
+    \draw[thick] (0,0) circle (1.5);
+    % Centro
+    \fill (0,0) circle (2pt);
+    % Radios con etiquetas
+    \draw[->] (0,0) -- (0.6, 0)
+        node[midway, above, font=\small]{$a$};
+    \draw[->] (0,0) -- (0,-1.0)
+        node[midway, right, font=\small]{$b$};
+    \draw[->] (0,0) -- ({1.5*cos(52)},{1.5*sin(52)})
+        node[midway, above left, font=\small]{$c$};
+    % Cargas
+    \node[font=\small] at (0, 0.3) {$-3Q$};
+    \node[font=\small] at (0, 1.24) {$4Q$};
+\end{tikzpicture}
+\end{center}
+
+%========================================
+% DATOS
+%========================================
+\section*{Datos del Problema}
+
+\[
+    q_1 = -3Q \quad (\text{esfera maciza aislante, radio }a),
+    \qquad
+    q_2 = 4Q \quad (\text{cascar\'on conductor, radios }b\text{ y }c)
+\]
+\[
+    \varepsilon_0 = 8{,}85 \times 10^{-12}
+    \ \left[\frac{\text{C}^2}{\text{N}\cdot\text{m}^2}\right]
+\]
+
+%========================================
+% PARTE a)
+%========================================
+\section*{Parte a): Magnitud del Campo El\'ectrico}
+
+Por simetr\'ia esf\'erica, $\vec{E} = E(r)\,\hat{r}$ es constante en m\'odulo sobre cualquier
+superficie esf\'erica de radio $r$. La Ley de Gauss establece:
+
+\[
+    \oint \vec{E}\cdot d\vec{A} = \frac{q_\text{enc}}{\varepsilon_0}
+\]
+
+El lado izquierdo se desarrolla en coordenadas esf\'ericas
+($dA = r^2\operatorname{sen}\phi\,d\phi\,d\theta$):
+
+\begin{align*}
+    \oint \vec{E}\cdot d\vec{A}
+        &= \int_0^{2\pi}\!\int_0^{\pi}
+           E\,r^2\,\operatorname{sen}\phi\;d\phi\;d\theta \\[4pt]
+        &= E\,r^2
+           \int_0^{2\pi}\!d\theta
+           \cdot
+           \int_0^{\pi}\operatorname{sen}\phi\;d\phi \\[4pt]
+        &= E\,r^2
+           \cdot \bigl(\theta\bigr)\big|_0^{2\pi}
+           \cdot \bigl(-\cos\phi\bigr)\big|_0^{\pi} \\[4pt]
+        &= E\,r^2 \cdot 2\pi \cdot 2
+         = 4\pi r^2\,E
+\end{align*}
+
+De modo que en \textbf{todas las regiones}:
+\[
+    E \cdot 4\pi r^2 = \frac{q_\text{enc}}{\varepsilon_0}
+\]
+Solo cambia $q_\text{enc}$ de una regi\'on a otra.
+
+\bigskip
+
+%--------------------------------------------
+\subsection*{i) $r < a$: Dentro de la esfera aislante}
+
+\noindent
+\begin{minipage}[c]{0.30\textwidth}
+\centering
+\begin{tikzpicture}[scale=1.15, >=Stealth]
+    \fill[blue!12] (0,0) circle (1.2);
+    \draw[thick]   (0,0) circle (1.2);
+    \fill (0,0) circle (2pt);
+    % Superficie gaussiana (roja punteada, r < a)
+    \draw[gaussred, dashed, thick] (0,0) circle (0.7);
+    \draw[->, gaussred, thick] (0,0) -- (0.7,0)
+        node[right, font=\scriptsize]{$r$};
+    % Radio a
+    \draw[->] (0,0) -- ({1.2*cos(130)},{1.2*sin(130)})
+        node[above left, font=\scriptsize]{$a$};
+    \node[font=\scriptsize] at (0,0.25) {$-3Q$};
+\end{tikzpicture}
+\end{minipage}%
+\hfill
+\begin{minipage}[c]{0.67\textwidth}
+La superficie gaussiana (radio $r < a$) encierra solo la fracci\'on
+de carga proporcional al volumen encerrado:
+\[
+    \frac{q_\text{enc}}{-3Q}
+    = \frac{\tfrac{4}{3}\pi r^3}{\tfrac{4}{3}\pi a^3}
+    \qquad\Rightarrow\qquad
+    q_\text{enc} = \frac{-3Q\,r^3}{a^3}
+\]
+Sustituyendo en la Ley de Gauss:
+\begin{align*}
+    E \cdot 4\pi r^2 &= \frac{-3Q\,r^3}{a^3\,\varepsilon_0} \\[6pt]
+    \vec{E}         &= \frac{-3Q\,r}{4\pi\varepsilon_0\,a^3}\,\hat{r}
+\end{align*}
+\end{minipage}
+
+\[
+    \boxed{\vec{E} = \frac{-3Q\,r}{4\pi\varepsilon_0\,a^3}\,\hat{r} \quad [\text{N/C}]}
+\]
+
+\bigskip
+
+%--------------------------------------------
+\subsection*{ii) $a < r < b$: Entre la esfera aislante y el cascar\'on}
+
+\noindent
+\begin{minipage}[c]{0.30\textwidth}
+\centering
+\begin{tikzpicture}[scale=1.15, >=Stealth]
+    \fill[blue!12] (0,0) circle (0.65);
+    \draw[thick]   (0,0) circle (0.65);
+    \fill (0,0) circle (2pt);
+    % Superficie gaussiana (roja punteada, a < r < b)
+    \draw[gaussred, dashed, thick] (0,0) circle (1.1);
+    \draw[->, gaussred, thick] (0,0) -- (1.1,0)
+        node[right, font=\scriptsize]{$r$};
+    % Radio a
+    \draw[->] (0,0) -- ({0.65*cos(130)},{0.65*sin(130)})
+        node[above left, font=\scriptsize]{$a$};
+\end{tikzpicture}
+\end{minipage}%
+\hfill
+\begin{minipage}[c]{0.67\textwidth}
+La superficie gaussiana encierra \textbf{completamente} la esfera aislante:
+\[
+    q_\text{enc} = -3Q
+\]
+Sustituyendo:
+\begin{align*}
+    E \cdot 4\pi r^2 &= \frac{-3Q}{\varepsilon_0} \\[6pt]
+    \vec{E}         &= \frac{-3Q}{4\pi\varepsilon_0\,r^2}\,\hat{r}
+\end{align*}
+\end{minipage}
+
+\[
+    \boxed{\vec{E} = \frac{-3Q}{4\pi\varepsilon_0\,r^2}\,\hat{r} \quad [\text{N/C}]}
+\]
+
+\bigskip
+
+%--------------------------------------------
+\subsection*{iii) $b < r < c$: Dentro del cascar\'on conductor}
+
+\noindent
+\begin{minipage}[c]{0.30\textwidth}
+\centering
+\begin{tikzpicture}[scale=1.15, >=Stealth]
+    \fill[gray!30] (0,0) circle (1.4);
+    \fill[white]   (0,0) circle (0.85);
+    \fill[blue!12] (0,0) circle (0.50);
+    \draw[thick] (0,0) circle (0.50);
+    \draw[thick] (0,0) circle (0.85);
+    \draw[thick] (0,0) circle (1.40);
+    \fill (0,0) circle (2pt);
+    % Superficie gaussiana dentro del conductor
+    \draw[gaussred, dashed, thick] (0,0) circle (1.15);
+    \draw[->, gaussred, thick] (0,0) -- ({1.15*cos(-30)},{1.15*sin(-30)})
+        node[right, font=\scriptsize]{$r$};
+    % Etiquetas
+    \node[font=\scriptsize] at ({0.50*cos(55)+0.05},{0.50*sin(55)+0.12}) {$a$};
+    \node[font=\scriptsize, above left] at ({0.85*cos(130)},{0.85*sin(130)}) {$b$};
+    \node[font=\scriptsize, above left] at ({1.40*cos(130)},{1.40*sin(130)}) {$c$};
+\end{tikzpicture}
+\end{minipage}%
+\hfill
+\begin{minipage}[c]{0.67\textwidth}
+La superficie gaussiana est\'a \textbf{dentro del material conductor}.
+En equilibrio electrost\'atico no existe campo el\'ectrico en el interior de
+un conductor.
+
+\[
+    \boxed{\vec{E} = \vec{0} \quad [\text{N/C}]}
+\]
+
+\textit{Nota:} La carga $-3Q$ de la esfera induce $+3Q$ en la superficie
+interior del cascar\'on ($r = b$). Los $+Q$ restantes de la carga $4Q$ del
+conductor quedan sobre la superficie exterior ($r = c$).
+\end{minipage}
+
+\bigskip
+
+%--------------------------------------------
+\subsection*{iv) $r > c$: Exterior al cascar\'on}
+
+\noindent
+\begin{minipage}[c]{0.30\textwidth}
+\centering
+\begin{tikzpicture}[scale=1.0, >=Stealth]
+    \fill[gray!30] (0,0) circle (1.0);
+    \fill[white]   (0,0) circle (0.65);
+    \fill[blue!12] (0,0) circle (0.40);
+    \draw[thick] (0,0) circle (0.40);
+    \draw[thick] (0,0) circle (0.65);
+    \draw[thick] (0,0) circle (1.00);
+    \fill (0,0) circle (2pt);
+    % Superficie gaussiana exterior
+    \draw[gaussred, dashed, thick] (0,0) circle (1.38);
+    \draw[->, gaussred, thick] (0,0) -- (1.38,0)
+        node[right, font=\scriptsize]{$r$};
+    % Etiquetas
+    \node[font=\scriptsize] at (0, 0.54) {$a$};
+    \node[font=\scriptsize, right] at (0.66, 0.07) {$b$};
+    \node[font=\scriptsize, above right] at ({cos(45)},{sin(45)}) {$c$};
+\end{tikzpicture}
+\end{minipage}%
+\hfill
+\begin{minipage}[c]{0.67\textwidth}
+La superficie gaussiana encierra la totalidad de las cargas:
+\[
+    q_\text{enc} = q_1 + q_2 = -3Q + 4Q = Q
+\]
+Sustituyendo:
+\begin{align*}
+    E \cdot 4\pi r^2 &= \frac{Q}{\varepsilon_0} \\[6pt]
+    \vec{E}         &= \frac{Q}{4\pi\varepsilon_0\,r^2}\,\hat{r}
+\end{align*}
+\end{minipage}
+
+\[
+    \boxed{\vec{E} = \frac{Q}{4\pi\varepsilon_0\,r^2}\,\hat{r} \quad [\text{N/C}]}
+\]
+
+%========================================
+% RESUMEN
+%========================================
+\section*{Resumen: Campo el\'ectrico seg\'un la regi\'on}
+
+\[
+\vec{E}(r) =
+\begin{cases}
+    \dfrac{-3Q\,r}{4\pi\varepsilon_0\,a^3}\,\hat{r}  & r < a        \\[10pt]
+    \dfrac{-3Q}{4\pi\varepsilon_0\,r^2}\,\hat{r}     & a < r < b    \\[10pt]
+    \vec{0}                                            & b < r < c    \\[10pt]
+    \dfrac{Q}{4\pi\varepsilon_0\,r^2}\,\hat{r}        & r > c
+\end{cases}
+\]
+
+%========================================
+% PARTE b)
+%========================================
+\section*{Parte b): C\'alculo Num\'erico}
+
+Con $a = 0{,}10$~[m], $b = 0{,}12$~[m], $c = 0{,}15$~[m], $Q = 120$~[$\mu$C] y $r = 0{,}11$~[m].
+
+Como $a < r < b$ (pues $0{,}10 < 0{,}11 < 0{,}12$~[m]), corresponde la expresi\'on de la regi\'on~(ii):
+
+\begin{align*}
+    \vec{E} &= \frac{-3Q}{4\pi\varepsilon_0\,r^2}\,\hat{r} \\[8pt]
+            &= \frac{-3 \times 120\times10^{-6}\ [\text{C}]}
+                   {4\pi \times (0{,}11)^2\ [\text{m}^2]
+                    \times 8{,}85\times10^{-12}
+                    \left[\dfrac{\text{C}^2}{\text{N}\cdot\text{m}^2}\right]}\,\hat{r} \\[8pt]
+            &= \frac{-3{,}6\times10^{-4}}{1{,}346\times10^{-12}}\,\hat{r}
+\end{align*}
+
+\[
+    \boxed{\vec{E} = -2{,}675 \times 10^{8}\,\hat{r}\ [\text{N/C}]}
+\]
+
+El coeficiente negativo de $\hat{r}$ indica que el campo apunta radialmente hacia el centro
+(la carga neta encerrada en esta regi\'on es $-3Q < 0$).
+
+\end{document}
