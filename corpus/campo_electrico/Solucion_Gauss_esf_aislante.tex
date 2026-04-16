@@ -105,18 +105,6 @@ distribuida en su volumen.
     % Radio a
     \draw[->] (0,0) -- ({1.5*cos(30)},{1.5*sin(30)})
         node[midway, above, font=\small]{$a$};
-    % Superficie gaussiana interior (roja punteada, radio ~0.9)
-    \draw[gaussred, dashed, thick] (0,0) circle (0.9);
-    % Radio r de la superficie gaussiana
-    \draw[->, gaussred, thick] (0,0) -- ({0.9*cos(200)},{0.9*sin(200)})
-        node[midway, below left, font=\small, gaussred]{$r$};
-    % Vectores E y dS en la superficie gaussiana
-    \draw[->, thick, blue!70] ({0.9*cos(60)},{0.9*sin(60)})
-        -- ({1.35*cos(60)},{1.35*sin(60)})
-        node[above right, font=\scriptsize]{$\vec{E}$};
-    \draw[->, thick, gaussred!80!black] ({0.9*cos(60)},{0.9*sin(60)})
-        -- ({1.35*cos(60)},{1.35*sin(60)})
-        node[below right, font=\scriptsize, xshift=4pt, yshift=-18pt]{$d\vec{S}$};
     % Etiqueta carga
     \node[font=\normalsize] at (0.05, -0.25) {$Q$};
 \end{tikzpicture}
@@ -179,10 +167,14 @@ dividiendo la carga total por el volumen de la esfera:
     % Radio r
     \draw[->, gaussred, thick] (0,0) -- (0.7,0)
         node[right, font=\scriptsize, gaussred]{$r$};
-    % Vectores E y dS
-    \draw[->, thick, blue!70] ({0.7*cos(70)},{0.7*sin(70)})
-        -- ({1.1*cos(70)},{1.1*sin(70)})
-        node[above right, font=\tiny]{$\vec{E},\,d\vec{S}$};
+    % Vector dS en rojo (angulo 70 grados)
+    \draw[->, thick, red] ({0.7*cos(70)},{0.7*sin(70)})
+        -- ({1.18*cos(70)},{1.18*sin(70)})
+        node[above right, font=\tiny, red]{$d\vec{S}$};
+    % Vector E en azul (angulo 30 grados)
+    \draw[->, thick, blue!70] ({0.7*cos(30)},{0.7*sin(30)})
+        -- ({1.18*cos(30)},{1.18*sin(30)})
+        node[right, font=\tiny, blue!70]{$\vec{E}$};
     % Etiqueta carga
     \node[font=\scriptsize] at (0, -0.25) {$Q$};
 \end{tikzpicture}
@@ -193,15 +185,19 @@ Por simetr\'ia esf\'erica, el campo $\vec{E} = E(r)\,\hat{r}$ es constante en m\
 y radial sobre toda la superficie gaussiana esf\'erica de radio $r < a$.
 Los vectores $\vec{E}$ y $d\vec{S}$ son paralelos, por lo que:
 
-\[
-    \oint \vec{E}\cdot d\vec{S} = E \cdot 4\pi r^2
-\]
+\begin{align*}
+    \oint \vec{E}\cdot d\vec{S}
+        &= \oint E\,dS\cos 0^\circ \\
+        &= E \oint dS \\
+        &= E\,(4\pi r^2)
+\end{align*}
 
 La carga encerrada dentro de la superficie gaussiana de radio $r$ se calcula a
 partir de $\rho$:
 
 \begin{align*}
     Q_\text{enc}
+        &= \rho\,V_\text{enc} \\[6pt]
         &= \rho \cdot \frac{4}{3}\pi r^3 \\[6pt]
         &= \frac{Q}{\dfrac{4}{3}\pi a^3} \cdot \frac{4}{3}\pi r^3 \\[6pt]
         &= Q\left(\frac{r}{a}\right)^3
@@ -219,15 +215,21 @@ Aplicando la Ley de Gauss:
 \begin{align*}
     E \oint dS
         &= \frac{Q}{\varepsilon_0}\left(\frac{r}{a}\right)^3 \\[8pt]
-    E \cdot 4\pi r^2
+    E\,(4\pi r^2)
         &= \frac{Q}{\varepsilon_0} \cdot \frac{r^3}{a^3} \\[8pt]
     E
         &= \frac{Q}{4\pi\varepsilon_0} \cdot \frac{r}{a^3}
 \end{align*}
 
 \[
-    \boxed{\vec{E} = \frac{Q}{4\pi\varepsilon_0\,a^3}\,r\,\hat{r} \quad [\text{N/C}]}
+    \boxed{\vec{E} = \left(\frac{Q}{4\pi\varepsilon_0\,a^3}\,r\right)\hat{r} \quad [\text{N/C}]}
 \]
+
+\smallskip
+\noindent donde $\hat{r}$ es el vector unitario radial que apunta desde el centro de la
+esfera hacia afuera. Como la densidad de carga es positiva ($\rho > 0$ cuando $Q > 0$),
+el campo el\'ectrico apunta en la direcci\'on radial saliente, coherente con la
+repulsi\'on que ejercer\'ia una carga positiva de prueba colocada en su interior.
 
 \bigskip
 

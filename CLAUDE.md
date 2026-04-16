@@ -173,7 +173,9 @@ For solutions that draw Gaussian surfaces (sphere/shell cross-sections), also ad
 - `Solucion_G[N]P[N][uni|bid].tex` — guide N, problem N (`uni`=unidimensional, `bid`=bidimensional)
 - `Solucion_G[N]_P[list].tex` — guide N, multiple problems in one file
 - `Solucion_C1P[N]_[year]-[semester].tex` — certamen problem breakdown (e.g. `Solucion_C1P1_2024-1.tex`)
-- `Solucion_Certamen1_[year].tex` — full certamen solution
+- `Solucion_Guia[N].tex` — full guide solution (e.g. `Solucion_Guia1.tex`)
+- `Solucion_Certamen[N]_[year].tex` — full certamen solution (e.g. `Solucion_Certamen1_2023.tex`, `Solucion_Certamen2_2020.tex`)
+- `Solucion_Certamen[N]_[year]_Rec.tex` — certamen recovery/retake solution
 - `Solucion_[topic].tex` — topic-specific (e.g. `Solucion_dipolo_HCl.tex`, `Solucion_clase_20-03.tex`)
 - `Solucion_DDMM.tex` — date-based shorthand (e.g. `Solucion_2703.tex` = class on March 27)
 - `Solucion_Tarea[N]_[year]-[semester].tex` — homework solution (e.g. `Solucion_Tarea1_2026-1.tex`)
