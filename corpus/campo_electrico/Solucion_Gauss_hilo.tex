@@ -1,0 +1,539 @@
+\documentclass[12pt,letterpaper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[spanish,es-noshorthands]{babel}
+\usepackage{amsmath,amssymb}
+\usepackage{graphicx}
+\usepackage{xcolor}
+\usepackage{tikz}
+\usetikzlibrary{calc,arrows.meta,decorations.markings,patterns}
+\usepackage{enumerate}
+\usepackage[top=2.5cm, bottom=4cm, left=2cm, right=2cm, footskip=40pt]{geometry}
+\usepackage{fancyhdr}
+\usepackage{lastpage}
+
+% Colores institucionales y auxiliares
+\definecolor{ubbblue}{RGB}{0,51,102}
+\definecolor{gaussred}{RGB}{200,50,50}
+
+% Encabezado y pie de p\'agina
+\pagestyle{fancy}
+\fancyhf{}
+\renewcommand{\headrulewidth}{0pt}
+\renewcommand{\footrulewidth}{0.4pt}
+\fancyfoot[L]{%
+    \raisebox{-0.5cm}{\includegraphics[height=1.2cm]{logo ubb.png}}%
+}
+\fancyfoot[C]{%
+    \begin{minipage}[b]{8cm}
+        \centering
+        \footnotesize
+        \textcolor{ubbblue}{\textbf{Dr. Arturo Fern\'andez P\'erez}}\\
+        \scriptsize Departamento de F\'isica -- Universidad del B\'io-B\'io\\
+        \scriptsize \textit{Electro\_Asistente\_AI-UBB}\\
+        \tiny P\'agina \thepage\ de \pageref{LastPage}
+    \end{minipage}%
+}
+\fancyfoot[R]{%
+    \raisebox{-0.5cm}{\includegraphics[height=1.2cm]{logo dfis.png}}%
+}
+
+\fancypagestyle{plain}{%
+    \fancyhf{}
+    \renewcommand{\headrulewidth}{0pt}
+    \renewcommand{\footrulewidth}{0.4pt}
+    \fancyfoot[L]{%
+        \raisebox{-0.5cm}{\includegraphics[height=1.2cm]{logo ubb.png}}%
+    }
+    \fancyfoot[C]{%
+        \begin{minipage}[b]{8cm}
+            \centering
+            \footnotesize
+            \textcolor{ubbblue}{\textbf{Dr. Arturo Fern\'andez P\'erez}}\\
+            \scriptsize Departamento de F\'isica -- Universidad del B\'io-B\'io\\
+            \scriptsize \textit{Electro\_Asistente\_AI-UBB}\\
+            \tiny P\'agina \thepage\ de \pageref{LastPage}
+        \end{minipage}%
+    }
+    \fancyfoot[R]{%
+        \raisebox{-0.5cm}{\includegraphics[height=1.2cm]{logo dfis.png}}%
+    }
+}
+
+\begin{document}
+
+%========================================
+% ENCABEZADO INSTITUCIONAL
+%========================================
+\begin{center}
+    \includegraphics[height=2cm]{logo ubb.png}\\[0.3cm]
+    {\large\textcolor{ubbblue}{\textbf{UNIVERSIDAD DEL B\'IO-B\'IO}}}\\[0.1cm]
+    {\normalsize Facultad de Ciencias -- Departamento de F\'isica}
+\end{center}
+
+\vspace{0.3cm}
+\hrule height 1pt
+\vspace{0.5cm}
+
+{\centering\Large\textbf{Soluci\'on: Ley de Gauss -- Alambre Infinito de Cargas}\par}
+{\centering\normalsize Simetr\'ia cil\'indrica: superficie gaussiana cil\'indrica coaxial\par}
+
+\vspace{0.5cm}
+
+%========================================
+% ENUNCIADO
+%========================================
+\section*{Enunciado del Problema}
+
+Un alambre infinito recto aislante posee carga el\'ectrica distribuida uniformemente
+a lo largo de su longitud con densidad lineal $\lambda = 3{,}5\ [\text{nC/m}]$.
+Utilizando la Ley de Gauss, determinar la magnitud y direcci\'on del campo el\'ectrico
+en cualquier punto del espacio situado a una distancia $r$ del alambre.
+
+\begin{center}
+\begin{tikzpicture}[scale=1.20, >=Stealth]
+
+    %=== ALAMBRE INFINITO (eje central, dibujado primero) ===%
+    \fill[blue!18] (-0.13,-3.30) rectangle (0.13,3.30);
+    \draw[thick, blue!58!black] (-0.13,-3.30)--(-0.13,3.30);
+    \draw[thick, blue!58!black] ( 0.13,-3.30)--( 0.13,3.30);
+    \foreach \y in {-2.6,-1.8,-1.0,-0.2,0.6,1.4,2.2}{
+        \node[font=\scriptsize, blue!82!black] at (0,\y){$+$};
+    }
+    \node[blue!80!black, font=\small, right] at (0.16, 2.9){$\lambda$};
+    \node[font=\large] at (0, 3.65){$\vdots$};
+    \node[font=\large] at (0,-3.65){$\vdots$};
+
+    %=== SUPERFICIE GAUSSIANA: CILINDRO COAXIAL ===%
+    % Tapa superior: elipse completa, relleno y contorno
+    \fill[gaussred!12] (0,2.40) ellipse (2.10 and 0.58);
+    \draw[gaussred, thick] (0,2.40) ellipse (2.10 and 0.58);
+
+    % Bordes laterales (izquierdo y derecho)
+    \draw[gaussred, thick] (-2.10,-2.40)--(-2.10,2.40);
+    \draw[gaussred, thick] ( 2.10,-2.40)--( 2.10,2.40);
+
+    % Tapa inferior: arco frontal (visible, s\'olido) desde el punto izquierdo
+    \draw[gaussred, thick]        (-2.10,-2.40) arc(180:360:2.10 and 0.58);
+    % Tapa inferior: arco trasero (oculto, punteado) desde el punto derecho
+    \draw[gaussred, dashed, thick] (2.10,-2.40) arc(0:180:2.10 and 0.58);
+
+    %=== RADIO r (desde el eje hasta la pared lateral, en la cintura) ===%
+    \draw[->, thin, black!70] (0.13, 0.35)--(2.10, 0.35)
+        node[midway, above, font=\small]{$r$};
+
+    %=== LONGITUD L (borde derecho, de tapa a tapa) ===%
+    \draw[{Stealth}-{Stealth}, thin] (2.55,-2.40)--(2.55,2.40)
+        node[midway, right, font=\small]{$L$};
+
+    %=== VECTORES NORMALES ===%
+    % Lateral: \hat{n} radial hacia afuera (derecha)
+    \draw[->, thick, black!65] (2.10, 0.80)--(3.05, 0.80)
+        node[right, font=\small]{$\hat{n}_\text{lat}$};
+    % Tapa superior: \hat{n} hacia arriba
+    \draw[->, thick, black!65] (-0.80, 2.40+0.58)--(-0.80, 3.55)
+        node[above, font=\scriptsize]{$\hat{n}_\text{sup}$};
+    % Tapa inferior: \hat{n} hacia abajo
+    \draw[->, thick, black!65] (-0.80,-2.40-0.58)--(-0.80,-3.55)
+        node[below, font=\scriptsize]{$\hat{n}_\text{inf}$};
+
+    %=== VECTORES DE CAMPO ELÉCTRICO (radiales, perpendiculares al eje) ===%
+    % Principal (derecha, a la altura del ecuador)
+    \draw[->, very thick, blue!72!black] (2.10, 0)--(3.40, 0)
+        node[right, font=\small]{$\vec{E}$};
+    % Principal (izquierda)
+    \draw[->, very thick, blue!72!black] (-2.10, 0)--(-3.40, 0);
+    % Vectores complementarios (otras alturas, m\'as tenues)
+    \foreach \yy in {1.40,-1.40}{
+        \draw[->, thin, blue!38] ( 2.10,\yy)--( 3.00,\yy);
+        \draw[->, thin, blue!38] (-2.10,\yy)--(-3.00,\yy);
+    }
+    % Vector "al frente" (en perspectiva 3D: indica simetr\'ia radial completa)
+    \draw[->, thick, blue!55!black] (0.75,-2.40-0.58)--(1.60,-3.45);
+
+    %=== ANOTACI\'ON "Sup. Gaussiana" ===%
+    \node[gaussred, font=\footnotesize, align=center] at (4.10, 2.05)
+        {\textit{Sup.}\\\textit{Gaussiana}};
+    \draw[->, gaussred, thin] (3.75, 1.80)--(2.15, 0.95);
+
+\end{tikzpicture}
+\end{center}
+
+%========================================
+% DATOS
+%========================================
+\section*{Datos del Problema}
+
+\[
+    \lambda = 3{,}5 \times 10^{-9}\ [\text{C/m}],
+    \qquad
+    \varepsilon_0 = 8{,}85 \times 10^{-12}
+    \ \left[\frac{\text{C}^2}{\text{N}\cdot\text{m}^2}\right],
+    \qquad
+    K = \frac{1}{4\pi\varepsilon_0} = 9{,}0 \times 10^9
+    \ \left[\frac{\text{N}\cdot\text{m}^2}{\text{C}^2}\right]
+\]
+
+%========================================
+% ANÁLISIS CUALITATIVO
+%========================================
+\section*{An\'alisis Cualitativo}
+
+Por la simetr\'ia del alambre infinito con carga uniforme:
+\begin{itemize}
+    \item \textbf{Direcci\'on del campo}: $\vec{E}$ es perpendicular al alambre en todo
+          punto (direcci\'on radial $\hat{r}$). Las componentes paralelas al eje se
+          cancelan por simetr\'ia, ya que por cada elemento de carga en $+z$ existe
+          un elemento sim\'etrico en $-z$.
+    \item \textbf{Magnitud}: $|\vec{E}|$ depende \'unicamente de la distancia radial $r$
+          al eje, no de la posici\'on axial ni del \'angulo azimutal.
+    \item \textbf{Orientaci\'on}: con $\lambda > 0$, el campo apunta radialmente
+          \emph{alejándose} del alambre en todas las direcciones.
+\end{itemize}
+Estas propiedades dictan la elecci\'on de la superficie gaussiana.
+
+%========================================
+% DESARROLLO
+%========================================
+\section*{Desarrollo: Aplicaci\'on de la Ley de Gauss}
+
+\subsection*{Paso 1: Elecci\'on de la superficie gaussiana}
+
+\noindent
+\begin{minipage}[c]{0.32\textwidth}
+\centering
+\begin{tikzpicture}[scale=0.82, >=Stealth]
+    % Alambre
+    \fill[blue!18] (-0.10,-2.5) rectangle (0.10,2.5);
+    \draw[thick, blue!58!black] (-0.10,-2.5)--(-0.10,2.5);
+    \draw[thick, blue!58!black] ( 0.10,-2.5)--( 0.10,2.5);
+    \foreach \y in {-2.0,-1.2,-0.4,0.4,1.2,2.0}{
+        \node[font=\scriptsize, blue!82!black] at (0,\y){$+$};
+    }
+    \node[font=\normalsize] at (0, 2.8){$\vdots$};
+    \node[font=\normalsize] at (0,-2.8){$\vdots$};
+    % Cilindro gaussiano
+    \fill[gaussred!10] (0,1.8) ellipse (1.6 and 0.42);
+    \draw[gaussred, thick] (0,1.8) ellipse (1.6 and 0.42);
+    \draw[gaussred, thick]        (-1.6,-1.8)--(-1.6,1.8);
+    \draw[gaussred, thick]        ( 1.6,-1.8)--( 1.6,1.8);
+    \draw[gaussred, thick]        (-1.6,-1.8) arc(180:360:1.6 and 0.42);
+    \draw[gaussred, dashed, thick] (1.6,-1.8) arc(0:180:1.6 and 0.42);
+    % Radio r
+    \draw[->, thin, black!70] (0.10,0.35)--(1.60,0.35)
+        node[midway,above,font=\scriptsize]{$r$};
+    % Largo L
+    \draw[{Stealth}-{Stealth}, thin] (1.95,-1.8)--(1.95,1.8)
+        node[midway,right,font=\scriptsize]{$L$};
+    % E (derecha)
+    \draw[->, thick, blue!70!black] (1.60,0)--(2.50,0)
+        node[right,font=\scriptsize]{$\vec{E}$};
+\end{tikzpicture}
+\end{minipage}%
+\hfill
+\begin{minipage}[c]{0.65\textwidth}
+Se elige un \textbf{cilindro recto coaxial} con el alambre, de radio $r$
+y longitud $L$.  La superficie gaussiana queda dividida en tres partes:
+\begin{itemize}
+    \item \textbf{Superficie lateral}: coaxial con el alambre, \'area $A_\text{lat}=2\pi r L$.
+    \item \textbf{Tapa superior}: disco perpendicular al eje, \'area $A_\text{tapa}=\pi r^2$.
+    \item \textbf{Tapa inferior}: disco perpendicular al eje, \'area $A_\text{tapa}=\pi r^2$.
+\end{itemize}
+
+La Ley de Gauss establece:
+\[
+    \oint_S \vec{E}\cdot d\vec{A} = \frac{q_\text{enc}}{\varepsilon_0}
+\]
+
+El flujo total se descompone en tres contribuciones:
+\[
+    \Phi_\text{total}
+    = \underbrace{\Phi_\text{lat}}_{\text{lateral}}
+    + \underbrace{\Phi_\text{sup}}_{\text{tapa sup.}}
+    + \underbrace{\Phi_\text{inf}}_{\text{tapa inf.}}
+\]
+\end{minipage}
+
+\bigskip
+
+%--------------------------------------------
+\subsection*{Paso 2: Flujo por las tapas ($\Phi_\text{sup} = \Phi_\text{inf} = 0$)}
+
+\noindent
+\begin{minipage}[c]{0.32\textwidth}
+\centering
+\begin{tikzpicture}[scale=0.85, >=Stealth]
+    % Contorno del cilindro (vista lateral, secci\'on transversal)
+    \draw[gaussred, dashed, thick] (-1.4,-1.8) rectangle (1.4,1.8);
+    % Tapas resaltadas en azul
+    \fill[blue!20] (-1.4, 1.60) rectangle (1.4, 1.80);
+    \fill[blue!20] (-1.4,-1.80) rectangle (1.4,-1.60);
+    \draw[blue!65!black, very thick] (-1.4, 1.80)--(1.4, 1.80);
+    \draw[blue!65!black, very thick] (-1.4,-1.80)--(1.4,-1.80);
+    % Alambre (punto en el centro, secci\'on transversal)
+    \fill[blue!70!black] (0,0) circle (3.5pt);
+    % E (horizontal, radial)
+    \draw[->, thick, blue!70!black] (1.40, 0)--(2.35, 0)
+        node[right,font=\scriptsize]{$\vec{E}$};
+    \draw[->, thick, blue!70!black] (-1.40,0)--(-2.35,0);
+    % n\hat en tapa superior (vertical)
+    \draw[->, thick, black!65] (0.50, 1.80)--(0.50, 2.70)
+        node[above,font=\scriptsize]{$\hat{n}_\text{sup}$};
+    % n\hat en tapa inferior (vertical)
+    \draw[->, thick, black!65] (0.50,-1.80)--(0.50,-2.70)
+        node[below,font=\scriptsize]{$\hat{n}_\text{inf}$};
+    % \'angulo recto E ⊥ n̂ (tapa superior)
+    \draw[black!45, thin] (0.15,1.80) rectangle (0.40,2.05);
+    \draw[black!45, thin] (0.15,-1.80) rectangle (0.40,-2.05);
+    % Etiqueta
+    \node[blue!65!black, font=\footnotesize] at (0,-2.20)
+        {$\vec{E}\perp\hat{n}_\text{tapa}$};
+\end{tikzpicture}
+\end{minipage}%
+\hfill
+\begin{minipage}[c]{0.65\textwidth}
+En cada tapa, el vector normal $\hat{n}_\text{tapa}$ apunta en la
+direcci\'on \textbf{axial} ($\pm\hat{z}$), mientras que $\vec{E}$ apunta
+en la direcci\'on \textbf{radial} ($\hat{r}$).  Ambos son perpendiculares
+entre s\'i:
+
+\[
+    \vec{E}\cdot\hat{n}_\text{tapa}
+    = E\cos 90^{\circ} = 0
+\]
+
+Por lo tanto el flujo a trav\'es de ambas tapas es exactamente nulo:
+
+\[
+    \Phi_\text{sup} = \int_{\text{tapa sup.}} \vec{E}\cdot d\vec{A} = 0
+\]
+\[
+    \Phi_\text{inf} = \int_{\text{tapa inf.}} \vec{E}\cdot d\vec{A} = 0
+\]
+
+\textit{Nota:} Este resultado es el complementario al plano infinito,
+donde eran las \emph{tapas} las que contribu\'ian al flujo y la
+superficie lateral no.
+\end{minipage}
+
+\bigskip
+
+%--------------------------------------------
+\subsection*{Paso 3: Flujo por la superficie lateral ($\Phi_\text{lat}$)}
+
+\noindent
+\begin{minipage}[c]{0.32\textwidth}
+\centering
+\begin{tikzpicture}[scale=0.85, >=Stealth]
+    % Contorno del cilindro
+    \draw[gaussred, dashed, thick] (-1.4,-1.8) rectangle (1.4,1.8);
+    % Caras laterales resaltadas en verde
+    \fill[green!18] (-1.40,-1.8) rectangle (-1.15,1.8);
+    \fill[green!18] ( 1.15,-1.8) rectangle ( 1.40,1.8);
+    \draw[green!58!black, very thick] (-1.40,-1.8)--(-1.40,1.8);
+    \draw[green!58!black, very thick] ( 1.40,-1.8)--( 1.40,1.8);
+    % Alambre (punto)
+    \fill[blue!70!black] (0,0) circle (3.5pt);
+    % E (radial, hacia afuera)
+    \draw[->, thick, blue!70!black] (1.40, 0.55)--(2.35, 0.55)
+        node[right,font=\scriptsize]{$\vec{E}$};
+    \draw[->, thick, blue!70!black] (-1.40,0.55)--(-2.35,0.55);
+    % n̂_lat (horizontal, misma direcci\'on que E)
+    \draw[->, thick, black!65] (1.40,-0.45)--(2.25,-0.45)
+        node[right,font=\scriptsize]{$\hat{n}_\text{lat}$};
+    % E paralelo a n̂_lat (ángulo 0°)
+    \node[green!58!black, font=\footnotesize] at (0,-2.20)
+        {$\vec{E}\parallel\hat{n}_\text{lat}\ (\theta=0^{\circ})$};
+    % Vectores E distribuidos por la cara lateral
+    \foreach \yy in {1.3,-1.3}{
+        \draw[->, thin, blue!45] ( 1.40,\yy)--(2.05,\yy);
+        \draw[->, thin, blue!45] (-1.40,\yy)--(-2.05,\yy);
+    }
+\end{tikzpicture}
+\end{minipage}%
+\hfill
+\begin{minipage}[c]{0.65\textwidth}
+En la superficie lateral, $\vec{E}$ apunta en la direcci\'on \textbf{radial}
+$\hat{r}$, que coincide con el vector normal exterior $\hat{n}_\text{lat}$.
+Por simetr\'ia, $|\vec{E}|$ es constante en toda la superficie lateral:
+
+\[
+    \vec{E}\cdot\hat{n}_\text{lat}
+    = E\cos 0^{\circ} = E
+\]
+
+El \'area total de la superficie lateral del cilindro es $A_\text{lat} = 2\pi r L$, por lo tanto:
+
+\begin{align*}
+    \Phi_\text{lat}
+        &= \int_{\text{lat}} \vec{E}\cdot d\vec{A}
+         = E \int_{\text{lat}} dA \\[6pt]
+        &= E \cdot A_\text{lat}
+         = E \cdot 2\pi r L
+\end{align*}
+
+\textbf{Flujo total}:
+\[
+    \Phi_\text{total} = \Phi_\text{lat} + \Phi_\text{sup} + \Phi_\text{inf}
+    = E\cdot 2\pi r L + 0 + 0
+    = 2\pi r L\, E
+\]
+\end{minipage}
+
+\bigskip
+
+%--------------------------------------------
+\subsection*{Paso 4: Carga encerrada por la superficie gaussiana}
+
+\noindent
+\begin{minipage}[c]{0.32\textwidth}
+\centering
+\begin{tikzpicture}[scale=0.85, >=Stealth]
+    % Contorno del cilindro
+    \draw[gaussred, dashed, thick] (-1.4,-1.8) rectangle (1.4,1.8);
+    % Segmento del alambre dentro del cilindro (resaltado)
+    \fill[blue!55] (-0.12,-1.8) rectangle (0.12,1.8);
+    \draw[thick, blue!75!black] (-0.12,-1.8)--(-0.12,1.8);
+    \draw[thick, blue!75!black] ( 0.12,-1.8)--( 0.12,1.8);
+    \foreach \y in {-1.4,-0.7,0,0.7,1.4}{
+        \node[font=\scriptsize, white] at (0,\y){$+$};
+    }
+    % Longitud L del segmento
+    \draw[{Stealth}-{Stealth}, thin] (-1.75,-1.8)--(-1.75,1.8)
+        node[midway,left,font=\scriptsize]{$L$};
+    % Etiqueta q_enc
+    \node[blue!80!black, font=\small] at (1.00, 0.55){$q_\text{enc}$};
+    \node[blue!80!black, font=\small] at (1.00,-0.05){$=\,\lambda L$};
+\end{tikzpicture}
+\end{minipage}%
+\hfill
+\begin{minipage}[c]{0.65\textwidth}
+\textbf{Densidad lineal de carga.}
+La densidad lineal $\lambda$ se define como la carga por unidad de longitud:
+\[
+    \lambda \equiv \frac{dq}{d\ell}
+    \quad \left[\frac{\text{C}}{\text{m}}\right]
+\]
+Mide cu\'anta carga hay en cada peque\~no elemento de longitud $d\ell$ del alambre.
+Para obtener la carga de un segmento finito de longitud $L$ se integra:
+\[
+    Q = \int_0^L \lambda\, d\ell
+\]
+Como en este problema $\lambda$ es \textbf{uniforme} (igual en todo el alambre),
+$\lambda$ sale de la integral y la expresi\'on se simplifica a:
+\[
+    \lambda = \frac{Q}{L}
+    \qquad\Longrightarrow\qquad
+    Q = \lambda \cdot L
+\]
+
+\medskip
+\textbf{Aplicaci\'on al caso de estudio.}
+La superficie gaussiana engloba el segmento del alambre de longitud $L$.
+La \'unica carga encerrada es la de ese segmento:
+\[
+    q_\text{enc} = \lambda \cdot L
+\]
+
+\textit{Observaci\'on:} $q_\text{enc}$ es proporcional a $L$ (la longitud elegida
+del cilindro gaussiano). Veremos que $L$ se cancela en el resultado final,
+confirmando que $E$ no depende de c\'omo se elige la longitud del cilindro.
+\end{minipage}
+
+\bigskip
+
+%--------------------------------------------
+\subsection*{Paso 5: Aplicaci\'on de la Ley de Gauss -- resultado simb\'olico}
+
+Se igualan el flujo total (Paso~3) y la carga encerrada dividida por $\varepsilon_0$ (Paso~4):
+
+\[
+    \oint_S \vec{E}\cdot d\vec{A} = \frac{q_\text{enc}}{\varepsilon_0}
+\]
+
+\begin{align*}
+    2\pi r L\, E
+        &= \frac{\lambda L}{\varepsilon_0} \\[8pt]
+    E
+        &= \frac{\lambda}{2\pi\varepsilon_0\, r}
+\end{align*}
+
+La longitud $L$ cancela en ambos miembros, confirmando que el resultado
+no depende de la elecci\'on del tama\~no del cilindro gaussiano.
+
+En forma vectorial, siendo $\hat{r}$ el vector unitario radial que se aleja del alambre:
+
+\[
+    \boxed{
+        \vec{E} = \frac{\lambda}{2\pi\varepsilon_0\, r}\,\hat{r}
+        \quad [\text{N/C}]
+    }
+\]
+
+Para $\lambda > 0$: $\vec{E}$ apunta radialmente \textbf{hacia afuera} del alambre en todas
+las direcciones, con magnitud que decrece como $1/r$.
+
+%========================================
+% CÁLCULO NUMÉRICO
+%========================================
+\section*{C\'alculo Num\'erico}
+
+Con $\lambda = 3{,}5 \times 10^{-9}$~[C/m], se calcula el campo a $r = 5{,}0$~[cm]$\ = 0{,}05$~[m]:
+
+\begin{align*}
+    E &= \frac{\lambda}{2\pi\varepsilon_0\, r}
+       = \frac{2K\lambda}{r}
+       = \frac{2 \times 9{,}0\times10^{9} \times 3{,}5\times10^{-9}}{0{,}05} \\[8pt]
+      &= \frac{2 \times 31{,}5}{0{,}05}
+       = \frac{63{,}0}{0{,}05}
+\end{align*}
+
+\[
+    \boxed{E = 1{,}26 \times 10^{3}\ [\text{N/C}]}
+\]
+
+En general, para cualquier distancia $r$ [m] al alambre:
+
+\[
+    E(r) = \frac{63{,}0}{r}\ [\text{N/C}]
+\]
+
+%========================================
+% INTERPRETACIÓN FÍSICA
+%========================================
+\section*{Interpretaci\'on F\'isica}
+
+\begin{itemize}
+    \item \textbf{Decaimiento $1/r$}: el campo del alambre infinito decae inversamente
+          con la distancia radial. Esto contrasta con la carga puntual ($E\propto 1/r^2$)
+          y con el plano infinito ($E=\text{cte}$). La siguiente tabla resume los tres
+          casos cl\'asicos de simetr\'ia gaussiana:
+
+    \begin{center}
+    \renewcommand{\arraystretch}{1.4}
+    \begin{tabular}{lccc}
+        \hline
+        \textbf{Geometr\'ia} & \textbf{Sup.\ gaussiana} & \textbf{Campo} & \textbf{Dependencia} \\
+        \hline
+        Esfera / carga puntual  & Esfera conc\'entrica  & $E = \dfrac{Q}{4\pi\varepsilon_0 r^2}$ & $1/r^2$ \\
+        Alambre infinito        & Cilindro coaxial      & $E = \dfrac{\lambda}{2\pi\varepsilon_0 r}$ & $1/r$ \\
+        Plano infinito          & Caja de pastilla      & $E = \dfrac{\sigma}{2\varepsilon_0}$       & constante \\
+        \hline
+    \end{tabular}
+    \end{center}
+
+    \item \textbf{Complementariedad con el plano infinito}: en el plano, las
+          \emph{tapas} del cilindro gaussiano contribu\'ian al flujo y la superficie
+          lateral no. En el alambre ocurre exactamente lo contrario: la
+          superficie \emph{lateral} contribuye y las tapas no.
+          Este intercambio refleja que $\vec{E}$ es perpendicular al eje en el
+          alambre, y perpendicular al plano en el plano.
+
+    \item \textbf{Cancelaci\'on de $L$}: la longitud $L$ del cilindro gaussiano
+          aparece tanto en el flujo ($\Phi = E\cdot 2\pi r L$) como en la carga
+          encerrada ($q_\text{enc} = \lambda L$), y se cancela. Esto demuestra que
+          la elecci\'on de $L$ es completamente arbitraria: la Ley de Gauss
+          produce el mismo resultado sea cual sea el tama\~no del cilindro,
+          siempre que respete la simetr\'ia del problema.
+\end{itemize}
+
+\end{document}

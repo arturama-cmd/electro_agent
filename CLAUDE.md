@@ -9,16 +9,18 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 ## Commands
 
 ```bash
-# Setup (Windows)
+# Setup (Windows) — note: venv on this machine lives at ~/venv, not inside the project
 python -m venv venv
-venv\Scripts\activate
+venv\Scripts\activate        # Windows
+source venv/bin/activate     # Linux/Mac (or use run.sh which does this automatically)
 pip install -r requirements.txt
 
 # Verify all dependencies are correctly installed
 python check_environment.py
 
-# Run the application
+# Run the application (two equivalent ways)
 streamlit run app.py
+./run.sh                     # Unix shortcut — activates venv + starts Streamlit
 
 # Add a single PDF to existing ChromaDB
 # Edit add_single_pdf.py lines 74-75 to set pdf_path and category, then run:
@@ -119,7 +121,7 @@ Documents in `corpus/` by topic (categories defined in `rag_system.py:13-19` -> 
 - Chunking split points: `---NUEVA PAGINA---` and `## Problema` delimiters (`tex_processor.py:86`)
 - PDF chunks split by page first, then by paragraph if page exceeds `chunk_size` (default 2000 chars)
 
-**Corpus Indexing Limitation**: `process_all_files_in_category()` at `tex_processor.py:112-115` uses `os.listdir` (non-recursive) and skips subdirectories. Files in subfolders (e.g. `corpus/campo_electrico/prob resueltos pdf/`, `corpus/campo_electrico/gauss_imgs/`) will **not** be auto-indexed — use `add_single_pdf.py` instead. The `gauss_imgs/` folder holds image assets referenced by Gauss-law solutions via `\includegraphics`; they don't need indexing but must remain alongside the `.tex` files for compilation.
+**Corpus Indexing Limitation**: `process_all_files_in_category()` at `tex_processor.py:112-115` uses `os.listdir` (non-recursive) and skips subdirectories. Files in subfolders (e.g. `corpus/campo_electrico/prob resueltos pdf/`, `corpus/campo_electrico/gauss_imgs/`) will **not** be auto-indexed — use `add_single_pdf.py` instead. The `gauss_imgs/` folder holds image assets referenced by Gauss-law solutions via `\includegraphics`; they don't need indexing but must remain alongside the `.tex` files for compilation. `.docx` files are also not supported by any indexing pipeline — convert to PDF first if content needs to be searchable.
 
 **Caching**: `@st.cache_resource` on `initialize_rag()` at `app.py:514-523` prevents re-init per session. Auto-indexes corpus on first run if collection is empty.
 
@@ -168,6 +170,13 @@ For solutions that draw Gaussian surfaces (sphere/shell cross-sections), also ad
 \usetikzlibrary{calc,arrows.meta,decorations.markings,patterns}
 ```
 
+**Gauss law solution template** (follow `Solucion_Gauss_plano.tex` / `Solucion_Gauss_hilo.tex` for planar/cylindrical, or `Solucion_Gauss_esf_v1.tex` for spherical):
+- TikZ diagram: Gaussian surface drawn in red dotted line (`dashed, red`)
+- Layout: `\begin{minipage}{0.30\textwidth}` (diagram) + `\begin{minipage}{0.67\textwidth}` (steps)
+- Always define charge density before first use: `σ ≡ dq/dA`, `λ ≡ dq/dℓ`, `ρ ≡ dq/dV`
+- 5 steps: define surface → write Gauss law → simplify flux → solve E → evaluate numerically
+- End with a comparative table of all 3 classic cases (sphere/wire/plane: 1/r², 1/r, const)
+
 **Solution file naming conventions** (use descriptive names, no strict rule, but these patterns are in use):
 - `Solucion_vec[N].tex` — vector exercises (e.g. `Solucion_vec1.tex`)
 - `Solucion_G[N]P[N][uni|bid].tex` — guide N, problem N (`uni`=unidimensional, `bid`=bidimensional)
@@ -199,6 +208,7 @@ For solutions that draw Gaussian surfaces (sphere/shell cross-sections), also ad
 - API key: `.env` file with `ANTHROPIC_API_KEY`
 - Session logs: `.claude/logs/YYYY-MM-DD_session_log.md`
 - Textbook PDFs (Sears, Serway) are gitignored due to copyright
+- Planned features (MCP server, SymPy math tools, field visualization, tutor mode): see `ROADMAP.md`
 - Git remote must include the username to avoid 403 auth errors:
   ```bash
   git remote set-url origin https://arturama-cmd@github.com/arturama-cmd/electro_agent.git

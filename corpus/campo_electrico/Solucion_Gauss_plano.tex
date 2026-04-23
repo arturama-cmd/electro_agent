@@ -1,0 +1,535 @@
+\documentclass[12pt,letterpaper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[spanish,es-noshorthands]{babel}
+\usepackage{amsmath,amssymb}
+\usepackage{graphicx}
+\usepackage{xcolor}
+\usepackage{tikz}
+\usetikzlibrary{calc,arrows.meta,decorations.markings,patterns}
+\usepackage{enumerate}
+\usepackage[top=2.5cm, bottom=4cm, left=2cm, right=2cm, footskip=40pt]{geometry}
+\usepackage{fancyhdr}
+\usepackage{lastpage}
+
+% Colores institucionales y auxiliares
+\definecolor{ubbblue}{RGB}{0,51,102}
+\definecolor{gaussred}{RGB}{200,50,50}
+
+% Encabezado y pie de p\'agina
+\pagestyle{fancy}
+\fancyhf{}
+\renewcommand{\headrulewidth}{0pt}
+\renewcommand{\footrulewidth}{0.4pt}
+\fancyfoot[L]{%
+    \raisebox{-0.5cm}{\includegraphics[height=1.2cm]{logo ubb.png}}%
+}
+\fancyfoot[C]{%
+    \begin{minipage}[b]{8cm}
+        \centering
+        \footnotesize
+        \textcolor{ubbblue}{\textbf{Dr. Arturo Fern\'andez P\'erez}}\\
+        \scriptsize Departamento de F\'isica -- Universidad del B\'io-B\'io\\
+        \scriptsize \textit{Electro\_Asistente\_AI-UBB}\\
+        \tiny P\'agina \thepage\ de \pageref{LastPage}
+    \end{minipage}%
+}
+\fancyfoot[R]{%
+    \raisebox{-0.5cm}{\includegraphics[height=1.2cm]{logo dfis.png}}%
+}
+
+\fancypagestyle{plain}{%
+    \fancyhf{}
+    \renewcommand{\headrulewidth}{0pt}
+    \renewcommand{\footrulewidth}{0.4pt}
+    \fancyfoot[L]{%
+        \raisebox{-0.5cm}{\includegraphics[height=1.2cm]{logo ubb.png}}%
+    }
+    \fancyfoot[C]{%
+        \begin{minipage}[b]{8cm}
+            \centering
+            \footnotesize
+            \textcolor{ubbblue}{\textbf{Dr. Arturo Fern\'andez P\'erez}}\\
+            \scriptsize Departamento de F\'isica -- Universidad del B\'io-B\'io\\
+            \scriptsize \textit{Electro\_Asistente\_AI-UBB}\\
+            \tiny P\'agina \thepage\ de \pageref{LastPage}
+        \end{minipage}%
+    }
+    \fancyfoot[R]{%
+        \raisebox{-0.5cm}{\includegraphics[height=1.2cm]{logo dfis.png}}%
+    }
+}
+
+\begin{document}
+
+%========================================
+% ENCABEZADO INSTITUCIONAL
+%========================================
+\begin{center}
+    \includegraphics[height=2cm]{logo ubb.png}\\[0.3cm]
+    {\large\textcolor{ubbblue}{\textbf{UNIVERSIDAD DEL B\'IO-B\'IO}}}\\[0.1cm]
+    {\normalsize Facultad de Ciencias -- Departamento de F\'isica}
+\end{center}
+
+\vspace{0.3cm}
+\hrule height 1pt
+\vspace{0.5cm}
+
+{\centering\Large\textbf{Soluci\'on: Ley de Gauss -- Plano Infinito de Cargas}\par}
+{\centering\normalsize Simetr\'ia planar: superficie gaussiana cilíndrica\par}
+
+\vspace{0.5cm}
+
+%========================================
+% ENUNCIADO
+%========================================
+\section*{Enunciado del Problema}
+
+Un plano infinito aislante posee carga el\'ectrica distribuida uniformemente sobre su superficie
+con densidad superficial $\sigma = 5{,}0\ [\mu\text{C/m}^2]$.
+Utilizando la Ley de Gauss, determinar la magnitud y direcci\'on del campo el\'ectrico
+en cualquier punto del espacio.
+
+\begin{center}
+\begin{tikzpicture}[scale=1.20, >=Stealth]
+
+    %--- Plano infinito (banda horizontal naranja) ---%
+    \fill[orange!22] (-4.8,-0.20) rectangle (4.8,0.20);
+    \draw[thick, orange!65!black] (-4.8,-0.20) -- (4.8,-0.20);
+    \draw[thick, orange!65!black] (-4.8, 0.20) -- (4.8, 0.20);
+    % Cargas + en el plano
+    \foreach \x in {-4.2,-3.4,-2.6,-1.8,-1.0,-0.2,0.6,1.4,2.2,3.0,3.8}{
+        \node[font=\footnotesize, orange!85!black] at (\x, 0) {$+$};
+    }
+    % Indicadores de extensión infinita
+    \node[font=\large] at ( 5.1, 0) {$\cdots$};
+    \node[font=\large] at (-5.1, 0) {$\cdots$};
+    % Etiqueta σ
+    \node[orange!80!black, font=\small] at (3.8, 0.55) {$\sigma > 0$};
+
+    %--- Superficie gaussiana: cilindro (caja de pastilla) ---%
+    % Relleno tenue del interior del cilindro
+    \fill[gaussred!7] (-1.55,-2.20) rectangle (1.55, 2.20);
+    % Tapas (resaltadas)
+    \fill[gaussred!22] (-1.55, 1.80) rectangle (1.55, 2.20);
+    \fill[gaussred!22] (-1.55,-2.20) rectangle (1.55,-1.80);
+    % Contorno del cilindro (paredes laterales: punteadas; tapas: sólidas)
+    \draw[gaussred, dashed, very thick] (-1.55,-2.20) -- (-1.55, 2.20);
+    \draw[gaussred, dashed, very thick] ( 1.55,-2.20) -- ( 1.55, 2.20);
+    \draw[gaussred, very thick] (-1.55, 2.20) -- (1.55, 2.20);   % tapa sup
+    \draw[gaussred, very thick] (-1.55,-2.20) -- (1.55,-2.20);   % tapa inf
+
+    %--- Etiquetas de área en las tapas ---%
+    \node[gaussred, font=\small] at (0,  2.05) {$A$};
+    \node[gaussred, font=\small] at (0, -2.03) {$A$};
+
+    %--- Dimensiones de altura ---%
+    \draw[{Stealth}-{Stealth}, thin]
+        (-2.05, 0.20) -- (-2.05, 2.20) node[midway, left, font=\small]{$h$};
+    \draw[{Stealth}-{Stealth}, thin]
+        (-2.05,-0.20) -- (-2.05,-2.20) node[midway, left, font=\small]{$h$};
+
+    %--- Vectores normales en cada cara ---%
+    % Tapa superior: n̂ hacia arriba
+    \draw[->, thick, black!65] ( 0.55, 2.20) -- ( 0.55, 3.05)
+        node[right, font=\small]{$\hat{n}$};
+    % Tapa inferior: n̂ hacia abajo
+    \draw[->, thick, black!65] ( 0.55,-2.20) -- ( 0.55,-3.05)
+        node[right, font=\small]{$\hat{n}$};
+    % Lateral derecha: n̂ hacia afuera (horizontal)
+    \draw[->, thick, black!45] (1.55, 0.55) -- (2.30, 0.55)
+        node[above, font=\scriptsize]{$\hat{n}_\text{lat}$};
+
+    %--- Vectores de campo eléctrico en las tapas ---%
+    % Encima del plano (E apunta hacia arriba)
+    \foreach \x in {-0.85, 0.85}{
+        \draw[->, very thick, blue!72!black] (\x, 2.20) -- (\x, 3.65);
+    }
+    \node[blue!72!black, font=\small] at (1.85, 3.05) {$\vec{E}$};
+    % Debajo del plano (E apunta hacia abajo)
+    \foreach \x in {-0.85, 0.85}{
+        \draw[->, very thick, blue!72!black] (\x,-2.20) -- (\x,-3.65);
+    }
+    \node[blue!72!black, font=\small] at (1.85,-3.05) {$\vec{E}$};
+
+    %--- Líneas de campo de fondo (más tenues, fuera del cilindro) ---%
+    \foreach \x in {-4.0,-3.0,3.0,4.0}{
+        \draw[->, thin, blue!28] (\x, 0.20) -- (\x, 1.10);
+        \draw[->, thin, blue!28] (\x,-0.20) -- (\x,-1.10);
+    }
+
+    %--- Anotación sobre la cara lateral ---%
+    \node[gaussred, font=\scriptsize, rotate=90] at (1.95, 0.0)
+        {$\vec{E}\perp\hat{n}_\text{lat}\ \Rightarrow\ \Phi_\text{lat}=0$};
+
+    %--- Etiqueta "Superficie gaussiana" con flecha ---%
+    \node[gaussred, font=\footnotesize, align=center] at (3.90, 1.90)
+        {\textit{Sup.}\\\textit{Gaussiana}};
+    \draw[->, gaussred, thin] (3.50, 1.60) -- (1.60, 1.05);
+
+\end{tikzpicture}
+\end{center}
+
+%========================================
+% DATOS
+%========================================
+\section*{Datos del Problema}
+
+\[
+    \sigma = 5{,}0 \times 10^{-6}\ [\text{C/m}^2],
+    \qquad
+    \varepsilon_0 = 8{,}85 \times 10^{-12}
+    \ \left[\frac{\text{C}^2}{\text{N}\cdot\text{m}^2}\right],
+    \qquad
+    K = \frac{1}{4\pi\varepsilon_0} = 9{,}0 \times 10^9
+    \ \left[\frac{\text{N}\cdot\text{m}^2}{\text{C}^2}\right]
+\]
+
+%========================================
+% ANÁLISIS CUALITATIVO
+%========================================
+\section*{An\'alisis Cualitativo}
+
+Por la simetr\'ia del plano infinito con carga uniforme:
+\begin{itemize}
+    \item \textbf{Direcci\'on del campo}: $\vec{E}$ es perpendicular al plano en todo punto.
+          Las componentes paralelas al plano se cancelan por simetr\'ia, ya que cada
+          elemento de carga a la derecha tiene un sim\'etrico a la izquierda.
+    \item \textbf{Magnitud}: $|\vec{E}|$ es igual en cualquier par de puntos equidistantes
+          del plano y no depende de la posici\'on a lo largo del plano.
+    \item \textbf{Orientaci\'on}: con $\sigma > 0$, el campo apunta \emph{alej\'andose} del
+          plano en ambos semiespacios.
+\end{itemize}
+Estas propiedades dictan la elecci\'on de la superficie gaussiana.
+
+%========================================
+% DESARROLLO
+%========================================
+\section*{Desarrollo: Aplicaci\'on de la Ley de Gauss}
+
+\subsection*{Paso 1: Elecci\'on de la superficie gaussiana}
+
+\noindent
+\begin{minipage}[c]{0.32\textwidth}
+\centering
+\begin{tikzpicture}[scale=0.90, >=Stealth]
+    % Plano
+    \fill[orange!22] (-2.6,-0.18) rectangle (2.6,0.18);
+    \draw[thick, orange!65!black] (-2.6,-0.18)--(2.6,-0.18);
+    \draw[thick, orange!65!black] (-2.6, 0.18)--(2.6, 0.18);
+    \foreach \x in {-2,-1,0,1,2}{
+        \node[font=\scriptsize, orange!85!black] at (\x,0){$+$};
+    }
+    \node[orange!80!black, font=\scriptsize, above right] at (2.0,0.18){$\sigma$};
+    % Cuerpo del cilindro
+    \fill[gaussred!10] (-1.1,-1.8) rectangle (1.1,1.8);
+    \draw[gaussred, dashed, thick] (-1.1,-1.8)--(-1.1,1.8);
+    \draw[gaussred, dashed, thick] ( 1.1,-1.8)--( 1.1,1.8);
+    \draw[gaussred, thick]         (-1.1, 1.8)--( 1.1,1.8);
+    \draw[gaussred, thick]         (-1.1,-1.8)--( 1.1,-1.8);
+    % Eje del cilindro
+    \draw[dashed, gray!50] (0,-2.0)--(0,2.0);
+    % E en las tapas
+    \draw[->, thick, blue!70!black] (0, 1.8)--(0, 2.65)
+        node[right, font=\scriptsize]{$\vec{E}$};
+    \draw[->, thick, blue!70!black] (0,-1.8)--(0,-2.65)
+        node[right, font=\scriptsize]{$\vec{E}$};
+    % Etiquetas h
+    \draw[{Stealth}-{Stealth}, thin] (1.4,0.18)--(1.4,1.8)
+        node[midway,right,font=\scriptsize]{$h$};
+    \draw[{Stealth}-{Stealth}, thin] (1.4,-0.18)--(1.4,-1.8)
+        node[midway,right,font=\scriptsize]{$h$};
+    % Etiqueta A
+    \node[gaussred, font=\scriptsize] at (0, 1.62){$A$};
+    \node[gaussred, font=\scriptsize] at (0,-1.60){$A$};
+\end{tikzpicture}
+\end{minipage}%
+\hfill
+\begin{minipage}[c]{0.65\textwidth}
+Se elige un \textbf{cilindro recto} (``caja de pastilla'') cuyo eje es perpendicular
+al plano.  La superficie gaussiana queda dividida en tres partes:
+\begin{itemize}
+    \item \textbf{Tapa superior}: paralela al plano, \'area $A$, a distancia $h$ del plano.
+    \item \textbf{Tapa inferior}: paralela al plano, \'area $A$, a distancia $h$ del plano.
+    \item \textbf{Superficie lateral}: perpendicular al plano, altura total $2h$.
+\end{itemize}
+
+La Ley de Gauss establece:
+\[
+    \oint_S \vec{E}\cdot d\vec{A} = \frac{q_\text{enc}}{\varepsilon_0}
+\]
+
+El flujo total se descompone en tres contribuciones:
+\[
+    \Phi_\text{total}
+    = \underbrace{\Phi_\text{sup}}_{\text{tapa sup.}}
+    + \underbrace{\Phi_\text{inf}}_{\text{tapa inf.}}
+    + \underbrace{\Phi_\text{lat}}_{\text{lateral}}
+\]
+\end{minipage}
+
+\bigskip
+
+%--------------------------------------------
+\subsection*{Paso 2: Flujo por la superficie lateral ($\Phi_\text{lat} = 0$)}
+
+\noindent
+\begin{minipage}[c]{0.32\textwidth}
+\centering
+\begin{tikzpicture}[scale=0.90, >=Stealth]
+    % Plano
+    \fill[orange!22] (-2.6,-0.18) rectangle (2.6,0.18);
+    \draw[thick, orange!65!black] (-2.6,-0.18)--(2.6,-0.18);
+    \draw[thick, orange!65!black] (-2.6, 0.18)--(2.6, 0.18);
+    % Cilindro (contorno)
+    \draw[gaussred, dashed, thick] (-1.1,-1.8)--(-1.1,1.8);
+    \draw[gaussred, dashed, thick] ( 1.1,-1.8)--( 1.1,1.8);
+    \draw[gaussred, thick]         (-1.1, 1.8)--( 1.1,1.8);
+    \draw[gaussred, thick]         (-1.1,-1.8)--( 1.1,-1.8);
+    % Cara lateral derecha resaltada en verde
+    \fill[green!20] (0.90,-1.8) rectangle (1.10,1.8);
+    \draw[green!55!black, very thick] (1.1,-1.8)--(1.1,1.8);
+    % n̂_lat (horizontal, hacia afuera)
+    \draw[->, thick, black!60] (1.1, 0.7)--(2.0, 0.7)
+        node[above, font=\scriptsize]{$\hat{n}_\text{lat}$};
+    % E (vertical, hacia arriba) sobre la cara lateral
+    \draw[->, thick, blue!70!black] (1.7,-0.3)--(1.7,0.7)
+        node[right, font=\scriptsize]{$\vec{E}$};
+    % Ángulo recto entre E y n̂_lat
+    \draw[black!50, thin] (1.50,0.50) rectangle (1.70,0.70);
+    % Anotación
+    \node[green!55!black, font=\footnotesize] at (0,-2.15)
+        {$\vec{E}\perp\hat{n}_\text{lat}\ \Rightarrow\ \Phi_\text{lat}=0$};
+\end{tikzpicture}
+\end{minipage}%
+\hfill
+\begin{minipage}[c]{0.65\textwidth}
+En la superficie lateral, el campo $\vec{E}$ apunta \textbf{perpendicularmente al plano}
+(eje $z$), mientras que el vector normal $\hat{n}_\text{lat}$ apunta en direcci\'on
+\textbf{radial horizontal}.  Ambos son perpendiculares entre s\'i:
+
+\[
+    \vec{E}\cdot\hat{n}_\text{lat}
+    = E\cos 90^{\circ} = 0
+\]
+
+Por lo tanto el flujo a trav\'es de la superficie lateral es exactamente nulo:
+\[
+    \Phi_\text{lat}
+    = \int_\text{lat} \vec{E}\cdot d\vec{A} = 0
+\]
+\end{minipage}
+
+\bigskip
+
+%--------------------------------------------
+\subsection*{Paso 3: Flujo por las tapas ($\Phi_\text{sup}$ y $\Phi_\text{inf}$)}
+
+\noindent
+\begin{minipage}[c]{0.32\textwidth}
+\centering
+\begin{tikzpicture}[scale=0.90, >=Stealth]
+    % Plano
+    \fill[orange!22] (-2.6,-0.18) rectangle (2.6,0.18);
+    \draw[thick, orange!65!black] (-2.6,-0.18)--(2.6,-0.18);
+    \draw[thick, orange!65!black] (-2.6, 0.18)--(2.6, 0.18);
+    % Cilindro (contorno)
+    \draw[gaussred, dashed, thick] (-1.1,-1.8)--(-1.1,1.8);
+    \draw[gaussred, dashed, thick] ( 1.1,-1.8)--( 1.1,1.8);
+    % Tapas resaltadas en azul
+    \fill[blue!22] (-1.1, 1.60) rectangle (1.1, 1.80);
+    \fill[blue!22] (-1.1,-1.80) rectangle (1.1,-1.60);
+    \draw[blue!65!black, very thick] (-1.1, 1.80)--(1.1, 1.80);
+    \draw[blue!65!black, very thick] (-1.1,-1.80)--(1.1,-1.80);
+    % E en tapa superior (E hacia arriba, n̂ hacia arriba)
+    \draw[->, very thick, blue!70!black] (-0.4,1.80)--(-0.4,2.75)
+        node[left, font=\scriptsize]{$\vec{E}$};
+    \draw[->, thick, black!65] (0.4,1.80)--(0.4,2.50)
+        node[right, font=\scriptsize]{$\hat{n}$};
+    % E en tapa inferior (E hacia abajo, n̂ hacia abajo)
+    \draw[->, very thick, blue!70!black] (-0.4,-1.80)--(-0.4,-2.75)
+        node[left, font=\scriptsize]{$\vec{E}$};
+    \draw[->, thick, black!65] (0.4,-1.80)--(0.4,-2.50)
+        node[right, font=\scriptsize]{$\hat{n}$};
+    % Labels E∥n̂
+    \node[blue!65!black, font=\scriptsize] at (-1.65, 2.25)
+        {$\vec{E}\!\parallel\!\hat{n}$};
+    \node[blue!65!black, font=\scriptsize] at (-1.65,-2.25)
+        {$\vec{E}\!\parallel\!\hat{n}$};
+\end{tikzpicture}
+\end{minipage}%
+\hfill
+\begin{minipage}[c]{0.65\textwidth}
+En cada tapa, $\vec{E}$ es \textbf{paralelo} al vector normal $\hat{n}$
+(ambos perpendiculares al plano). Por simetr\'ia, la magnitud $E$ es id\'entica
+en la tapa superior y en la inferior.
+
+\medskip
+\textbf{Tapa superior} ($z=+h$, $\hat{n}$ hacia arriba, $\theta=0^{\circ}$):
+\[
+    \Phi_\text{sup}
+    = \int_{\text{tapa}} \vec{E}\cdot d\vec{A}
+    = E\int_{\text{tapa}} dA
+    = E\cdot A
+\]
+
+\textbf{Tapa inferior} ($z=-h$, $\hat{n}$ hacia abajo, $\theta=0^{\circ}$):
+\[
+    \Phi_\text{inf} = E\cdot A
+\]
+
+($\vec{E}$ apunta hacia abajo y $\hat{n}$ tambi\'en apunta hacia abajo en la tapa inferior,
+por lo que $\vec{E}\cdot\hat{n}=E\cos 0^{\circ}=E>0$.)
+
+\medskip
+\textbf{Flujo total}:
+\begin{align*}
+    \Phi_\text{total}
+    &= \Phi_\text{sup} + \Phi_\text{inf} + \Phi_\text{lat} \\[4pt]
+    &= EA + EA + 0 \\[4pt]
+    &= 2EA
+\end{align*}
+\end{minipage}
+
+\bigskip
+
+%--------------------------------------------
+\subsection*{Paso 4: Carga encerrada por la superficie gaussiana}
+
+\noindent
+\begin{minipage}[c]{0.32\textwidth}
+\centering
+\begin{tikzpicture}[scale=0.90, >=Stealth]
+    % Plano completo (fondo)
+    \fill[orange!22] (-2.6,-0.18) rectangle (2.6,0.18);
+    \draw[thick, orange!65!black] (-2.6,-0.18)--(2.6,-0.18);
+    \draw[thick, orange!65!black] (-2.6, 0.18)--(2.6, 0.18);
+    % Porci\'on del plano DENTRO del cilindro (resaltada)
+    \fill[orange!70] (-1.1,-0.18) rectangle (1.1,0.18);
+    % + dentro de esa porción
+    \foreach \x in {-0.65, 0, 0.65}{
+        \node[font=\small, white] at (\x,0){$+$};
+    }
+    % Cilindro (contorno)
+    \draw[gaussred, dashed, thick] (-1.1,-1.8)--(-1.1,1.8);
+    \draw[gaussred, dashed, thick] ( 1.1,-1.8)--( 1.1,1.8);
+    \draw[gaussred, thick]         (-1.1, 1.8)--( 1.1,1.8);
+    \draw[gaussred, thick]         (-1.1,-1.8)--( 1.1,-1.8);
+    % Flecha de anchura A
+    \draw[{Stealth}-{Stealth}, thin]
+        (-1.1,-0.55)--(1.1,-0.55) node[midway,below,font=\scriptsize]{$A$};
+    % Etiqueta carga encerrada
+    \node[orange!80!black, font=\small] at (0, 0.65)
+        {$q_\text{enc}=\sigma A$};
+\end{tikzpicture}
+\end{minipage}%
+\hfill
+\begin{minipage}[c]{0.65\textwidth}
+\textbf{Densidad superficial de carga.}
+La densidad superficial $\sigma$ se define como la carga por unidad de \'area:
+\[
+    \sigma \equiv \frac{dq}{dA}
+    \quad \left[\frac{\text{C}}{\text{m}^2}\right]
+\]
+Mide cu\'anta carga hay en cada peque\~no elemento de superficie $dA$.
+Para obtener la carga total de una regi\'on de \'area finita se integra:
+\[
+    Q = \int \sigma\, dA
+\]
+Como en este problema $\sigma$ es \textbf{uniforme} (igual en todo el plano),
+$\sigma$ sale de la integral y la expresi\'on se simplifica a:
+\[
+    \sigma = \frac{Q}{A}
+    \qquad\Longrightarrow\qquad
+    Q = \sigma \cdot A
+\]
+
+\medskip
+\textbf{Aplicaci\'on al caso de estudio.}
+La superficie gaussiana intersecta el plano en una regi\'on de \'area~$A$.
+La \'unica carga encerrada es la del plano dentro de ese cilindro:
+\[
+    q_\text{enc} = \sigma \cdot A
+\]
+
+\textit{Observaci\'on:} $q_\text{enc}$ no depende de $h$ porque la carga
+est\'a \emph{concentrada en el plano} (densidad superficial, no volum\'etrica).
+Esta independencia de $h$ implica que el campo resultante tampoco depender\'a
+de la distancia al plano: el campo es \textbf{uniforme}.
+\end{minipage}
+
+\bigskip
+
+%--------------------------------------------
+\subsection*{Paso 5: Aplicaci\'on de la Ley de Gauss -- resultado simb\'olico}
+
+Se igualan el flujo total (Paso~3) y la carga encerrada (Paso~4):
+
+\[
+    \oint_S \vec{E}\cdot d\vec{A} = \frac{q_\text{enc}}{\varepsilon_0}
+\]
+
+\begin{align*}
+    2EA
+        &= \frac{\sigma A}{\varepsilon_0} \\[8pt]
+    E
+        &= \frac{\sigma}{2\varepsilon_0}
+\end{align*}
+
+El \'area $A$ cancela en ambos lados, confirmando que el resultado no depende
+de la elecci\'on particular del tama\~no del cilindro gaussiano.
+
+En forma vectorial, definiendo $\hat{n}$ como la direcci\'on que \emph{se aleja del plano}:
+
+\[
+    \boxed{
+        \vec{E} = \frac{\sigma}{2\varepsilon_0}\,\hat{n}
+        \quad [\text{N/C}]
+    }
+\]
+
+Para $\sigma > 0$: $\hat{n} = +\hat{z}$ en el semiplano $z > 0$ y
+$\hat{n} = -\hat{z}$ en el semiplano $z < 0$.
+
+%========================================
+% CÁLCULO NUMÉRICO
+%========================================
+\section*{C\'alculo Num\'erico}
+
+Con $\sigma = 5{,}0 \times 10^{-6}$~[C/m$^2$] y $\varepsilon_0 = 8{,}85 \times 10^{-12}$~[C$^2$/(N$\cdot$m$^2$)]:
+
+\begin{align*}
+    E &= \frac{\sigma}{2\varepsilon_0}
+       = \frac{5{,}0 \times 10^{-6}}{2 \times 8{,}85 \times 10^{-12}} \\[8pt]
+      &= \frac{5{,}0 \times 10^{-6}}{1{,}77 \times 10^{-11}}
+\end{align*}
+
+\[
+    \boxed{E = 2{,}82 \times 10^{5}\ [\text{N/C}]}
+\]
+
+El campo es perpendicular al plano, apunta hacia ambos lados con igual magnitud,
+y es constante en todo punto del espacio.
+
+%========================================
+% INTERPRETACIÓN FÍSICA
+%========================================
+\section*{Interpretaci\'on F\'isica}
+
+\begin{itemize}
+    \item \textbf{Campo uniforme}: $E = \sigma/(2\varepsilon_0)$ es constante, sin importar
+          la distancia al plano. Esto contrasta con la carga puntual
+          ($E \propto 1/r^2$) y la l\'inea infinita ($E \propto 1/r$).
+          La raz\'on es que agregar distancia no cambia la geometr\'ia del plano infinito
+          (simetr\'ia translacional en $z$).
+
+    \item \textbf{El factor $\tfrac{1}{2}$}: el campo se distribuye sim\'etricamente
+          en \emph{dos} semiespacios.  Un condensador de placas paralelas con
+          densidades $+\sigma$ y $-\sigma$ tiene $E = \sigma/\varepsilon_0$ en su interior
+          porque \textbf{dos} planos superponen sus campos en la misma regi\'on.
+
+    \item \textbf{Independencia de $h$}: el radio $h$ del cilindro gaussiano no aparece
+          en el resultado final, lo que confirma que la elecci\'on de la superficie
+          gaussiana es arbitraria siempre que respete la simetr\'ia del problema.
+\end{itemize}
+
+\end{document}

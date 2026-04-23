@@ -16,8 +16,9 @@
 % Colores institucionales y auxiliares
 \definecolor{ubbblue}{RGB}{0,51,102}
 \definecolor{gaussred}{RGB}{200,50,50}
+\definecolor{metalcolor}{RGB}{160,160,170}
 
-% Encabezado y pie de p\'agina
+% Encabezado y pie de página
 \pagestyle{fancy}
 \fancyhf{}
 \renewcommand{\headrulewidth}{0pt}
@@ -76,8 +77,8 @@
 \hrule height 1pt
 \vspace{0.5cm}
 
-{\centering\Large\textbf{Soluci\'on: Ley de Gauss -- Esfera Aislante con Carga Uniforme}\par}
-{\centering\normalsize Densidad de carga volum\'etrica, campo interior y campo exterior\par}
+{\centering\Large\textbf{Soluci\'on: Ley de Gauss -- Esfera Met\'alica (Conductora) con Carga $Q$}\par}
+{\centering\normalsize Densidad superficial de carga, campo interior nulo y campo exterior\par}
 
 \vspace{0.5cm}
 
@@ -86,11 +87,11 @@
 %========================================
 \section*{Enunciado}
 
-Considere una esfera de material aislante de radio $a$ y carga total $Q$ uniformemente
-distribuida en su volumen.
+Considere una esfera met\'alica (conductora) de radio $a$ con carga total $Q$
+uniformemente distribuida en su \textit{superficie}.
 
 \begin{enumerate}[(a)]
-    \item Determine su densidad de carga volum\'etrica $\rho$.
+    \item Determine la densidad de carga superficial $\sigma$.
     \item Determine, usando la Ley de Gauss, el campo el\'ectrico dentro de la esfera
           ($r < a$).
     \item Determine, usando la Ley de Gauss, el campo el\'ectrico fuera de la esfera
@@ -99,11 +100,15 @@ distribuida en su volumen.
 
 \begin{center}
 \begin{tikzpicture}[scale=1.3, >=Stealth]
-    % Esfera aislante con hatching azul
-    \fill[blue!15] (0,0) circle (1.5);
-    \draw[thick, blue!60, pattern=north east lines, pattern color=blue!40]
+    % Esfera metálica: relleno gris con borde grueso
+    \fill[metalcolor!60] (0,0) circle (1.5);
+    \draw[thick, gray!70, pattern=crosshatch, pattern color=gray!50]
         (0,0) circle (1.5);
     \draw[thick] (0,0) circle (1.5);
+    % Cargas + en la superficie (distribuidas)
+    \foreach \ang in {0,40,80,120,160,200,240,280,320}{
+        \node[font=\tiny, text=red!80!black] at ({1.5*cos(\ang)},{1.5*sin(\ang)}) {$+$};
+    }
     % Centro
     \fill (0,0) circle (2pt);
     % Radio a
@@ -120,7 +125,7 @@ distribuida en su volumen.
 \section*{Datos}
 
 \[
-    Q = \text{carga total de la esfera aislante},
+    Q = \text{carga total de la esfera conductora},
     \qquad
     a = \text{radio de la esfera},
     \qquad
@@ -128,21 +133,26 @@ distribuida en su volumen.
     \ \left[\frac{\text{C}^2}{\text{N}\cdot\text{m}^2}\right]
 \]
 
+\textbf{Propiedad fundamental del conductor:} En equilibrio electrost\'atico, las
+cargas libres se redistribuyen hasta que el campo el\'ectrico en el interior del
+conductor es exactamente \textbf{cero}. Toda la carga neta reside en la
+superficie exterior.
+
 %========================================
 % PARTE a)
 %========================================
-\section*{Parte a): Densidad de Carga Volum\'etrica}
+\section*{Parte a): Densidad de Carga Superficial}
 
-La carga $Q$ se distribuye de manera uniforme en el volumen de la esfera de radio $a$.
-Por lo tanto, la densidad de carga volum\'etrica $\rho$ es constante y se obtiene
-dividiendo la carga total por el volumen de la esfera:
+La carga $Q$ se distribuye de manera uniforme sobre la superficie de la esfera
+de radio $a$. La densidad de carga superficial $\sigma \equiv dq/dA$ es constante
+y se obtiene dividiendo la carga total por el \'area de la esfera:
 
 \[
-    \rho = \frac{Q}{V_\text{esfera}} = \frac{Q}{\dfrac{4}{3}\pi a^3}
+    \sigma = \frac{Q}{A_\text{esfera}} = \frac{Q}{4\pi a^2}
 \]
 
 \[
-    \boxed{\rho = \frac{3Q}{4\pi a^3} \quad \left[\text{C/m}^3\right]}
+    \boxed{\sigma = \frac{Q}{4\pi a^2} \quad \left[\text{C/m}^2\right]}
 \]
 
 \bigskip
@@ -156,97 +166,65 @@ dividiendo la carga total por el volumen de la esfera:
 \begin{minipage}[c]{0.30\textwidth}
 \centering
 \begin{tikzpicture}[scale=1.15, >=Stealth]
-    % Esfera aislante con hatching azul
-    \fill[blue!15] (0,0) circle (1.2);
-    \draw[thick, blue!60, pattern=north east lines, pattern color=blue!40]
+    % Esfera metálica
+    \fill[metalcolor!60] (0,0) circle (1.2);
+    \draw[thick, gray!70, pattern=crosshatch, pattern color=gray!50]
         (0,0) circle (1.2);
     \draw[thick] (0,0) circle (1.2);
+    % Cargas en la superficie
+    \foreach \ang in {0,60,120,180,240,300}{
+        \node[font=\tiny, text=red!80!black] at ({1.2*cos(\ang)},{1.2*sin(\ang)}) {$+$};
+    }
     % Centro
     \fill (0,0) circle (2pt);
     % Radio a
     \draw[->] (0,0) -- ({1.2*cos(130)},{1.2*sin(130)})
         node[above left, font=\scriptsize]{$a$};
     % Superficie gaussiana interior roja punteada
-    \draw[gaussred, dashed, thick] (0,0) circle (0.7);
+    \draw[gaussred, dashed, thick] (0,0) circle (0.65);
     % Radio r
-    \draw[->, gaussred, thick] (0,0) -- (0.7,0)
+    \draw[->, gaussred, thick] (0,0) -- (0.65,0)
         node[right, font=\scriptsize, gaussred]{$r$};
-    % Vector dS en rojo (angulo 70 grados)
-    \draw[->, thick, red] ({0.7*cos(70)},{0.7*sin(70)})
-        -- ({1.18*cos(70)},{1.18*sin(70)})
-        node[above right, font=\tiny, red]{$d\vec{S}$};
-    % Vector E en azul (angulo 30 grados)
-    \draw[->, thick, blue!70] ({0.7*cos(30)},{0.7*sin(30)})
-        -- ({1.18*cos(30)},{1.18*sin(30)})
-        node[right, font=\tiny, blue!70]{$\vec{E}$};
-    % Etiqueta carga
-    \node[font=\scriptsize] at (0, -0.25) {$Q$};
+    % E = 0 en el interior
+    \node[font=\small, blue!70] at (0, 0.38) {$\vec{E}=\vec{0}$};
 \end{tikzpicture}
 \end{minipage}%
 \hfill
 \begin{minipage}[c]{0.67\textwidth}
-Por simetr\'ia esf\'erica, el campo $\vec{E} = E(r)\,\hat{r}$ es constante en m\'odulo
-y radial sobre toda la superficie gaussiana esf\'erica de radio $r < a$.
-Los vectores $\vec{E}$ y $d\vec{S}$ son paralelos, por lo que:
-
-\begin{align*}
-    \oint \vec{E}\cdot d\vec{S}
-        &= \oint E\,dS\cos 0^\circ \\
-        &= E \oint dS \\
-        &= E\,(4\pi r^2)
-\end{align*}
-
-La carga encerrada dentro de la superficie gaussiana de radio $r$ se calcula a
-partir de $\rho$:
-
-\begin{align*}
-    Q_\text{enc}
-        &= \rho\,V_\text{enc} \\[6pt]
-        &= \rho \cdot \frac{4}{3}\pi r^3 \\[6pt]
-        &= \frac{Q}{\dfrac{4}{3}\pi a^3} \cdot \frac{4}{3}\pi r^3 \\[6pt]
-        &= Q\left(\frac{r}{a}\right)^3
-\end{align*}
-\end{minipage}
-
-\bigskip
-
+Se elige una superficie gaussiana esf\'erica de radio $r < a$, completamente
+en el interior del conductor. Por simetr\'ia, si existiera campo, ser\'ia radial.
 Aplicando la Ley de Gauss:
 
 \[
     \oint \vec{E}\cdot d\vec{S} = \frac{Q_\text{enc}}{\varepsilon_0}
 \]
 
-\begin{align*}
-    E \oint dS
-        &= \frac{Q}{\varepsilon_0}\left(\frac{r}{a}\right)^3 \\[8pt]
-    E\,(4\pi r^2)
-        &= \frac{Q}{\varepsilon_0} \cdot \frac{r^3}{a^3} \\[8pt]
-    E
-        &= \frac{Q}{4\pi\varepsilon_0} \cdot \frac{r}{a^3}
-\end{align*}
+Toda la carga $Q$ reside en la \textit{superficie} del conductor; por lo tanto,
+ninguna carga queda dentro de la superficie gaussiana de radio $r < a$:
 
 \[
-    \boxed{\vec{E} = \left(\frac{Q}{4\pi\varepsilon_0\,a^3}\,r\right)\hat{r} \quad [\text{N/C}]}
+    Q_\text{enc} = 0
 \]
 
-\smallskip
-\noindent donde $\hat{r}$ es el vector unitario radial que apunta desde el centro de la
-esfera hacia afuera. Como la densidad de carga es positiva ($\rho > 0$ cuando $Q > 0$),
-el campo el\'ectrico apunta en la direcci\'on radial saliente, coherente con la
-repulsi\'on que ejercer\'ia una carga positiva de prueba colocada en su interior.
+\[
+    E\,(4\pi r^2) = \frac{0}{\varepsilon_0} = 0
+\]
+\end{minipage}
 
 \bigskip
 
-\textbf{Interpretaci\'on f\'isica:} El campo el\'ectrico dentro de la esfera aislante
-crece \textit{linealmente} con $r$, siendo cero en el centro ($r = 0$) y m\'aximo en
-la superficie ($r = a$), donde vale:
 \[
-    E(a) = \frac{Q}{4\pi\varepsilon_0\,a^2}
+    \boxed{\vec{E} = \vec{0} \quad \text{para} \quad r < a}
 \]
-Este valor es id\'entico al campo producido por una carga puntual $Q$ a una distancia
-$a$, lo cual es coherente con el principio de superposici\'on: visto desde la
-superficie, la esfera uniformemente cargada se comporta como si toda su carga estuviera
-concentrada en el centro.
+
+\smallskip
+\noindent Este resultado es independiente de $r$: el campo el\'ectrico es
+rigurosamente nulo en \textit{cualquier} punto del interior del conductor en
+equilibrio electrost\'atico. Esto se debe a que las cargas libres se han
+redistribuido en la superficie hasta cancelar completamente cualquier campo
+interno.
+
+\bigskip
 
 %========================================
 % PARTE c)
@@ -257,11 +235,15 @@ concentrada en el centro.
 \begin{minipage}[c]{0.30\textwidth}
 \centering
 \begin{tikzpicture}[scale=1.15, >=Stealth]
-    % Esfera aislante con hatching azul
-    \fill[blue!15] (0,0) circle (1.2);
-    \draw[thick, blue!60, pattern=north east lines, pattern color=blue!40]
+    % Esfera metálica
+    \fill[metalcolor!60] (0,0) circle (1.2);
+    \draw[thick, gray!70, pattern=crosshatch, pattern color=gray!50]
         (0,0) circle (1.2);
     \draw[thick] (0,0) circle (1.2);
+    % Cargas en la superficie
+    \foreach \ang in {0,60,120,180,240,300}{
+        \node[font=\tiny, text=red!80!black] at ({1.2*cos(\ang)},{1.2*sin(\ang)}) {$+$};
+    }
     % Centro
     \fill (0,0) circle (2pt);
     % Radio a
@@ -272,33 +254,29 @@ concentrada en el centro.
     % Radio r
     \draw[->, gaussred, thick] (0,0) -- (1.85,0)
         node[right, font=\scriptsize, gaussred]{$r$};
-    % Vector dS en rojo (angulo 55 grados)
+    % Vector dS
     \draw[->, thick, red] ({1.85*cos(55)},{1.85*sin(55)})
         -- ({2.35*cos(55)},{2.35*sin(55)})
         node[above right, font=\tiny, red]{$d\vec{S}$};
-    % Vector E en azul (angulo 20 grados)
+    % Vector E
     \draw[->, thick, blue!70] ({1.85*cos(20)},{1.85*sin(20)})
         -- ({2.35*cos(20)},{2.35*sin(20)})
         node[right, font=\tiny, blue!70]{$\vec{E}$};
-    % Etiqueta carga
-    \node[font=\scriptsize] at (0, -0.25) {$Q$};
 \end{tikzpicture}
 \end{minipage}%
 \hfill
 \begin{minipage}[c]{0.67\textwidth}
-Por simetr\'ia esf\'erica, se elige una superficie gaussiana esf\'erica de radio
-$r > a$ concéntrica con la esfera. El campo $\vec{E} = E(r)\,\hat{r}$ es constante
-en m\'odulo y radial sobre ella, por lo que:
+Se elige una superficie gaussiana esf\'erica de radio $r > a$. Por simetr\'ia
+esf\'erica, $\vec{E} = E(r)\,\hat{r}$ es constante en m\'odulo y radial, de modo
+que $\vec{E} \parallel d\vec{S}$:
 
 \begin{align*}
     \oint \vec{E}\cdot d\vec{S}
-        &= \oint E\,dS\cos 0^\circ \\
-        &= E \oint dS \\
         &= E\,(4\pi r^2)
 \end{align*}
 
-La superficie gaussiana encierra la esfera aislante \textit{completa}, de modo que
-toda la carga $Q$ queda en su interior:
+La superficie gaussiana encierra la esfera met\'alica completa, por lo que
+toda la carga superficial queda en su interior:
 
 \[
     Q_\text{enc} = Q
@@ -314,50 +292,42 @@ Aplicando la Ley de Gauss:
 \]
 
 \begin{align*}
-    E\,(4\pi r^2)
-        &= \frac{Q}{\varepsilon_0} \\[8pt]
-    E
-        &= \frac{Q}{4\pi\varepsilon_0\,r^2}
+    E\,(4\pi r^2) &= \frac{Q}{\varepsilon_0} \\[8pt]
+    E             &= \frac{Q}{4\pi\varepsilon_0\,r^2}
 \end{align*}
 
 \[
-    \boxed{\vec{E} = \frac{Q}{4\pi\varepsilon_0\,r^2}\,\hat{r} \quad [\text{N/C}]
-    \qquad (r > a)}
+    \boxed{\vec{E} = \frac{Q}{4\pi\varepsilon_0\,r^2}\,\hat{r}
+    \quad [\text{N/C}] \qquad (r > a)}
 \]
 
 \smallskip
-\noindent donde $\hat{r}$ apunta desde el centro de la esfera hacia el punto exterior.
-Si $Q > 0$, el campo es saliente (repulsivo); si $Q < 0$, es entrante (atractivo).
+\noindent El campo exterior es id\'entico al de una carga puntual $Q$ ubicada en
+el centro: visto desde afuera, la distribuci\'on superficial es indistinguible
+de una carga puntual.
 
 \bigskip
 
-\textbf{Interpretaci\'on f\'isica:} Fuera de la esfera aislante, el campo el\'ectrico
-decae como $1/r^2$, \textit{id\'entico} al de una carga puntual $Q$ ubicada en el
-centro. La distribuci\'on interna de carga no importa: vista desde afuera, cualquier
-distribuci\'on esf\'ericamente sim\'etrica produce el mismo campo que una carga
-puntual equivalente.
-
-\bigskip
-
-\textbf{Continuidad en la superficie} ($r = a$): al evaluar las expresiones de ambas
-regiones en $r = a$ se obtiene el mismo resultado, lo que confirma que el campo es
-continuo en la superficie de la esfera aislante:
+\textbf{Discontinuidad en la superficie} ($r = a$): a diferencia de la esfera
+aislante, aqu\'i el campo presenta un \textit{salto} en $r = a$. El campo pasa
+de cero (interior) al valor m\'aximo $E_{\max}$ (exterior) de forma abrupta,
+lo cual es consistente con la presencia de una densidad superficial $\sigma$:
 
 \[
-    E_\text{interior}(a) = \frac{Q}{4\pi\varepsilon_0\,a^3}\cdot a
-                         = \frac{Q}{4\pi\varepsilon_0\,a^2}
-    = E_\text{exterior}(a) \checkmark
+    \Delta E = E_\text{ext}(a) - E_\text{int}(a)
+             = \frac{Q}{4\pi\varepsilon_0\,a^2} - 0
+             = \frac{\sigma}{\varepsilon_0}
 \]
 
 %========================================
 % GRÁFICO E(r)
 %========================================
-\bigskip
+\clearpage
 \section*{Gr\'afico del Campo El\'ectrico $E(r)$}
 
 El siguiente gr\'afico muestra el comportamiento del campo el\'ectrico en funci\'on
-de la distancia $r$ al centro, normalizado respecto al valor m\'aximo
-$E_\text{max} = \dfrac{Q}{4\pi\varepsilon_0 a^2}$ que se alcanza en la superficie:
+de la distancia $r$ al centro, normalizado respecto al valor
+$E_{\max} = \dfrac{Q}{4\pi\varepsilon_0 a^2}$ justo en la superficie:
 
 \begin{center}
 \begin{tikzpicture}
@@ -367,7 +337,7 @@ $E_\text{max} = \dfrac{Q}{4\pi\varepsilon_0 a^2}$ que se alcanza en la superfici
     xlabel={$r/a$},
     ylabel={$E\,/\,E_{\max}$},
     xmin=0, xmax=3.2,
-    ymin=0, ymax=1.25,
+    ymin=0, ymax=1.35,
     xtick={0,0.5,1,1.5,2,2.5,3},
     xticklabels={$0$,$0{,}5a$,$a$,$1{,}5a$,$2a$,$2{,}5a$,$3a$},
     ytick={0,0.25,0.5,0.75,1},
@@ -382,16 +352,16 @@ $E_\text{max} = \dfrac{Q}{4\pi\varepsilon_0 a^2}$ que se alcanza en la superfici
     legend style={font=\small},
     clip=false,
 ]
-    % Region interior r < a: E/Emax = r/a
+    % Interior r < a: E = 0
     \addplot[
         color=blue!70!black,
         line width=1.8pt,
         domain=0:1,
-        samples=50,
-    ] {x};
-    \addlegendentry{Interior ($r < a$): $E \propto r$}
+        samples=2,
+    ] {0};
+    \addlegendentry{Interior ($r < a$): $E = 0$}
 
-    % Region exterior r > a: E/Emax = 1/r^2
+    % Exterior r > a: E/Emax = 1/r^2
     \addplot[
         color=gaussred,
         line width=1.8pt,
@@ -400,14 +370,24 @@ $E_\text{max} = \dfrac{Q}{4\pi\varepsilon_0 a^2}$ que se alcanza en la superfici
     ] {1/x^2};
     \addlegendentry{Exterior ($r > a$): $E \propto 1/r^2$}
 
-    % Línea vertical en r = a
+    % Línea vertical en r = a (discontinuidad)
     \draw[dashed, gray!70, line width=1pt] (axis cs:1,0) -- (axis cs:1,1.15);
-    \node[font=\small, gray!80] at (axis cs:1,1.20) {$r = a$};
+    \node[font=\small, gray!80] at (axis cs:1,1.22) {$r = a$};
 
-    % Punto en la superficie
-    \addplot[only marks, mark=*, mark size=2.5pt, color=black]
+    % Línea vertical que indica el salto (discontinuidad)
+    \draw[dotted, black!60, line width=1.2pt] (axis cs:1,0) -- (axis cs:1,1);
+
+    % Punto abierto en r=a desde interior (E=0)
+    \draw[blue!70!black, fill=white, thick] (axis cs:1,0) circle (2.5pt);
+    % Punto cerrado en r=a desde exterior (E=Emax)
+    \addplot[only marks, mark=*, mark size=2.5pt, color=gaussred]
         coordinates {(1,1)};
     \node[font=\small, anchor=west] at (axis cs:1.05, 1.05) {$E_{\max}$};
+
+    % Región sombreada (metal)
+    \addplot[fill=metalcolor!30, opacity=0.4, draw=none]
+        coordinates {(0,0) (1,0) (1,1.3) (0,1.3)} \closedcycle;
+    \node[font=\small, gray!70] at (axis cs:0.5, 0.65) {metal};
 
 \end{axis}
 \end{tikzpicture}
@@ -417,13 +397,12 @@ $E_\text{max} = \dfrac{Q}{4\pi\varepsilon_0 a^2}$ que se alcanza en la superfici
 \noindent
 \textbf{Observaciones:}
 \begin{itemize}
-    \item Para $r < a$: $E$ crece \textit{linealmente} con $r$
-          (la carga encerrada aumenta como $r^3$, pero el \'area de la
-          superficie gaussiana crece como $r^2$, resultando en una
-          dependencia neta $\propto r$).
-    \item Para $r > a$: $E$ decrece como $1/r^2$, igual que una carga puntual.
-    \item En $r = a$: el campo es continuo y alcanza su valor m\'aximo
-          $E_{\max} = \dfrac{Q}{4\pi\varepsilon_0 a^2}$.
+    \item Para $r < a$: $E = 0$ en todo el interior del conductor.
+    \item En $r = a$: el campo presenta una \textit{discontinuidad} (salto brusco),
+          caracter\'istica de la presencia de carga superficial $\sigma$.
+          El salto vale $\Delta E = \sigma/\varepsilon_0$.
+    \item Para $r > a$: $E$ decrece como $1/r^2$, igual que una carga puntual
+          $Q$ en el centro.
 \end{itemize}
 
 \end{document}
