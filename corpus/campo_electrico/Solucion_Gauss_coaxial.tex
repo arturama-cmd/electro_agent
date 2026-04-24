@@ -1,0 +1,558 @@
+\documentclass[12pt,letterpaper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[spanish,es-noshorthands]{babel}
+\usepackage{amsmath,amssymb}
+\usepackage{graphicx}
+\usepackage{xcolor}
+\usepackage{tikz}
+\usetikzlibrary{calc,arrows.meta,decorations.markings,patterns}
+\usepackage{enumerate}
+\usepackage[top=2.5cm, bottom=4cm, left=2cm, right=2cm, footskip=40pt]{geometry}
+\usepackage{fancyhdr}
+\usepackage{lastpage}
+
+% Colores institucionales
+\definecolor{ubbblue}{RGB}{0,51,102}
+\definecolor{gaussred}{RGB}{200,50,50}
+
+% Encabezado y pie de p\'agina
+\pagestyle{fancy}
+\fancyhf{}
+\renewcommand{\headrulewidth}{0pt}
+\renewcommand{\footrulewidth}{0.4pt}
+\fancyfoot[L]{%
+    \raisebox{-0.5cm}{\includegraphics[height=1.2cm]{logo ubb.png}}%
+}
+\fancyfoot[C]{%
+    \begin{minipage}[b]{8cm}
+        \centering
+        \footnotesize
+        \textcolor{ubbblue}{\textbf{Dr. Arturo Fern\'andez P\'erez}}\\
+        \scriptsize Departamento de F\'isica -- Universidad del B\'io-B\'io\\
+        \scriptsize \textit{Electro\_Asistente\_AI-UBB}\\
+        \tiny P\'agina \thepage\ de \pageref{LastPage}
+    \end{minipage}%
+}
+\fancyfoot[R]{%
+    \raisebox{-0.5cm}{\includegraphics[height=1.2cm]{logo dfis.png}}%
+}
+
+\fancypagestyle{plain}{%
+    \fancyhf{}
+    \renewcommand{\headrulewidth}{0pt}
+    \renewcommand{\footrulewidth}{0.4pt}
+    \fancyfoot[L]{%
+        \raisebox{-0.5cm}{\includegraphics[height=1.2cm]{logo ubb.png}}%
+    }
+    \fancyfoot[C]{%
+        \begin{minipage}[b]{8cm}
+            \centering
+            \footnotesize
+            \textcolor{ubbblue}{\textbf{Dr. Arturo Fern\'andez P\'erez}}\\
+            \scriptsize Departamento de F\'isica -- Universidad del B\'io-B\'io\\
+            \scriptsize \textit{Electro\_Asistente\_AI-UBB}\\
+            \tiny P\'agina \thepage\ de \pageref{LastPage}
+        \end{minipage}%
+    }
+    \fancyfoot[R]{%
+        \raisebox{-0.5cm}{\includegraphics[height=1.2cm]{logo dfis.png}}%
+    }
+}
+
+\begin{document}
+
+%========================================
+% ENCABEZADO INSTITUCIONAL
+%========================================
+\begin{center}
+    \includegraphics[height=2cm]{logo ubb.png}\\[0.3cm]
+    {\large\textcolor{ubbblue}{\textbf{UNIVERSIDAD DEL B\'IO-B\'IO}}}\\[0.1cm]
+    {\normalsize Facultad de Ciencias -- Departamento de F\'isica}
+\end{center}
+
+\vspace{0.3cm}
+\hrule height 1pt
+\vspace{0.5cm}
+
+{\centering\Large\textbf{Soluci\'on: Ley de Gauss -- Cable Coaxial}\par}
+{\centering\normalsize Simetr\'ia cil\'indrica: conductor s\'olido interior + casc\'ar\'on conductor exterior\par}
+
+\vspace{0.4cm}
+
+%========================================
+% ENUNCIADO
+%========================================
+\section*{Enunciado del Problema}
+
+Un conductor cil\'indrico s\'olido de radio $R_1 = 1{,}3$~[mm] y longitud $L = 11$~[m]
+se encuentra dentro de un casc\'ar\'on cil\'indrico conductor delgado de radio $R_2 = 10R_1$
+e igual longitud. La carga neta del conductor interior es $Q_1 = 3{,}4$~[nC] y la del
+casc\'ar\'on es $Q_2 = -2Q_1$. Determinar:
+\begin{itemize}
+    \item El campo el\'ectrico $\vec{E}$ a distancias radiales $r = 0{,}5R_1$,\enspace
+          $r = 5R_1$\enspace y\enspace $r = 20R_1$.
+    \item Las cargas superficiales en la cara interior y exterior del casc\'ar\'on.
+\end{itemize}
+
+% Diagrama principal: secci\'on transversal
+\begin{center}
+\begin{tikzpicture}[scale=1.05, >=Stealth]
+
+    % ===  FONDOS DE REGION === %
+    % Region III (exterior): naranja tenue
+    \fill[orange!8] (0,0) circle (5.1);
+    % Region II (entre conductores): verde tenue
+    \fill[green!12] (0,0) circle (2.8);
+
+    % === CASCARÓN EXTERIOR (anillo gris) === %
+    \fill[gray!45] (0,0) circle (2.87);
+    \fill[green!12] (0,0) circle (2.73);
+    \draw[gray!55!black, very thick] (0,0) circle (2.80);
+
+    % === CONDUCTOR INTERIOR (disco azul) === %
+    \fill[blue!22] (0,0) circle (0.70);
+    \draw[blue!65!black, thick] (0,0) circle (0.70);
+    \node[blue!80!black, font=\small\bfseries] at (0, 0.28) {$Q_1$};
+    \node[blue!60!black, font=\scriptsize] at (0,-0.25) {$+$};
+
+    % === SUPERFICIES GAUSSIANAS === %
+    % r = 0.5 R1 (dentro del conductor)
+    \draw[gaussred, dashed, thick] (0,0) circle (0.35);
+    % r = 5 R1 (entre conductores)
+    \draw[green!58!black, dashed, thick] (0,0) circle (1.75);
+    % r = 20 R1 (exterior) -- parcialmente visible
+    \begin{scope}
+        \clip (-5.2,-4.5) rectangle (5.2,4.5);
+        \draw[orange!65!black, dashed, thick] (0,0) circle (5.00);
+    \end{scope}
+
+    % === ETIQUETAS DE RADIOS === %
+    % R1
+    \draw[{Stealth}-{Stealth}, thin, blue!60!black]
+        (0, 0.10) -- (0.70, 0.10) node[midway, above, font=\scriptsize]{$R_1$};
+    % R2
+    \draw[{Stealth}-{Stealth}, thin, gray!65!black]
+        (0,-0.10) -- (2.80,-0.10) node[midway, below, font=\scriptsize]{$R_2{=}10R_1$};
+
+    % === ETIQUETAS DE SUPERFICIES GAUSSIANAS === %
+    \node[gaussred, font=\scriptsize] at (-1.35, 0.65)
+        {$r{=}0{,}5R_1$};
+    \draw[->, gaussred, very thin] (-0.95,0.55) -- (-0.28,0.22);
+
+    \node[green!55!black, font=\scriptsize] at (1.75,-2.15)
+        {$r{=}5R_1$};
+    \draw[->, green!55!black, very thin] (1.60,-1.97) -- (1.50,-1.82);
+
+    \node[orange!70!black, font=\scriptsize] at (3.80, 4.0)
+        {$r{=}20R_1$};
+    \draw[->, orange!70!black, very thin] (4.00,3.80) -- (4.30,3.55);
+
+    % === VECTORES DE CAMPO (Region II, hacia afuera) === %
+    \draw[->, very thick, green!52!black] ( 1.75, 0.0)--( 2.55, 0.0)
+        node[right, font=\scriptsize]{$\vec{E}_\text{II}$};
+    \draw[->, very thick, green!52!black] (-1.75, 0.0)--(-2.55, 0.0);
+    \draw[->, very thick, green!52!black] ( 0.0, 1.75)--( 0.0, 2.55);
+    \draw[->, very thick, green!52!black] ( 0.0,-1.75)--( 0.0,-2.55);
+
+    % === VECTORES DE CAMPO (Region III, hacia adentro) === %
+    \draw[->, very thick, orange!62!black] ( 4.0, 0.0)--( 3.2, 0.0)
+        node[right, font=\scriptsize]{$\vec{E}_\text{III}$};
+    \draw[->, very thick, orange!62!black] (-4.0, 0.0)--(-3.2, 0.0);
+    \draw[->, very thick, orange!62!black] ( 0.0, 4.0)--( 0.0, 3.2);
+
+    % === ETIQUETA DEL CASCARÓN === %
+    \node[gray!60!black, font=\footnotesize\bfseries] at (3.60, 1.10)
+        {$Q_2 = -2Q_1$};
+
+    % === ETIQUETAS DE REGIONES === %
+    \node[blue!70!black,   font=\small\bfseries] at ( 0.42, 0.42) {I};
+    \node[green!60!black,  font=\small\bfseries] at ( 2.20, 0.42) {II};
+    \node[orange!65!black, font=\small\bfseries] at ( 4.20, 0.42) {III};
+
+    % Nota de escala
+    \node[font=\tiny, gray!60!black] at (4.5,-4.2) {(esquema no a escala)};
+
+\end{tikzpicture}
+\end{center}
+
+%========================================
+% DATOS
+%========================================
+\section*{Datos del Problema}
+
+\[
+    R_1 = 1{,}3\times10^{-3}\ [\text{m}],\qquad
+    R_2 = 10R_1 = 1{,}3\times10^{-2}\ [\text{m}],\qquad
+    L   = 11\ [\text{m}]
+\]
+\[
+    Q_1 = 3{,}4\times10^{-9}\ [\text{C}],\qquad
+    Q_2 = -2Q_1 = -6{,}8\times10^{-9}\ [\text{C}]
+\]
+\[
+    \varepsilon_0 = 8{,}85\times10^{-12}
+    \ \left[\tfrac{\text{C}^2}{\text{N}\cdot\text{m}^2}\right],\qquad
+    K = 9{,}0\times10^{9}
+    \ \left[\tfrac{\text{N}\cdot\text{m}^2}{\text{C}^2}\right]
+\]
+
+\noindent\textbf{Densidad lineal del conductor interior:}
+\[
+    \lambda_1 \equiv \frac{Q_1}{L}
+    = \frac{3{,}4\times10^{-9}}{11}
+    = 3{,}09\times10^{-10}\ [\text{C/m}]
+\]
+
+%========================================
+% ANÁLISIS CUALITATIVO
+%========================================
+\section*{An\'alisis Cualitativo}
+
+El sistema posee \textbf{simetr\'ia cil\'indrica}: los dos conductores son coaxiales y
+de igual longitud. Por ello:
+\begin{itemize}
+    \item $\vec{E}$ es \textbf{radial} ($\hat{r}$) en todo punto fuera de los conductores.
+    \item $|\vec{E}|$ depende s\'olo de la distancia radial $r$ (no de $z$ ni del \'angulo
+          azimutal $\varphi$).
+    \item La superficie gaussiana \'optima es un \textbf{cilindro coaxial} de radio $r$
+          y longitud $\ell$ arbitraria (el flujo por las tapas es nulo porque
+          $\vec{E}\perp\hat{n}_\text{tapa}$).
+\end{itemize}
+
+El sistema presenta tres regiones de comportamiento distinto:
+
+\begin{center}
+\renewcommand{\arraystretch}{1.30}
+\begin{tabular}{clcc}
+\hline
+\textbf{Regi\'on} & \textbf{Zona} & \textbf{Intervalo} & \textbf{$q_\text{enc}$} \\
+\hline
+I   & Dentro del conductor interior & $r < R_1$       & $0$ (conductor) \\
+II  & Entre los dos conductores     & $R_1 < r < R_2$ & $Q_1$ \\
+III & Exterior al sistema           & $r > R_2$       & $Q_1 + Q_2 = -Q_1$ \\
+\hline
+\end{tabular}
+\end{center}
+
+%========================================
+% DESARROLLO
+%========================================
+\section*{Desarrollo: Aplicaci\'on de la Ley de Gauss}
+
+%--------------------------------------------
+\subsection*{Regi\'on~I:\enspace $r = 0{,}5R_1$ \normalfont(dentro del conductor interior)}
+
+\noindent
+\begin{minipage}[c]{0.30\textwidth}
+\centering
+\begin{tikzpicture}[scale=1.0, >=Stealth]
+    % Conductor interior
+    \fill[blue!22] (0,0) circle (1.6);
+    \draw[blue!65!black, thick] (0,0) circle (1.6);
+    \node[blue!70!black, font=\scriptsize] at (0,-1.95) {conductor interior};
+    % Superficie gaussiana dentro
+    \draw[gaussred, dashed, thick] (0,0) circle (0.80);
+    \node[gaussred, font=\scriptsize] at (1.15, 0.70) {$S_G$};
+    % Campo nulo
+    \node[font=\small\bfseries] at (0, 0.10) {$\vec{E}=\vec{0}$};
+    % Radio
+    \draw[->, thin, gaussred] (0,0.08)--(0.80,0.08)
+        node[midway, above, font=\scriptsize]{$r$};
+\end{tikzpicture}
+\end{minipage}%
+\hfill
+\begin{minipage}[c]{0.67\textwidth}
+El conductor interior se encuentra en \textbf{equilibrio electrost\'atico}.
+Dentro de todo conductor en equilibrio el campo el\'ectrico es nulo;
+de lo contrario las cargas libres experimentar\'ian una fuerza neta y se
+redistribuir\'ian, contradiciendo el equilibrio.
+
+\[
+    \boxed{\vec{E}_\text{I} = \vec{0}\ [\text{N/C}]}
+\]
+
+Las cargas $Q_1$ residen \'unicamente en la \emph{superficie exterior}
+del conductor interior ($r = R_1$), con densidad superficial:
+\[
+    \sigma_1 = \frac{Q_1}{2\pi R_1 L}
+    = \frac{3{,}4\times10^{-9}}{2\pi\,(1{,}3\times10^{-3})(11)}
+    \approx 37{,}9\ [\text{nC/m}^2]
+\]
+\end{minipage}
+
+\bigskip
+
+%--------------------------------------------
+\subsection*{Regi\'on~II:\enspace $r = 5R_1$ \normalfont(entre los dos conductores)}
+
+\noindent
+\begin{minipage}[c]{0.30\textwidth}
+\centering
+\begin{tikzpicture}[scale=0.88, >=Stealth]
+    % Cascarón
+    \fill[gray!40] (0,0) circle (2.75);
+    \fill[green!12] (0,0) circle (2.60);
+    \draw[gray!55!black, thick] (0,0) circle (2.68);
+    % Region II
+    \fill[green!12] (0,0) circle (2.60);
+    % Conductor interior
+    \fill[blue!22] (0,0) circle (0.65);
+    \draw[blue!65!black, thick] (0,0) circle (0.65);
+    % Superficie gaussiana
+    \draw[gaussred, dashed, thick] (0,0) circle (1.70);
+    % Radios
+    \draw[->, thin, blue!60!black] (0, 0.08)--(0.65, 0.08)
+        node[midway, above, font=\scriptsize]{$R_1$};
+    \draw[->, thin, gray!65!black] (0,-0.08)--(2.68,-0.08)
+        node[midway, below, font=\scriptsize]{$R_2$};
+    \draw[->, thin, gaussred] (0, 0.16)--(1.70, 0.16)
+        node[midway, above, font=\scriptsize, gaussred]{$r$};
+    % E vector (outward)
+    \draw[->, thick, green!52!black] (1.70,0)--(2.50,0)
+        node[right, font=\scriptsize]{$\vec{E}$};
+    % q_enc label
+    \node[gaussred, font=\scriptsize] at (0,-3.05)
+        {$q_\text{enc} = \lambda_1\,\ell$};
+\end{tikzpicture}
+\end{minipage}%
+\hfill
+\begin{minipage}[c]{0.67\textwidth}
+La superficie gaussiana es un cilindro de radio $r$ ($R_1 < r < R_2$) y
+longitud arbitraria $\ell$.  Solo encierra la carga del conductor interior:
+\[
+    q_\text{enc} = \lambda_1\,\ell = \frac{Q_1}{L}\,\ell
+\]
+
+Las tapas no contribuyen al flujo ($\vec{E}\perp\hat{n}_\text{tapa}$).
+Aplicando la Ley de Gauss sobre la superficie lateral:
+
+\begin{align*}
+    \oint_S \vec{E}\cdot d\vec{A}
+        &= \frac{q_\text{enc}}{\varepsilon_0} \\[6pt]
+    E\cdot 2\pi r\,\ell
+        &= \frac{\lambda_1\,\ell}{\varepsilon_0} \\[6pt]
+    E   &= \frac{\lambda_1}{2\pi\varepsilon_0\,r}
+         = \frac{Q_1}{2\pi\varepsilon_0\,r\,L}
+\end{align*}
+
+\[
+    \boxed{%
+        \vec{E}_\text{II}
+        = \frac{\lambda_1}{2\pi\varepsilon_0\,r}\,\hat{r}
+        \quad (R_1 < r < R_2)
+    }
+\]
+
+La longitud $\ell$ cancela: el resultado es independiente del
+tama\~no del cilindro gaussiano. El campo apunta \textbf{radialmente
+hacia afuera} ($Q_1 > 0$), igual que en un alambre infinito.
+\end{minipage}
+
+\bigskip
+
+%--------------------------------------------
+\subsection*{Regi\'on~III:\enspace $r = 20R_1$ \normalfont(exterior al sistema)}
+
+\noindent
+\begin{minipage}[c]{0.30\textwidth}
+\centering
+\begin{tikzpicture}[scale=0.88, >=Stealth]
+    % Region III
+    \fill[orange!10] (0,0) circle (2.75);
+    % Cascarón
+    \fill[gray!40] (0,0) circle (2.08);
+    \fill[green!12] (0,0) circle (1.93);
+    \draw[gray!55!black, thick] (0,0) circle (2.00);
+    % Conductor interior
+    \fill[blue!22] (0,0) circle (0.48);
+    \draw[blue!65!black, thick] (0,0) circle (0.48);
+    % Superficie gaussiana
+    \draw[gaussred, dashed, thick] (0,0) circle (2.58);
+    % r arrow
+    \draw[{Stealth}-{Stealth}, thin, gaussred]
+        (0, 2.65)--(2.58, 2.65)
+        node[midway, above, font=\scriptsize, gaussred]{$r$};
+    % E vector (inward, Q_enc < 0)
+    \draw[->, thick, orange!60!black] (2.58,0)--(1.88,0)
+        node[left, font=\scriptsize]{$\vec{E}$};
+    \draw[->, thick, orange!60!black] (-2.58,0)--(-1.88,0);
+    % q_enc label
+    \node[gaussred, font=\scriptsize, align=center] at (0,-3.05)
+        {$q_\text{enc} = Q_1+Q_2$\\$= -Q_1$};
+\end{tikzpicture}
+\end{minipage}%
+\hfill
+\begin{minipage}[c]{0.67\textwidth}
+La superficie gaussiana ($r > R_2$) encierra \textbf{ambos} conductores:
+
+\[
+    q_\text{enc} = Q_1 + Q_2 = Q_1 + (-2Q_1) = -Q_1
+\]
+
+Como $\vec{E}$ apunta \textbf{hacia el eje} y $d\vec{A}$ apunta
+\textbf{hacia afuera}, forman un \'angulo de $180^{\circ}$: el flujo por la
+superficie lateral es \emph{negativo}.
+Aplicando la Ley de Gauss:
+
+\begin{align*}
+    \oint_S \vec{E}\cdot d\vec{A}
+        &= \frac{q_\text{enc}}{\varepsilon_0} \\[6pt]
+    -E\cdot 2\pi r\,\ell
+        &= \frac{-\lambda_1\,\ell}{\varepsilon_0} \\[6pt]
+    E   &= \frac{\lambda_1}{2\pi\varepsilon_0\,r} > 0
+\end{align*}
+
+Los dos signos negativos se cancelan: la \textbf{magnitud} $E$ resulta
+positiva. La direcci\'on (hacia el eje) se expresa al escribir la forma
+vectorial con $-\hat{r}$:
+
+\[
+    \boxed{%
+        \vec{E}_\text{III}
+        = -\frac{\lambda_1}{2\pi\varepsilon_0\,r}\,\hat{r}
+        \quad (r > R_2)
+    }
+\]
+
+El campo apunta \textbf{radialmente hacia el eje} ($-\hat{r}$). Su
+magnitud decae como $1/r$, igual que en la Regi\'on~II, pero con
+mayor $r$ (menor intensidad) y sentido opuesto.
+\end{minipage}
+
+\bigskip
+
+%--------------------------------------------
+\subsection*{Cargas superficiales del casc\'ar\'on}
+
+El casc\'ar\'on tambi\'en es un conductor en equilibrio.
+Dentro de su material el campo es cero. Aplicando la Ley de Gauss con
+una superficie gaussiana contenida \emph{enteramente dentro del material}
+del casc\'ar\'on:
+
+\[
+    q_\text{enc} = Q_1 + Q_\text{int} = 0
+    \qquad\Longrightarrow\qquad
+    \boxed{Q_\text{int} = -Q_1 = -3{,}4\ [\text{nC}]}
+\]
+
+La carga total del casc\'ar\'on se divide entre ambas caras.
+La cara exterior queda con:
+
+\[
+    Q_\text{ext} = Q_2 - Q_\text{int}
+    = -2Q_1 - (-Q_1)
+    \qquad\Longrightarrow\qquad
+    \boxed{Q_\text{ext} = -Q_1 = -3{,}4\ [\text{nC}]}
+\]
+
+%========================================
+% CÁLCULO NUMÉRICO
+%========================================
+\section*{C\'alculo Num\'erico}
+
+\textbf{Distancias radiales evaluadas:}
+\[
+    r_\text{I}   = 0{,}5R_1 = 6{,}5\times10^{-4}\ [\text{m}],\qquad
+    r_\text{II}  = 5R_1    = 6{,}5\times10^{-3}\ [\text{m}],\qquad
+    r_\text{III} = 20R_1   = 2{,}6\times10^{-2}\ [\text{m}]
+\]
+
+\noindent\textbf{Regi\'on I} ($r = 0{,}5R_1$, dentro del conductor):
+\[
+    \vec{E}_\text{I} = \vec{0}\ [\text{N/C}]
+\]
+
+\noindent\textbf{Regi\'on II} ($r = 5R_1 = 6{,}5\times10^{-3}$~[m], entre conductores):
+\begin{align*}
+    E_\text{II}
+        &= \frac{\lambda_1}{2\pi\varepsilon_0\,r}
+         = \frac{2K\lambda_1}{r}
+         = \frac{2\times9{,}0\times10^{9}\times3{,}09\times10^{-10}}{6{,}5\times10^{-3}} \\[6pt]
+        &= \frac{5{,}56}{6{,}5\times10^{-3}}
+\end{align*}
+\[
+    \boxed{E_\text{II} \approx 856\ [\text{N/C}],\quad \text{radialmente hacia afuera}}
+\]
+
+\noindent\textbf{Regi\'on III} ($r = 20R_1 = 2{,}6\times10^{-2}$~[m], exterior):
+\begin{align*}
+    E_\text{III}
+        &= \frac{\lambda_1}{2\pi\varepsilon_0\,r}
+         = \frac{2K\lambda_1}{r}
+         = \frac{5{,}56}{2{,}6\times10^{-2}}
+\end{align*}
+\[
+    \boxed{E_\text{III} \approx 214\ [\text{N/C}],\quad \text{radialmente hacia el eje}}
+\]
+
+\noindent\textbf{Cargas superficiales del casc\'ar\'on}
+($A_2 = 2\pi R_2 L = 2\pi\times1{,}3\times10^{-2}\times11 = 0{,}899$~[m$^2$]):
+
+\begin{align*}
+    \sigma_\text{int}
+        &= \frac{Q_\text{int}}{A_2}
+         = \frac{-3{,}4\times10^{-9}}{0{,}899}
+         = -3{,}78\ [\text{nC/m}^2]\\[6pt]
+    \sigma_\text{ext}
+        &= \frac{Q_\text{ext}}{A_2}
+         = \frac{-3{,}4\times10^{-9}}{0{,}899}
+         = -3{,}78\ [\text{nC/m}^2]
+\end{align*}
+
+\[
+    \boxed{\sigma_\text{int} = \sigma_\text{ext} = -3{,}78\ [\text{nC/m}^2]}
+\]
+
+%========================================
+% INTERPRETACIÓN FÍSICA
+%========================================
+\section*{Interpretaci\'on F\'isica}
+
+\begin{itemize}
+    \item \textbf{Blindaje electrost\'atico}: el conductor interior induce
+          $-Q_1$ en la cara interior del casc\'ar\'on, anulando el flujo
+          a trav\'es del material del casc\'ar\'on. Esta es la propiedad
+          clave del cable coaxial: el campo queda \emph{confinado} en la
+          Regi\'on~II entre los dos conductores, sin perturbaciones externas.
+
+    \item \textbf{Por qu\'e ambas caras tienen la misma carga}:
+          como $Q_2 = -2Q_1$, la cara interior debe alojar $-Q_1$
+          para blindar el interior del casc\'ar\'on, dejando a la cara
+          exterior con $Q_2 - (-Q_1) = -Q_1$. Si en cambio
+          $Q_2 = -Q_1$ (blindaje perfecto), la cara exterior tendr\'ia
+          carga nula y no existir\'ia campo en la Regi\'on~III.
+
+    \item \textbf{Resumen de resultados y dependencia con $r$}:
+
+    \begin{center}
+    \renewcommand{\arraystretch}{1.40}
+    \begin{tabular}{llcc}
+    \hline
+    \textbf{Regi\'on} & \textbf{Zona} & \textbf{Campo el\'ectrico} & \textbf{Dep.} \\
+    \hline
+    I   & $r < R_1$       & $E = 0$                                    & ---   \\
+    II  & $R_1 < r < R_2$ & $E = \dfrac{\lambda_1}{2\pi\varepsilon_0 r}$ & $1/r$ \\
+    III & $r > R_2$        & $E = \dfrac{\lambda_1}{2\pi\varepsilon_0 r}$
+                              \enspace (hacia adentro)                   & $1/r$ \\
+    \hline
+    \end{tabular}
+    \end{center}
+
+    \item \textbf{Analog\'ia con los tres casos cl\'asicos de Gauss}:
+
+    \begin{center}
+    \renewcommand{\arraystretch}{1.40}
+    \begin{tabular}{lccc}
+    \hline
+    \textbf{Geometr\'ia} & \textbf{Sup.\ gaussiana} & \textbf{Campo} & \textbf{Dep.} \\
+    \hline
+    Esfera / carga puntual & Esfera conc\'entrica & $E = \dfrac{Q}{4\pi\varepsilon_0 r^2}$    & $1/r^2$ \\
+    Alambre / cable coaxial & Cilindro coaxial    & $E = \dfrac{\lambda}{2\pi\varepsilon_0 r}$ & $1/r$   \\
+    Plano infinito          & Caja de pastilla    & $E = \dfrac{\sigma}{2\varepsilon_0}$       & cte.    \\
+    \hline
+    \end{tabular}
+    \end{center}
+
+\end{itemize}
+
+\end{document}
