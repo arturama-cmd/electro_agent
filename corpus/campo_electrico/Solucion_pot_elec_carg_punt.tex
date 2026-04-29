@@ -1,0 +1,258 @@
+\documentclass[12pt,letterpaper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[spanish,es-noshorthands]{babel}
+\usepackage{amsmath,amssymb}
+\usepackage{graphicx}
+\usepackage{xcolor}
+\usepackage{tikz}
+\usetikzlibrary{3d,calc,arrows.meta,decorations.markings,patterns}
+\usepackage{enumerate}
+\usepackage[top=2.5cm, bottom=4cm, left=2cm, right=2cm, footskip=40pt]{geometry}
+\usepackage{fancyhdr}
+\usepackage{lastpage}
+
+% Colores institucionales
+\definecolor{ubbblue}{RGB}{0,51,102}
+\definecolor{carga_pos}{RGB}{180,0,0}
+\definecolor{carga_neg}{RGB}{0,0,180}
+
+% Encabezado y pie de p\'agina
+\pagestyle{fancy}
+\fancyhf{}
+\renewcommand{\headrulewidth}{0pt}
+\renewcommand{\footrulewidth}{0.4pt}
+\fancyfoot[L]{%
+    \raisebox{-0.5cm}{\includegraphics[height=1.2cm]{logo ubb.png}}%
+}
+\fancyfoot[C]{%
+    \begin{minipage}[b]{8cm}
+        \centering
+        \footnotesize
+        \textcolor{ubbblue}{\textbf{Dr. Arturo Fern\'andez P\'erez}}\\
+        \scriptsize Departamento de F\'isica -- Universidad del B\'io-B\'io\\
+        \scriptsize \textit{Electro\_Asistente\_AI-UBB}\\
+        \tiny P\'agina \thepage\ de \pageref{LastPage}
+    \end{minipage}%
+}
+\fancyfoot[R]{%
+    \raisebox{-0.5cm}{\includegraphics[height=1.2cm]{logo dfis.png}}%
+}
+
+\fancypagestyle{plain}{%
+    \fancyhf{}
+    \renewcommand{\headrulewidth}{0pt}
+    \renewcommand{\footrulewidth}{0.4pt}
+    \fancyfoot[L]{%
+        \raisebox{-0.5cm}{\includegraphics[height=1.2cm]{logo ubb.png}}%
+    }
+    \fancyfoot[C]{%
+        \begin{minipage}[b]{8cm}
+            \centering
+            \footnotesize
+            \textcolor{ubbblue}{\textbf{Dr. Arturo Fern\'andez P\'erez}}\\
+            \scriptsize Departamento de F\'isica -- Universidad del B\'io-B\'io\\
+            \scriptsize \textit{Electro\_Asistente\_AI-UBB}\\
+            \tiny P\'agina \thepage\ de \pageref{LastPage}
+        \end{minipage}%
+    }
+    \fancyfoot[R]{%
+        \raisebox{-0.5cm}{\includegraphics[height=1.2cm]{logo dfis.png}}%
+    }
+}
+
+\begin{document}
+
+%========================================
+% ENCABEZADO INSTITUCIONAL
+%========================================
+\begin{center}
+    \includegraphics[height=2cm]{logo ubb.png}\\[0.3cm]
+    {\large\textcolor{ubbblue}{\textbf{UNIVERSIDAD DEL B\'IO-B\'IO}}}\\[0.1cm]
+    {\normalsize Facultad de Ciencias -- Departamento de F\'isica}
+\end{center}
+
+\vspace{0.3cm}
+\hrule height 1pt
+\vspace{0.5cm}
+
+{\centering\Large\textbf{Potencial El\'ectrico de Cargas Puntuales}\par}
+{\centering\normalsize Tres cargas en el espacio -- potencial, energ\'ia y trabajo\par}
+
+\vspace{0.5cm}
+
+%========================================
+% ENUNCIADO
+%========================================
+\section*{Enunciado del Problema}
+
+Un sistema est\'a compuesto de 3 cargas el\'ectricas puntuales:
+$q_1 = 2\ [\mu\text{C}]$, $q_2 = -3\ [\mu\text{C}]$ y $q_3 = 5\ [\mu\text{C}]$,
+ubicadas en el espacio tridimensional:
+$q_1$ en $(0,\,3,\,0)$~[m],
+$q_2$ en $(3,\,0,\,4)$~[m] y
+$q_3$ en $(2,\,2,\,3)$~[m].
+
+\begin{center}
+\begin{tikzpicture}[
+    scale=1.1,
+    x={({cos(210)*0.85cm},{sin(210)*0.85cm})},
+    y={(1.0cm,0cm)},
+    z={(0cm,1.0cm)},
+    >=Stealth
+]
+    % Ejes
+    \draw[->] (0,0,0) -- (4.5,0,0) node[left, font=\small]{$X$};
+    \draw[->] (0,0,0) -- (0,4.5,0) node[right, font=\small]{$Y$};
+    \draw[->] (0,0,0) -- (0,0,5.0) node[above, font=\small]{$Z$};
+    \node[below, font=\small] at (0,0,0) {$O$};
+
+    % Proyecciones de q2 = (3,0,4) sobre el plano XZ
+    \draw[gray, dashed, thin] (3,0,0) -- (3,0,4);
+    \draw[gray, dashed, thin] (0,0,4) -- (3,0,4);
+    \draw[gray, dashed, thin] (3,0,0) -- (0,0,0);
+
+    % Proyecciones de q3 = (2,2,3)
+    \draw[gray, dashed, thin] (2,2,0) -- (2,2,3);
+    \draw[gray, dashed, thin] (2,0,0) -- (2,2,0);
+    \draw[gray, dashed, thin] (0,2,0) -- (2,2,0);
+
+    % Cargas
+    % q1 = (0,3,0) sobre eje Y
+    \fill[carga_pos] (0,3,0) circle (3pt);
+    \node[right, font=\small, carga_pos] at (0,3.15,0) {$q_1$};
+
+    % q2 = (3,0,4) en plano XZ
+    \fill[carga_neg] (3,0,4) circle (3pt);
+    \node[left, font=\small, carga_neg] at (2.8,0,4) {$q_2$};
+
+    % q3 = (2,2,3) en el espacio
+    \fill[green!60!black] (2,2,3) circle (3pt);
+    \node[right, font=\small, green!60!black] at (2.1,2.1,3) {$q_3$};
+
+\end{tikzpicture}
+\end{center}
+
+\noindent\textbf{Resuelva:}
+\begin{enumerate}[(a)]
+    \item Calcule el potencial el\'ectrico total en el origen generado por el sistema de cargas.
+    \item Calcule la energ\'ia potencial el\'ectrica total del sistema de cargas.
+    \item Determine el trabajo necesario para traer una cuarta carga $q_4 = 1\ [\mu\text{C}]$
+    desde el infinito y ubicarla en el origen.
+\end{enumerate}
+
+%========================================
+% DATOS
+%========================================
+\section*{Datos del Problema}
+
+\[
+    q_1 = 2\times10^{-6}\ [\text{C}]\ \text{en}\ \vec{r}_1 = 3\,\hat{j}\ [\text{m}],\quad
+    q_2 = -3\times10^{-6}\ [\text{C}]\ \text{en}\ \vec{r}_2 = 3\,\hat{\imath}+4\,\hat{k}\ [\text{m}]
+\]
+\[
+    q_3 = 5\times10^{-6}\ [\text{C}]\ \text{en}\ \vec{r}_3 = 2\,\hat{\imath}+2\,\hat{j}+3\,\hat{k}\ [\text{m}],\quad
+    K = 9\times10^{9}\ \left[\frac{\text{N}\cdot\text{m}^2}{\text{C}^2}\right]
+\]
+
+%========================================
+% PARTE A
+%========================================
+\section*{Parte (a): Potencial el\'ectrico total en el origen}
+
+El potencial el\'ectrico es una magnitud \textbf{escalar}; la contribuci\'on de cada carga se suma directamente:
+
+\[
+    V_T = K\,\frac{q_1}{\|\vec{r}-\vec{r}_1\|} + K\,\frac{q_2}{\|\vec{r}-\vec{r}_2\|} + K\,\frac{q_3}{\|\vec{r}-\vec{r}_3\|}
+    \qquad \text{con}\ \vec{r} = \vec{0}
+\]
+
+\noindent\textbf{Distancias al origen:}
+
+\begin{align*}
+    \|\vec{r}_1\| &= \|(0,\,3,\,0)\| = 3\ [\text{m}]\\[4pt]
+    \|\vec{r}_2\| &= \|(3,\,0,\,4)\| = \sqrt{3^2+0^2+4^2} = \sqrt{9+16} = \sqrt{25} = 5\ [\text{m}]\\[4pt]
+    \|\vec{r}_3\| &= \|(2,\,2,\,3)\| = \sqrt{2^2+2^2+3^2} = \sqrt{4+4+9} = \sqrt{17} \approx 4{,}123\ [\text{m}]
+\end{align*}
+
+\noindent\textbf{Potencial total:}
+
+\begin{align*}
+    V_T &= 9\times10^{9} \times 10^{-6}\left[\frac{2}{3} + \frac{-3}{5} + \frac{5}{\sqrt{17}}\right]\\[6pt]
+        &= 9\times10^{3}\left[\frac{2}{3} - \frac{3}{5} + \frac{5}{\sqrt{17}}\right]\\[6pt]
+        &= 9\times10^{3}\left[0{,}6667 - 0{,}6000 + 1{,}2127\right]\\[6pt]
+        &= 9\times10^{3} \times 1{,}2794
+\end{align*}
+
+\[
+    \boxed{V_T = 11\,514{,}1\ [\text{V}]}
+\]
+
+%========================================
+% PARTE B
+%========================================
+\section*{Parte (b): Energ\'ia potencial el\'ectrica total del sistema}
+
+La energ\'ia potencial total es la suma del trabajo necesario para ensamblar el sistema trayendo cada carga desde el infinito:
+
+\[
+    U = K\left(\frac{q_1 q_2}{r_{12}} + \frac{q_1 q_3}{r_{13}} + \frac{q_2 q_3}{r_{23}}\right)
+\]
+
+\noindent\textbf{Distancias entre cargas:}
+
+\begin{align*}
+    r_{12} &= \|\vec{r}_2 - \vec{r}_1\|
+            = \|(3,\,-3,\,4)\|
+            = \sqrt{9+9+16} = \sqrt{34} \approx 5{,}831\ [\text{m}]\\[4pt]
+    r_{13} &= \|\vec{r}_3 - \vec{r}_1\|
+            = \|(2,\,-1,\,3)\|
+            = \sqrt{4+1+9} = \sqrt{14} \approx 3{,}742\ [\text{m}]\\[4pt]
+    r_{23} &= \|\vec{r}_3 - \vec{r}_2\|
+            = \|(-1,\,2,\,-1)\|
+            = \sqrt{1+4+1} = \sqrt{6} \approx 2{,}449\ [\text{m}]
+\end{align*}
+
+\noindent\textbf{Energ\'ia potencial:}
+
+\begin{align*}
+    U &= 9\times10^{9} \times 10^{-12}\left[\frac{(2)(-3)}{\sqrt{34}} + \frac{(2)(5)}{\sqrt{14}} + \frac{(-3)(5)}{\sqrt{6}}\right]\\[6pt]
+      &= 9\times10^{-3}\left[\frac{-6}{5{,}831} + \frac{10}{3{,}742} - \frac{15}{2{,}449}\right]\\[6pt]
+      &= 9\times10^{-3}\left[-1{,}029 + 2{,}673 - 6{,}124\right]\\[6pt]
+      &= 9\times10^{-3} \times (-4{,}480)
+\end{align*}
+
+\[
+    \boxed{U = -40{,}32\ [\text{mJ}]}
+\]
+
+\noindent El valor negativo indica que el sistema \textbf{libera energ\'ia} durante el ensamblaje; la interacci\'on \textbf{atractiva} entre $q_2 < 0$ y $q_3 > 0$ (separadas s\'olo por $\sqrt{6}\approx 2{,}45$~m) domina el t\'ermino negativo de la energ\'ia.
+
+%========================================
+% PARTE C
+%========================================
+\section*{Parte (c): Trabajo para traer $q_4$ desde el infinito al origen}
+
+El trabajo que debe realizar un agente externo para traer $q_4$ desde el infinito hasta el origen es igual a la carga $q_4$ multiplicada por el potencial ya existente en ese punto:
+
+\[
+    W_{q_4} = q_4 \cdot V_T(\vec{0}) = (1\times10^{-6}) \times 11\,514{,}1
+\]
+
+\[
+    \boxed{W_{q_4} = 0{,}01151\ [\text{J}] \approx 11{,}51\ [\text{mJ}]}
+\]
+
+\noindent El trabajo es \textbf{positivo}: el agente externo debe realizar trabajo para ubicar $q_4 > 0$ en un punto donde el potencial es positivo.
+
+%========================================
+% INTERPRETACIÓN FÍSICA
+%========================================
+\section*{Interpretaci\'on F\'isica}
+
+\begin{itemize}
+    \item \textbf{Parte (a):} El potencial neto en el origen es positivo porque la carga positiva $q_3$ (mayor magnitud, $5\ \mu\text{C}$) y la carga $q_1$ contribuyen m\'as que la negativa $q_2$.
+    \item \textbf{Parte (b):} La energ\'ia negativa indica que el sistema est\'a ligado; para \emph{separar} las cargas hasta el infinito habr\'ia que suministrar $40{,}32$~mJ. El t\'ermino dominante es la atracci\'on entre $q_2$ y $q_3$, que son de signo opuesto y est\'an muy pr\'oximas ($r_{23} = \sqrt{6}\approx 2{,}45$~m).
+    \item \textbf{Parte (c):} Como $W = q_4 V_T > 0$, se necesita trabajo externo para posicionar $q_4$ en el origen (el campo el\'ectrico se opondr\'ia al desplazamiento de una carga positiva hacia una regi\'on de alto potencial positivo).
+\end{itemize}
+
+\end{document}

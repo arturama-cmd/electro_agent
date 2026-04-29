@@ -9,10 +9,10 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 ## Commands
 
 ```bash
-# Setup (Windows) — note: venv on this machine lives at ~/venv, not inside the project
-python -m venv venv
-venv\Scripts\activate        # Windows
-source venv/bin/activate     # Linux/Mac (or use run.sh which does this automatically)
+# Setup (Windows) — venv lives at ~/venv, NOT inside the project directory
+python -m venv ~/venv
+~/venv/Scripts/activate      # Windows
+source ~/venv/bin/activate   # Linux/Mac (or use run.sh which does this automatically)
 pip install -r requirements.txt
 
 # Verify all dependencies are correctly installed
@@ -170,7 +170,16 @@ For solutions that draw Gaussian surfaces (sphere/shell cross-sections), also ad
 \usetikzlibrary{calc,arrows.meta,decorations.markings,patterns}
 ```
 
-**Gauss law solution template** (follow `Solucion_Gauss_plano.tex` / `Solucion_Gauss_hilo.tex` for planar/cylindrical, or `Solucion_Gauss_esf_v1.tex` for spherical):
+**Gauss law solution template** (reference files by geometry):
+- Planar: `Solucion_Gauss_plano.tex`
+- Cylindrical (infinite wire): `Solucion_Gauss_hilo.tex`
+- Cylindrical (coaxial cable, multi-region): `Solucion_Gauss_coaxial.tex`
+- Spherical (conducting shell): `Solucion_Gauss_esf_v1.tex` / `Solucion_Gauss_esf_v2.tex`
+- Spherical (insulating solid): `Solucion_Gauss_esf_aislante.tex`
+- Spherical (conducting solid): `Solucion_Gauss_esf_conductora.tex`
+- Spherical (non-concentric shell): `Solucion_Gauss_cascaron_nc.tex`
+
+Shared conventions across all Gauss law templates:
 - TikZ diagram: Gaussian surface drawn in red dotted line (`dashed, red`)
 - Layout: `\begin{minipage}{0.30\textwidth}` (diagram) + `\begin{minipage}{0.67\textwidth}` (steps)
 - Always define charge density before first use: `σ ≡ dq/dA`, `λ ≡ dq/dℓ`, `ρ ≡ dq/dV`

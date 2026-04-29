@@ -16,12 +16,8 @@ def add_pdf_to_collection(pdf_path: str, category: str):
     )
 
     # Obtener el ID máximo actual para continuar la numeración
-    existing = collection.get()
-    if existing["ids"]:
-        max_id = max(int(id.replace("doc_", "")) for id in existing["ids"])
-        next_id = max_id + 1
-    else:
-        next_id = 0
+    # Los IDs pueden tener formato mixto (doc_N o nombre_chunk_N), se usa el conteo total
+    next_id = collection.count()
 
     print(f"Procesando: {pdf_path}")
     print(f"Categoría: {category}")
