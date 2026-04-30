@@ -1,0 +1,300 @@
+\documentclass[12pt,letterpaper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[spanish,es-noshorthands]{babel}
+\usepackage{amsmath,amssymb}
+\usepackage{graphicx}
+\usepackage{xcolor}
+\usepackage{tikz}
+\usetikzlibrary{calc,arrows.meta}
+\usepackage[top=2.5cm, bottom=4cm, left=2cm, right=2cm, footskip=40pt]{geometry}
+\usepackage{fancyhdr}
+\usepackage{lastpage}
+
+\definecolor{ubbblue}{RGB}{0,51,102}
+
+\pagestyle{fancy}
+\fancyhf{}
+\renewcommand{\headrulewidth}{0pt}
+\renewcommand{\footrulewidth}{0.4pt}
+\fancyfoot[L]{\raisebox{-0.5cm}{\includegraphics[height=1.2cm]{logo ubb.png}}}
+\fancyfoot[C]{%
+    \begin{minipage}[b]{8cm}
+        \centering
+        \footnotesize\textcolor{ubbblue}{\textbf{Dr.\ Arturo Fern\'andez P\'erez}}\\
+        \scriptsize Departamento de F\'isica -- Universidad del B\'io-B\'io\\
+        \scriptsize \textit{Electro\_Asistente\_AI-UBB}\\
+        \tiny P\'agina \thepage\ de \pageref{LastPage}
+    \end{minipage}%
+}
+\fancyfoot[R]{\raisebox{-0.5cm}{\includegraphics[height=1.2cm]{logo dfis.png}}}
+\fancypagestyle{plain}{%
+    \fancyhf{}
+    \renewcommand{\headrulewidth}{0pt}
+    \renewcommand{\footrulewidth}{0.4pt}
+    \fancyfoot[L]{\raisebox{-0.5cm}{\includegraphics[height=1.2cm]{logo ubb.png}}}
+    \fancyfoot[C]{%
+        \begin{minipage}[b]{8cm}
+            \centering
+            \footnotesize\textcolor{ubbblue}{\textbf{Dr.\ Arturo Fern\'andez P\'erez}}\\
+            \scriptsize Departamento de F\'isica -- Universidad del B\'io-B\'io\\
+            \scriptsize \textit{Electro\_Asistente\_AI-UBB}\\
+            \tiny P\'agina \thepage\ de \pageref{LastPage}
+        \end{minipage}%
+    }
+    \fancyfoot[R]{\raisebox{-0.5cm}{\includegraphics[height=1.2cm]{logo dfis.png}}}
+}
+
+\begin{document}
+
+%========================================
+% ENCABEZADO INSTITUCIONAL
+%========================================
+\begin{center}
+    \includegraphics[height=2cm]{logo ubb.png}\\[0.3cm]
+    {\large\textcolor{ubbblue}{\textbf{UNIVERSIDAD DEL B\'IO-B\'IO}}}\\[0.1cm]
+    {\normalsize Facultad de Ciencias -- Departamento de F\'isica}
+\end{center}
+
+\vspace{0.3cm}
+\hrule height 1pt
+\vspace{0.5cm}
+
+{\centering\Large\textbf{Potencial El\'ectrico: Distribuciones Continuas 1D}\par}
+{\centering\normalsize\textit{L\'inea Finita de Carga y Anillo Cargado}\par}
+
+\vspace{0.7cm}
+
+%========================================
+% PROBLEMA 1: LÍNEA FINITA DE CARGA
+%========================================
+\section*{Problema 1: Potencial el\'ectrico de una l\'inea finita de carga}
+
+\noindent\textbf{Datos:}
+\begin{itemize}
+    \item $l$ = longitud de la barra
+    \item $\lambda$ = densidad lineal de carga uniforme
+    \item $d$ = distancia perpendicular de $P$ al extremo izquierdo de la barra
+\end{itemize}
+
+\bigskip
+
+\noindent\textbf{Definici\'on de densidad lineal de carga:}
+\[
+    \lambda \;\equiv\; \frac{dq}{d\ell}
+    \qquad\Longrightarrow\qquad
+    dq = \lambda\,d\ell = \lambda\,dx
+\]
+
+\bigskip
+
+\noindent
+\begin{minipage}[t]{0.42\textwidth}
+    \centering
+    \begin{tikzpicture}[scale=1.15, >=Stealth]
+        % Ejes
+        \draw[->, thick] (-0.4,0) -- (5.0,0) node[right]{$x$};
+        \draw[->, thick] (0,-0.6) -- (0,3.3) node[above]{$y$};
+        \node[below left] at (0,0) {$O$};
+
+        % Barra de carga (de x=0 a x=l)
+        \fill[red!15] (0,-0.13) rectangle (4.4,0.13);
+        \draw[red!70!black, very thick] (0,0) -- (4.4,0);
+        \node[below right] at (4.4,-0.15) {$l$};
+
+        % Elemento dq en posicion x~2.4
+        \fill[red!65!black] (2.35,-0.13) rectangle (2.75,0.13);
+        \draw[<->, black, thin] (2.35,-0.45) -- (2.75,-0.45)
+              node[midway, below]{\footnotesize$dx$};
+
+        % Cota x (desde O al centro del elemento)
+        \draw[<->, gray, thin] (0,-0.75) -- (2.55,-0.75)
+              node[midway, below]{\footnotesize$x$};
+
+        % Punto P (sobre el eje y, a altura d)
+        \filldraw[black] (0,2.7) circle (2.2pt);
+        \node[left=4pt] at (0,2.7) {$P$};
+
+        % Cota d (distancia perpendicular)
+        \draw[<->, gray, thin] (-0.5,0) -- (-0.5,2.7)
+              node[midway, left]{\footnotesize$d$};
+
+        % Vector r_P (azul): origen -> P
+        \draw[->, blue, thick] (0,0) -- (0,2.7)
+              node[right=3pt, midway]
+              {\footnotesize$\vec{r}_{P}=d\,\hat{y}$};
+
+        % Vector r_q (verde): origen -> dq
+        \draw[->, green!50!black, thick] (0,0) -- (2.55,0)
+              node[above=4pt, midway]
+              {\footnotesize$\vec{r}_{q}=x\,\hat{x}$};
+
+        % Vector r_P - r_q (naranja, de dq a P)
+        \draw[->, orange!80!black, thick, dashed] (2.55,0) -- (0,2.7)
+              node[right=3pt, midway]
+              {\footnotesize$\vec{r}_{P}-\vec{r}_{q}$};
+    \end{tikzpicture}
+\end{minipage}%
+\hfill
+\begin{minipage}[t]{0.54\textwidth}
+    \vspace{0.3cm}
+    \textbf{Vectores de posici\'on:}
+    \begin{align*}
+        \vec{r}_{P} &= d\,\hat{y} \\[4pt]
+        \vec{r}_{q} &= x\,\hat{x} \\[4pt]
+        \vec{r}_{P} - \vec{r}_{q} &= -x\,\hat{x} + d\,\hat{y} \\[4pt]
+        |\vec{r}_{P} - \vec{r}_{q}| &= \sqrt{x^2 + d^2}
+    \end{align*}
+
+    \bigskip
+
+    \textbf{Potencial diferencial:}
+    \[
+        dV = K\,\frac{dq}{|\vec{r}_{P}-\vec{r}_{q}|}
+           = \frac{K\lambda\,dx}{\sqrt{x^2+d^2}}
+    \]
+\end{minipage}
+
+\bigskip\bigskip
+
+\noindent Integrando a lo largo de la barra ($x$ de $0$ a $l$):
+\begin{align*}
+    V &= K\lambda \int_0^{l} \frac{dx}{\sqrt{x^2+d^2}} \\[6pt]
+      &= K\lambda \Bigl[\ln\!\bigl(x + \sqrt{x^2+d^2}\bigr)\Bigr]_0^{\,l} \\[6pt]
+      &= K\lambda \Bigl[\ln\!\bigl(l + \sqrt{l^2+d^2}\bigr)
+                       - \ln\!\bigl(0 + \sqrt{0^2+d^2}\bigr)\Bigr] \\[6pt]
+      &= K\lambda \Bigl[\ln\!\bigl(l + \sqrt{l^2+d^2}\bigr) - \ln(d)\Bigr]
+\end{align*}
+
+\[
+    \boxed{V = K\lambda\,\ln\!\left(\frac{l + \sqrt{l^2+d^2}}{d}\right)}
+\]
+
+\newpage
+
+%========================================
+% PROBLEMA 2: ANILLO CARGADO
+%========================================
+\section*{Problema 2: Potencial el\'ectrico de un anillo cargado}
+
+\noindent\textbf{Datos:}
+\begin{itemize}
+    \item $a$ = radio del anillo
+    \item $Q$ = carga total del anillo
+    \item $z$ = distancia de $P$ al centro del anillo (sobre el eje del anillo)
+\end{itemize}
+
+\bigskip
+
+\noindent\textbf{Densidad lineal de carga del anillo:}
+
+La longitud total del anillo es su circunferencia $\ell = 2\pi a$, luego:
+\[
+    \lambda = \frac{Q}{2\pi a}
+    \qquad\Longrightarrow\qquad
+    dq = \lambda\,d\ell = \lambda\,a\,d\phi
+\]
+donde $\phi \in [0,\,2\pi)$ es el \'angulo azimutal que parametriza la posici\'on de $dq$ sobre el anillo.
+
+\bigskip
+
+\noindent
+\begin{minipage}[t]{0.42\textwidth}
+    \centering
+    \begin{tikzpicture}[scale=1.15, >=Stealth]
+        % Eje z (horizontal, eje del anillo)
+        \draw[->, thick] (-0.4,0) -- (4.5,0) node[right]{$z$};
+        % Eje y (vertical, en el plano del anillo)
+        \draw[->, thick] (0,-2.1) -- (0,2.4) node[above]{$y$};
+        \node[below left] at (0,0) {$O$};
+
+        % Anillo (perspectiva más ancha: más área interior visible)
+        \draw[very thick] (0,0) ellipse (0.80 and 1.5);
+
+        % Radio a: del origen al punto superior del anillo (eje y)
+        \draw[gray, thin] (0,0) -- (0,1.5);
+        \node[right=3pt] at (0,0.75) {\footnotesize$a$};
+
+        % Elemento dq en ~40° (separado del radio a)
+        % x = 0.80*cos(40°) ≈ 0.613,  y = 1.5*sin(40°) ≈ 0.964
+        \filldraw[red!70!black] (0.613,0.964) circle (2.5pt);
+        \node[right=3pt] at (0.613,0.964) {\footnotesize$dq$};
+
+        % Punto P sobre eje z
+        \filldraw[black] (3.6,0) circle (2.2pt);
+        \node[below right] at (3.6,0) {$P$};
+
+        % Cota z
+        \draw[<->, gray, thin] (0,-0.45) -- (3.6,-0.45)
+              node[midway, below]{\footnotesize$z$};
+
+        % Vector r_P (azul): origen -> P
+        \draw[->, blue, thick] (0,0) -- (3.6,0)
+              node[above=3pt, midway]
+              {\footnotesize$\vec{r}_{P}=z\,\hat{z}$};
+
+        % Vector r_q (verde): origen -> dq
+        \draw[->, green!50!black, thick] (0,0) -- (0.613,0.964)
+              node[right=3pt, near end]
+              {\footnotesize$\vec{r}_{q}$};
+
+        % Vector r_P - r_q (naranja, de dq a P)
+        \draw[->, orange!80!black, thick, dashed] (0.613,0.964) -- (3.6,0)
+              node[above=2pt, midway]
+              {\footnotesize$\vec{r}_{P}-\vec{r}_{q}$};
+    \end{tikzpicture}
+\end{minipage}%
+\hfill
+\begin{minipage}[t]{0.54\textwidth}
+    \vspace{0.3cm}
+    \textbf{Vectores de posici\'on:}
+    \begin{align*}
+        \vec{r}_{P} &= z\,\hat{z} \\[4pt]
+        \vec{r}_{q} &= a\cos\phi\,\hat{x} + a\sin\phi\,\hat{y} \\[4pt]
+        \vec{r}_{P} - \vec{r}_{q} &= -a\cos\phi\,\hat{x}
+                                     - a\sin\phi\,\hat{y}
+                                     + z\,\hat{z}
+    \end{align*}
+    \begin{align*}
+        |\vec{r}_{P} - \vec{r}_{q}|
+          &= \sqrt{a^2\cos^2\!\phi + a^2\sin^2\!\phi + z^2} \\
+          &= \sqrt{a^2 + z^2} \;=\; \text{cte.}
+    \end{align*}
+
+    \smallskip
+    La distancia de cada $dq$ al punto $P$ es \textbf{constante}
+    (no depende de $\phi$).
+
+    \bigskip
+    \textbf{Potencial diferencial:}
+    \[
+        dV = K\,\frac{dq}{|\vec{r}_{P}-\vec{r}_{q}|}
+           = \frac{K\lambda\,a\,d\phi}{\sqrt{a^2+z^2}}
+    \]
+\end{minipage}
+
+\bigskip
+
+\noindent\textbf{Observaci\'on:} La expresi\'on diferencial $dV$ es id\'entica para cualquier arco del anillo; \'unicamente cambian los l\'imites de integraci\'on del \'angulo $\phi$:
+\begin{itemize}
+    \item Anillo completo: \quad$\phi \in [0,\; 2\pi]$
+    \item Semianillo: \quad\quad\;\,$\phi \in [0,\; \pi]$
+    \item Cuarto de anillo: \;$\phi \in \bigl[0,\; \tfrac{\pi}{2}\bigr]$
+\end{itemize}
+
+\bigskip
+
+\noindent Integrando sobre el anillo completo ($\phi$ de $0$ a $2\pi$):
+\begin{align*}
+    V &= \int_0^{2\pi} \frac{K\lambda\,a\,d\phi}{\sqrt{a^2+z^2}}
+       = \frac{K\lambda\,a}{\sqrt{a^2+z^2}} \int_0^{2\pi} d\phi
+       = \frac{K\lambda\,a}{\sqrt{a^2+z^2}} \cdot 2\pi \\[6pt]
+      &= \frac{K\cdot 2\pi a\,\lambda}{\sqrt{a^2+z^2}}
+\end{align*}
+
+\noindent Sustituyendo $\lambda = \dfrac{Q}{2\pi a}$:
+
+\[
+    \boxed{V = \frac{KQ}{\sqrt{a^2+z^2}}}
+\]
+
+\end{document}

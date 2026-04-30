@@ -23,7 +23,7 @@ streamlit run app.py
 ./run.sh                     # Unix shortcut — activates venv + starts Streamlit
 
 # Add a single PDF to existing ChromaDB
-# Edit add_single_pdf.py lines 74-75 to set pdf_path and category, then run:
+# Edit add_single_pdf.py lines 70-71 to set pdf_path and category, then run:
 python add_single_pdf.py
 
 # Test PDF processor (outputs chunk count and preview)
@@ -199,7 +199,7 @@ Shared conventions across all Gauss law templates:
 - `Solucion_Tarea[N]_[year]-[semester].tex` — homework solution (e.g. `Solucion_Tarea1_2026-1.tex`)
 - `Solucion_[topic]_esf_v[N].tex` — topic + geometry variant (e.g. `Solucion_Gauss_esf_v1.tex` = Gauss law, spherical geometry, version 1)
 
-**Other corpus files** (also indexed alongside solutions): `guia[N].tex` and `guia_tarea[N]_[year]-[semester].tex` contain problem statements. Individual problem PDFs follow the pattern `prob [N] guia [N].pdf`.
+**Other corpus files** (also indexed alongside solutions): `guia[N].tex` and `guia_tarea[N]_[year]-[semester].tex` contain problem statements. Individual problem PDFs follow the pattern `prob [N] guia [N].pdf`. Student-facing exercise sheets (for printing/distribution) use `Prob_[N][Variant]_ejercicio.tex` (e.g. `Prob_2A_ejercicio.tex`, `Prob_2B_ejercicio.tex`) — these are enunciado-only files with UBB institutional header/footer (logos, fancyhdr), not solutions.
 
 **Correcting TikZ figures — mandatory workflow:**
 1. Read the PDF enunciado figure first (`guia[N].pdf`, `guia_tarea[N]_*.pdf`, etc.).
