@@ -186,6 +186,10 @@ Shared conventions across all Gauss law templates:
 - 5 steps: define surface → write Gauss law → simplify flux → solve E → evaluate numerically
 - End with a comparative table of all 3 classic cases (sphere/wire/plane: 1/r², 1/r, const)
 
+**Potential electric solution templates** (reference files by problem type):
+- Point charges (discrete): `Solucion_pot_elec_carg_punt.tex`
+- Continuous charge distribution (1D — line charge + ring): `Solucion_pot_elec_1D_cont.tex`
+
 **Solution file naming conventions** (use descriptive names, no strict rule, but these patterns are in use):
 - `Solucion_vec[N].tex` — vector exercises (e.g. `Solucion_vec1.tex`)
 - `Solucion_G[N]P[N][uni|bid].tex` — guide N, problem N (`uni`=unidimensional, `bid`=bidimensional)
