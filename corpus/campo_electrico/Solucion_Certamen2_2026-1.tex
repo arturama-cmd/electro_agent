@@ -1,0 +1,397 @@
+\documentclass[12pt,letterpaper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[spanish,es-noshorthands]{babel}
+\usepackage{amsmath,amssymb}
+\usepackage{graphicx}
+\usepackage{xcolor}
+\usepackage{tikz}
+\usetikzlibrary{3d,calc,arrows.meta,decorations.markings,patterns}
+\usepackage{enumerate}
+\usepackage[top=2.5cm, bottom=4cm, left=2cm, right=2cm, footskip=40pt]{geometry}
+\usepackage{fancyhdr}
+\usepackage{lastpage}
+
+% Colores institucionales
+\definecolor{ubbblue}{RGB}{0,51,102}
+\definecolor{carga_pos}{RGB}{180,0,0}
+\definecolor{carga_neg}{RGB}{0,0,180}
+\definecolor{shellgray}{RGB}{180,180,180}
+
+% Encabezado y pie de p\'agina
+\pagestyle{fancy}
+\fancyhf{}
+\renewcommand{\headrulewidth}{0pt}
+\renewcommand{\footrulewidth}{0.4pt}
+\fancyfoot[L]{%
+    \raisebox{-0.5cm}{\includegraphics[height=1.2cm]{logo ubb.png}}%
+}
+\fancyfoot[C]{%
+    \begin{minipage}[b]{8cm}
+        \centering
+        \footnotesize
+        \textcolor{ubbblue}{\textbf{Dr. Arturo Fern\'andez P\'erez}}\\
+        \scriptsize Departamento de F\'isica -- Universidad del B\'io-B\'io\\
+        \scriptsize \textit{Electro\_Asistente\_AI-UBB}\\
+        \tiny P\'agina \thepage\ de \pageref{LastPage}
+    \end{minipage}%
+}
+\fancyfoot[R]{%
+    \raisebox{-0.5cm}{\includegraphics[height=1.2cm]{logo dfis.png}}%
+}
+
+\fancypagestyle{plain}{%
+    \fancyhf{}
+    \renewcommand{\headrulewidth}{0pt}
+    \renewcommand{\footrulewidth}{0.4pt}
+    \fancyfoot[L]{%
+        \raisebox{-0.5cm}{\includegraphics[height=1.2cm]{logo ubb.png}}%
+    }
+    \fancyfoot[C]{%
+        \begin{minipage}[b]{8cm}
+            \centering
+            \footnotesize
+            \textcolor{ubbblue}{\textbf{Dr. Arturo Fern\'andez P\'erez}}\\
+            \scriptsize Departamento de F\'isica -- Universidad del B\'io-B\'io\\
+            \scriptsize \textit{Electro\_Asistente\_AI-UBB}\\
+            \tiny P\'agina \thepage\ de \pageref{LastPage}
+        \end{minipage}%
+    }
+    \fancyfoot[R]{%
+        \raisebox{-0.5cm}{\includegraphics[height=1.2cm]{logo dfis.png}}%
+    }
+}
+
+\begin{document}
+
+%========================================
+% ENCABEZADO INSTITUCIONAL
+%========================================
+\begin{center}
+    \includegraphics[height=2cm]{logo ubb.png}\\[0.3cm]
+    {\large\textcolor{ubbblue}{\textbf{UNIVERSIDAD DEL B\'IO-B\'IO}}}\\[0.1cm]
+    {\normalsize Facultad de Ciencias -- Departamento de F\'isica}
+\end{center}
+
+\vspace{0.3cm}
+\hrule height 1pt
+\vspace{0.5cm}
+
+{\centering\Large\textbf{Pauta -- Certamen 2}\par}
+{\centering\normalsize F\'isica II Electromagnetismo \quad 06 de Mayo de 2026\par}
+{\centering\small Gauss, Potencial El\'ectrico, Distribuci\'on Continua de Carga\par}
+
+\vspace{0.5cm}
+
+%========================================
+% PREGUNTA 1
+%========================================
+\section*{Pregunta 1 \hfill \normalfont\small(22 puntos)}
+
+\noindent\textbf{Enunciado:} Esfera aislante de radio $a$ con carga total $+4Q$ distribuida uniformemente en su volumen, rodeada por un cascarón esf\'erico conductor neutro de radios interior $b$ y exterior $c$ ($a < b < c$).
+
+\begin{center}
+\begin{tikzpicture}[scale=1.2]
+    % Relleno del aislante (esfera interior)
+    \fill[red!15] (0,0) circle(1.2);
+    % Cascarón conductor (sección transversal)
+    \fill[shellgray!60] (0,0) circle(2.0);
+    \fill[white]        (0,0) circle(1.5);
+    % Borde esfera interior
+    \draw[thick, red]  (0,0) circle(1.2);
+    % Bordes del cascarón
+    \draw[thick, black!70] (0,0) circle(1.5);
+    \draw[thick, black!70] (0,0) circle(2.0);
+    % Centro
+    \fill (0,0) circle(1.5pt);
+    % Etiquetas radios
+    \draw[<->,>=stealth, thin] (0,0) -- (1.2,0) node[midway, above, font=\scriptsize]{$a$};
+    \draw[->,>=stealth, thin, dashed] (0,0) -- (-1.5,0) node[midway, above, font=\scriptsize]{$b$};
+    \draw[->,>=stealth, thin, dashed] (0,0) -- (0,2.0) node[midway, right, font=\scriptsize]{$c$};
+    % Etiqueta carga interior
+    \node[font=\small, red] at (0,0) {$+4Q$};
+    % Etiquetas regiones
+    \node[font=\scriptsize] at (0,-2.4) {Cascarón conductor neutro};
+    \node[font=\scriptsize, gray] at (1.8,0.7) {cond.};
+\end{tikzpicture}
+\end{center}
+
+%--- (a) ---
+\subsection*{(a) Densidad de carga $\rho$ del aislante \hfill \normalfont\small[3 pts]}
+
+\[
+    4Q = \rho\cdot\frac{4}{3}\pi a^{3}
+    \implies
+    \boxed{\rho = \frac{3Q}{\pi a^{3}}}
+\]
+
+%--- (b) ---
+\subsection*{(b) Campo el\'ectrico $\vec{E}$ en las cuatro regiones \hfill \normalfont\small[13 pts]}
+
+Se aplica la Ley de Gauss con superficies esf\'ericas concéntricas de radio $r$:
+
+\[
+    \oint \vec{E}\cdot d\vec{A} = \frac{Q_{enc}}{\varepsilon_0}
+    \implies
+    E\cdot 4\pi r^{2} = \frac{Q_{enc}}{\varepsilon_0}
+\]
+
+\medskip
+\noindent\textbf{Regi\'on 1: $r < a$ (interior del aislante)}
+
+\begin{align*}
+    Q_{enc} &= \rho\cdot\frac{4}{3}\pi r^{3} = \frac{3Q}{\pi a^{3}}\cdot\frac{4\pi r^{3}}{3} = \frac{4Qr^{3}}{a^{3}}\\[4pt]
+    E\cdot 4\pi r^{2} &= \frac{4Qr^{3}}{\varepsilon_0 a^{3}}
+    \implies
+    \boxed{E_{1} = \frac{Q\,r}{\pi\varepsilon_0 a^{3}} = \frac{4KQ\,r}{a^{3}}, \quad r < a}
+\end{align*}
+
+\noindent\textbf{Regi\'on 2: $a < r < b$ (entre esfera y cascarón)}
+
+\begin{align*}
+    Q_{enc} &= 4Q\\[4pt]
+    \boxed{E_{2} = \frac{4Q}{4\pi\varepsilon_0 r^{2}} = \frac{4KQ}{r^{2}}, \quad a < r < b}
+\end{align*}
+
+\noindent\textbf{Regi\'on 3: $b < r < c$ (interior del conductor)}
+
+En el interior de un conductor en equilibrio el campo es nulo:
+
+\[
+    \boxed{E_{3} = 0, \quad b < r < c}
+\]
+
+\noindent\textbf{Regi\'on 4: $r > c$ (exterior del cascarón)}
+
+El cascarón es neutro, por lo que la carga total encerrada es $4Q$:
+
+\begin{align*}
+    Q_{enc} &= 4Q + 0 = 4Q\\[4pt]
+    \boxed{E_{4} = \frac{4KQ}{r^{2}}, \quad r > c}
+\end{align*}
+
+%--- (c) ---
+\subsection*{(c) Cargas inducidas en el cascarón \hfill \normalfont\small[3 pts]}
+
+Para que $E=0$ en el interior del conductor, la cara interior $r=b$ debe blindar la carga $+4Q$:
+
+\[
+    \boxed{Q_{\text{interior}} = -4Q}
+\]
+
+El cascarón es neutro ($Q_{\text{total}} = 0$), por lo tanto:
+
+\[
+    \boxed{Q_{\text{exterior}} = +4Q}
+\]
+
+%--- (d) ---
+\subsection*{(d) Valor num\'erico para $Q = 5\ [\mu\text{C}]$,\ $a = 6\ [\text{cm}]$,\ $r = 8\ [\text{cm}]$ \hfill \normalfont\small[3 pts]}
+
+El punto $r = 8\ \text{cm}$ se encuentra en la regi\'on $a < r < b$ (regi\'on 2):
+
+\begin{align*}
+    E &= \frac{4KQ}{r^{2}}
+      = \frac{4\times 9\times10^{9}\times 5\times10^{-6}}{(0{,}08)^{2}}\\[6pt]
+      &= \frac{1{,}80\times10^{5}}{6{,}4\times10^{-3}}
+\end{align*}
+
+\[
+    \boxed{E = 2{,}81\times10^{8}\ [\text{N/C}]}
+\]
+
+\newpage
+
+%========================================
+% PREGUNTA 2
+%========================================
+\section*{Pregunta 2 \hfill \normalfont\small(16 puntos)}
+
+\noindent\textbf{Enunciado:} Tres cargas puntuales:
+\begin{itemize}
+    \item $q_A = +16\ [\text{nC}]$ en $A = (0,\ 4,\ 0)\ [\text{cm}]$
+    \item $q_B = +10\ [\text{nC}]$ en $B = (1,\ 0,\ 0)\ [\text{cm}]$
+    \item $q_C = -6\ [\text{nC}]$  en $C = (0,\ 0,\ 2)\ [\text{cm}]$
+\end{itemize}
+
+Punto de inter\'es $P = (4,\ 4,\ 0)\ [\text{cm}]$.
+
+\begin{center}
+\begin{tikzpicture}[scale=1.25,
+    axis/.style={->, >=stealth, thick},
+    vec/.style={->, >=stealth, dashed, thin}]
+    % Ejes
+    \draw[axis] (0,0,0) -- (5,0,0) node[right]{\small $x$};
+    \draw[axis] (0,0,0) -- (0,5,0) node[above]{\small $y$};
+    \draw[axis] (0,0,0) -- (0,0,3) node[below left]{\small $z$};
+    % Cargas
+    \fill[carga_pos] (0,4,0) circle(3pt);
+    \node[left, font=\small, carga_pos] at (0,4,0) {$A$};
+    \node[right, font=\scriptsize, carga_pos] at (0,4.3,0) {$+16\ \text{nC}$};
+    \fill[carga_pos] (1,0,0) circle(3pt);
+    \node[below, font=\small, carga_pos] at (1,0,0) {$B$};
+    \node[below right, font=\scriptsize, carga_pos] at (1,0,0) {$+10\ \text{nC}$};
+    \fill[carga_neg] (0,0,2) circle(3pt);
+    \node[right, font=\small, carga_neg] at (0,0,2) {$C$};
+    \node[right, font=\scriptsize, carga_neg] at (0,0.3,2) {$-6\ \text{nC}$};
+    % Punto P
+    \fill[black] (4,4,0) circle(3pt);
+    \node[above right, font=\small] at (4,4,0) {$P$};
+    % Distancias (flechas auxiliares)
+    \draw[vec] (0,4,0) -- (4,4,0) node[midway, above, font=\scriptsize]{$r_A=4\ \text{cm}$};
+    \draw[vec] (1,0,0) -- (4,4,0) node[midway, right, font=\scriptsize]{$r_B=5\ \text{cm}$};
+    \draw[vec] (0,0,2) -- (4,4,0) node[near start, left, font=\scriptsize]{$r_C=6\ \text{cm}$};
+\end{tikzpicture}
+\end{center}
+
+\noindent\textbf{Distancias a $P=(4,4,0)\ [\text{cm}]$:}
+
+\begin{align*}
+    r_A &= \sqrt{(4-0)^2+(4-4)^2+(0-0)^2} = \sqrt{16} = 4\ [\text{cm}]\\[4pt]
+    r_B &= \sqrt{(4-1)^2+(4-0)^2+(0-0)^2} = \sqrt{9+16} = 5\ [\text{cm}]\\[4pt]
+    r_C &= \sqrt{(4-0)^2+(4-0)^2+(0-2)^2} = \sqrt{16+16+4} = 6\ [\text{cm}]
+\end{align*}
+
+%--- Potenciales individuales ---
+\subsection*{Potenciales individuales en $P$ \hfill \normalfont\small[9 pts $= 3+3+3$]}
+
+\[
+    V = K\frac{q}{r}, \quad K = 9\times10^{9}\ \left[\frac{\text{N}\cdot\text{m}^2}{\text{C}^2}\right]
+\]
+
+\begin{align*}
+    V_A &= K\frac{q_A}{r_A}
+         = \frac{9\times10^{9}\times 16\times10^{-9}}{0{,}04}
+         = \frac{144}{0{,}04}
+         &&\implies \boxed{V_A = 36\,000\ [\text{V}]}\\[8pt]
+    V_B &= K\frac{q_B}{r_B}
+         = \frac{9\times10^{9}\times 10\times10^{-9}}{0{,}05}
+         = \frac{90}{0{,}05}
+         &&\implies \boxed{V_B = 18\,000\ [\text{V}]}\\[8pt]
+    V_C &= K\frac{q_C}{r_C}
+         = \frac{9\times10^{9}\times(-6\times10^{-9})}{0{,}06}
+         = \frac{-54}{0{,}06}
+         &&\implies \boxed{V_C = -9\,000\ [\text{V}]}
+\end{align*}
+
+%--- Potencial total ---
+\subsection*{Potencial total en $P$ \hfill \normalfont\small[3 pts]}
+
+\begin{align*}
+    V_T &= V_A + V_B + V_C = 36\,000 + 18\,000 + (-9\,000)
+\end{align*}
+\[
+    \boxed{V_T = 45\,000\ [\text{V}] = 45\ [\text{kV}]}
+\]
+
+%--- Energía ---
+\subsection*{Energ\'ia necesaria para traer una carga $q_0 = +0{,}2\ [\mu\text{C}]$ desde el infinito a $P$ \hfill \normalfont\small[4 pts]}
+
+\begin{align*}
+    U &= q_0\cdot V_T
+      = 0{,}2\times10^{-6}\times 45\,000
+\end{align*}
+\[
+    \boxed{U = 9\times10^{-3}\ [\text{J}] = 9\ [\text{mJ}]}
+\]
+
+\newpage
+
+%========================================
+% PREGUNTA 3
+%========================================
+\section*{Pregunta 3 \hfill \normalfont\small(21 puntos)}
+
+\noindent\textbf{Enunciado:} Dos distribuciones de carga en el plano $xy$ producen potencial en el origen $O$.
+
+\begin{itemize}
+    \item \textbf{Arco de cuarto de c\'irculo} ($\lambda_1$): en el tercer cuadrante ($-x$, $-y$), radio $R$, del \'angulo $\pi$ al $3\pi/2$.
+    \item \textbf{Barra recta} ($\lambda_2$): sobre el eje $+x$, desde $x = R/2$ hasta $x = 2R$.
+\end{itemize}
+
+\begin{center}
+\begin{tikzpicture}[scale=1.4]
+    % Ejes
+    \draw[->, >=stealth, thick] (-3.2,0) -- (3.0,0) node[right]{\small $x$};
+    \draw[->, >=stealth, thick] (0,-3.0) -- (0,2.5) node[above]{\small $y$};
+    % Arco (tercer cuadrante, ángulos 180° a 270°)
+    \draw[very thick, blue, domain=180:270, samples=60]
+        plot ({2.2*cos(\x)}, {2.2*sin(\x)});
+    \node[blue, font=\small] at (-1.7,-1.7) {$\lambda_1$};
+    % Radio R (indicativo)
+    \draw[dashed, thin] (0,0) -- ({2.2*cos(225)}, {2.2*sin(225)});
+    \node[font=\scriptsize] at ({1.0*cos(225)-0.2}, {1.0*sin(225)+0.15}) {$R$};
+    % Barra (eje +x, desde R/2 a 2R)
+    \draw[very thick, red] (1.1,0) -- (4.4,0);
+    \node[red, font=\small] at (2.75,0.25) {$\lambda_2$};
+    % Etiquetas de la barra
+    \draw[thin] (1.1, 0.08) -- (1.1,-0.08) node[below, font=\scriptsize]{$R/2$};
+    \draw[thin] (4.4, 0.08) -- (4.4,-0.08) node[below, font=\scriptsize]{$2R$};
+    % Origen
+    \fill (0,0) circle(2pt);
+    \node[above right, font=\small] at (0,0) {$O$};
+\end{tikzpicture}
+\end{center}
+
+%--- V1 ---
+\subsection*{(a) Potencial $V_1$ del arco en el origen \hfill \normalfont\small[8 pts]}
+
+Cada elemento $d\ell = R\,d\theta$ del arco est\'a a distancia $r = R$ del origen.
+
+\begin{align*}
+    dV &= K\frac{\lambda_1\,d\ell}{r} = K\frac{\lambda_1\,R\,d\theta}{R} = K\lambda_1\,d\theta\\[6pt]
+    V_1 &= \int_{\pi}^{3\pi/2} K\lambda_1\,d\theta
+          = K\lambda_1\left[\theta\right]_{\pi}^{3\pi/2}
+          = K\lambda_1\left(\frac{3\pi}{2} - \pi\right)
+\end{align*}
+
+\[
+    \boxed{V_1 = \frac{\pi}{2}\,K\lambda_1}
+\]
+
+%--- V2 ---
+\subsection*{(b) Potencial $V_2$ de la barra en el origen \hfill \normalfont\small[8 pts]}
+
+Elemento $dx$ en posici\'on $x$ sobre el eje $+x$; su distancia al origen es $r = x$.
+
+\begin{align*}
+    dV &= K\frac{\lambda_2\,dx}{x}\\[6pt]
+    V_2 &= \int_{R/2}^{2R} K\frac{\lambda_2}{x}\,dx
+          = K\lambda_2\left[\ln x\right]_{R/2}^{2R}
+          = K\lambda_2\left(\ln 2R - \ln\frac{R}{2}\right)\\[6pt]
+        &= K\lambda_2\ln\!\left(\frac{2R}{R/2}\right)
+          = K\lambda_2\ln 4
+\end{align*}
+
+\[
+    \boxed{V_2 = K\lambda_2\ln 4}
+\]
+
+%--- Parte (c) ---
+\subsection*{(c) Determinar $\lambda_1$ si $\lambda_2 = \dfrac{1}{\ln 4}\ [\text{C/m}]$ y $V_P = 10\ [\text{V}]$ \hfill \normalfont\small[5 pts]}
+
+Con el valor dado de $\lambda_2$:
+
+\[
+    V_2 = K\lambda_2\ln 4 = K\cdot\frac{1}{\ln 4}\cdot\ln 4 = K\ [\text{V}]
+\]
+
+La condici\'on total es $V_1 + V_2 = V_P$:
+
+\begin{align*}
+    \frac{\pi}{2}\,K\lambda_1 + K &= 10\\[6pt]
+    \frac{\pi}{2}\,K\lambda_1 &= 10 - K\\[6pt]
+    \lambda_1 &= \frac{2(10 - K)}{\pi K}
+\end{align*}
+
+\[
+    \boxed{\lambda_1 = \frac{2(10-K)}{\pi K}\ [\text{C/m}]}
+\]
+
+\noindent\small\textit{Nota:} Con $K = 9\times10^{9}\ [\text{N\,m}^2/\text{C}^2]$ en unidades SI, $V_2 = 9\times10^{9}\ [\text{V}] \gg 10\ [\text{V}]$, lo que implica que la condici\'on num\'erica se satisface para $\lambda_2$ expresada en unidades normalizadas (i.e.\ sistema de unidades donde $K=1$). La soluci\'on algebraica anterior es general; sustituyendo $K=1$ se obtiene la forma simplificada:
+
+\[
+    \lambda_1 = \frac{2(10-1)}{\pi\cdot 1} = \frac{18}{\pi}\ [\text{C/m}]
+\]
+\normalsize
+
+\end{document}
