@@ -367,31 +367,32 @@ Elemento $dx$ en posici\'on $x$ sobre el eje $+x$; su distancia al origen es $r 
 \]
 
 %--- Parte (c) ---
-\subsection*{(c) Determinar $\lambda_1$ si $\lambda_2 = \dfrac{1}{\ln 4}\ [\text{C/m}]$ y $V_P = 10\ [\text{V}]$ \hfill \normalfont\small[5 pts]}
+\subsection*{(c) Determinar $\lambda_1$ si $\lambda_2 = \dfrac{1}{\ln 4}\ [\text{nC/m}]$ y $V_P = 10\ [\text{V}]$ \hfill \normalfont\small[5 pts]}
 
-Con el valor dado de $\lambda_2$:
-
-\[
-    V_2 = K\lambda_2\ln 4 = K\cdot\frac{1}{\ln 4}\cdot\ln 4 = K\ [\text{V}]
-\]
-
-La condici\'on total es $V_1 + V_2 = V_P$:
+Con $\lambda_2 = \dfrac{1}{\ln 4}\ [\text{nC/m}] = \dfrac{10^{-9}}{\ln 4}\ [\text{C/m}]$, el potencial de la barra es:
 
 \begin{align*}
-    \frac{\pi}{2}\,K\lambda_1 + K &= 10\\[6pt]
-    \frac{\pi}{2}\,K\lambda_1 &= 10 - K\\[6pt]
-    \lambda_1 &= \frac{2(10 - K)}{\pi K}
+    V_2 &= K\lambda_2\ln 4
+         = 9\times10^{9}\cdot\frac{10^{-9}}{\ln 4}\cdot\ln 4
+         = 9\ [\text{V}]
+\end{align*}
+
+La condici\'on total $V_1 + V_2 = V_P$ determina $V_1$:
+
+\[
+    V_1 = V_P - V_2 = 10 - 9 = 1\ [\text{V}]
+\]
+
+De la expresi\'on obtenida en (a), $V_1 = \dfrac{\pi}{2}\,K\lambda_1$, se despeja $\lambda_1$:
+
+\begin{align*}
+    \lambda_1 &= \frac{2\,V_1}{\pi\,K}
+               = \frac{2\times 1}{\pi\times 9\times10^{9}}\ [\text{C/m}]
+               = \frac{2}{9\pi}\times10^{-9}\ [\text{C/m}]
 \end{align*}
 
 \[
-    \boxed{\lambda_1 = \frac{2(10-K)}{\pi K}\ [\text{C/m}]}
+    \boxed{\lambda_1 = \frac{2}{9\pi}\ [\text{nC/m}] \approx 0{,}0707\ [\text{nC/m}]}
 \]
-
-\noindent\small\textit{Nota:} Con $K = 9\times10^{9}\ [\text{N\,m}^2/\text{C}^2]$ en unidades SI, $V_2 = 9\times10^{9}\ [\text{V}] \gg 10\ [\text{V}]$, lo que implica que la condici\'on num\'erica se satisface para $\lambda_2$ expresada en unidades normalizadas (i.e.\ sistema de unidades donde $K=1$). La soluci\'on algebraica anterior es general; sustituyendo $K=1$ se obtiene la forma simplificada:
-
-\[
-    \lambda_1 = \frac{2(10-1)}{\pi\cdot 1} = \frac{18}{\pi}\ [\text{C/m}]
-\]
-\normalsize
 
 \end{document}
