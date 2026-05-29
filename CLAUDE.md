@@ -87,7 +87,7 @@ Documents in `corpus/` by topic (categories defined in `rag_system.py:13-19` -> 
 |----------|--------|---------|
 | `campo_electrico/` | Active | Exams, solutions, Sears/Serway textbook chapters |
 | `campo_magnetico/` | Active | Homework solutions, Biot-Savart problems |
-| `corriente_directa/` | Planned | DC circuits (empty) |
+| `corriente_directa/` | Active | Capacitors, dielectrics, DC circuits (Guía 7 + class solutions + Certamen 2 Kirchhoff) |
 | `corriente_alterna/` | Planned | AC circuits (empty) |
 | `maquinas_electricas/` | Planned | Electric machines (empty) |
 
@@ -197,13 +197,46 @@ Shared conventions across all Gauss law templates:
 - `Solucion_C1P[N]_[year]-[semester].tex` — certamen problem breakdown (e.g. `Solucion_C1P1_2024-1.tex`)
 - `Solucion_Guia[N].tex` — full guide solution (e.g. `Solucion_Guia1.tex`)
 - `Solucion_Certamen[N]_[year].tex` — full certamen solution (e.g. `Solucion_Certamen1_2023.tex`, `Solucion_Certamen2_2020.tex`)
-- `Solucion_Certamen[N]_[year]_Rec.tex` — certamen recovery/retake solution
+- `Solucion_C[N]_[year]-[semester].tex` — full certamen N solution, e.g. `Solucion_C2_2026-1.tex`
+- `Solucion_C[N]_[year]-[semester]_Rec.tex` — certamen N recuperativo, e.g. `Solucion_C2_2026-1_Rec.tex`
+- `Solucion_Certamen[N]_[year]_Rec.tex` — certamen recovery/retake solution (older naming)
 - `Solucion_[topic].tex` — topic-specific (e.g. `Solucion_dipolo_HCl.tex`, `Solucion_clase_20-03.tex`)
 - `Solucion_DDMM.tex` — date-based shorthand (e.g. `Solucion_2703.tex` = class on March 27)
 - `Solucion_Tarea[N]_[year]-[semester].tex` — homework solution (e.g. `Solucion_Tarea1_2026-1.tex`)
 - `Solucion_[topic]_esf_v[N].tex` — topic + geometry variant (e.g. `Solucion_Gauss_esf_v1.tex` = Gauss law, spherical geometry, version 1)
 
 **Other corpus files** (also indexed alongside solutions): `guia[N].tex` and `guia_tarea[N]_[year]-[semester].tex` contain problem statements. Individual problem PDFs follow the pattern `prob [N] guia [N].pdf`. Student-facing exercise sheets (for printing/distribution) use `Prob_[N][Variant]_ejercicio.tex` (e.g. `Prob_2A_ejercicio.tex`, `Prob_2B_ejercicio.tex`) — these are enunciado-only files with UBB institutional header/footer (logos, fancyhdr), not solutions.
+
+**DC circuit (Kirchhoff) solution template** (`corriente_directa/`):
+
+Reference files: `Solucion_C2_2026-1.tex` (normal) and `Solucion_C2_2026-1_Rec.tex` (recuperativo).
+
+Shared circuit topology for Certamen 2 problems: 2 nodes (a, b), 3 branches, 2 independent meshes.
+- Branch top (I₁ ←): b → R₄ (right-upper rail) → TR → R₁ + ε₁ (top) → TL → [R₂ or wire] → a
+- Branch mid (I₂ →): a → ε₂ + R₅ → b
+- Branch bot (I₃ →): a → [wire or R₂] + ε₃ + R₃ → b
+
+**Critical topology difference between Normal and Recuperativo:**
+- Normal: R₂ on **upper-left** rail (TL→a) → I₁ coefficient = R₄+R₁+R₂; bottom path has only R₃.
+- Recuperativo: R₂ on **lower-left** rail (a→BL) → I₁ coefficient = R₄+R₁; I₃ path has R₂+R₃.
+Always deduce R₂ position from the mesh equations (coefficient of I₁ vs I₃) before drawing TikZ.
+
+**TikZ DC circuit conventions** (established 2026-05-28):
+- Resistors: colored filled rectangles (`\fill[color!25] ... \draw[color,thick] ...`)
+  Color palette: R₁=red, R₂=blue, R₃=green, R₄=orange, R₅=violet
+- Sources: standard 2-line battery symbol — long thin line = +, short thick line = −
+  Color palette: ε₁=amber, ε₂=cyan-dark, ε₃=magenta; mark + terminal explicitly
+- Wires: always black (`\draw[black]`)
+- Node dots: `\fill[black] (x,y) circle (3.5pt)` with letter label beside
+- Current arrows: placed outside the circuit frame with `\draw[->,black,thick]`
+- MiKTeX 2.9 compatibility: use `\usetikzlibrary{calc,arrows,...}` (NOT `arrows.meta`) and `>=stealth` (lowercase)
+- Minipage layout for part a): 38% width for small circuit diagram + mesh arrows, 58% for KVL/KCL equations
+
+**Battery polarity rules** (verified against pauta):
+- ε drives current in the direction labeled by its current arrow → + terminal faces the current's source node.
+- ε₁ (top branch, I₁ goes TR→TL): + at TL side
+- ε₂ (middle branch, I₂ goes a→b): + at a side  
+- ε₃ (bottom branch, I₃ goes BL→BR): + at BR side
 
 **Correcting TikZ figures — mandatory workflow:**
 1. Read the PDF enunciado figure first (`guia[N].pdf`, `guia_tarea[N]_*.pdf`, etc.).

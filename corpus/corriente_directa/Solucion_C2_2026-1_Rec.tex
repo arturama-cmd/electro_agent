@@ -1,0 +1,421 @@
+\documentclass[12pt,letterpaper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[spanish,es-noshorthands]{babel}
+\usepackage{amsmath,amssymb}
+\usepackage{graphicx}
+\usepackage{xcolor}
+\usepackage{tikz}
+\usetikzlibrary{calc,arrows,decorations.markings,patterns}
+\usepackage{enumerate}
+\usepackage[top=2.5cm, bottom=4cm, left=2cm, right=2cm, footskip=40pt]{geometry}
+\usepackage{fancyhdr}
+\usepackage{lastpage}
+
+% ===== COLORES =====
+\definecolor{ubbblue}{RGB}{0,51,102}
+\definecolor{colR1}{RGB}{180,0,0}
+\definecolor{colR2}{RGB}{0,0,180}
+\definecolor{colR3}{RGB}{0,140,0}
+\definecolor{colR4}{RGB}{200,100,0}
+\definecolor{colR5}{RGB}{120,0,180}
+\definecolor{colE1}{RGB}{180,120,0}
+\definecolor{colE2}{RGB}{0,140,140}
+\definecolor{colE3}{RGB}{160,0,160}
+
+% ===== ENCABEZADO / PIE =====
+\pagestyle{fancy}
+\fancyhf{}
+\renewcommand{\headrulewidth}{0pt}
+\renewcommand{\footrulewidth}{0.4pt}
+\fancyfoot[L]{\raisebox{-0.5cm}{\includegraphics[height=1.2cm]{logo ubb.png}}}
+\fancyfoot[C]{%
+    \begin{minipage}[b]{8cm}\centering
+        \footnotesize\textcolor{ubbblue}{\textbf{Dr. Arturo Fern\'andez P\'erez}}\\
+        \scriptsize Departamento de F\'isica -- Universidad del B\'io-B\'io\\
+        \scriptsize\textit{Electro\_Asistente\_AI-UBB}\\
+        \tiny P\'agina \thepage\ de \pageref{LastPage}
+    \end{minipage}}
+\fancyfoot[R]{\raisebox{-0.5cm}{\includegraphics[height=1.2cm]{logo dfis.png}}}
+
+\fancypagestyle{plain}{%
+  \fancyhf{}
+  \renewcommand{\headrulewidth}{0pt}
+  \renewcommand{\footrulewidth}{0.4pt}
+  \fancyfoot[L]{\raisebox{-0.5cm}{\includegraphics[height=1.2cm]{logo ubb.png}}}
+  \fancyfoot[C]{%
+    \begin{minipage}[b]{8cm}\centering
+        \footnotesize\textcolor{ubbblue}{\textbf{Dr. Arturo Fern\'andez P\'erez}}\\
+        \scriptsize Departamento de F\'isica -- Universidad del B\'io-B\'io\\
+        \scriptsize\textit{Electro\_Asistente\_AI-UBB}\\
+        \tiny P\'agina \thepage\ de \pageref{LastPage}
+    \end{minipage}}
+  \fancyfoot[R]{\raisebox{-0.5cm}{\includegraphics[height=1.2cm]{logo dfis.png}}}
+}
+
+\begin{document}
+
+%========================================
+% ENCABEZADO INSTITUCIONAL
+%========================================
+\begin{center}
+    \includegraphics[height=2cm]{logo ubb.png}\\[0.3cm]
+    {\large\textcolor{ubbblue}{\textbf{UNIVERSIDAD DEL B\'IO-B\'IO}}}\\[0.1cm]
+    {\normalsize Facultad de Ciencias -- Departamento de F\'isica}
+\end{center}
+
+\vspace{0.3cm}
+\hrule height 1pt
+\vspace{0.5cm}
+
+{\centering\Large\textbf{Soluci\'on -- Certamen 2 (Recuperativo) 2026-1}\par}
+{\centering\normalsize Leyes de Kirchhoff -- Corriente Continua\par}
+
+\vspace{0.5cm}
+
+%========================================
+% ENUNCIADO
+%========================================
+\section*{Enunciado del Problema}
+
+Considere el circuito de corriente continua de la figura, con
+$R_1 = R_2 = R_3 = 8\ [\Omega]$, $R_4 = 20\ [\Omega]$, $R_5 = 15\ [\Omega]$,
+$\varepsilon_1 = 5\ [\text{V}]$, $\varepsilon_2 = 10\ [\text{V}]$ y $\varepsilon_3 = 15\ [\text{V}]$,
+donde los sentidos de las corrientes se indican en la figura.
+
+\begin{enumerate}[(a)]
+    \item \textbf{(6 puntos)} Aplique las leyes de Kirchhoff y escriba las ecuaciones
+          de nodos y mallas para el circuito indicado.
+    \item \textbf{(10 puntos)} Resuelva el sistema de ecuaciones para determinar
+          los valores de las corrientes $I_1$, $I_2$ e $I_3$.
+    \item \textbf{(3 puntos)} Calcule la potencia disipada en la resistencia $R_3$.
+\end{enumerate}
+
+%--- DIAGRAMA DEL CIRCUITO ---
+\begin{center}
+\begin{tikzpicture}[scale=1.15, >=stealth, line width=1pt]
+
+% ============================================================
+% DIFERENCIA CLAVE vs. certamen normal:
+%   R2 esta en el CARRIL IZQUIERDO INFERIOR (a --> BL)
+%   El carril izquierdo superior (a --> TL) es solo cable
+% ============================================================
+
+% ---------- CABLES (negro) ----------
+% Rama superior: TL --> eps1 --> R1 --> TR
+\draw[black] (0,5) -- (1.0,5);
+\draw[black] (1.7,5) -- (3.2,5);
+\draw[black] (4.8,5) -- (7,5);
+
+% Carril izquierdo superior: a --> TL  (solo cable, recuperativo)
+\draw[black] (0,2.5) -- (0,5);
+
+% Carril derecho superior: TR --> R4 --> b
+\draw[black] (7,5) -- (7,3.9);
+\draw[black] (7,2.2) -- (7,2.5);
+
+% Rama media: a --> eps2 --> R5 --> b
+\draw[black] (0,2.5) -- (0.9,2.5);
+\draw[black] (1.6,2.5) -- (3.0,2.5);
+\draw[black] (4.6,2.5) -- (7,2.5);
+
+% Carril izquierdo inferior: a --> R2 --> BL  (R2 aqui en recuperativo)
+\draw[black] (0,2.5) -- (0,1.9);        % a a R2 superior
+\draw[black] (0,0.6) -- (0,0);          % R2 inferior a BL
+
+% Rama inferior: BL --> eps3 --> R3 --> BR
+\draw[black] (0,0) -- (0.9,0);
+\draw[black] (1.6,0) -- (3.0,0);
+\draw[black] (4.6,0) -- (7,0);
+
+% Carril derecho inferior: BR --> b  (solo cable)
+\draw[black] (7,0) -- (7,2.5);
+
+% ---------- FUENTES ----------
+% eps1 (rama superior, + hacia TL/izquierda)
+\draw[colE1, line width=2pt]  (1.0, 4.68) -- (1.0, 5.32);
+\draw[colE1, line width=4pt]  (1.7, 4.83) -- (1.7, 5.17);
+\node[colE1, above, font=\small] at (1.35,5.32) {$\varepsilon_1$};
+\node[colE1, font=\tiny, above] at (0.95,5.32) {$+$};
+
+% eps2 (rama media, + hacia a/izquierda)
+\draw[colE2, line width=2pt]  (0.9, 2.18) -- (0.9, 2.82);
+\draw[colE2, line width=4pt]  (1.6, 2.33) -- (1.6, 2.67);
+\node[colE2, above, font=\small] at (1.25,2.82) {$\varepsilon_2$};
+\node[colE2, font=\tiny, above] at (0.85,2.82) {$+$};
+
+% eps3 (rama inferior, + hacia BR/derecha)
+\draw[colE3, line width=4pt]  (0.9, -0.17) -- (0.9, 0.17);
+\draw[colE3, line width=2pt]  (1.6, -0.32) -- (1.6, 0.32);
+\node[colE3, below, font=\small] at (1.25,-0.32) {$\varepsilon_3$};
+\node[colE3, font=\tiny, above] at (1.65,0.32) {$+$};
+
+% ---------- RESISTENCIAS ----------
+% R1 (rama superior, horizontal)
+\fill[colR1!25] (3.2, 4.81) rectangle (4.8, 5.19);
+\draw[colR1, line width=1.5pt] (3.2, 4.81) rectangle (4.8, 5.19);
+\node[colR1, above, font=\small] at (4.0, 5.19) {$R_1$};
+
+% R2 (carril izquierdo INFERIOR, vertical) -- recuperativo: debajo del nodo a
+\fill[colR2!25] (-0.19, 0.6) rectangle (0.19, 1.9);
+\draw[colR2, line width=1.5pt] (-0.19, 0.6) rectangle (0.19, 1.9);
+\node[colR2, left, font=\small] at (-0.19, 1.25) {$R_2$};
+
+% R3 (rama inferior, horizontal)
+\fill[colR3!25] (3.0, -0.19) rectangle (4.6, 0.19);
+\draw[colR3, line width=1.5pt] (3.0, -0.19) rectangle (4.6, 0.19);
+\node[colR3, below, font=\small] at (3.8, -0.19) {$R_3$};
+
+% R4 (carril derecho superior, vertical)
+\fill[colR4!25] (6.81, 2.2) rectangle (7.19, 3.9);
+\draw[colR4, line width=1.5pt] (6.81, 2.2) rectangle (7.19, 3.9);
+\node[colR4, right, font=\small] at (7.19, 3.05) {$R_4$};
+
+% R5 (rama media, horizontal)
+\fill[colR5!25] (3.0, 2.31) rectangle (4.6, 2.69);
+\draw[colR5, line width=1.5pt] (3.0, 2.31) rectangle (4.6, 2.69);
+\node[colR5, above, font=\small] at (3.8, 2.69) {$R_5$};
+
+% ---------- FLECHAS DE CORRIENTE ----------
+\draw[->, black, line width=1.3pt] (5.6,5.55) -- (4.2,5.55)
+    node[midway, above, font=\normalsize]{$I_1$};
+\draw[->, black, line width=1.3pt] (5.0,2.05) -- (6.3,2.05)
+    node[midway, below, font=\normalsize]{$I_2$};
+\draw[->, black, line width=1.3pt] (5.0,-0.55) -- (6.3,-0.55)
+    node[midway, below, font=\normalsize]{$I_3$};
+
+% ---------- NODOS ----------
+\fill[black] (0,2.5) circle (3.5pt);
+\node[left, font=\large, black] at (-0.3,2.5) {$a$};
+\fill[black] (7,2.5) circle (3.5pt);
+\node[right, font=\large, black] at (7.3,2.5) {$b$};
+
+\end{tikzpicture}
+\end{center}
+
+%========================================
+% DATOS
+%========================================
+\section*{Datos del Problema}
+
+\[
+    R_1 = R_2 = R_3 = 8\ [\Omega],\qquad
+    R_4 = 20\ [\Omega],\qquad
+    R_5 = 15\ [\Omega]
+\]
+\[
+    \varepsilon_1 = 5\ [\text{V}],\qquad
+    \varepsilon_2 = 10\ [\text{V}],\qquad
+    \varepsilon_3 = 15\ [\text{V}]
+\]
+
+%========================================
+% ANÁLISIS DEL CIRCUITO
+%========================================
+\section*{An\'alisis del Circuito}
+
+El circuito posee \textbf{dos nodos} ($a$ y $b$) y \textbf{tres ramas} independientes:
+
+\begin{itemize}
+    \item \textbf{Rama superior} (corriente $I_1 \leftarrow$): de $b$ sube por
+          \textcolor{colR4}{$R_4$}, cruza la rama alta por
+          \textcolor{colR1}{$R_1$} y \textcolor{colE1}{$\varepsilon_1$},
+          baja por cable directo hasta $a$.
+    \item \textbf{Rama media} (corriente $I_2 \rightarrow$): de $a$ hacia $b$
+          a trav\'es de \textcolor{colE2}{$\varepsilon_2$} y
+          \textcolor{colR5}{$R_5$}.
+    \item \textbf{Rama inferior} (corriente $I_3 \rightarrow$): de $a$ hacia $b$
+          pasando por \textcolor{colR2}{$R_2$} (carril inferior izquierdo),
+          luego \textcolor{colE3}{$\varepsilon_3$} y \textcolor{colR3}{$R_3$}.
+\end{itemize}
+
+Se identifican \textbf{dos mallas independientes}: la malla superior (ramas superior + media)
+y la malla inferior (ramas media + inferior).
+
+%========================================
+% DESARROLLO
+%========================================
+\section*{Desarrollo}
+
+%----------------------------------------
+\subsection*{a) Ecuaciones de Kirchhoff}
+
+\noindent
+\begin{minipage}[t]{0.38\textwidth}
+\centering\vspace{0pt}
+\begin{tikzpicture}[scale=0.72, >=stealth, line width=0.9pt]
+% Cables
+\draw[black](0,5)--(1.0,5); \draw[black](1.7,5)--(3.2,5); \draw[black](4.8,5)--(7,5);
+\draw[black](0,2.5)--(0,5);
+\draw[black](7,5)--(7,3.9); \draw[black](7,2.2)--(7,2.5);
+\draw[black](0,2.5)--(0.9,2.5); \draw[black](1.6,2.5)--(3.0,2.5); \draw[black](4.6,2.5)--(7,2.5);
+\draw[black](0,2.5)--(0,1.9); \draw[black](0,0.6)--(0,0);
+\draw[black](0,0)--(0.9,0); \draw[black](1.6,0)--(3.0,0); \draw[black](4.6,0)--(7,0);
+\draw[black](7,0)--(7,2.5);
+% Baterias
+\draw[colE1,line width=1.8pt](1.0,4.68)--(1.0,5.32);
+\draw[colE1,line width=3.5pt](1.7,4.83)--(1.7,5.17);
+\draw[colE2,line width=1.8pt](0.9,2.18)--(0.9,2.82);
+\draw[colE2,line width=3.5pt](1.6,2.33)--(1.6,2.67);
+\draw[colE3,line width=3.5pt](0.9,-0.17)--(0.9,0.17);
+\draw[colE3,line width=1.8pt](1.6,-0.32)--(1.6,0.32);
+% Resistencias
+\fill[colR1!25](3.2,4.81) rectangle (4.8,5.19);
+\draw[colR1,line width=1.2pt](3.2,4.81) rectangle (4.8,5.19);
+\fill[colR2!25](-0.19,0.6) rectangle (0.19,1.9);
+\draw[colR2,line width=1.2pt](-0.19,0.6) rectangle (0.19,1.9);
+\fill[colR3!25](3.0,-0.19) rectangle (4.6,0.19);
+\draw[colR3,line width=1.2pt](3.0,-0.19) rectangle (4.6,0.19);
+\fill[colR4!25](6.81,2.2) rectangle (7.19,3.9);
+\draw[colR4,line width=1.2pt](6.81,2.2) rectangle (7.19,3.9);
+\fill[colR5!25](3.0,2.31) rectangle (4.6,2.69);
+\draw[colR5,line width=1.2pt](3.0,2.31) rectangle (4.6,2.69);
+% Flechas corriente
+\draw[->,black,line width=1pt](5.2,5.48)--(4.0,5.48) node[midway,above,font=\scriptsize]{$I_1$};
+\draw[->,black,line width=1pt](5.0,2.05)--(6.0,2.05) node[midway,below,font=\scriptsize]{$I_2$};
+\draw[->,black,line width=1pt](5.0,-0.48)--(6.0,-0.48) node[midway,below,font=\scriptsize]{$I_3$};
+% Mallas
+\draw[->,gray,thick,dashed](3.5,4.3) arc[start angle=200,end angle=-160,radius=0.6]
+    node[pos=0.7,font=\scriptsize,gray]{M1};
+\draw[->,gray,thick,dashed](3.5,1.7) arc[start angle=200,end angle=-160,radius=0.6]
+    node[pos=0.7,font=\scriptsize,gray]{M2};
+% Nodos
+\fill[black](0,2.5) circle (3pt); \node[left,font=\small] at (-0.25,2.5){$a$};
+\fill[black](7,2.5) circle (3pt); \node[right,font=\small] at (7.25,2.5){$b$};
+\end{tikzpicture}
+\end{minipage}%
+\hfill
+\begin{minipage}[t]{0.58\textwidth}
+\vspace{6pt}
+
+\textbf{KCL -- Nodo $a$:}
+
+\[
+    \boxed{I_1 = I_2 + I_3} \tag{N}
+\]
+
+\medskip
+\textbf{KVL -- Malla 1} (media + inferior, sentido antihorario):
+
+Recorriendo desde $a$: baja por $R_2$, cruza por $\varepsilon_3$ y $R_3$, sube a $b$,
+regresa por $R_5$ y $\varepsilon_2$:
+\[
+    -R_2 I_3 + \varepsilon_3 - R_3 I_3 + R_5 I_2 + \varepsilon_2 = 0
+\]
+\[
+    \boxed{-8\,I_3 + 15 - 8\,I_3 + 15\,I_2 + 10 = 0} \tag{M1}
+\]
+
+\medskip
+\textbf{KVL -- Malla 2} (superior + media, sentido horario):
+
+Recorriendo desde $b$: sube por $R_4$, cruza por $R_1$ y $\varepsilon_1$,
+baja a $a$, regresa por $\varepsilon_2$ y $R_5$:
+\[
+    -R_4 I_1 - R_1 I_1 + \varepsilon_1 - \varepsilon_2 - R_5 I_2 = 0
+\]
+\[
+    \boxed{-20\,I_1 - 8\,I_1 + 5 - 10 - 15\,I_2 = 0} \tag{M2}
+\]
+\end{minipage}
+
+\newpage
+
+%----------------------------------------
+\subsection*{b) Resoluci\'on del sistema}
+
+Simplificando las ecuaciones de malla:
+
+\[
+    \text{(M1)}: \quad 15\,I_2 - 16\,I_3 = -25 \tag{I}
+\]
+\[
+    \text{(M2)}: \quad -28\,I_1 - 15\,I_2 = 5 \tag{II}
+\]
+
+Sustituyendo $I_1 = I_2 + I_3$ de (N) en (II):
+
+\begin{align*}
+    -28\,(I_2 + I_3) - 15\,I_2 &= 5 \\
+    -28\,I_2 - 28\,I_3 - 15\,I_2 &= 5 \\
+    -43\,I_2 - 28\,I_3 &= 5 \tag{III}
+\end{align*}
+
+Multiplicando (I) por $\dfrac{43}{15}$:
+
+\[
+    43\,I_2 - \frac{43 \times 16}{15}\,I_3 = -25 \times \frac{43}{15}
+    \quad\Rightarrow\quad
+    43\,I_2 - 45{,}87\,I_3 = -71{,}67 \tag{IV}
+\]
+
+Sumando (III) + (IV):
+
+\begin{align*}
+    (-43 + 43)\,I_2 + (-28 - 45{,}87)\,I_3 &= 5 - 71{,}67 \\
+    -73{,}87\,I_3 &= -66{,}67
+\end{align*}
+
+\[
+    \boxed{I_3 = \frac{66{,}67}{73{,}87} \approx 0{,}90\ [\text{A}]}
+\]
+
+Sustituyendo $I_3 = 0{,}90$ en (I):
+
+\begin{align*}
+    15\,I_2 - 16 \times 0{,}90 &= -25 \\
+    15\,I_2 - 14{,}4 &= -25 \\
+    15\,I_2 &= -10{,}6
+\end{align*}
+
+\[
+    \boxed{I_2 = -\frac{10{,}6}{15} \approx -0{,}70\ [\text{A}]}
+\]
+
+Finalmente, de (N):
+
+\[
+    I_1 = I_2 + I_3 = -0{,}70 + 0{,}90
+\]
+
+\[
+    \boxed{I_1 = 0{,}20\ [\text{A}]}
+\]
+
+%----------------------------------------
+\subsection*{c) Potencia disipada en $R_3$}
+
+La corriente que circula por $R_3$ es $I_3$:
+
+\begin{align*}
+    P_3 &= I_3^2 \cdot R_3 \\
+        &= (0{,}90)^2 \times 8 \\
+        &= 0{,}81 \times 8
+\end{align*}
+
+\[
+    \boxed{P_3 = 6{,}48\ [\text{W}]}
+\]
+
+%========================================
+% RESUMEN
+%========================================
+\section*{Resumen de Resultados}
+
+\begin{center}
+\begin{tabular}{|c|c|l|}
+\hline
+\textbf{Variable} & \textbf{Valor} & \textbf{Observaci\'on} \\
+\hline
+$I_1$ & $+0{,}20\ [\text{A}]$ & Sentido supuesto correcto \\
+$I_2$ & $-0{,}70\ [\text{A}]$ & Sentido real opuesto al supuesto \\
+$I_3$ & $+0{,}90\ [\text{A}]$ & Sentido supuesto correcto \\
+$P_3$ & $6{,}48\ [\text{W}]$  & Potencia disipada en $R_3$ \\
+\hline
+\end{tabular}
+\end{center}
+
+\medskip
+\noindent\textbf{Nota:} El signo negativo de $I_2$ indica que la corriente real en la rama media
+circula de $b$ hacia $a$ (opuesto al sentido asumido en la figura).
+
+\end{document}
