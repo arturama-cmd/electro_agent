@@ -1,0 +1,698 @@
+\documentclass[12pt,letterpaper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[spanish,es-noshorthands]{babel}
+\usepackage{amsmath,amssymb}
+\usepackage{bm}
+\usepackage{graphicx}
+\usepackage{xcolor}
+\usepackage{tikz}
+\usetikzlibrary{calc,arrows.meta,decorations.markings,patterns}
+\usepackage{enumerate}
+\usepackage[top=2.5cm, bottom=4cm, left=2cm, right=2cm, footskip=40pt]{geometry}
+\usepackage{fancyhdr}
+\usepackage{lastpage}
+
+% Colores
+\definecolor{ubbblue}{RGB}{0,51,102}
+\definecolor{gaussred}{RGB}{200,50,50}
+
+% Macros: cargas en negrita roja
+\newcommand{\Qr}{{\color{red}\bm{Q}}}
+\newcommand{\qr}{{\color{red}\bm{q}}}
+
+% Encabezado y pie de p\'agina
+\pagestyle{fancy}
+\fancyhf{}
+\renewcommand{\headrulewidth}{0pt}
+\renewcommand{\footrulewidth}{0.4pt}
+\fancyfoot[L]{\raisebox{-0.5cm}{\includegraphics[height=1.2cm]{logo ubb.png}}}
+\fancyfoot[C]{%
+    \begin{minipage}[b]{8cm}
+        \centering
+        \footnotesize
+        \textcolor{ubbblue}{\textbf{Dr. Arturo Fern\'andez P\'erez}}\\
+        \scriptsize Departamento de F\'isica -- Universidad del B\'io-B\'io\\
+        \scriptsize \textit{Electro\_Asistente\_AI-UBB}\\
+        \tiny P\'agina \thepage\ de \pageref{LastPage}
+    \end{minipage}%
+}
+\fancyfoot[R]{\raisebox{-0.5cm}{\includegraphics[height=1.2cm]{logo dfis.png}}}
+
+\fancypagestyle{plain}{%
+    \fancyhf{}
+    \renewcommand{\headrulewidth}{0pt}
+    \renewcommand{\footrulewidth}{0.4pt}
+    \fancyfoot[L]{\raisebox{-0.5cm}{\includegraphics[height=1.2cm]{logo ubb.png}}}
+    \fancyfoot[C]{%
+        \begin{minipage}[b]{8cm}
+            \centering
+            \footnotesize
+            \textcolor{ubbblue}{\textbf{Dr. Arturo Fern\'andez P\'erez}}\\
+            \scriptsize Departamento de F\'isica -- Universidad del B\'io-B\'io\\
+            \scriptsize \textit{Electro\_Asistente\_AI-UBB}\\
+            \tiny P\'agina \thepage\ de \pageref{LastPage}
+        \end{minipage}%
+    }
+    \fancyfoot[R]{\raisebox{-0.5cm}{\includegraphics[height=1.2cm]{logo dfis.png}}}
+}
+
+\begin{document}
+
+%========================================
+% ENCABEZADO INSTITUCIONAL
+%========================================
+\begin{center}
+    \includegraphics[height=2cm]{logo ubb.png}\\[0.3cm]
+    {\large\textcolor{ubbblue}{\textbf{UNIVERSIDAD DEL B\'IO-B\'IO}}}\\[0.1cm]
+    {\normalsize Facultad de Ciencias -- Departamento de F\'isica}
+\end{center}
+
+\vspace{0.3cm}
+\hrule height 1pt
+\vspace{0.5cm}
+
+{\centering\Large\textbf{Soluci\'on Tarea 2: Ley de Gauss y Potencial El\'ectrico}\par}
+{\centering\large F\'isica II (Electromagnetismo) -- 2026-1\par}
+
+\vspace{0.3cm}
+
+%========================================
+% PROBLEMA 1 -- Gu\'ia 5, Prob. 4
+%========================================
+\section*{Problema 1 \textnormal{(Gu\'ia 5, Prob.\ 4)} -- Coraza Conductora Esf\'erica}
+
+\subsection*{Enunciado}
+
+Una coraza conductora esf\'erica de radio interior $a = 2$~[cm] y radio exterior $b = 5$~[cm]
+tiene una carga puntual positiva $\Qr = 5\times10^{-6}$~[C] en su centro. La carga total de
+la coraza es $-3\Qr$, aislada del entorno.
+\begin{enumerate}[(a)]
+    \item Determine $E(r)$ en las regiones $r<a$, $a<r<b$ y $r>b$.
+    \item Describa las l\'ineas de campo en cada regi\'on.
+    \item Determine la densidad superficial de carga en la superficie interior y exterior de la coraza.
+\end{enumerate}
+
+\subsection*{Datos}
+
+\[
+    a = 0{,}02\ [\text{m}],\quad b = 0{,}05\ [\text{m}],\quad
+    \Qr = 5\times10^{-6}\ [\text{C}],\quad Q_\text{coraza} = -3\Qr
+\]
+\[
+    K = \frac{1}{4\pi\varepsilon_0} = 8{,}99\times10^9\ \left[\frac{\text{N}{\cdot}\text{m}^2}{\text{C}^2}\right]
+\]
+
+\subsection*{An\'alisis cualitativo}
+
+La carga puntual $+\Qr$ induce $-\Qr$ en la superficie interior del conductor (para anular
+el campo dentro del material) y deja en la superficie exterior:
+\[
+    Q_\text{ext} = Q_\text{coraza} - (-\Qr) = -3\Qr + \Qr = -2\Qr
+\]
+
+\begin{center}
+\begin{tikzpicture}[scale=1.3, >=Stealth]
+    % Conductor (gris)
+    \fill[gray!30] (0,0) circle (2.0);
+    \fill[white]   (0,0) circle (0.8);
+    \draw[thick] (0,0) circle (0.8);
+    \draw[thick] (0,0) circle (2.0);
+    % Carga puntual
+    \fill[red!70] (0,0) circle (4pt);
+    \node[font=\small, above right] at (0.05,0.05) {$+\Qr$};
+    % Etiqueta coraza
+    \node[font=\small] at (1.5, 0.5) {$-3\Qr$};
+    % Radios
+    \draw[->] (0,0) -- (0.8, 0) node[midway, above, font=\small]{$a$};
+    \draw[->] (0,0) -- ({2.0*cos(50)},{2.0*sin(50)})
+        node[midway, above left, font=\small]{$b$};
+\end{tikzpicture}
+\end{center}
+
+\subsection*{(a) Campo el\'ectrico por regi\'on}
+
+\bigskip
+
+\noindent
+\begin{minipage}[c]{0.30\textwidth}
+\centering
+\begin{tikzpicture}[scale=1.0, >=Stealth]
+    \fill[gray!30] (0,0) circle (1.8);
+    \fill[white]   (0,0) circle (0.72);
+    \draw[thick] (0,0) circle (0.72);
+    \draw[thick] (0,0) circle (1.8);
+    \fill[red!70] (0,0) circle (3pt);
+    \draw[gaussred, dashed, thick] (0,0) circle (0.38);
+    \draw[->, gaussred, thick] (0,0) -- (0.38, 0)
+        node[right, font=\scriptsize]{$r$};
+    \node[font=\scriptsize, above right] at ({0.72*cos(45)},{0.72*sin(45)}) {$a$};
+    \node[font=\scriptsize, above left]  at ({1.8*cos(130)},{1.8*sin(130)}) {$b$};
+\end{tikzpicture}
+\end{minipage}%
+\hfill
+\begin{minipage}[c]{0.67\textwidth}
+\textbf{Regi\'on I: $r < a$} (espacio vac\'io entre la carga y el conductor)
+
+$q_\text{enc} = \Qr$. Campo radialmente hacia afuera:
+\begin{align*}
+    E \cdot 4\pi r^2 &= \frac{\Qr}{\varepsilon_0} \\[4pt]
+    E &= \frac{K\Qr}{r^2} = \frac{8{,}99\times10^9 \times 5\times10^{-6}}{r^2}
+\end{align*}
+\[
+    \boxed{E = \frac{44\,950}{r^2}\ [\text{N/C}],\quad \vec{E}\ \text{radial hacia afuera}}
+\]
+\end{minipage}
+
+\bigskip
+
+\noindent
+\begin{minipage}[c]{0.30\textwidth}
+\centering
+\begin{tikzpicture}[scale=1.0, >=Stealth]
+    \fill[gray!30] (0,0) circle (1.8);
+    \fill[white]   (0,0) circle (0.72);
+    \draw[thick] (0,0) circle (0.72);
+    \draw[thick] (0,0) circle (1.8);
+    \fill[red!70] (0,0) circle (3pt);
+    \draw[gaussred, dashed, thick] (0,0) circle (1.26);
+    \draw[->, gaussred, thick] (0,0) -- (1.26, 0)
+        node[right, font=\scriptsize]{$r$};
+    \node[font=\scriptsize, above right] at ({0.72*cos(45)},{0.72*sin(45)}) {$a$};
+    \node[font=\scriptsize, above left]  at ({1.8*cos(130)},{1.8*sin(130)}) {$b$};
+\end{tikzpicture}
+\end{minipage}%
+\hfill
+\begin{minipage}[c]{0.67\textwidth}
+\textbf{Regi\'on II: $a < r < b$} (interior del material conductor)
+
+En equilibrio electrost\'atico, el campo dentro de un conductor es siempre nulo:
+\[
+    \boxed{E = 0\ [\text{N/C}]}
+\]
+\end{minipage}
+
+\bigskip
+
+\noindent
+\begin{minipage}[c]{0.30\textwidth}
+\centering
+\begin{tikzpicture}[scale=0.95, >=Stealth]
+    \fill[gray!30] (0,0) circle (1.8);
+    \fill[white]   (0,0) circle (0.72);
+    \draw[thick] (0,0) circle (0.72);
+    \draw[thick] (0,0) circle (1.8);
+    \fill[red!70] (0,0) circle (3pt);
+    \draw[gaussred, dashed, thick] (0,0) circle (2.35);
+    \draw[->, gaussred, thick] (0,0) -- (2.35, 0)
+        node[right, font=\scriptsize]{$r$};
+    \node[font=\scriptsize, above right] at ({0.72*cos(45)},{0.72*sin(45)}) {$a$};
+    \node[font=\scriptsize, above left]  at ({1.8*cos(130)},{1.8*sin(130)}) {$b$};
+\end{tikzpicture}
+\end{minipage}%
+\hfill
+\begin{minipage}[c]{0.67\textwidth}
+\textbf{Regi\'on III: $r > b$} (exterior al sistema)
+
+$q_\text{enc} = \Qr + (-3\Qr) = -2\Qr < 0$. El campo apunta hacia el centro:
+\begin{align*}
+    E \cdot 4\pi r^2 &= \frac{-2\Qr}{\varepsilon_0} \\[4pt]
+    |E| &= \frac{2K\Qr}{r^2} = \frac{2 \times 8{,}99\times10^9 \times 5\times10^{-6}}{r^2}
+\end{align*}
+\[
+    \boxed{|E| = \frac{89\,900}{r^2}\ [\text{N/C}],\quad \vec{E}\ \text{radial hacia el centro}}
+\]
+\end{minipage}
+
+\subsection*{(b) L\'ineas de campo el\'ectrico}
+
+\begin{itemize}
+    \item $r < a$: L\'ineas radiales que nacen en $+\Qr$ y apuntan \textbf{hacia afuera}.
+    \item $a < r < b$: \textbf{Sin l\'ineas} ($E = 0$ en el interior del conductor).
+    \item $r > b$: L\'ineas radiales que apuntan \textbf{hacia el centro} (carga neta exterior $= -2\Qr < 0$).
+\end{itemize}
+
+\subsection*{(c) Densidad superficial de carga}
+
+\textbf{Superficie interior} ($r = a$): carga inducida $= -\Qr$
+\begin{align*}
+    \sigma_\text{int} &= \frac{-\Qr}{4\pi a^2}
+    = \frac{-5\times10^{-6}}{4\pi\,(0{,}02)^2}
+    = \frac{-5\times10^{-6}}{5{,}0265\times10^{-3}}
+\end{align*}
+\[
+    \boxed{\sigma_\text{int} = -9{,}947\times10^{-4}\ \left[\text{C/m}^2\right]}
+\]
+
+\textbf{Superficie exterior} ($r = b$): carga restante $= -2\Qr$
+\begin{align*}
+    \sigma_\text{ext} &= \frac{-2\Qr}{4\pi b^2}
+    = \frac{-2 \times 5\times10^{-6}}{4\pi\,(0{,}05)^2}
+    = \frac{-10^{-5}}{3{,}1416\times10^{-2}}
+\end{align*}
+\[
+    \boxed{\sigma_\text{ext} = -3{,}183\times10^{-4}\ \left[\text{C/m}^2\right]}
+\]
+
+%========================================
+% PROBLEMA 2 -- Gu\'ia 5, Prob. 5
+%========================================
+\newpage
+\section*{Problema 2 \textnormal{(Gu\'ia 5, Prob.\ 5)} -- Esfera Aislante dentro de un Conductor Hueco}
+
+\subsection*{Enunciado}
+
+Se tienen $a = 5{,}0$~[cm] (radio esfera aislante), $b = 20$~[cm] (radio interior conductor) y
+$c = 25$~[cm] (radio exterior conductor). Se miden los campos:
+\begin{itemize}
+    \item $E = 3{,}6\times10^3$~[N/C] \textbf{radialmente hacia adentro} en $r_1 = 10$~[cm].
+    \item $E = 2{,}0\times10^2$~[N/C] \textbf{radialmente hacia afuera} en $r_2 = 50$~[cm].
+\end{itemize}
+
+Encuentre la carga sobre la esfera aislante y la carga neta sobre la conductora hueca.
+
+\subsection*{Datos}
+
+\[
+    a = 0{,}05\ [\text{m}],\quad b = 0{,}20\ [\text{m}],\quad c = 0{,}25\ [\text{m}]
+\]
+\[
+    E_1 = 3{,}6\times10^3\ [\text{N/C}]\ \text{(hacia adentro)},\quad r_1 = 0{,}10\ [\text{m}]
+\]
+\[
+    E_2 = 2{,}0\times10^2\ [\text{N/C}]\ \text{(hacia afuera)},\quad r_2 = 0{,}50\ [\text{m}]
+\]
+
+\begin{center}
+\begin{tikzpicture}[scale=1.1, >=Stealth]
+    % Conductor (gris, entre b y c) -- escala: 1 cm -> 0.10 unidades
+    \fill[gray!25] (0,0) circle (2.5);  % c = 25 cm -> 2.5
+    \fill[white]   (0,0) circle (2.0);  % b = 20 cm -> 2.0
+    % Esfera aislante (azul, radio a = 5 cm -> 0.5)
+    \fill[blue!20] (0,0) circle (0.5);
+    % Contornos
+    \draw[thick] (0,0) circle (0.5);
+    \draw[thick] (0,0) circle (2.0);
+    \draw[thick] (0,0) circle (2.5);
+    \fill (0,0) circle (2pt);
+    % Etiquetas de radio
+    \draw[->] (0,0) -- (0.5, 0) node[midway, above, font=\scriptsize]{$a$};
+    \draw[->] (0,0) -- (0,-2.0) node[midway, right, font=\scriptsize]{$b$};
+    \draw[->] (0,0) -- ({2.5*cos(40)},{2.5*sin(40)})
+        node[midway, above left, font=\scriptsize]{$c$};
+    % Superficie gaussiana en r1 = 10 cm -> 1.0
+    \draw[gaussred, dashed, thick] (0,0) circle (1.0);
+    \node[gaussred, font=\scriptsize, right] at (0.72, 0.72) {$r_1 = 10$~cm};
+    % Texto
+    \node[font=\scriptsize] at (0, 0.3) {Aisl.};
+    \node[font=\scriptsize] at (0, 2.25) {Cond.};
+\end{tikzpicture}
+\end{center}
+
+\subsection*{Desarrollo}
+
+\subsubsection*{Paso 1: Carga de la esfera aislante (usando $E_1$ en $r_1 = 0{,}10$~m)}
+
+El punto $r_1 = 10$~cm se halla \textbf{entre $a$ y $b$}: fuera de la esfera aislante, en espacio
+vac\'io antes del conductor. La superficie gaussiana encierra solo $Q_\text{aislante}$.
+
+Como $E_1$ apunta \textbf{hacia adentro}, $q_\text{enc} < 0$. Usando la Ley de Gauss:
+\begin{align*}
+    (-E_1)\cdot 4\pi r_1^2 &= \frac{Q_\text{aislante}}{\varepsilon_0} \\[6pt]
+    Q_\text{aislante} &= -\frac{E_1\,r_1^2}{K}
+    = -\frac{3{,}6\times10^3 \times (0{,}10)^2}{8{,}99\times10^9}
+    = -\frac{36}{8{,}99\times10^9}
+\end{align*}
+\[
+    \boxed{Q_\text{aislante} = -4{,}004\times10^{-9}\ [\text{C}]}
+\]
+
+\subsubsection*{Paso 2: Carga total del sistema (usando $E_2$ en $r_2 = 0{,}50$~m)}
+
+El punto $r_2 = 50$~cm est\'a \textbf{fuera de todo} ($r_2 > c$). La superficie gaussiana
+encierra $Q_\text{aislante} + Q_\text{conductora} = Q_\text{total}$.
+
+Como $E_2$ apunta \textbf{hacia afuera}, $Q_\text{total} > 0$:
+\begin{align*}
+    Q_\text{total} &= \frac{E_2\,r_2^2}{K}
+    = \frac{2{,}0\times10^2 \times (0{,}50)^2}{8{,}99\times10^9}
+    = \frac{50}{8{,}99\times10^9}
+    = 5{,}561\times10^{-9}\ [\text{C}]
+\end{align*}
+
+\subsubsection*{Paso 3: Carga neta del conductor}
+
+\begin{align*}
+    Q_\text{conductora} &= Q_\text{total} - Q_\text{aislante}
+    = 5{,}561\times10^{-9} - (-4{,}004\times10^{-9})
+\end{align*}
+\[
+    \boxed{Q_\text{conductora} = 9{,}565\times10^{-9}\ [\text{C}]}
+\]
+
+%========================================
+% PROBLEMA 3 -- Gu\'ia 5, Prob. 6
+%========================================
+\newpage
+\section*{Problema 3 \textnormal{(Gu\'ia 5, Prob.\ 6)} -- Dos Cascarones Esf\'ericos Aislantes}
+
+\subsection*{Enunciado}
+
+Dos cascarones esf\'ericos aislantes de espesor despreciable est\'an separados por $L = 12$~[cm]
+entre sus centros. El cascar\'on~1 tiene $R_1 = 4$~[cm] y $\sigma_1 = 6$~[$\mu$C/m$^2$];
+el cascar\'on~2 tiene $R_2 = 2$~[cm] y $\sigma_2 = 3$~[$\mu$C/m$^2$].
+\begin{enumerate}[(a)]
+    \item Determine la carga total $Q_1$ y $Q_2$.
+    \item Determine $E_1(r)$ y $E_2(r)$ en la regi\'on exterior a cada cascar\'on.
+    \item Determine $\vec{E}_\text{total}$ en el punto $(6,\,0)$~[cm].
+\end{enumerate}
+
+\begin{center}
+\begin{tikzpicture}[scale=0.9, >=Stealth]
+    % Ejes
+    \draw[->] (-1.5, 0) -- (4.5, 0) node[right]{$x$};
+    \draw[->] (0, -1.4) -- (0, 1.6) node[above]{$y$};
+    % Cascar\'on 1 (azul, R1=4cm -> 1.0 u con escala 1cm=0.25u)
+    \draw[blue!70, thick, fill=blue!10] (0,0) circle (1.0);
+    \node[font=\small] at (-0.6, 0.75) {\textcolor{blue!70}{\textbf{1}}};
+    % Cascar\'on 2 (naranja, centro en L=12cm -> 3.0 u, R2=2cm -> 0.5 u)
+    \draw[orange!80!red, thick, fill=orange!15] (3.0, 0) circle (0.5);
+    \node[font=\small] at (3.55, 0.4) {\textcolor{orange!80!red}{\textbf{2}}};
+    % Distancia L
+    \draw[<->] (0, -1.3) -- (3.0, -1.3)
+        node[midway, below, font=\small]{$L = 12$~cm};
+    % Punto P=(6,0) -> (1.5, 0)
+    \fill (1.5, 0) circle (2.5pt)
+        node[above right, font=\small]{$P(6,0)$};
+    % Radios (etiquetas)
+    \node[font=\scriptsize] at ({1.05*cos(50)},{1.05*sin(50)}) {$R_1$};
+    \node[font=\scriptsize] at ({3.0+0.55*cos(50)},{0.55*sin(50)}) {$R_2$};
+    % Flecha E1 en P
+    \draw[->, blue!70, thick] (1.5, 0.15) -- (2.1, 0.15)
+        node[above, font=\scriptsize]{$\vec{E}_1$};
+    % Flecha E2 en P (hacia la izquierda)
+    \draw[->, orange!80!red, thick] (1.5, -0.15) -- (0.9, -0.15)
+        node[below, font=\scriptsize]{$\vec{E}_2$};
+\end{tikzpicture}
+\end{center}
+
+\subsection*{Datos}
+
+\[
+    R_1 = 0{,}04\ [\text{m}],\quad \sigma_1 = 6\times10^{-6}\ [\text{C/m}^2],\quad
+    R_2 = 0{,}02\ [\text{m}],\quad \sigma_2 = 3\times10^{-6}\ [\text{C/m}^2]
+\]
+
+\subsection*{Desarrollo}
+
+\subsubsection*{(a) Carga total de cada cascar\'on}
+
+La densidad superficial $\sigma \equiv dq/dA$ implica $Q = \sigma \cdot 4\pi R^2$:
+
+\begin{align*}
+    Q_1 &= \sigma_1 \cdot 4\pi R_1^2
+         = 6\times10^{-6} \cdot 4\pi\,(0{,}04)^2
+         = 6\times10^{-6} \cdot 2{,}0106\times10^{-2}
+\end{align*}
+\[
+    \boxed{Q_1 = 1{,}2064\times10^{-7}\ [\text{C}]}
+\]
+
+\begin{align*}
+    Q_2 &= \sigma_2 \cdot 4\pi R_2^2
+         = 3\times10^{-6} \cdot 4\pi\,(0{,}02)^2
+         = 3\times10^{-6} \cdot 5{,}0265\times10^{-3}
+\end{align*}
+\[
+    \boxed{Q_2 = 1{,}508\times10^{-8}\ [\text{C}]}
+\]
+
+\subsubsection*{(b) Campo el\'ectrico exterior a cada cascar\'on}
+
+Por la Ley de Gauss, para $r > R_i$ el cascar\'on actua como carga puntual $Q_i$ en su centro:
+
+\[
+    E_i(r) = \frac{KQ_i}{r^2}
+\]
+
+\begin{align*}
+    E_1(r) &= \frac{8{,}99\times10^9 \times 1{,}2064\times10^{-7}}{r^2}
+\end{align*}
+\[
+    \boxed{E_1(r) = \frac{1\,084{,}77}{r^2}\ [\text{N/C}]}
+\]
+
+\begin{align*}
+    E_2(r) &= \frac{8{,}99\times10^9 \times 1{,}508\times10^{-8}}{r^2}
+\end{align*}
+\[
+    \boxed{E_2(r) = \frac{135{,}596}{r^2}\ [\text{N/C}]}
+\]
+
+\subsubsection*{(c) Campo el\'ectrico total en $(6,\,0)$~[cm]}
+
+El punto $P = (6,\,0)$~cm se ubica:
+\begin{itemize}
+    \item A $r_1 = 6$~cm del centro del cascar\'on~1 (en el origen): \textbf{exterior} ($r_1 > R_1 = 4$~cm).
+    \item A $r_2 = |12 - 6| = 6$~cm del centro del cascar\'on~2 (en $x=12$~cm): \textbf{exterior} ($r_2 > R_2 = 2$~cm).
+\end{itemize}
+
+\textbf{Campo de cascar\'on 1} ($Q_1 > 0$, $P$ est\'a a la derecha del centro~1 $\Rightarrow$ apunta en $+\hat{\imath}$):
+\[
+    \vec{E}_1 = \frac{1\,084{,}77}{(0{,}06)^2}\,\hat{\imath}
+    = \frac{1\,084{,}77}{3{,}6\times10^{-3}}\,\hat{\imath}
+    = 301\,325\,\hat{\imath}\ [\text{N/C}]
+\]
+
+\textbf{Campo de cascar\'on 2} ($Q_2 > 0$, $P$ est\'a a la \textbf{izquierda} del centro~2
+$\Rightarrow$ el campo en $P$ apunta en $-\hat{\imath}$):
+\[
+    \vec{E}_2 = -\frac{135{,}596}{(0{,}06)^2}\,\hat{\imath}
+    = -37\,666\,\hat{\imath}\ [\text{N/C}]
+\]
+
+\textbf{Campo total:}
+\begin{align*}
+    \vec{E}_\text{total} &= \vec{E}_1 + \vec{E}_2
+    = (301\,325 - 37\,666)\,\hat{\imath}
+\end{align*}
+\[
+    \boxed{\vec{E}_\text{total} = 263\,660\,\hat{\imath}\ [\text{N/C}]}
+\]
+
+%========================================
+% PROBLEMA 4 -- Gu\'ia 6, Prob. 9
+%========================================
+\newpage
+\section*{Problema 4 \textnormal{(Gu\'ia 6, Prob.\ 9)} -- Potencial El\'ectrico de una Barra Cargada}
+
+\subsection*{Enunciado}
+
+Una barra de longitud $2a = 5$~[m] se ubica sobre el eje $y$, con el origen en su centro,
+y tiene densidad lineal de carga $\lambda = -4$~[$\mu$C/m].
+\begin{itemize}
+    \item Determine el potencial el\'ectrico en el punto $P$ ubicado a $x = 80$~[cm] del centro.
+    \item Determine la rapidez de una carga $q = 7$~[$\mu$C] de masa $m = 4$~[g] que parte del reposo
+          desde $A = (200,\,0)$~[cm] y llega a $P$.
+\end{itemize}
+
+\begin{center}
+\begin{tikzpicture}[scale=1.2, >=Stealth]
+    \draw[->] (-0.4,  0) -- (2.8, 0) node[right]{$x$};
+    \draw[->] ( 0, -1.7) -- (0, 1.9) node[above]{$y$};
+    % Barra
+    \draw[blue!70, very thick] (0, -1.5) -- (0, 1.5);
+    \node[blue!70, font=\small, left] at (0,  1.5) {$a$};
+    \node[blue!70, font=\small, left] at (0, -1.5) {$-a$};
+    % Elemento dy
+    \fill[blue!70] (0, 0.8) circle (2pt);
+    \draw[blue!70, ->] (0, 0.75) -- (0, 1.0)
+        node[right, font=\scriptsize]{$dy$};
+    \node[font=\scriptsize, left] at (-0.05, 0.875) {$y$};
+    % Distancia al punto P
+    \draw[dashed, gray] (0, 0.8) -- (1.9, 0);
+    \node[gray, font=\scriptsize] at (1.1, 0.55)
+        {$r{=}\sqrt{x^2+y^2}$};
+    % Punto P
+    \fill (1.9, 0) circle (3pt) node[above right, font=\small]{$P$};
+    \draw[<->] (0, -0.18) -- (1.9, -0.18)
+        node[midway, below, font=\scriptsize]{$x = 0{,}80$~m};
+    % Punto A
+    \fill (2.5, 0) circle (2pt) node[above, font=\small]{$A$};
+    \draw[<->] (0, -0.45) -- (2.5, -0.45)
+        node[midway, below, font=\scriptsize]{$x_0 = 2{,}00$~m};
+\end{tikzpicture}
+\end{center}
+
+\subsection*{Datos}
+
+\[
+    a = 2{,}5\ [\text{m}],\quad \lambda = -4\times10^{-6}\ [\text{C/m}],\quad x = 0{,}80\ [\text{m}]
+\]
+\[
+    q = 7\times10^{-6}\ [\text{C}],\quad m = 4\times10^{-3}\ [\text{kg}],\quad x_0 = 2{,}00\ [\text{m}]
+\]
+
+\subsection*{Desarrollo}
+
+\subsubsection*{Parte 1: Potencial en $P = (0{,}80,\,0)$~m}
+
+Cada elemento $dq = \lambda\,dy$ de la barra aporta:
+\[
+    dV = \frac{K\,dq}{r} = \frac{K\lambda\,dy}{\sqrt{x^2+y^2}}
+\]
+
+Integrando desde $-a$ hasta $+a$, con el resultado est\'andar:
+\[
+    \int_{-a}^{a}\frac{dy}{\sqrt{x^2+y^2}}
+    = 2\ln\!\left(\frac{a+\sqrt{x^2+a^2}}{x}\right)
+\]
+se obtiene:
+
+\[
+    V_P = 2K\lambda\,\ln\!\left(\frac{a + \sqrt{x^2+a^2}}{x}\right)
+\]
+
+Con $x = 0{,}80$~m y $a = 2{,}5$~m:
+\begin{align*}
+    \sqrt{x^2+a^2} &= \sqrt{(0{,}80)^2+(2{,}5)^2} = \sqrt{6{,}89} = 2{,}6249\ [\text{m}] \\[6pt]
+    V_P &= 2 \times 9\times10^9 \times (-4\times10^{-6})
+            \times \ln\!\left(\frac{2{,}5+2{,}6249}{0{,}80}\right) \\[4pt]
+        &= -72\,000 \times \ln(6{,}4061) \\[4pt]
+        &= -72\,000 \times 1{,}8572
+\end{align*}
+\[
+    \boxed{V_P = -133\,718\ [\text{V}]}
+\]
+
+\subsubsection*{Parte 2: Rapidez en $P$}
+
+Primero se calcula el potencial en el punto inicial $A = (2{,}00,\,0)$~m:
+\begin{align*}
+    \sqrt{x_0^2+a^2} &= \sqrt{(2{,}00)^2+(2{,}5)^2} = \sqrt{10{,}25} = 3{,}2016\ [\text{m}] \\[6pt]
+    V_A &= 2 \times 9\times10^9 \times (-4\times10^{-6})
+           \times \ln\!\left(\frac{2{,}5+3{,}2016}{2{,}00}\right) \\[4pt]
+        &= -72\,000 \times \ln(2{,}8508) \\[4pt]
+        &= -72\,000 \times 1{,}0476 = -75\,427\ [\text{V}]
+\end{align*}
+
+Por conservaci\'on de energ\'ia (la carga parte del reposo, $K_A = 0$):
+\begin{align*}
+    W_{A\to P} &= q\,(V_A - V_P) \\
+    &= 7\times10^{-6}\,\bigl(-75\,427 - (-133\,718)\bigr) \\
+    &= 7\times10^{-6} \times 58\,291 = 0{,}4080\ [\text{J}]
+\end{align*}
+
+\textit{Nota:} $\lambda < 0$ y $q > 0$, por lo que la barra \textbf{atrae} a la carga. Al acercarse,
+la carga gana energ\'ia cin\'etica ($W > 0$ y $V_P < V_A$, consistente).
+
+\begin{align*}
+    \frac{1}{2}mv^2 &= W_{A\to P} \\[4pt]
+    v &= \sqrt{\frac{2W}{m}} = \sqrt{\frac{2 \times 0{,}4080}{4\times10^{-3}}} = \sqrt{204{,}0}
+\end{align*}
+\[
+    \boxed{v = 14{,}28\ [\text{m/s}]}
+\]
+
+%========================================
+% PROBLEMA 5 -- Gu\'ia 6, Prob. 10
+%========================================
+\newpage
+\section*{Problema 5 \textnormal{(Gu\'ia 6, Prob.\ 10)} -- Potencial El\'ectrico de un Anillo de Carga}
+
+\subsection*{Enunciado}
+
+Un anillo de radio $R = 12$~[cm] tiene carga $Q_1 = +8$~[nC] distribuida en $\tfrac{1}{4}$ de
+su circunferencia y $Q_2 = -6Q_1$ en el resto. Determine el potencial el\'ectrico en el
+centro $C$ del anillo y en el punto $D$ ubicado a 8~[cm] del centro sobre el eje de simetr\'ia.
+
+\begin{center}
+\begin{tikzpicture}[scale=2.2, >=Stealth]
+    % Anillo: Q2 ocupa 3/4 de la circunferencia (0 a 270 grados, naranja)
+    \draw[orange!80!red, very thick]
+        ({cos(0)},{0.30*sin(0)}) arc[x radius=1, y radius=0.30, start angle=0, end angle=270];
+    % Q1 ocupa 1/4 (270 a 360 grados, verde)
+    \draw[green!60!black, very thick]
+        ({cos(270)},{0.30*sin(270)}) arc[x radius=1, y radius=0.30, start angle=270, end angle=360];
+    % Etiquetas de carga
+    \node[orange!80!red, font=\small] at (-0.75, 0.12) {$Q_2{=}{-}6Q_1$};
+    \node[green!60!black, font=\small] at (0.75, -0.22) {$Q_1$};
+    % Eje de simetr\'ia
+    \draw[->, gray] (0,-0.15) -- (0, 1.0) node[right, font=\small]{eje};
+    % Centro C
+    \fill (0,0) circle (1pt) node[below left, font=\small]{$C$};
+    % Radio R
+    \draw[dashed, gray] (0,0) -- (1, 0)
+        node[midway, above, font=\scriptsize]{$R = 12$~cm};
+    % Punto D (a h=8cm=0.55 unidades proporcional a R=12cm=1u -> 8/12=0.667)
+    \fill (0, 0.667) circle (1.5pt) node[right, font=\small]{$D$};
+    \draw[<->] (0.08, 0) -- (0.08, 0.667)
+        node[midway, right, font=\scriptsize]{$8$~cm};
+    % Distancia de elemento del anillo a D
+    \draw[dashed, orange!80!red] (-1, 0) -- (0, 0.667)
+        node[midway, above left, font=\scriptsize]{$d_D$};
+\end{tikzpicture}
+\end{center}
+
+\subsection*{Datos}
+
+\[
+    R = 0{,}12\ [\text{m}],\quad Q_1 = 8\times10^{-9}\ [\text{C}],\quad
+    Q_2 = -6Q_1 = -4{,}8\times10^{-8}\ [\text{C}]
+\]
+\[
+    Q_\text{total} = Q_1 + Q_2 = 8\times10^{-9} - 4{,}8\times10^{-8}
+    = -4{,}0\times10^{-8}\ [\text{C}]
+\]
+
+\subsection*{Desarrollo}
+
+\subsubsection*{Potencial en el centro $C$}
+
+El potencial es una magnitud \textbf{escalar}. Cada elemento $dq$ del anillo se encuentra a la
+\textbf{misma distancia} $R$ del centro, independientemente de su posici\'on angular. Por lo tanto,
+la distribuci\'on no uniforme de carga no afecta el resultado:
+
+\begin{align*}
+    V_C &= \int \frac{K\,dq}{R}
+         = \frac{K}{R}\int dq
+         = \frac{K\,Q_\text{total}}{R} \\[6pt]
+        &= \frac{9\times10^9 \times (-4{,}0\times10^{-8})}{0{,}12}
+         = \frac{-0{,}36}{0{,}12}
+\end{align*}
+\[
+    \boxed{V_C = -3\,000\ [\text{V}]}
+\]
+
+\subsubsection*{Potencial en el punto $D$ (a 8~cm del centro sobre el eje)}
+
+Todo elemento del anillo dista la misma longitud $d_D$ del punto $D$
+(donde $h = 0{,}08$~m es la distancia axial):
+\[
+    d_D = \sqrt{R^2 + h^2} = \sqrt{(0{,}12)^2 + (0{,}08)^2}
+    = \sqrt{0{,}0144 + 0{,}0064} = \sqrt{0{,}0208} = 0{,}1442\ [\text{m}]
+\]
+
+Nuevamente, como todos los elementos est\'an a igual distancia de $D$:
+\begin{align*}
+    V_D &= \frac{K\,Q_\text{total}}{d_D}
+         = \frac{9\times10^9 \times (-4{,}0\times10^{-8})}{0{,}1442}
+         = \frac{-0{,}36}{0{,}1442}
+\end{align*}
+\[
+    \boxed{V_D = -2\,496\ [\text{V}]}
+\]
+
+\subsection*{Interpretaci\'on f\'isica}
+
+\begin{itemize}
+    \item El potencial es \textbf{negativo} en ambos puntos porque la carga neta del anillo es
+          negativa ($Q_\text{total} = -40$~nC $< 0$).
+    \item $|V_C| > |V_D|$: el centro est\'a m\'as pr\'oximo al anillo ($d_C = R < d_D$), por
+          lo que el potencial tiene mayor magnitud all\'i.
+    \item La distribuci\'on no uniforme ($Q_1$ en un cuarto, $Q_2$ en tres cuartos) \textbf{no}
+          afecta el c\'alculo de potencial en $C$ ni en $D$, porque el potencial el\'ectrico solo
+          depende de la distancia escalar, y ambos puntos son equidistantes de todos los
+          elementos del anillo.
+\end{itemize}
+
+\end{document}

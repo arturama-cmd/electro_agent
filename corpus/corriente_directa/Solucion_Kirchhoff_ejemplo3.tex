@@ -1,0 +1,382 @@
+\documentclass[12pt,letterpaper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[spanish,es-noshorthands]{babel}
+\usepackage{amsmath,amssymb}
+\usepackage{graphicx}
+\usepackage{xcolor}
+\usepackage{tikz}
+\usetikzlibrary{calc,arrows,decorations.markings,patterns}
+\usepackage{enumerate}
+\usepackage[top=2.5cm, bottom=4cm, left=2cm, right=2cm, footskip=40pt]{geometry}
+\usepackage{fancyhdr}
+\usepackage{lastpage}
+
+% ===== COLORES =====
+\definecolor{ubbblue}{RGB}{0,51,102}
+\definecolor{colR1}{RGB}{180,0,0}       % rojo
+\definecolor{colR2}{RGB}{0,0,180}       % azul
+\definecolor{colR3}{RGB}{0,140,0}       % verde
+\definecolor{colE1}{RGB}{180,120,0}     % ambar
+\definecolor{colE2}{RGB}{0,140,140}     % cyan oscuro
+\definecolor{colVab}{RGB}{120,0,180}    % violeta
+
+% ===== ENCABEZADO / PIE =====
+\pagestyle{fancy}
+\fancyhf{}
+\renewcommand{\headrulewidth}{0pt}
+\renewcommand{\footrulewidth}{0.4pt}
+\fancyfoot[L]{\raisebox{-0.5cm}{\includegraphics[height=1.2cm]{logo ubb.png}}}
+\fancyfoot[C]{%
+    \begin{minipage}[b]{8cm}\centering
+        \footnotesize\textcolor{ubbblue}{\textbf{Dr. Arturo Fern\'andez P\'erez}}\\
+        \scriptsize Departamento de F\'isica -- Universidad del B\'io-B\'io\\
+        \scriptsize\textit{Electro\_Asistente\_AI-UBB}\\
+        \tiny P\'agina \thepage\ de \pageref{LastPage}
+    \end{minipage}}
+\fancyfoot[R]{\raisebox{-0.5cm}{\includegraphics[height=1.2cm]{logo dfis.png}}}
+
+\fancypagestyle{plain}{%
+  \fancyhf{}
+  \renewcommand{\headrulewidth}{0pt}
+  \renewcommand{\footrulewidth}{0.4pt}
+  \fancyfoot[L]{\raisebox{-0.5cm}{\includegraphics[height=1.2cm]{logo ubb.png}}}
+  \fancyfoot[C]{%
+    \begin{minipage}[b]{8cm}\centering
+        \footnotesize\textcolor{ubbblue}{\textbf{Dr. Arturo Fern\'andez P\'erez}}\\
+        \scriptsize Departamento de F\'isica -- Universidad del B\'io-B\'io\\
+        \scriptsize\textit{Electro\_Asistente\_AI-UBB}\\
+        \tiny P\'agina \thepage\ de \pageref{LastPage}
+    \end{minipage}}
+  \fancyfoot[R]{\raisebox{-0.5cm}{\includegraphics[height=1.2cm]{logo dfis.png}}}
+}
+
+\begin{document}
+
+%========================================
+% ENCABEZADO INSTITUCIONAL
+%========================================
+\begin{center}
+    \includegraphics[height=2cm]{logo ubb.png}\\[0.3cm]
+    {\large\textcolor{ubbblue}{\textbf{UNIVERSIDAD DEL B\'IO-B\'IO}}}\\[0.1cm]
+    {\normalsize Facultad de Ciencias -- Departamento de F\'isica}
+\end{center}
+
+\vspace{0.3cm}
+\hrule height 1pt
+\vspace{0.5cm}
+
+{\centering\Large\textbf{Soluci\'on -- Leyes de Kirchhoff}\par}
+{\centering\normalsize Circuito con dos fuentes en paralelo -- Corriente Continua\par}
+
+\vspace{0.5cm}
+
+%========================================
+% ENUNCIADO
+%========================================
+\section*{Enunciado del Problema}
+
+Considere el circuito de corriente continua de la figura, con dos fuentes id\'enticas
+$\varepsilon_1 = \varepsilon_2 = \varepsilon = 24\ [\text{V}]$ y tres resistencias
+$R_1 = 3\ [\Omega]$, $R_2 = 2\ [\Omega]$, $R_3 = 7\ [\Omega]$.
+Los sentidos supuestos de las corrientes se indican en la figura.
+Determine:
+
+\begin{enumerate}[(a)]
+    \item Las corrientes $I_1$, $I_2$ e $I_3$ que circulan por cada rama.
+    \item La potencia total disipada en las resistencias.
+    \item La diferencia de potencial $V_{ab} = V_a - V_b$ entre los puntos $a$ y $b$.
+\end{enumerate}
+
+%--- DIAGRAMA DEL CIRCUITO ---
+\begin{center}
+\begin{tikzpicture}[scale=1.15, >=stealth, line width=1pt]
+
+% ============================================================
+% COORDENADAS:  rieles y=0 (abajo) y=4 (arriba)
+%   ramas en x=0 (izq), x=3.5 (centro), x=7 (der)
+%   nodos: c=(3.5,4)=a-superior, d=(3.5,0)=b-inferior
+%          a=(7,4), b=(7,0)
+% ============================================================
+
+% ---------- RIELES (cables negros) ----------
+\draw[black] (0,4) -- (7,4);     % riel superior
+\draw[black] (0,0) -- (7,0);     % riel inferior
+
+% ---------- RAMA IZQUIERDA: eps1 (arriba) + R1 (abajo) ----------
+\draw[black] (0,0) -- (0,0.6);
+\draw[black] (0,2.0) -- (0,2.7);
+\draw[black] (0,3.05) -- (0,4);
+% R1
+\fill[colR1!25] (-0.19,0.6) rectangle (0.19,2.0);
+\draw[colR1,line width=1.5pt] (-0.19,0.6) rectangle (0.19,2.0);
+\node[colR1,left,font=\small] at (-0.22,1.3) {$R_1$};
+% eps1 (+ arriba): placa larga fina arriba, placa corta gruesa abajo
+\draw[colE1,line width=2pt] (-0.30,3.05) -- (0.30,3.05);   % + (larga)
+\draw[colE1,line width=4pt] (-0.16,2.70) -- (0.16,2.70);   % - (corta)
+\node[colE1,left,font=\small] at (-0.34,2.9) {$\varepsilon_1$};
+\node[colE1,font=\tiny,right] at (0.30,3.18) {$+$};
+
+% ---------- RAMA CENTRAL: eps2 (arriba) + R2 (abajo) ----------
+\draw[black] (3.5,0) -- (3.5,0.6);
+\draw[black] (3.5,2.0) -- (3.5,2.7);
+\draw[black] (3.5,3.05) -- (3.5,4);
+% R2
+\fill[colR2!25] (3.31,0.6) rectangle (3.69,2.0);
+\draw[colR2,line width=1.5pt] (3.31,0.6) rectangle (3.69,2.0);
+\node[colR2,left,font=\small] at (3.28,1.3) {$R_2$};
+% eps2 (+ arriba)
+\draw[colE2,line width=2pt] (3.20,3.05) -- (3.80,3.05);   % + (larga)
+\draw[colE2,line width=4pt] (3.34,2.70) -- (3.66,2.70);   % - (corta)
+\node[colE2,left,font=\small] at (3.16,2.9) {$\varepsilon_2$};
+\node[colE2,font=\tiny,right] at (3.80,3.18) {$+$};
+
+% ---------- RAMA DERECHA: R3 ----------
+\draw[black] (7,0) -- (7,1.3);
+\draw[black] (7,2.7) -- (7,4);
+\fill[colR3!25] (6.81,1.3) rectangle (7.19,2.7);
+\draw[colR3,line width=1.5pt] (6.81,1.3) rectangle (7.19,2.7);
+\node[colR3,left,font=\small] at (6.78,2.0) {$R_3$};
+
+% ---------- FLECHAS DE CORRIENTE ----------
+% I1: entra al nodo c por el riel superior izquierdo (->)
+\draw[->,black,line width=1.3pt] (0.9,4.35) -- (2.2,4.35)
+    node[midway,above,font=\normalsize]{$I_1$};
+% I3: sale del nodo c por el riel superior derecho (->)
+\draw[->,black,line width=1.3pt] (4.8,4.35) -- (6.1,4.35)
+    node[midway,above,font=\normalsize]{$I_3$};
+% I2: baja por la rama central
+\draw[->,black,line width=1.3pt] (4.05,2.6) -- (4.05,1.4)
+    node[midway,right,font=\normalsize]{$I_2$};
+
+% ---------- Vab (rama derecha) ----------
+\draw[<->,colVab,line width=1pt] (7.75,3.9) -- (7.75,0.1);
+\node[colVab,right,font=\small] at (7.8,2.0) {$V_{ab}$};
+
+% ---------- NODOS ----------
+\fill[black] (3.5,4) circle (3pt);
+\node[above left,font=\small] at (3.45,4.05) {$c$};
+\fill[black] (3.5,0) circle (3pt);
+\node[below left,font=\small] at (3.45,-0.05) {$d$};
+\fill[black] (7,4) circle (3.5pt);
+\node[above right,font=\large] at (7.05,4.05) {$a$};
+\fill[black] (7,0) circle (3.5pt);
+\node[below right,font=\large] at (7.05,-0.05) {$b$};
+
+\end{tikzpicture}
+\end{center}
+
+%========================================
+% DATOS
+%========================================
+\section*{Datos del Problema}
+
+\[
+    \varepsilon_1 = \varepsilon_2 = 24\ [\text{V}],\qquad
+    R_1 = 3\ [\Omega],\qquad
+    R_2 = 2\ [\Omega],\qquad
+    R_3 = 7\ [\Omega]
+\]
+
+%========================================
+% ANÁLISIS
+%========================================
+\section*{An\'alisis del Circuito}
+
+El circuito posee \textbf{dos nodos} ($c$ arriba y $d$ abajo; n\'otese que $c$ y $a$ est\'an
+unidos por cable, igual que $d$ y $b$) y \textbf{tres ramas} en paralelo:
+
+\begin{itemize}
+    \item \textbf{Rama izquierda} ($I_1 \uparrow$): fuente \textcolor{colE1}{$\varepsilon_1$}
+          y resistencia \textcolor{colR1}{$R_1$}.
+    \item \textbf{Rama central} ($I_2 \downarrow$): fuente \textcolor{colE2}{$\varepsilon_2$}
+          y resistencia \textcolor{colR2}{$R_2$}.
+    \item \textbf{Rama derecha} ($I_3 \downarrow$): resistencia \textcolor{colR3}{$R_3$}.
+\end{itemize}
+
+Se identifican \textbf{dos mallas independientes}: la malla izquierda $M_1$ (ramas izquierda +
+central) y la malla derecha $M_2$ (ramas central + derecha).
+
+%========================================
+% DESARROLLO
+%========================================
+\section*{Desarrollo}
+
+%----------------------------------------
+\subsection*{a) Ecuaciones de Kirchhoff}
+
+\noindent
+\begin{minipage}[t]{0.40\textwidth}
+\centering\vspace{0pt}
+\begin{tikzpicture}[scale=0.74, >=stealth, line width=0.9pt]
+% Rieles
+\draw[black] (0,4)--(7,4); \draw[black] (0,0)--(7,0);
+% Rama izq
+\draw[black] (0,0)--(0,0.6); \draw[black] (0,2.0)--(0,2.7); \draw[black] (0,3.05)--(0,4);
+\fill[colR1!25](-0.19,0.6) rectangle (0.19,2.0);
+\draw[colR1,line width=1.2pt](-0.19,0.6) rectangle (0.19,2.0);
+\draw[colE1,line width=1.8pt](-0.30,3.05)--(0.30,3.05);
+\draw[colE1,line width=3.5pt](-0.16,2.70)--(0.16,2.70);
+% Rama centro
+\draw[black] (3.5,0)--(3.5,0.6); \draw[black] (3.5,2.0)--(3.5,2.7); \draw[black] (3.5,3.05)--(3.5,4);
+\fill[colR2!25](3.31,0.6) rectangle (3.69,2.0);
+\draw[colR2,line width=1.2pt](3.31,0.6) rectangle (3.69,2.0);
+\draw[colE2,line width=1.8pt](3.20,3.05)--(3.80,3.05);
+\draw[colE2,line width=3.5pt](3.34,2.70)--(3.66,2.70);
+% Rama der
+\draw[black] (7,0)--(7,1.3); \draw[black] (7,2.7)--(7,4);
+\fill[colR3!25](6.81,1.3) rectangle (7.19,2.7);
+\draw[colR3,line width=1.2pt](6.81,1.3) rectangle (7.19,2.7);
+% Corrientes
+\draw[->,black,line width=1pt](0.9,4.35)--(2.0,4.35) node[midway,above,font=\scriptsize]{$I_1$};
+\draw[->,black,line width=1pt](4.9,4.35)--(6.0,4.35) node[midway,above,font=\scriptsize]{$I_3$};
+\draw[->,black,line width=1pt](4.0,2.5)--(4.0,1.5) node[midway,right,font=\scriptsize]{$I_2$};
+% Mallas
+\draw[->,gray,thick,dashed] (1.75,2.0) arc[start angle=120,end angle=-200,radius=0.55]
+    node[pos=0.5,font=\scriptsize,gray]{$M_1$};
+\draw[->,gray,thick,dashed] (5.25,2.0) arc[start angle=120,end angle=-200,radius=0.55]
+    node[pos=0.5,font=\scriptsize,gray]{$M_2$};
+% Nodos
+\fill[black](3.5,4) circle (2.5pt); \node[above left,font=\scriptsize] at (3.45,4.05){$c$};
+\fill[black](3.5,0) circle (2.5pt); \node[below left,font=\scriptsize] at (3.45,-0.05){$d$};
+\fill[black](7,4) circle (3pt); \node[above right,font=\small] at (7.05,4.05){$a$};
+\fill[black](7,0) circle (3pt); \node[below right,font=\small] at (7.05,-0.05){$b$};
+\end{tikzpicture}
+\end{minipage}%
+\hfill
+\begin{minipage}[t]{0.56\textwidth}
+\vspace{6pt}
+
+\textbf{KCL -- Nodo $c$:}
+
+La corriente $I_1$ llega al nodo $c$ y se divide en $I_2$ e $I_3$:
+\[
+    \boxed{I_1 = I_2 + I_3} \tag{N}
+\]
+
+\medskip
+\textbf{KVL -- Malla $M_1$} (izquierda + central):
+
+Recorriendo: subiendo por $R_1$ y $\varepsilon_1$, bajando por $\varepsilon_2$ y $R_2$:
+\[
+    \varepsilon_1 - R_1 I_1 - \varepsilon_2 - R_2 I_2 = 0
+\]
+Como $\varepsilon_1 = \varepsilon_2$, las fuentes se cancelan:
+\[
+    \boxed{-3\,I_1 - 2\,I_2 = 0 \;\Rightarrow\; 3\,I_1 + 2\,I_2 = 0} \tag{M1}
+\]
+
+\medskip
+\textbf{KVL -- Malla $M_2$} (central + derecha):
+
+Recorriendo: subiendo por $R_2$ y $\varepsilon_2$, bajando por $R_3$:
+\[
+    R_2 I_2 + \varepsilon_2 - R_3 I_3 = 0
+\]
+\[
+    \boxed{2\,I_2 + 24 - 7\,I_3 = 0 \;\Rightarrow\; 2\,I_2 - 7\,I_3 = -24} \tag{M2}
+\]
+\end{minipage}
+
+\newpage
+
+%----------------------------------------
+\subsection*{b) Resoluci\'on del sistema}
+
+De \textbf{(M1)} se despeja $I_1$ en funci\'on de $I_2$:
+\[
+    3\,I_1 = -2\,I_2 \qquad\Rightarrow\qquad I_1 = -\frac{2}{3}\,I_2 \tag{I}
+\]
+
+Sustituyendo (I) en la ecuaci\'on de nodos \textbf{(N)}, $I_1 = I_2 + I_3$:
+\begin{align*}
+    -\frac{2}{3}\,I_2 &= I_2 + I_3 \\[4pt]
+    I_3 &= -\frac{2}{3}\,I_2 - I_2 = -\frac{5}{3}\,I_2 \tag{II}
+\end{align*}
+
+Sustituyendo (II) en \textbf{(M2)}, $2\,I_2 - 7\,I_3 = -24$:
+\begin{align*}
+    2\,I_2 - 7\left(-\frac{5}{3}\,I_2\right) &= -24 \\[4pt]
+    2\,I_2 + \frac{35}{3}\,I_2 &= -24 \\[4pt]
+    \frac{6\,I_2 + 35\,I_2}{3} &= -24 \\[4pt]
+    \frac{41}{3}\,I_2 &= -24
+\end{align*}
+
+\[
+    \boxed{I_2 = -\frac{72}{41} \approx -1{,}76\ [\text{A}]}
+\]
+
+Con (I) y (II) se obtienen las otras corrientes:
+\[
+    I_1 = -\frac{2}{3}\left(-\frac{72}{41}\right) = \frac{48}{41}
+    \qquad\Rightarrow\qquad
+    \boxed{I_1 = \frac{48}{41} \approx 1{,}17\ [\text{A}]}
+\]
+\[
+    I_3 = -\frac{5}{3}\left(-\frac{72}{41}\right) = \frac{120}{41}
+    \qquad\Rightarrow\qquad
+    \boxed{I_3 = \frac{120}{41} \approx 2{,}93\ [\text{A}]}
+\]
+
+\noindent\textbf{Verificaci\'on (N):}
+$\;I_2 + I_3 = -\dfrac{72}{41} + \dfrac{120}{41} = \dfrac{48}{41} = I_1$ \checkmark
+
+%----------------------------------------
+\subsection*{b) Potencia total disipada}
+
+La potencia disipada en cada resistencia es $P = I^2 R$:
+
+\begin{align*}
+    P_1 &= I_1^2 R_1 = (1{,}17)^2 \times 3 \approx 4{,}11\ [\text{W}] \\
+    P_2 &= I_2^2 R_2 = (1{,}76)^2 \times 2 \approx 6{,}17\ [\text{W}] \\
+    P_3 &= I_3^2 R_3 = (2{,}93)^2 \times 7 \approx 59{,}96\ [\text{W}]
+\end{align*}
+
+\[
+    \boxed{P_{\text{total}} = P_1 + P_2 + P_3 \approx 70{,}24\ [\text{W}]}
+\]
+
+\noindent\small\textit{Comprobaci\'on (balance de potencia):} la potencia entregada por las fuentes
+es $\varepsilon_1 I_1 + \varepsilon_2 |I_2| = 24(1{,}17) + 24(1{,}76) \approx 70{,}24\ [\text{W}]$,
+igual a la disipada. \checkmark
+\normalsize
+
+%----------------------------------------
+\subsection*{c) Diferencia de potencial $V_{ab}$}
+
+La corriente $I_3$ circula de $a$ hacia $b$ a trav\'es de $R_3$, por lo que:
+\[
+    V_{ab} = V_a - V_b = I_3 \, R_3 = \frac{120}{41}\times 7 = \frac{840}{41}
+\]
+\[
+    \boxed{V_{ab} \approx 20{,}49\ [\text{V}]}
+\]
+
+\noindent Tambi\'en puede verificarse por la rama izquierda:
+$V_{ab} = \varepsilon_1 - I_1 R_1 = 24 - (1{,}17)(3) \approx 20{,}49\ [\text{V}]$ \checkmark
+
+%========================================
+% RESUMEN
+%========================================
+\section*{Resumen de Resultados}
+
+\begin{center}
+\begin{tabular}{|c|c|l|}
+\hline
+\textbf{Variable} & \textbf{Valor} & \textbf{Observaci\'on} \\
+\hline
+$I_1$ & $+1{,}17\ [\text{A}]$ & Sentido supuesto correcto \\
+$I_2$ & $-1{,}76\ [\text{A}]$ & Sentido real opuesto al supuesto \\
+$I_3$ & $+2{,}93\ [\text{A}]$ & Sentido supuesto correcto \\
+$P_{\text{total}}$ & $70{,}24\ [\text{W}]$ & Potencia disipada total \\
+$V_{ab}$ & $20{,}49\ [\text{V}]$ & Diferencia de potencial $a$--$b$ \\
+\hline
+\end{tabular}
+\end{center}
+
+\medskip
+\noindent\textbf{Nota:} El signo negativo de $I_2$ indica que la corriente real en la rama
+central circula hacia arriba (de $d$ a $c$), opuesta al sentido supuesto. Ambas fuentes,
+al tener su terminal $+$ hacia el nodo superior, impulsan corriente hacia arriba por sus
+ramas, que retorna por $R_3$.
+
+\end{document}

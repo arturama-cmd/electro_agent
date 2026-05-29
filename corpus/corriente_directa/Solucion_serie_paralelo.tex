@@ -1,0 +1,335 @@
+\documentclass[12pt,letterpaper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[spanish,es-noshorthands]{babel}
+\usepackage{amsmath,amssymb}
+\usepackage{graphicx}
+\usepackage{xcolor}
+\usepackage{tikz}
+\usetikzlibrary{calc,arrows,decorations.markings,patterns}
+\usepackage{enumerate}
+\usepackage[top=2.5cm, bottom=4cm, left=2cm, right=2cm, footskip=40pt]{geometry}
+\usepackage{fancyhdr}
+\usepackage{lastpage}
+
+% ===== COLORES =====
+\definecolor{ubbblue}{RGB}{0,51,102}
+\definecolor{colR1}{RGB}{180,0,0}       % rojo
+\definecolor{colR2}{RGB}{0,0,180}       % azul
+\definecolor{colR3}{RGB}{0,140,0}       % verde
+\definecolor{colR4}{RGB}{200,110,0}     % naranja
+\definecolor{colE1}{RGB}{0,140,140}     % cyan oscuro
+\definecolor{colEq}{RGB}{110,110,110}   % gris (resistencia equivalente)
+
+% ===== ENCABEZADO / PIE =====
+\pagestyle{fancy}
+\fancyhf{}
+\renewcommand{\headrulewidth}{0pt}
+\renewcommand{\footrulewidth}{0.4pt}
+\fancyfoot[L]{\raisebox{-0.5cm}{\includegraphics[height=1.2cm]{logo ubb.png}}}
+\fancyfoot[C]{%
+    \begin{minipage}[b]{8cm}\centering
+        \footnotesize\textcolor{ubbblue}{\textbf{Dr. Arturo Fern\'andez P\'erez}}\\
+        \scriptsize Departamento de F\'isica -- Universidad del B\'io-B\'io\\
+        \scriptsize\textit{Electro\_Asistente\_AI-UBB}\\
+        \tiny P\'agina \thepage\ de \pageref{LastPage}
+    \end{minipage}}
+\fancyfoot[R]{\raisebox{-0.5cm}{\includegraphics[height=1.2cm]{logo dfis.png}}}
+
+\fancypagestyle{plain}{%
+  \fancyhf{}
+  \renewcommand{\headrulewidth}{0pt}
+  \renewcommand{\footrulewidth}{0.4pt}
+  \fancyfoot[L]{\raisebox{-0.5cm}{\includegraphics[height=1.2cm]{logo ubb.png}}}
+  \fancyfoot[C]{%
+    \begin{minipage}[b]{8cm}\centering
+        \footnotesize\textcolor{ubbblue}{\textbf{Dr. Arturo Fern\'andez P\'erez}}\\
+        \scriptsize Departamento de F\'isica -- Universidad del B\'io-B\'io\\
+        \scriptsize\textit{Electro\_Asistente\_AI-UBB}\\
+        \tiny P\'agina \thepage\ de \pageref{LastPage}
+    \end{minipage}}
+  \fancyfoot[R]{\raisebox{-0.5cm}{\includegraphics[height=1.2cm]{logo dfis.png}}}
+}
+
+\begin{document}
+
+%========================================
+% ENCABEZADO INSTITUCIONAL
+%========================================
+\begin{center}
+    \includegraphics[height=2cm]{logo ubb.png}\\[0.3cm]
+    {\large\textcolor{ubbblue}{\textbf{UNIVERSIDAD DEL B\'IO-B\'IO}}}\\[0.1cm]
+    {\normalsize Facultad de Ciencias -- Departamento de F\'isica}
+\end{center}
+
+\vspace{0.3cm}
+\hrule height 1pt
+\vspace{0.5cm}
+
+{\centering\Large\textbf{Soluci\'on -- Circuito Serie-Paralelo}\par}
+{\centering\normalsize Reducci\'on de resistencias -- Corriente Continua\par}
+
+\vspace{0.5cm}
+
+%========================================
+% ENUNCIADO
+%========================================
+\section*{Enunciado del Problema}
+
+Considere el circuito de corriente continua de la figura, con una fuente
+$\varepsilon = 12\ [\text{V}]$ y cuatro resistencias
+$R_1 = 20\ [\Omega]$, $R_2 = 20\ [\Omega]$, $R_3 = 30\ [\Omega]$ y $R_4 = 8{,}0\ [\Omega]$.
+Determine las corrientes que circulan en el circuito y la potencia disipada en cada
+resistencia el\'ectrica.
+
+%--- DIAGRAMA DEL CIRCUITO ---
+\begin{center}
+\begin{tikzpicture}[scale=1.2, >=stealth, line width=1pt]
+
+% ============================================================
+% COORDENADAS:  TL=(0,3) TR=(6,3) BR=(6,0) BL=a=(0,0)
+%   b=(3,3) nodo superior central, c=(3,0) nodo inferior central
+%   R1 y R3 en el riel superior, R4 en el inferior, R2 vertical entre b y c
+%   fuente en el lado izquierdo (+ arriba)
+% ============================================================
+
+% ---------- RIEL SUPERIOR con R1 y R3 ----------
+\draw[black] (0,3)--(1.0,3);
+\draw[black] (2.0,3)--(3,3);
+\draw[black] (3,3)--(4.0,3);
+\draw[black] (5.0,3)--(6,3);
+% R1
+\fill[colR1!25] (1.0,2.78) rectangle (2.0,3.22);
+\draw[colR1,line width=1.5pt] (1.0,2.78) rectangle (2.0,3.22);
+\node[colR1,above,font=\small] at (1.5,3.26) {$R_1$};
+% R3
+\fill[colR3!25] (4.0,2.78) rectangle (5.0,3.22);
+\draw[colR3,line width=1.5pt] (4.0,2.78) rectangle (5.0,3.22);
+\node[colR3,above,font=\small] at (4.5,3.26) {$R_3$};
+
+% ---------- LADO DERECHO ----------
+\draw[black] (6,3)--(6,0);
+
+% ---------- RIEL INFERIOR con R4 ----------
+\draw[black] (0,0)--(1.0,0);
+\draw[black] (2.0,0)--(3,0);
+\draw[black] (3,0)--(6,0);
+% R4
+\fill[colR4!25] (1.0,-0.22) rectangle (2.0,0.22);
+\draw[colR4,line width=1.5pt] (1.0,-0.22) rectangle (2.0,0.22);
+\node[colR4,below,font=\small] at (1.5,-0.26) {$R_4$};
+
+% ---------- RAMA CENTRAL: R2 (vertical entre b y c) ----------
+\draw[black] (3,3)--(3,2.0);
+\draw[black] (3,1.0)--(3,0);
+\fill[colR2!25] (2.78,1.0) rectangle (3.22,2.0);
+\draw[colR2,line width=1.5pt] (2.78,1.0) rectangle (3.22,2.0);
+\node[colR2,left,font=\small] at (2.74,1.5) {$R_2$};
+
+% ---------- FUENTE (lado izquierdo, + arriba) ----------
+\draw[black] (0,0)--(0,1.55);
+\draw[black] (0,1.9)--(0,3);
+\draw[colE1,line width=2pt] (-0.30,1.9)--(0.30,1.9);    % + (larga fina)
+\draw[colE1,line width=4pt] (-0.16,1.55)--(0.16,1.55);  % - (corta gruesa)
+\node[colE1,left,font=\small] at (-0.34,1.72) {$\varepsilon$};
+\node[colE1,font=\tiny,above right] at (0.26,1.9) {$+$};
+
+% ---------- FLECHAS DE CORRIENTE ----------
+% I1 (total) entra por el riel superior izquierdo (->)
+\draw[->,black,line width=1.3pt] (1.05,3.6)--(1.95,3.6)
+    node[midway,above,font=\small]{$I_1$};
+% I3 sale por el riel superior derecho (->)
+\draw[->,black,line width=1.3pt] (4.05,3.6)--(4.95,3.6)
+    node[midway,above,font=\small]{$I_3$};
+% I2 baja por la rama central
+\draw[->,black,line width=1.3pt] (3.55,1.95)--(3.55,1.05)
+    node[midway,right,font=\small]{$I_2$};
+% I1 retorna por el riel inferior (<-)
+\draw[->,black,line width=1.3pt] (1.95,-0.6)--(1.05,-0.6)
+    node[midway,below,font=\small]{$I_1$};
+
+% ---------- NODOS ----------
+\fill[black] (3,3) circle (3pt);
+\node[above right,font=\small] at (3.06,3.04) {$b$};
+\fill[black] (3,0) circle (3pt);
+\node[below right,font=\small] at (3.06,-0.04) {$c$};
+\fill[black] (0,0) circle (3pt);
+\node[below left,font=\small] at (-0.04,-0.04) {$a$};
+
+\end{tikzpicture}
+\end{center}
+
+%========================================
+% DATOS
+%========================================
+\section*{Datos del Problema}
+
+\[
+    \varepsilon = 12\ [\text{V}],\qquad
+    R_1 = 20\ [\Omega],\qquad
+    R_2 = 20\ [\Omega],\qquad
+    R_3 = 30\ [\Omega],\qquad
+    R_4 = 8{,}0\ [\Omega]
+\]
+
+%========================================
+% ANÁLISIS
+%========================================
+\section*{An\'alisis del Circuito}
+
+El circuito \textbf{no requiere mallas}: se resuelve por \textbf{reducci\'on serie-paralelo}.
+Partiendo de la fuente, la corriente recorre:
+
+\begin{itemize}
+    \item \textbf{\textcolor{colR1}{$R_1$}} en serie, desde la fuente hasta el nodo $b$.
+    \item En el nodo $b$ la corriente \textbf{se divide} hacia el nodo $c$ por dos caminos:
+          \begin{itemize}
+              \item la \textbf{\textcolor{colR2}{$R_2$}} (rama central, $I_2 \downarrow$),
+              \item la \textbf{\textcolor{colR3}{$R_3$}} ($b \to$ lado derecho $\to c$, $I_3$).
+          \end{itemize}
+          Como ambas conectan los mismos nodos $b$ y $c$, est\'an \textbf{en paralelo}:
+          $R_2 \parallel R_3$.
+    \item En $c$ las corrientes se recombinan y atraviesan \textbf{\textcolor{colR4}{$R_4$}}
+          en serie, de regreso a la fuente.
+\end{itemize}
+
+\noindent En consecuencia, la resistencia equivalente es
+$R_{\text{eq}} = R_1 + (R_2 \parallel R_3) + R_4$.
+
+%========================================
+% DESARROLLO
+%========================================
+\section*{Desarrollo}
+
+%----------------------------------------
+\subsection*{a) Resistencia equivalente y corriente total}
+
+\noindent
+\begin{minipage}[t]{0.40\textwidth}
+\centering\vspace{0pt}
+\begin{tikzpicture}[scale=0.82, >=stealth, line width=0.9pt]
+% circuito equivalente en serie: eps - R1 - R23 - R4
+% fuente izquierda
+\draw[black] (0,0)--(0,0.95);
+\draw[black] (0,1.45)--(0,2.4);
+\draw[colE1,line width=1.8pt] (-0.28,1.45)--(0.28,1.45);
+\draw[colE1,line width=3.5pt] (-0.15,1.05)--(0.15,1.05);
+\node[colE1,left,font=\scriptsize] at (-0.3,1.25){$\varepsilon$};
+% riel superior con R1 y R23
+\draw[black] (0,2.4)--(0.7,2.4);
+\fill[colR1!25](0.7,2.22) rectangle (1.7,2.58);
+\draw[colR1,line width=1.2pt](0.7,2.22) rectangle (1.7,2.58);
+\node[colR1,above,font=\scriptsize] at (1.2,2.6){$R_1$};
+\draw[black] (1.7,2.4)--(2.3,2.4);
+\fill[colEq!25](2.3,2.22) rectangle (3.5,2.58);
+\draw[colEq,line width=1.2pt](2.3,2.22) rectangle (3.5,2.58);
+\node[colEq,above,font=\scriptsize] at (2.9,2.6){$R_{23}$};
+\draw[black] (3.5,2.4)--(4.2,2.4);
+% lado derecho
+\draw[black] (4.2,2.4)--(4.2,0);
+% riel inferior con R4
+\draw[black] (4.2,0)--(2.7,0);
+\fill[colR4!25](1.7,-0.18) rectangle (2.7,0.18);
+\draw[colR4,line width=1.2pt](1.7,-0.18) rectangle (2.7,0.18);
+\node[colR4,below,font=\scriptsize] at (2.2,-0.2){$R_4$};
+\draw[black] (1.7,0)--(0,0);
+% corriente
+\draw[->,black,line width=1pt](0.8,2.95)--(1.6,2.95) node[midway,above,font=\scriptsize]{$I_1$};
+\end{tikzpicture}\\[2pt]
+{\scriptsize Circuito equivalente en serie}
+\end{minipage}%
+\hfill
+\begin{minipage}[t]{0.56\textwidth}
+\vspace{6pt}
+
+\textbf{Paralelo $R_2 \parallel R_3$:}
+\[
+    R_{23} = \frac{R_2\,R_3}{R_2 + R_3}
+           = \frac{(20)(30)}{20 + 30}
+           = \frac{600}{50}
+\]
+\[
+    \boxed{R_{23} = 12\ [\Omega]}
+\]
+
+\medskip
+\textbf{Resistencia equivalente (serie):}
+\[
+    R_{\text{eq}} = R_1 + R_{23} + R_4 = 20 + 12 + 8 = \boxed{40\ [\Omega]}
+\]
+
+\medskip
+\textbf{Corriente total} (ley de Ohm):
+\[
+    I_1 = \frac{\varepsilon}{R_{\text{eq}}} = \frac{12}{40}
+        \;\Rightarrow\; \boxed{I_1 = 0{,}30\ [\text{A}]}
+\]
+Esta corriente circula por $R_1$ y por $R_4$ (est\'an en serie con la fuente).
+\end{minipage}
+
+%----------------------------------------
+\subsection*{b) Corrientes en las ramas paralelas}
+
+La ca\'ida de tensi\'on entre los nodos $b$ y $c$ es la misma para $R_2$ y $R_3$, e igual
+a la que cae en la resistencia equivalente $R_{23}$:
+\[
+    V_{bc} = I_1\,R_{23} = (0{,}30)(12) = 3{,}6\ [\text{V}]
+\]
+
+Aplicando la ley de Ohm en cada rama:
+\[
+    I_2 = \frac{V_{bc}}{R_2} = \frac{3{,}6}{20}
+        \;\Rightarrow\; \boxed{I_2 = 0{,}18\ [\text{A}]}
+    \qquad\qquad
+    I_3 = \frac{V_{bc}}{R_3} = \frac{3{,}6}{30}
+        \;\Rightarrow\; \boxed{I_3 = 0{,}12\ [\text{A}]}
+\]
+
+\noindent\textbf{Verificaci\'on (nodo $b$):}
+$\;I_2 + I_3 = 0{,}18 + 0{,}12 = 0{,}30 = I_1$ \checkmark
+
+%----------------------------------------
+\subsection*{c) Potencia disipada en cada resistencia}
+
+La potencia disipada en cada resistencia es $P = I^2 R$:
+
+\begin{align*}
+    P_1 &= I_1^2\,R_1 = (0{,}30)^2 (20) = 1{,}80\ [\text{W}] \\
+    P_2 &= I_2^2\,R_2 = (0{,}18)^2 (20) = 0{,}648\ [\text{W}] \\
+    P_3 &= I_3^2\,R_3 = (0{,}12)^2 (30) = 0{,}432\ [\text{W}] \\
+    P_4 &= I_1^2\,R_4 = (0{,}30)^2 (8{,}0) = 0{,}72\ [\text{W}]
+\end{align*}
+
+\[
+    \boxed{P_{\text{total}} = P_1 + P_2 + P_3 + P_4 = 3{,}6\ [\text{W}]}
+\]
+
+\noindent\small\textit{Comprobaci\'on (balance de potencia):} la potencia entregada por la
+fuente es $P = \varepsilon\,I_1 = (12)(0{,}30) = 3{,}6\ [\text{W}]$, igual a la disipada
+por las resistencias. \checkmark
+\normalsize
+
+%========================================
+% RESUMEN
+%========================================
+\section*{Resumen de Resultados}
+
+\begin{center}
+\begin{tabular}{|c|c|l|}
+\hline
+\textbf{Variable} & \textbf{Valor} & \textbf{Observaci\'on} \\
+\hline
+$R_{23} = R_2 \parallel R_3$ & $12\ [\Omega]$ & Paralelo central \\
+$R_{\text{eq}}$ & $40\ [\Omega]$ & Resistencia equivalente total \\
+$I_1$ & $0{,}30\ [\text{A}]$ & Corriente total ($R_1$ y $R_4$) \\
+$I_2$ & $0{,}18\ [\text{A}]$ & Rama $R_2$ \\
+$I_3$ & $0{,}12\ [\text{A}]$ & Rama $R_3$ \\
+$P_1$ & $1{,}80\ [\text{W}]$ & Disipada en $R_1$ \\
+$P_2$ & $0{,}648\ [\text{W}]$ & Disipada en $R_2$ \\
+$P_3$ & $0{,}432\ [\text{W}]$ & Disipada en $R_3$ \\
+$P_4$ & $0{,}72\ [\text{W}]$ & Disipada en $R_4$ \\
+$P_{\text{total}}$ & $3{,}6\ [\text{W}]$ & Potencia total disipada \\
+\hline
+\end{tabular}
+\end{center}
+
+\end{document}

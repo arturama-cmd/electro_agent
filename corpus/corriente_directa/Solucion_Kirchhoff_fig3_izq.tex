@@ -1,0 +1,361 @@
+\documentclass[12pt,letterpaper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[spanish,es-noshorthands]{babel}
+\usepackage{amsmath,amssymb}
+\usepackage{graphicx}
+\usepackage{xcolor}
+\usepackage{tikz}
+\usetikzlibrary{calc,arrows,decorations.markings,patterns}
+\usepackage{enumerate}
+\usepackage[top=2.5cm, bottom=4cm, left=2cm, right=2cm, footskip=40pt]{geometry}
+\usepackage{fancyhdr}
+\usepackage{lastpage}
+
+% ===== COLORES =====
+\definecolor{ubbblue}{RGB}{0,51,102}
+\definecolor{colR1}{RGB}{180,0,0}       % rojo   - 8 ohm
+\definecolor{colR2}{RGB}{0,0,180}       % azul   - 5 ohm
+\definecolor{colR3}{RGB}{0,140,0}       % verde  - 1 ohm medio
+\definecolor{colR4}{RGB}{200,100,0}     % naranja- 3 ohm
+\definecolor{colR5}{RGB}{120,0,180}     % violeta- 1 ohm der
+\definecolor{colE1}{RGB}{180,120,0}     % ambar  - 4 V
+\definecolor{colE2}{RGB}{0,140,140}     % cyan   - 12 V
+
+% ===== ENCABEZADO / PIE =====
+\pagestyle{fancy}
+\fancyhf{}
+\renewcommand{\headrulewidth}{0pt}
+\renewcommand{\footrulewidth}{0.4pt}
+\fancyfoot[L]{\raisebox{-0.5cm}{\includegraphics[height=1.2cm]{logo ubb.png}}}
+\fancyfoot[C]{%
+    \begin{minipage}[b]{8cm}\centering
+        \footnotesize\textcolor{ubbblue}{\textbf{Dr. Arturo Fern\'andez P\'erez}}\\
+        \scriptsize Departamento de F\'isica -- Universidad del B\'io-B\'io\\
+        \scriptsize\textit{Electro\_Asistente\_AI-UBB}\\
+        \tiny P\'agina \thepage\ de \pageref{LastPage}
+    \end{minipage}}
+\fancyfoot[R]{\raisebox{-0.5cm}{\includegraphics[height=1.2cm]{logo dfis.png}}}
+
+\fancypagestyle{plain}{%
+  \fancyhf{}
+  \renewcommand{\headrulewidth}{0pt}
+  \renewcommand{\footrulewidth}{0.4pt}
+  \fancyfoot[L]{\raisebox{-0.5cm}{\includegraphics[height=1.2cm]{logo ubb.png}}}
+  \fancyfoot[C]{%
+    \begin{minipage}[b]{8cm}\centering
+        \footnotesize\textcolor{ubbblue}{\textbf{Dr. Arturo Fern\'andez P\'erez}}\\
+        \scriptsize Departamento de F\'isica -- Universidad del B\'io-B\'io\\
+        \scriptsize\textit{Electro\_Asistente\_AI-UBB}\\
+        \tiny P\'agina \thepage\ de \pageref{LastPage}
+    \end{minipage}}
+  \fancyfoot[R]{\raisebox{-0.5cm}{\includegraphics[height=1.2cm]{logo dfis.png}}}
+}
+
+\begin{document}
+
+%========================================
+% ENCABEZADO INSTITUCIONAL
+%========================================
+\begin{center}
+    \includegraphics[height=2cm]{logo ubb.png}\\[0.3cm]
+    {\large\textcolor{ubbblue}{\textbf{UNIVERSIDAD DEL B\'IO-B\'IO}}}\\[0.1cm]
+    {\normalsize Facultad de Ciencias -- Departamento de F\'isica}
+\end{center}
+
+\vspace{0.3cm}
+\hrule height 1pt
+\vspace{0.5cm}
+
+{\centering\Large\textbf{Soluci\'on -- Leyes de Kirchhoff (Figura 3)}\par}
+{\centering\normalsize Determinaci\'on de corrientes -- Corriente Continua\par}
+
+\vspace{0.5cm}
+
+%========================================
+% ENUNCIADO
+%========================================
+\section*{Enunciado del Problema}
+
+Determine las corrientes que circulan en el circuito de la figura, con
+$R_a = 8\ [\Omega]$ (rama izquierda), $R_b = 5\ [\Omega]$ y $R_c = 1\ [\Omega]$
+(rama central), $R_d = 3\ [\Omega]$ (riel superior) y $R_e = 1\ [\Omega]$ (rama derecha),
+y fuentes $\varepsilon_1 = 4\ [\text{V}]$ y $\varepsilon_2 = 12\ [\text{V}]$
+(ambas con terminal $+$ hacia arriba). Los sentidos supuestos de las corrientes se
+indican en la figura.
+
+%--- DIAGRAMA DEL CIRCUITO ---
+\begin{center}
+\begin{tikzpicture}[scale=1.05, >=stealth, line width=1pt]
+
+% ============================================================
+% Nodos: c=(3.5,5) arriba-centro, d=(3.5,0) abajo-centro
+% Ramas: izq x=0 (8 ohm) ; centro x=3.5 (5,1 ohm + 4V) ;
+%        der x=7 (1 ohm + 12V). 3 ohm en riel superior.
+% ============================================================
+
+% ---------- RIEL SUPERIOR (con 3 ohm) ----------
+\draw[black] (0,5) -- (3.5,5);        % TL a c
+\draw[black] (3.5,5) -- (4.3,5);      % c a 3ohm
+\draw[black] (5.7,5) -- (7,5);        % 3ohm a TR
+\fill[colR4!25] (4.3,4.81) rectangle (5.7,5.19);
+\draw[colR4,line width=1.5pt] (4.3,4.81) rectangle (5.7,5.19);
+\node[colR4,above,font=\small] at (5.0,5.19) {$3\,\Omega$};
+
+% ---------- RIEL INFERIOR ----------
+\draw[black] (0,0) -- (7,0);
+
+% ---------- RAMA IZQUIERDA: 8 ohm ----------
+\draw[black] (0,0) -- (0,2.2);
+\draw[black] (0,3.6) -- (0,5);
+\fill[colR1!25] (-0.19,2.2) rectangle (0.19,3.6);
+\draw[colR1,line width=1.5pt] (-0.19,2.2) rectangle (0.19,3.6);
+\node[colR1,left,font=\small] at (-0.22,2.9) {$8\,\Omega$};
+
+% ---------- RAMA CENTRAL: 5 ohm, 1 ohm, 4V ----------
+\draw[black] (3.5,5) -- (3.5,4.4);
+\fill[colR2!25] (3.31,3.2) rectangle (3.69,4.4);
+\draw[colR2,line width=1.5pt] (3.31,3.2) rectangle (3.69,4.4);
+\node[colR2,left,font=\small] at (3.28,3.8) {$5\,\Omega$};
+\draw[black] (3.5,3.2) -- (3.5,2.8);
+\fill[colR3!25] (3.31,1.6) rectangle (3.69,2.8);
+\draw[colR3,line width=1.5pt] (3.31,1.6) rectangle (3.69,2.8);
+\node[colR3,left,font=\small] at (3.28,2.2) {$1\,\Omega$};
+\draw[black] (3.5,1.6) -- (3.5,1.0);
+% 4V (+ arriba)
+\draw[colE1,line width=2pt] (3.20,1.0) -- (3.80,1.0);    % + larga
+\draw[colE1,line width=4pt] (3.34,0.65) -- (3.66,0.65);  % - corta
+\node[colE1,left,font=\small] at (3.16,0.85) {$4\,$V};
+\node[colE1,font=\tiny,right] at (3.80,1.13) {$+$};
+\draw[black] (3.5,0.65) -- (3.5,0);
+
+% ---------- RAMA DERECHA: 1 ohm, 12V ----------
+\draw[black] (7,5) -- (7,3.6);
+\fill[colR5!25] (6.81,2.4) rectangle (7.19,3.6);
+\draw[colR5,line width=1.5pt] (6.81,2.4) rectangle (7.19,3.6);
+\node[colR5,right,font=\small] at (7.22,3.0) {$1\,\Omega$};
+\draw[black] (7,2.4) -- (7,1.0);
+% 12V (+ arriba)
+\draw[colE2,line width=2pt] (6.70,1.0) -- (7.30,1.0);    % + larga
+\draw[colE2,line width=4pt] (6.84,0.65) -- (7.16,0.65);  % - corta
+\node[colE2,right,font=\small] at (7.34,0.85) {$12\,$V};
+\node[colE2,font=\tiny,right] at (7.30,1.13) {$+$};
+\draw[black] (7,0.65) -- (7,0);
+
+% ---------- FLECHAS DE CORRIENTE ----------
+% I1: sale de c hacia la izquierda (riel superior)
+\draw[->,black,line width=1.3pt] (2.4,5.4) -- (1.1,5.4)
+    node[midway,above,font=\normalsize]{$I_1$};
+% I2: sube por la rama central (hacia c)
+\draw[->,black,line width=1.3pt] (4.0,1.7) -- (4.0,2.7)
+    node[midway,right,font=\normalsize]{$I_2$};
+% I3: sube por la rama derecha (hacia c)
+\draw[->,black,line width=1.3pt] (6.45,2.5) -- (6.45,3.5)
+    node[midway,left,font=\normalsize]{$I_3$};
+
+% ---------- NODOS ----------
+\fill[black] (3.5,5) circle (3pt);
+\node[above right,font=\large] at (3.55,5.05) {$c$};
+\fill[black] (3.5,0) circle (3pt);
+\node[below right,font=\large] at (3.55,-0.05) {$d$};
+
+\end{tikzpicture}
+\end{center}
+
+%========================================
+% DATOS
+%========================================
+\section*{Datos del Problema}
+
+\[
+    \text{Izquierda: } 8\ [\Omega] \qquad
+    \text{Centro: } 5\ [\Omega] + 1\ [\Omega] \qquad
+    \text{Derecha: } 3\ [\Omega] + 1\ [\Omega]
+\]
+\[
+    \varepsilon_1 = 4\ [\text{V}] \quad(\text{rama central}),\qquad
+    \varepsilon_2 = 12\ [\text{V}] \quad(\text{rama derecha})
+\]
+
+%========================================
+% ANÁLISIS
+%========================================
+\section*{An\'alisis del Circuito}
+
+El circuito tiene \textbf{dos nodos} ($c$ arriba y $d$ abajo) y \textbf{tres ramas}
+en paralelo. En cada rama las resistencias en serie se agrupan:
+
+\begin{itemize}
+    \item \textbf{Rama izquierda} ($I_1$): \textcolor{colR1}{$8\ \Omega$}.
+    \item \textbf{Rama central} ($I_2$): \textcolor{colR2}{$5\ \Omega$} $+$
+          \textcolor{colR3}{$1\ \Omega$} $= 6\ \Omega$, con la fuente
+          \textcolor{colE1}{$\varepsilon_1 = 4\ \text{V}$}.
+    \item \textbf{Rama derecha} ($I_3$): \textcolor{colR4}{$3\ \Omega$} $+$
+          \textcolor{colR5}{$1\ \Omega$} $= 4\ \Omega$, con la fuente
+          \textcolor{colE2}{$\varepsilon_2 = 12\ \text{V}$}.
+\end{itemize}
+
+Se definen dos mallas: $M_1$ (ramas izquierda + central) y $M_2$ (ramas central + derecha).
+
+%========================================
+% DESARROLLO
+%========================================
+\section*{Desarrollo}
+
+%----------------------------------------
+\subsection*{a) Ecuaciones de Kirchhoff}
+
+\noindent
+\begin{minipage}[t]{0.40\textwidth}
+\centering\vspace{0pt}
+\begin{tikzpicture}[scale=0.66, >=stealth, line width=0.9pt]
+% Riel superior con 3 ohm
+\draw[black] (0,5)--(3.5,5); \draw[black] (3.5,5)--(4.3,5); \draw[black] (5.7,5)--(7,5);
+\fill[colR4!25](4.3,4.81) rectangle (5.7,5.19);
+\draw[colR4,line width=1.2pt](4.3,4.81) rectangle (5.7,5.19);
+% Riel inferior
+\draw[black] (0,0)--(7,0);
+% Rama izq
+\draw[black] (0,0)--(0,2.2); \draw[black] (0,3.6)--(0,5);
+\fill[colR1!25](-0.19,2.2) rectangle (0.19,3.6);
+\draw[colR1,line width=1.2pt](-0.19,2.2) rectangle (0.19,3.6);
+% Rama centro
+\draw[black] (3.5,5)--(3.5,4.4);
+\fill[colR2!25](3.31,3.2) rectangle (3.69,4.4);
+\draw[colR2,line width=1.2pt](3.31,3.2) rectangle (3.69,4.4);
+\draw[black] (3.5,3.2)--(3.5,2.8);
+\fill[colR3!25](3.31,1.6) rectangle (3.69,2.8);
+\draw[colR3,line width=1.2pt](3.31,1.6) rectangle (3.69,2.8);
+\draw[black] (3.5,1.6)--(3.5,1.0);
+\draw[colE1,line width=1.8pt](3.20,1.0)--(3.80,1.0);
+\draw[colE1,line width=3.5pt](3.34,0.65)--(3.66,0.65);
+\draw[black] (3.5,0.65)--(3.5,0);
+% Rama der
+\draw[black] (7,5)--(7,3.6);
+\fill[colR5!25](6.81,2.4) rectangle (7.19,3.6);
+\draw[colR5,line width=1.2pt](6.81,2.4) rectangle (7.19,3.6);
+\draw[black] (7,2.4)--(7,1.0);
+\draw[colE2,line width=1.8pt](6.70,1.0)--(7.30,1.0);
+\draw[colE2,line width=3.5pt](6.84,0.65)--(7.16,0.65);
+\draw[black] (7,0.65)--(7,0);
+% Corrientes
+\draw[->,black,line width=1pt](2.4,5.4)--(1.2,5.4) node[midway,above,font=\scriptsize]{$I_1$};
+\draw[->,black,line width=1pt](4.0,1.8)--(4.0,2.7) node[midway,right,font=\scriptsize]{$I_2$};
+\draw[->,black,line width=1pt](6.45,2.6)--(6.45,3.5) node[midway,left,font=\scriptsize]{$I_3$};
+% Mallas
+\draw[->,gray,thick,dashed] (1.75,2.5) arc[start angle=120,end angle=-200,radius=0.5]
+    node[pos=0.5,font=\scriptsize,gray]{$M_1$};
+\draw[->,gray,thick,dashed] (5.25,2.5) arc[start angle=120,end angle=-200,radius=0.5]
+    node[pos=0.5,font=\scriptsize,gray]{$M_2$};
+% Nodos
+\fill[black](3.5,5) circle (2.5pt); \node[above right,font=\scriptsize] at (3.55,5.05){$c$};
+\fill[black](3.5,0) circle (2.5pt); \node[below right,font=\scriptsize] at (3.55,-0.05){$d$};
+\end{tikzpicture}
+\end{minipage}%
+\hfill
+\begin{minipage}[t]{0.56\textwidth}
+\vspace{6pt}
+
+\textbf{KCL -- Nodo $c$:}
+
+Las corrientes $I_2$ e $I_3$ llegan al nodo $c$ y salen como $I_1$:
+\[
+    \boxed{I_2 + I_3 = I_1} \tag{N}
+\]
+
+\medskip
+\textbf{KVL -- Malla $M_1$} (izquierda + central):
+
+Suma de ca\'idas en $8\,\Omega$, fuente de $4\,$V y resistencias $5\,\Omega$, $1\,\Omega$:
+\[
+    -8\,I_1 + 4 - I_2 - 5\,I_2 = 0
+\]
+\[
+    \boxed{8\,I_1 + 6\,I_2 = 4} \tag{M1}
+\]
+
+\medskip
+\textbf{KVL -- Malla $M_2$} (central + derecha):
+
+Resistencias $5\,\Omega$, $1\,\Omega$, fuentes $4\,$V y $12\,$V, y $1\,\Omega$, $3\,\Omega$:
+\[
+    5\,I_2 + I_2 - 4 + 12 - I_3 - 3\,I_3 = 0
+\]
+\[
+    \boxed{6\,I_2 - 4\,I_3 = -8} \tag{M2}
+\]
+\end{minipage}
+
+\newpage
+
+%----------------------------------------
+\subsection*{b) Resoluci\'on del sistema}
+
+Sustituyendo la ecuaci\'on de nodos $I_1 = I_2 + I_3$ en \textbf{(M1)}:
+
+\begin{align*}
+    8\,(I_2 + I_3) + 6\,I_2 &= 4 \\
+    14\,I_2 + 8\,I_3 &= 4 \\
+    7\,I_2 + 4\,I_3 &= 2 \tag{M1$'$}
+\end{align*}
+
+Sumando \textbf{(M1$'$)} y \textbf{(M2)} para eliminar $I_3$:
+
+\begin{align*}
+    (7\,I_2 + 4\,I_3) + (6\,I_2 - 4\,I_3) &= 2 + (-8) \\
+    13\,I_2 &= -6
+\end{align*}
+
+\[
+    \boxed{I_2 = -\frac{6}{13} \approx -0{,}46\ [\text{A}]}
+\]
+
+De \textbf{(M2)}, $6\,I_2 - 4\,I_3 = -8$, se despeja $I_3$:
+
+\begin{align*}
+    4\,I_3 &= 6\,I_2 + 8 = 6\left(-\frac{6}{13}\right) + 8 = -\frac{36}{13} + \frac{104}{13} = \frac{68}{13}
+\end{align*}
+
+\[
+    \boxed{I_3 = \frac{17}{13} \approx 1{,}31\ [\text{A}]}
+\]
+
+Finalmente, de la ecuaci\'on de nodos \textbf{(N)}:
+
+\[
+    I_1 = I_2 + I_3 = -\frac{6}{13} + \frac{17}{13} = \frac{11}{13}
+\]
+
+\[
+    \boxed{I_1 = \frac{11}{13} \approx 0{,}85\ [\text{A}]}
+\]
+
+\noindent\textbf{Verificaci\'on (M1):}
+$\;8\,I_1 + 6\,I_2 = 8\cdot\dfrac{11}{13} + 6\cdot\left(-\dfrac{6}{13}\right)
+= \dfrac{88 - 36}{13} = \dfrac{52}{13} = 4$ \checkmark
+
+\medskip
+
+%========================================
+% RESUMEN
+%========================================
+\section*{Resumen de Resultados}
+
+\begin{center}
+\begin{tabular}{|c|c|l|}
+\hline
+\textbf{Variable} & \textbf{Valor} & \textbf{Observaci\'on} \\
+\hline
+$I_1$ & $+0{,}85\ [\text{A}]$ & Sentido supuesto correcto \\
+$I_2$ & $-0{,}46\ [\text{A}]$ & Sentido real opuesto al supuesto \\
+$I_3$ & $+1{,}31\ [\text{A}]$ & Sentido supuesto correcto \\
+\hline
+\end{tabular}
+\end{center}
+
+\medskip
+\noindent\textbf{Nota:} El signo negativo de $I_2$ indica que la corriente real en la rama
+central circula en sentido opuesto al supuesto (hacia abajo, de $c$ a $d$). Los valores
+verifican las tres ecuaciones de Kirchhoff y el potencial del nodo $c$ es consistente
+por las tres ramas.
+
+\end{document}

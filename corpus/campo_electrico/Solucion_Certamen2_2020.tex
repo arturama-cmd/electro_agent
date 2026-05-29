@@ -95,13 +95,13 @@ Considere una barra muy delgada de longitud $L = 120$~[cm], paralela a la parte 
 
     % Mitad izquierda: lambda1 > 0, color rojo, de -2 a -1
     \draw[red, line width=2.5pt] (-2,0) -- (-1,0);
-    \node[red, above, font=\small] at (-1.5, 0.04) {$+\;+\;+\;+\;+$};
-    \node[red, below, font=\footnotesize] at (-1.5,-0.08) {$\lambda_1 = +5$~[nC/m]};
+    \node[red, above, font=\small] at (-1.5, 0.03) {$+\;+\;+\;+\;+$};
+    \node[red, above, font=\footnotesize] at (-1.5, 0.13) {$\lambda_1 = +5$~[nC/m]};
 
     % Mitad derecha: lambda2 < 0, color azul, de -1 a 0
     \draw[blue, line width=2.5pt] (-1,0) -- (0,0);
-    \node[blue, above, font=\small] at (-0.5, 0.04) {$-\;-\;-\;-\;-$};
-    \node[blue, below, font=\footnotesize] at (-0.5,-0.08) {$\lambda_2 = -7$~[nC/m]};
+    \node[blue, above, font=\small] at (-0.5, 0.03) {$-\;-\;-\;-\;-$};
+    \node[blue, above, font=\footnotesize] at (-0.5, 0.13) {$\lambda_2 = -7$~[nC/m]};
 
     % Punto P en el eje y a altura d (0.25 unidades = 0.15 m)
     \fill (0, 0.25) circle (1.5pt);
@@ -111,12 +111,12 @@ Considere una barra muy delgada de longitud $L = 120$~[cm], paralela a la parte 
     \draw[<->, gray] (0.12, 0) -- (0.12, 0.25)
         node[midway, right, font=\footnotesize]{$d$};
 
-    % Elemento dq en la barra (en x = -1, frontera entre las dos mitades)
-    \fill[violet] (-1, 0) circle (1.2pt);
-    \node[violet, below, font=\scriptsize] at (-1, -0.02) {$dq$};
+    % Elemento dq desplazado a la izquierda para no traslaparse con x=-L/2
+    \fill[violet] (-1.6, 0) circle (1.2pt);
+    \node[violet, below, font=\scriptsize] at (-1.6, -0.06) {$dq$};
 
     % Vector r desde dq hasta P
-    \draw[->, violet, thick] (-1, 0) -- (0, 0.25)
+    \draw[->, violet, thick] (-1.6, 0) -- (0, 0.25)
         node[midway, above left, font=\scriptsize]
         {$\|\vec{r}-\vec{r}'\|$};
 
@@ -292,5 +292,107 @@ negativa domina sobre la positiva por dos razones:
 La combinaci\'on de ambos efectos hace que la contribuci\'on negativa
 ($\approx -131{,}84$~[V]) supere ampliamente a la contribuci\'on positiva
 ($\approx +30{,}68$~[V]), resultando en un potencial neto negativo.
+
+\newpage
+
+%========================================
+% PREGUNTA ADICIONAL
+%========================================
+{\centering\Large\textbf{Pregunta Adicional -- Energ\'ia y Rapidez de una Carga Puntual}\par}
+\vspace{0.4cm}
+
+\section*{Enunciado}
+
+Una carga puntual $q = -5$~[nC] de masa $m$ se encuentra en reposo en el punto $P$
+(eje~$y$, $d = 15$~[cm] del origen). \textquestiondown Qu\'e rapidez $v$ alcanza
+cuando llega al punto $Q$, ubicado sobre el eje~$y$ positivo a $20$~[cm] del origen?
+
+\section*{Estrategia}
+
+El sistema es conservativo (solo act\'ua la fuerza el\'ectrica).
+Aplicando conservaci\'on de energ\'ia entre $P$ y $Q$:
+
+\[
+    \underbrace{K_P}_{=\;0} + U_P \;=\; K_Q + U_Q
+    \quad\Longrightarrow\quad
+    \tfrac{1}{2}mv^2 = q\,(V_P - V_Q)
+\]
+
+$V_P = -101{,}16$~[V] fue calculado en el Problema~1.
+Solo resta calcular $V_Q$.
+
+\section*{C\'alculo de $V_Q$ en $Q=(0,\;0{,}20\ \text{m})$}
+
+Con $d' = 0{,}20$~[m], la misma f\'ormula integral da:
+
+\begin{align*}
+    \sqrt{(L/2)^2+d'^2}
+        &= \sqrt{(0{,}6)^2+(0{,}20)^2}
+         = \sqrt{0{,}40}
+         \approx 0{,}6325\ [\text{m}]\\[4pt]
+    \sqrt{L^2+d'^2}
+        &= \sqrt{(1{,}2)^2+(0{,}20)^2}
+         = \sqrt{1{,}48}
+         \approx 1{,}2166\ [\text{m}]
+\end{align*}
+
+\noindent\textbf{Primera integral} ($\lambda_1$, tramo $x\in[-L,\,-L/2]$):
+
+\begin{align*}
+    K\lambda_1\ln\!\left[\frac{-0{,}6+0{,}6325}{-1{,}2+1{,}2166}\right]
+        &= 45\times\ln\!\left(\frac{0{,}0325}{0{,}0166}\right)
+         = 45\times\ln(1{,}9578)\\[4pt]
+        &= 45\times 0{,}6731
+         \approx +30{,}29\ [\text{V}]
+\end{align*}
+
+\noindent\textbf{Segunda integral} ($\lambda_2$, tramo $x\in[-L/2,\,0]$):
+
+\begin{align*}
+    K\lambda_2\ln\!\left[\frac{0{,}20}{-0{,}6+0{,}6325}\right]
+        &= -63\times\ln\!\left(\frac{0{,}20}{0{,}0325}\right)
+         = -63\times\ln(6{,}1538)\\[4pt]
+        &= -63\times 1{,}8167
+         \approx -114{,}45\ [\text{V}]
+\end{align*}
+
+\[
+    \boxed{V_Q \approx 30{,}29 - 114{,}45 = -84{,}16\ [\text{V}]}
+\]
+
+\section*{Trabajo Realizado por la Fuerza El\'ectrica}
+
+\[
+    \Delta V = V_Q - V_P = -84{,}16 - (-101{,}16) = +17{,}00\ [\text{V}]
+\]
+
+\begin{align*}
+    W_{P\to Q}
+        &= q\,(V_P - V_Q)
+         = (-5\times10^{-9})\times(-17{,}00)\\[4pt]
+        &= +85\times10^{-9}\ [\text{J}]
+         = +85\ [\text{nJ}]
+\end{align*}
+
+$W > 0$: la fuerza el\'ectrica realiza trabajo positivo sobre la carga negativa,
+que se mueve de menor potencial ($V_P$) a mayor potencial ($V_Q$).
+
+\section*{Rapidez en el Punto $Q$}
+
+Por el teorema trabajo--energ\'ia cin\'etica:
+
+\begin{align*}
+    W &= \tfrac{1}{2}mv^2\\[6pt]
+    v &= \sqrt{\dfrac{2\,W}{m}}
+       = \sqrt{\dfrac{2\times85\times10^{-9}}{m}}
+       = \sqrt{\dfrac{1{,}70\times10^{-7}}{m}}\ [\text{m/s}]
+\end{align*}
+
+\[
+    \boxed{v = \sqrt{\dfrac{1{,}70\times10^{-7}}{m}}\ [\text{m/s}]}
+\]
+
+\textit{Nota:} el enunciado no especifica la masa $m$ de la part\'icula.
+Sustituyendo el valor de $m$ en la expresi\'on anterior se obtiene la rapidez num\'erica.
 
 \end{document}
