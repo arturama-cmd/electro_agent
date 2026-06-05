@@ -1,0 +1,357 @@
+\documentclass[12pt,letterpaper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[spanish,es-noshorthands]{babel}
+\usepackage{amsmath,amssymb}
+\usepackage{graphicx}
+\usepackage{xcolor}
+\usepackage{tikz}
+\usetikzlibrary{calc,arrows.meta,decorations.markings}
+\usepackage[top=2.5cm, bottom=4cm, left=2cm, right=2cm, footskip=40pt]{geometry}
+\usepackage{fancyhdr}
+\usepackage{lastpage}
+
+\definecolor{ubbblue}{RGB}{0,51,102}
+
+\pagestyle{fancy}
+\fancyhf{}
+\renewcommand{\headrulewidth}{0pt}
+\renewcommand{\footrulewidth}{0.4pt}
+\fancyfoot[L]{\raisebox{-0.5cm}{\includegraphics[height=1.2cm]{logo ubb.png}}}
+\fancyfoot[C]{%
+    \begin{minipage}[b]{8cm}
+        \centering
+        \footnotesize\textcolor{ubbblue}{\textbf{Dr.\ Arturo Fern\'andez P\'erez}}\\
+        \scriptsize Departamento de F\'isica -- Universidad del B\'io-B\'io\\
+        \scriptsize \textit{Electro\_Asistente\_AI-UBB}\\
+        \tiny P\'agina \thepage\ de \pageref{LastPage}
+    \end{minipage}%
+}
+\fancyfoot[R]{\raisebox{-0.5cm}{\includegraphics[height=1.2cm]{logo dfis.png}}}
+\fancypagestyle{plain}{%
+    \fancyhf{}
+    \renewcommand{\headrulewidth}{0pt}
+    \renewcommand{\footrulewidth}{0.4pt}
+    \fancyfoot[L]{\raisebox{-0.5cm}{\includegraphics[height=1.2cm]{logo ubb.png}}}
+    \fancyfoot[C]{%
+        \begin{minipage}[b]{8cm}
+            \centering
+            \footnotesize\textcolor{ubbblue}{\textbf{Dr.\ Arturo Fern\'andez P\'erez}}\\
+            \scriptsize Departamento de F\'isica -- Universidad del B\'io-B\'io\\
+            \scriptsize \textit{Electro\_Asistente\_AI-UBB}\\
+            \tiny P\'agina \thepage\ de \pageref{LastPage}
+        \end{minipage}%
+    }
+    \fancyfoot[R]{\raisebox{-0.5cm}{\includegraphics[height=1.2cm]{logo dfis.png}}}
+}
+
+\begin{document}
+
+%========================================
+% ENCABEZADO INSTITUCIONAL
+%========================================
+\begin{center}
+    \includegraphics[height=2cm]{logo ubb.png}\\[0.3cm]
+    {\large\textcolor{ubbblue}{\textbf{UNIVERSIDAD DEL B\'IO-B\'IO}}}\\[0.1cm]
+    {\normalsize Facultad de Ciencias -- Departamento de F\'isica}
+\end{center}
+
+\vspace{0.3cm}
+\hrule height 1pt
+\vspace{0.5cm}
+
+{\centering\Large\textbf{Problemas resueltos en la clase del 05/06/2026}\par}
+{\centering\normalsize\textit{Fuerza Magn\'etica sobre Cargas y Corrientes}\par}
+
+\vspace{0.5cm}
+
+%--- recordatorio: productos cruz de unitarios ---
+\begin{center}
+\fcolorbox{ubbblue}{ubbblue!5}{%
+\begin{minipage}{0.92\textwidth}
+\centering
+\textbf{\textcolor{ubbblue}{Productos cruz de los vectores unitarios cartesianos}}\\[4pt]
+$\hat{\imath}\times\hat{\jmath}=\hat{k}$,\quad
+$\hat{\jmath}\times\hat{k}=\hat{\imath}$,\quad
+$\hat{k}\times\hat{\imath}=\hat{\jmath}$
+\qquad\qquad
+$\hat{\jmath}\times\hat{\imath}=-\hat{k}$,\quad
+$\hat{k}\times\hat{\jmath}=-\hat{\imath}$,\quad
+$\hat{\imath}\times\hat{k}=-\hat{\jmath}$\\[3pt]
+$\hat{\imath}\times\hat{\imath}=\hat{\jmath}\times\hat{\jmath}=\hat{k}\times\hat{k}=\vec{0}$
+\end{minipage}}
+\end{center}
+
+\vspace{0.4cm}
+
+%========================================
+% PROBLEMA 1: FUERZA SOBRE UN PROTÓN
+%========================================
+\section*{Problema 1: Fuerza magn\'etica sobre un prot\'on}
+
+\noindent Un haz de protones se mueve con una rapidez $v = 3\times 10^{5}\ [\text{m/s}]$ a trav\'es
+de un campo magn\'etico uniforme de magnitud $B = 2\ [\text{T}]$. Seg\'un la figura, el campo
+$\vec{B}$ es \textbf{paralelo al eje $z$} y la velocidad $\vec{v}$ forma un \'angulo de
+$30^\circ$ con respecto al eje $z$, en el plano $x$--$z$. Encuentre la fuerza magn\'etica sobre
+un prot\'on.
+
+\medskip
+
+\noindent
+\begin{minipage}[t]{0.40\textwidth}
+\centering
+\vspace{0pt}
+\begin{tikzpicture}[scale=1.0, >=Stealth, line width=0.9pt]
+    % plano x-z (horizontal) sombreado
+    \fill[gray!12] (-0.1,0.27)--(2.69,0.27)--(0.09,-1.53)--(-2.71,-1.53)--cycle;
+    % ejes
+    \draw[->,thick] (0,0)--(2.5,0) node[right]{$x$};
+    \draw[->,thick] (0,0)--(0,2.2) node[above]{$y$};
+    \draw[->,thick] (0,0)--(-1.82,-1.26) node[below left]{$z$};
+    % proton
+    \shade[ball color=red!70] (0,0) circle (5pt);
+    \node[above right=0pt,font=\small] at (0.06,0.12){$q$};
+    % B (azul) paralelo al eje z
+    \draw[->,blue,line width=1.6pt] (0,0)--(-1.40,-0.97)
+          node[above left=-1pt,font=\small]{$\vec{B}$};
+    % v (verde) a 30° del eje z, en el plano x-z (inclinada hacia +x)
+    \draw[->,green!60!black,line width=1.6pt] (0,0)--(-0.67,-1.56)
+          node[below=1pt,font=\small]{$\vec{v}$};
+    % angulo 30° entre el eje z (B) y v
+    \draw[gray,line width=0.6pt] (214.7:0.72) arc(214.7:246.8:0.72);
+    \node[font=\footnotesize] at (-0.66,-0.66){$30^\circ$};
+    % F resultante: -y (perpendicular al plano x-z, hacia abajo)
+    \draw[->,orange!85!black,line width=1.4pt] (0,0)--(0,-1.65);
+    \node[right=1pt,font=\small,text=orange!85!black] at (0.03,-1.35){$\vec{F}$};
+\end{tikzpicture}
+\end{minipage}%
+\hfill
+\begin{minipage}[t]{0.56\textwidth}
+\vspace{0pt}
+\textbf{Datos:}
+\begin{itemize}\setlength\itemsep{1pt}
+    \item $q = +1{,}6\times10^{-19}\ [\text{C}]$ (prot\'on)
+    \item $v = 3\times10^{5}\ [\text{m/s}]$,\quad $B = 2\ [\text{T}]$
+    \item \'Angulo entre $\vec{v}$ y el eje $z$: $\;\theta = 30^\circ$
+\end{itemize}
+
+\smallskip
+\textbf{Forma vectorial de la fuerza magn\'etica:}
+\[
+    \vec{F} = q\,\vec{v}\times\vec{B}
+\]
+
+\smallskip
+Seg\'un el sistema de referencia, $\vec{B}$ es paralelo al eje $z$ y
+$\vec{v}$ forma $30^\circ$ con el eje $z$ en el plano $x$--$z$:
+\begin{align*}
+    \vec{v} &= v\sin30^\circ\,\hat{\imath} + v\cos30^\circ\,\hat{k} \\
+    \vec{B} &= B\,\hat{k}
+\end{align*}
+\end{minipage}
+
+\bigskip
+
+\noindent Reemplazando en la forma vectorial y distribuyendo el producto cruz:
+\begin{align*}
+    \vec{F} &= q\,\bigl(v\sin30^\circ\,\hat{\imath} + v\cos30^\circ\,\hat{k}\bigr)\times\bigl(B\,\hat{k}\bigr) \\[4pt]
+            &= q\,v\,B\sin30^\circ\,(\hat{\imath}\times\hat{k})
+             + q\,v\,B\cos30^\circ\,(\hat{k}\times\hat{k})
+\end{align*}
+
+\noindent Evaluando \textbf{cada producto cruz de unitarios por separado}:
+\[
+    \hat{\imath}\times\hat{k} = -\hat{\jmath},
+    \qquad\qquad
+    \hat{k}\times\hat{k} = \vec{0}
+\]
+
+\noindent Por lo tanto:
+\begin{align*}
+    \vec{F} &= -\,q\,v\,B\sin30^\circ\,\hat{\jmath} + \vec{0} \\[4pt]
+            &= -\,(1{,}6\times10^{-19})(3\times10^{5})(2)\,(0{,}5)\,\hat{\jmath}
+\end{align*}
+
+\[
+    \boxed{\vec{F} = -\,4{,}8\times10^{-14}\,\hat{\jmath}\ [\text{N}]}
+\]
+
+\noindent\small\textit{Interpretaci\'on:} la fuerza es perpendicular al plano que contiene a
+$\vec{v}$ y $\vec{B}$ (el plano $x$--$z$), es decir, a lo largo del eje $y$, en sentido
+$-\hat{\jmath}$. Su magnitud es $F = qvB\sin30^\circ = 4{,}8\times10^{-14}\ [\text{N}]$.
+\normalsize
+
+\newpage
+
+%========================================
+% PROBLEMA 2: LEVITACIÓN MAGNÉTICA DE UN CABLE
+%========================================
+\section*{Problema 2: Levitaci\'on magn\'etica de un cable conductor}
+
+\noindent Un cable transporta una corriente $I = 50\ [\text{A}]$ de \textbf{Oeste a Este}, en una
+regi\'on con un campo magn\'etico uniforme de magnitud $B = 2\ [\text{T}]$ dirigido
+$45^\circ$ \textbf{al Norte del Este} (en el plano horizontal). Determine la fuerza magn\'etica
+sobre una secci\'on de $L = 1\ [\text{m}]$ de cable y la masa que debe tener el cable de cobre
+para levitar (su peso equilibrado por la fuerza magn\'etica).
+
+\medskip
+
+\noindent
+\begin{minipage}[t]{0.42\textwidth}
+\centering
+\vspace{0pt}
+\begin{tikzpicture}[scale=1.0, >=Stealth, line width=0.9pt]
+    % rosa de los vientos (vista superior del plano horizontal)
+    \draw[->,gray!70] (0,0)--(0,2.0) node[above,black,font=\small]{Norte};
+    \draw[->,gray!70] (0,0)--(0,-1.9) node[below,black,font=\small]{Sur};
+    \draw[->,gray!70] (0,0)--(2.5,0) node[right,black,font=\small]{Este};
+    \draw[->,gray!70] (0,0)--(-2.5,0) node[left,black,font=\small]{Oeste};
+    % cable Oeste-Este
+    \draw[orange!75!black,line width=3pt] (-2.2,0)--(2.2,0);
+    \draw[->,black,line width=1.4pt] (-0.7,0)--(0.9,0)
+          node[midway,below=2pt,font=\small]{$I$};
+    % B a 45° N del E
+    \draw[->,blue,line width=1.7pt] (0,0)--(1.45,1.45)
+          node[above right=0pt,font=\small]{$\vec{B}$};
+    \draw[gray,line width=0.6pt] (0.6,0) arc(0:45:0.6);
+    \node[font=\footnotesize] at (0.92,0.30){$45^\circ$};
+    % F sale del plano (+k)
+    \draw[black,line width=0.9pt] (1.5,-1.15) circle(7pt);
+    \fill[black] (1.5,-1.15) circle(1.4pt);
+    \node[right,font=\footnotesize] at (1.75,-1.15){$\vec{F}$ (sale del plano)};
+\end{tikzpicture}\\[3pt]
+{\footnotesize $\hat{\imath}$: Este,\; $\hat{\jmath}$: Norte,\; $\hat{k}$: vertical (hacia arriba).}
+\end{minipage}%
+\hfill
+\begin{minipage}[t]{0.54\textwidth}
+\vspace{0pt}
+\textbf{Datos:}
+\begin{itemize}\setlength\itemsep{1pt}
+    \item $I = 50\ [\text{A}]$,\quad $L = 1\ [\text{m}]$,\quad $B = 2\ [\text{T}]$
+    \item Corriente: Oeste $\to$ Este $\;\Rightarrow\; \vec{L} = L\,\hat{\imath}$
+    \item $\vec{B}$ a $45^\circ$ al Norte del Este (plano $x$--$y$)
+\end{itemize}
+
+\smallskip
+\textbf{Forma vectorial de la fuerza sobre un conductor recto:}
+\[
+    \vec{F} = I\,\vec{L}\times\vec{B}
+\]
+
+\smallskip
+Vectores en el plano horizontal:
+\begin{align*}
+    \vec{L} &= L\,\hat{\imath} = (1)\,\hat{\imath} \\
+    \vec{B} &= B\cos45^\circ\,\hat{\imath} + B\sin45^\circ\,\hat{\jmath}
+\end{align*}
+\end{minipage}
+
+\bigskip
+
+\noindent Reemplazando en la forma vectorial y distribuyendo el producto cruz:
+\begin{align*}
+    \vec{F} &= I\,(L\,\hat{\imath})\times\bigl(B\cos45^\circ\,\hat{\imath} + B\sin45^\circ\,\hat{\jmath}\bigr) \\[4pt]
+            &= I\,L\,B\cos45^\circ\,(\hat{\imath}\times\hat{\imath})
+             + I\,L\,B\sin45^\circ\,(\hat{\imath}\times\hat{\jmath})
+\end{align*}
+
+\noindent Evaluando \textbf{cada producto cruz de unitarios por separado}:
+\[
+    \hat{\imath}\times\hat{\imath} = \vec{0},
+    \qquad\qquad
+    \hat{\imath}\times\hat{\jmath} = \hat{k}
+\]
+
+\noindent Por lo tanto:
+\begin{align*}
+    \vec{F} &= \vec{0} + I\,L\,B\sin45^\circ\,\hat{k} \\[4pt]
+            &= (50)(1)(2)\left(\tfrac{\sqrt{2}}{2}\right)\hat{k}
+\end{align*}
+
+\[
+    \boxed{\vec{F} = 70{,}71\,\hat{k}\ [\text{N}]}
+\]
+
+\noindent La fuerza apunta verticalmente hacia arriba ($+\hat{k}$, fuera del plano horizontal).
+
+\newpage
+
+%========================================
+% LEVITACIÓN MAGNÉTICA (página aparte)
+%========================================
+\section*{Condici\'on de levitaci\'on magn\'etica}
+
+\noindent Inicialmente el cable descansa sobre el piso. Para que el cable \textbf{se despegue del
+suelo}, la fuerza normal $N$ que el piso ejerce sobre \'el debe \textbf{anularse} ($N = 0$).
+Analicemos las fuerzas que act\'uan sobre el cable a lo largo del eje vertical $z$:
+
+\medskip
+
+\noindent
+\begin{minipage}[t]{0.34\textwidth}
+\centering
+\vspace{0pt}
+\begin{tikzpicture}[scale=1.0, >=Stealth, line width=0.9pt]
+    % eje z
+    \draw[->,gray!55] (0,-2.0)--(0,2.4) node[above,black,font=\small]{$z$};
+    % cable (corte transversal)
+    \shade[ball color=orange!70] (0,0) circle(6pt);
+    \node[right=3pt,font=\footnotesize] at (0.18,0){cable};
+    % F magnética (arriba, sobre el cable)
+    \draw[->,blue,line width=1.6pt] (0,0)--(0,1.9)
+          node[right,font=\small]{$\vec{F}$};
+    % N normal (arriba, desplazada a la izquierda)
+    \draw[->,gray!45!black,line width=1.4pt] (-0.7,0)--(-0.7,1.2)
+          node[left,font=\small]{$\vec{N}$};
+    % peso (abajo)
+    \draw[->,black,line width=1.6pt] (0,0)--(0,-1.7)
+          node[right,font=\small]{$m\vec{g}$};
+\end{tikzpicture}\\[3pt]
+{\footnotesize Diagrama de cuerpo libre del cable.}
+\end{minipage}%
+\hfill
+\begin{minipage}[t]{0.62\textwidth}
+\vspace{0pt}
+\textbf{Fuerzas sobre el eje $z$:}
+\begin{itemize}\setlength\itemsep{2pt}
+    \item Peso: $\;-mg\,\hat{k}$ \hfill (hacia abajo)
+    \item Normal del piso: $\;+N\,\hat{k}$ \hfill (hacia arriba)
+    \item Fuerza magn\'etica: $\;+F\,\hat{k}$, \; con $F = 70{,}71\ [\text{N}]$ \hfill (hacia arriba)
+\end{itemize}
+
+\smallskip
+\textbf{Segunda ley de Newton} (equilibrio vertical, $\sum F_z = 0$):
+\[
+    N + F - mg = 0
+    \qquad\Longrightarrow\qquad
+    N = mg - F
+\]
+\end{minipage}
+
+\bigskip
+
+\noindent En el instante en que el cable \textbf{se despega del piso}, la fuerza normal se anula.
+Con $N = 0$, las \'unicas fuerzas sobre el eje $z$ son el \textbf{peso} y la \textbf{fuerza
+magn\'etica}, que quedan equilibradas:
+\[
+    N = 0
+    \qquad\Longrightarrow\qquad
+    F - mg = 0
+    \qquad\Longrightarrow\qquad
+    F = mg
+\]
+
+\noindent Despejando la masa del cable:
+\[
+    m = \frac{F}{g} = \frac{70{,}71}{9{,}8}
+\]
+
+\[
+    \boxed{m = 7{,}21\ [\text{kg}]}
+\]
+
+\noindent\small\textit{Interpretaci\'on:} esta es la masa m\'axima que puede tener el cable para
+que la fuerza magn\'etica logre levantarlo. Si la masa fuera mayor, se tendr\'ia $mg > F$ y el
+cable permanecer\'ia apoyado en el piso (con $N > 0$).
+\normalsize
+
+\end{document}

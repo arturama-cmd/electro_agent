@@ -1,0 +1,281 @@
+\documentclass[12pt,letterpaper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[spanish,es-noshorthands]{babel}
+\usepackage{amsmath,amssymb}
+\usepackage{graphicx}
+\usepackage{xcolor}
+\usepackage{tikz}
+\usetikzlibrary{calc,arrows.meta,decorations.markings}
+\usepackage[top=2.5cm, bottom=4cm, left=2cm, right=2cm, footskip=40pt]{geometry}
+\usepackage{fancyhdr}
+\usepackage{lastpage}
+
+\definecolor{ubbblue}{RGB}{0,51,102}
+
+\pagestyle{fancy}
+\fancyhf{}
+\renewcommand{\headrulewidth}{0pt}
+\renewcommand{\footrulewidth}{0.4pt}
+\fancyfoot[L]{\raisebox{-0.5cm}{\includegraphics[height=1.2cm]{logo ubb.png}}}
+\fancyfoot[C]{%
+    \begin{minipage}[b]{8cm}
+        \centering
+        \footnotesize\textcolor{ubbblue}{\textbf{Dr.\ Arturo Fern\'andez P\'erez}}\\
+        \scriptsize Departamento de F\'isica -- Universidad del B\'io-B\'io\\
+        \scriptsize \textit{Electro\_Asistente\_AI-UBB}\\
+        \tiny P\'agina \thepage\ de \pageref{LastPage}
+    \end{minipage}%
+}
+\fancyfoot[R]{\raisebox{-0.5cm}{\includegraphics[height=1.2cm]{logo dfis.png}}}
+\fancypagestyle{plain}{%
+    \fancyhf{}
+    \renewcommand{\headrulewidth}{0pt}
+    \renewcommand{\footrulewidth}{0.4pt}
+    \fancyfoot[L]{\raisebox{-0.5cm}{\includegraphics[height=1.2cm]{logo ubb.png}}}
+    \fancyfoot[C]{%
+        \begin{minipage}[b]{8cm}
+            \centering
+            \footnotesize\textcolor{ubbblue}{\textbf{Dr.\ Arturo Fern\'andez P\'erez}}\\
+            \scriptsize Departamento de F\'isica -- Universidad del B\'io-B\'io\\
+            \scriptsize \textit{Electro\_Asistente\_AI-UBB}\\
+            \tiny P\'agina \thepage\ de \pageref{LastPage}
+        \end{minipage}%
+    }
+    \fancyfoot[R]{\raisebox{-0.5cm}{\includegraphics[height=1.2cm]{logo dfis.png}}}
+}
+
+\begin{document}
+
+%========================================
+% ENCABEZADO INSTITUCIONAL
+%========================================
+\begin{center}
+    \includegraphics[height=2cm]{logo ubb.png}\\[0.3cm]
+    {\large\textcolor{ubbblue}{\textbf{UNIVERSIDAD DEL B\'IO-B\'IO}}}\\[0.1cm]
+    {\normalsize Facultad de Ciencias -- Departamento de F\'isica}
+\end{center}
+
+\vspace{0.3cm}
+\hrule height 1pt
+\vspace{0.5cm}
+
+{\centering\Large\textbf{Campo Magn\'etico: Fuerza, Momento Dipolar y Torque}\par}
+{\centering\normalsize\textit{Certamen 3 -- Problema 3}\par}
+
+\vspace{0.7cm}
+
+%========================================
+% PROBLEMA 1: ESPIRA (momento dipolar y torque)
+%========================================
+\section*{Problema 1: Momento dipolar magn\'etico y torque sobre una espira}
+
+\noindent Una espira por la que circula una corriente $I = 5\ [\text{A}]$ est\'a orientada de
+modo que su vector de \'area $\vec{A} = 10\,(\hat{\imath} - \hat{\jmath})\ [\text{m}^2]$ es
+perpendicular al plano de la espira. La espira se encuentra inmersa en un campo magn\'etico
+uniforme $\vec{B} = 5\,(\hat{\jmath} - \hat{k})\ [\text{T}]$. Determine:
+
+\medskip
+\noindent\textbf{Datos:}
+\begin{itemize}
+    \item $I = 5\ [\text{A}]$ \quad (corriente de la espira)
+    \item $\vec{A} = 10\,\hat{\imath} - 10\,\hat{\jmath}\ [\text{m}^2]$ \quad (vector de \'area)
+    \item $\vec{B} = 5\,\hat{\jmath} - 5\,\hat{k}\ [\text{T}]$ \quad (campo magn\'etico uniforme)
+\end{itemize}
+
+\bigskip
+
+%--- (a) momento dipolar ---
+\subsection*{(a) Momento dipolar magn\'etico $\vec{\mu}$}
+
+El momento dipolar magn\'etico de una espira se define como el producto de la corriente
+por su vector de \'area:
+\[
+    \vec{\mu} = I\,\vec{A}
+\]
+\[
+    \vec{\mu} = (5)\,\bigl[10\,(\hat{\imath} - \hat{\jmath})\bigr]
+\]
+\[
+    \boxed{\vec{\mu} = 50\,(\hat{\imath} - \hat{\jmath})\ [\text{A}\cdot\text{m}^2]}
+\]
+
+\bigskip
+
+%--- (b) torque ---
+\subsection*{(b) Momento de torsi\'on (torque) sobre la espira $\vec{\tau}$}
+
+El torque sobre un dipolo magn\'etico en un campo uniforme es:
+\[
+    \vec{\tau} = \vec{\mu} \times \vec{B}
+    = \begin{vmatrix}
+        \hat{\imath} & \hat{\jmath} & \hat{k} \\[2pt]
+        50 & -50 & 0 \\[2pt]
+        0 & 5 & -5
+      \end{vmatrix}
+\]
+
+Desarrollando el determinante por la primera fila:
+\begin{align*}
+    \vec{\tau} &= \hat{\imath}\bigl[(-50)(-5) - (0)(5)\bigr]
+                - \hat{\jmath}\bigl[(50)(-5) - (0)(0)\bigr]
+                + \hat{k}\bigl[(50)(5) - (-50)(0)\bigr] \\[4pt]
+               &= \hat{\imath}\,(250 - 0) - \hat{\jmath}\,(-250 - 0) + \hat{k}\,(250 - 0) \\[4pt]
+               &= 250\,\hat{\imath} + 250\,\hat{\jmath} + 250\,\hat{k}
+\end{align*}
+
+\[
+    \boxed{\vec{\tau} = 250\,(\hat{\imath} + \hat{\jmath} + \hat{k})\ [\text{N}\cdot\text{m}]}
+\]
+
+\newpage
+
+%========================================
+% PROBLEMA 2: CONDUCTOR DE GEOMETRÍA MIXTA
+%========================================
+\section*{Problema 2: Fuerza magn\'etica sobre un conductor de geometr\'ia mixta}
+
+\noindent Un conductor compuesto por un \textbf{segmento recto} de longitud $L$ y un
+\textbf{segmento curvo} de radio $R$ transporta una corriente $I = I_0$ en una regi\'on de
+campos magn\'eticos uniformes de diferentes direcciones, seg\'un la figura. Determine la
+fuerza magn\'etica sobre cada tramo y la fuerza total.
+
+\medskip
+
+\noindent
+\begin{minipage}[t]{0.46\textwidth}
+    \centering
+    \vspace{0pt}
+    \begin{tikzpicture}[scale=0.82, >=Stealth, line width=1pt]
+        % --- regiones de campo ---
+        % B saliente (izquierda): puntos rojos
+        \foreach \x in {-3.3,-2.6,-1.9,-1.2,-0.5}
+          \foreach \y in {-2.6,-1.9,-1.2,-0.5,0.2,0.9,1.6,2.3}
+            \fill[red] (\x,\y) circle (1.4pt);
+        % B entrante (derecha): cruces azules
+        \foreach \x in {0.5,1.2,1.9,2.6,3.3}
+          \foreach \y in {-2.6,-1.9,-1.2,-0.5,0.2,0.9,1.6,2.3}
+            \draw[blue,line width=0.6pt]
+              (\x-0.08,\y-0.08)--(\x+0.08,\y+0.08)
+              (\x-0.08,\y+0.08)--(\x+0.08,\y-0.08);
+        % --- ejes ---
+        \draw[->,thick] (-4,0)--(4.2,0) node[right]{$X$};
+        \draw[->,thick] (0,-3)--(0,3) node[above]{$Y$};
+        \node[below left] at (0,0){$O$};
+        % --- segmento recto (horizontal, abajo) ---
+        \draw[blue,very thick] (-3,-2)--(0,-2);
+        \draw[->,green!55!black,line width=2pt] (-2.2,-2)--(-1.1,-2);
+        \node[above,font=\small] at (-1.65,-1.95){$I$};
+        \node[below right,font=\small] at (0,-2){$-R$};
+        % --- segmento curvo (arco radio 2, de -90° a 60°) ---
+        \draw[blue,very thick] (0,-2) arc[start angle=-90,end angle=60,radius=2];
+        % radio R
+        \draw[->,orange!85!black,thick] (0,0)--(1.879,-0.684);
+        \node[font=\small] at (1.15,-0.55){$R$};
+        % linea punteada al extremo superior y angulo pi/6
+        \draw[dashed,gray] (0,0)--(1.15,1.99);
+        \node[font=\small] at (0.55,2.15){$\dfrac{\pi}{6}$};
+        % cota L
+        \draw[<->,gray] (-3,-2.7)--(0,-2.7) node[midway,below,font=\small]{$L$};
+    \end{tikzpicture}\\[4pt]
+    {\footnotesize Recto en $\vec{B}=B_0\hat{k}$ (saliente);
+     curvo en $\vec{B}=-B_0\hat{k}$ (entrante).}
+\end{minipage}%
+\hfill
+\begin{minipage}[t]{0.50\textwidth}
+    \vspace{0pt}
+    \textbf{Ley de fuerza magn\'etica sobre una corriente:}
+    \[
+        \vec{F} = I\!\int \vec{d\ell}\times\vec{B}
+    \]
+
+    \smallskip
+    \textbf{Productos vectoriales \'utiles:}
+    \[
+        \hat{\imath}\times\hat{k} = -\hat{\jmath},\qquad
+        \hat{\jmath}\times\hat{k} = \hat{\imath}
+    \]
+
+    \smallskip
+    \textbf{Tramo recto:} horizontal, corriente hacia $+\hat{\imath}$,
+    inmerso en $\vec{B}=B_0\hat{k}$, con $\vec{d\ell}=dx\,\hat{\imath}$
+    y $x:\,-L\to 0$.
+
+    \smallskip
+    \textbf{Tramo curvo:} arco de radio $R$ recorrido en sentido
+    antihorario, inmerso en $\vec{B}=-B_0\hat{k}$, parametrizado por
+    \[
+        \vec{d\ell}=R\sin\theta\,d\theta(-\hat{\imath})+R\cos\theta\,d\theta\,\hat{\jmath},
+    \]
+    con $\theta:\,-\tfrac{\pi}{2}\to \tfrac{\pi}{3}$.
+\end{minipage}
+
+\bigskip
+
+%--- (a) segmento recto ---
+\subsection*{(a) Fuerza sobre el segmento recto $\vec{F}_1$}
+
+Con $\vec{d\ell}=dx\,\hat{\imath}$ y $\vec{B}=B_0\hat{k}$:
+\begin{align*}
+    \vec{F}_1 &= I_0\int_{-L}^{0} (dx\,\hat{\imath})\times(B_0\hat{k})
+             = I_0 B_0 \int_{-L}^{0} dx\,(\hat{\imath}\times\hat{k}) \\[4pt]
+            &= I_0 B_0 \int_{-L}^{0} dx\,(-\hat{\jmath})
+             = -I_0 B_0\,\hat{\jmath}\,\bigl[x\bigr]_{-L}^{0}
+             = -I_0 B_0\,\hat{\jmath}\,\bigl(0-(-L)\bigr)
+\end{align*}
+
+\[
+    \boxed{\vec{F}_1 = -\,I_0 B_0\,L\,\hat{\jmath}\ [\text{N}]}
+\]
+
+\bigskip
+
+%--- (b) segmento curvo ---
+\subsection*{(b) Fuerza sobre el segmento curvo $\vec{F}_2$}
+
+Con $\vec{d\ell}=R\sin\theta\,d\theta(-\hat{\imath})+R\cos\theta\,d\theta\,\hat{\jmath}$
+y $\vec{B}=-B_0\hat{k}$, el integrando es:
+\begin{align*}
+    \vec{d\ell}\times\vec{B}
+      &= \bigl[R\sin\theta(-\hat{\imath})+R\cos\theta\,\hat{\jmath}\bigr]\,d\theta
+         \times(-B_0\hat{k}) \\[4pt]
+      &= -B_0 R\,\sin\theta\,d\theta\,(\hat{\imath}\times\hat{k})
+         - B_0 R\,\cos\theta\,d\theta\,(\hat{\jmath}\times\hat{k}) \\[4pt]
+      &= -B_0 R\,\cos\theta\,d\theta\,\hat{\imath}
+         - B_0 R\,\sin\theta\,d\theta\,\hat{\jmath}
+\end{align*}
+
+Integrando entre $\theta=-\tfrac{\pi}{2}$ y $\theta=\tfrac{\pi}{3}$:
+\begin{align*}
+    \vec{F}_2 &= -I_0 B_0 R\int_{-\pi/2}^{\pi/3}
+                 \bigl(\cos\theta\,\hat{\imath}+\sin\theta\,\hat{\jmath}\bigr)d\theta \\[4pt]
+              &= -I_0 B_0 R\Bigl[\,\hat{\imath}\,(\sin\theta)
+                 -\hat{\jmath}\,(\cos\theta)\,\Bigr]_{-\pi/2}^{\pi/3} \\[4pt]
+              &= -I_0 B_0 R\Bigl[\hat{\imath}\bigl(\sin\tfrac{\pi}{3}-\sin(-\tfrac{\pi}{2})\bigr)
+                 -\hat{\jmath}\bigl(\cos\tfrac{\pi}{3}-\cos(-\tfrac{\pi}{2})\bigr)\Bigr] \\[4pt]
+              &= -I_0 B_0 R\Bigl[\hat{\imath}\Bigl(\tfrac{\sqrt{3}}{2}+1\Bigr)
+                 -\hat{\jmath}\Bigl(\tfrac{1}{2}-0\Bigr)\Bigr]
+\end{align*}
+
+\[
+    \boxed{\vec{F}_2 = I_0 B_0 R\left[-\Bigl(1+\tfrac{\sqrt{3}}{2}\Bigr)\hat{\imath}
+        + \tfrac{1}{2}\,\hat{\jmath}\right]\ [\text{N}]}
+\]
+
+\bigskip
+
+%--- (c) fuerza total ---
+\subsection*{(c) Fuerza magn\'etica total $\vec{F}$}
+
+\[
+    \vec{F} = \vec{F}_1 + \vec{F}_2
+            = -I_0 B_0 L\,\hat{\jmath}
+              + I_0 B_0 R\left[-\Bigl(1+\tfrac{\sqrt{3}}{2}\Bigr)\hat{\imath}
+              + \tfrac{1}{2}\,\hat{\jmath}\right]
+\]
+
+\[
+    \boxed{\vec{F} = I_0 B_0\left[-\Bigl(1+\tfrac{\sqrt{3}}{2}\Bigr)R\,\hat{\imath}
+        + \Bigl(\tfrac{1}{2}R - L\Bigr)\hat{\jmath}\right]\ [\text{N}]}
+\]
+
+\end{document}
