@@ -1,0 +1,126 @@
+\documentclass[12pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[spanish,es-noshorthands]{babel}
+\usepackage{amsmath,amssymb}
+\usepackage[margin=2.5cm]{geometry}
+
+\begin{document}
+
+\begin{center}
+    {\Large\textbf{Pauta Pregunta 3 (Recuperativo)}}
+\end{center}
+
+\vspace{0.4cm}
+
+\noindent\textbf{Datos:}
+\[
+    I = 0{,}8\ [\text{A}],\qquad
+    l_{ac} = 0{,}08\ [\text{m}],\qquad
+    l_{bc} = 0{,}15\ [\text{m}],\qquad
+    B = 1{,}2\ [\text{T}]
+\]
+
+\noindent Tri\'angulo rect\'angulo en $c$: $b=(0,0)$, $c=(0{,}15,\;0)$, $a=(0{,}15,\;0{,}08)$.
+La corriente circula $b\to c\to a\to b$ (sentido \textbf{antihorario}). El campo $\vec{B}$
+est\'a en el segundo cuadrante (a $40^\circ$ sobre el eje $-x$: componente $x$ negativa,
+componente $y$ positiva). Productos cruz de unitarios:
+$\hat{\imath}\times\hat{\jmath}=\hat{k}$,\;
+$\hat{\jmath}\times\hat{\imath}=-\hat{k}$,\;
+$\hat{k}\times\hat{\imath}=\hat{\jmath}$,\;
+$\hat{k}\times\hat{\jmath}=-\hat{\imath}$.
+
+%==========================================================
+\subsection*{(a) Campo magn\'etico $\vec{B}$}
+
+\[
+    \vec{B} = -B\cos40^\circ\,\hat{\imath} + B\sin40^\circ\,\hat{\jmath}
+            = -1{,}2\cos40^\circ\,\hat{\imath} + 1{,}2\sin40^\circ\,\hat{\jmath}
+\]
+\[
+    \boxed{\vec{B} = -0{,}919\,\hat{\imath} + 0{,}771\,\hat{\jmath}\ [\text{T}]}
+\]
+
+%==========================================================
+\subsection*{(b) Fuerza magn\'etica sobre cada segmento}
+
+Para cada segmento $\vec{F} = I\,\vec{L}\times\vec{B}$, con $\vec{L}$ en el sentido de la
+corriente:
+\[
+    \vec{L}_{bc} = 0{,}15\,\hat{\imath}
+    \quad(b\to c),\qquad
+    \vec{L}_{ca} = 0{,}08\,\hat{\jmath}
+    \quad(c\to a),\qquad
+    \vec{L}_{ab} = -0{,}15\,\hat{\imath} - 0{,}08\,\hat{\jmath}
+    \quad(a\to b)
+\]
+
+\noindent\textbf{Segmento $bc$ ($b\to c$):}
+\begin{align*}
+    \vec{F}_{bc} &= I\,(0{,}15\,\hat{\imath})\times(-0{,}919\,\hat{\imath}+0{,}771\,\hat{\jmath}) \\
+                 &= I\big[\,0{,}15\cdot(-0{,}919)\,(\hat{\imath}\times\hat{\imath})
+                    + 0{,}15\cdot0{,}771\,(\hat{\imath}\times\hat{\jmath})\,\big] \\
+                 &= 0{,}8\big[\,0 + 0{,}1157\,\hat{k}\,\big]
+\end{align*}
+\[
+    \boxed{\vec{F}_{bc} = +0{,}0926\,\hat{k}\ [\text{N}]}
+\]
+
+\noindent\textbf{Segmento $ca$ ($c\to a$):}
+\begin{align*}
+    \vec{F}_{ca} &= I\,(0{,}08\,\hat{\jmath})\times(-0{,}919\,\hat{\imath}+0{,}771\,\hat{\jmath}) \\
+                 &= I\big[\,0{,}08\cdot(-0{,}919)\,(\hat{\jmath}\times\hat{\imath})
+                    + 0{,}08\cdot0{,}771\,(\hat{\jmath}\times\hat{\jmath})\,\big] \\
+                 &= 0{,}8\big[\,0{,}07354\,\hat{k} + 0\,\big]
+\end{align*}
+\[
+    \boxed{\vec{F}_{ca} = +0{,}0588\,\hat{k}\ [\text{N}]}
+\]
+
+\noindent\textbf{Segmento $ab$ ($a\to b$, hipotenusa):}
+\begin{align*}
+    \vec{F}_{ab} &= I\,(-0{,}15\,\hat{\imath}-0{,}08\,\hat{\jmath})\times(-0{,}919\,\hat{\imath}+0{,}771\,\hat{\jmath}) \\
+                 &= I\big[\,-0{,}15\cdot0{,}771\,(\hat{\imath}\times\hat{\jmath})
+                    - 0{,}08\cdot(-0{,}919)\,(\hat{\jmath}\times\hat{\imath})\,\big] \\
+                 &= 0{,}8\big[\,-0{,}1157\,\hat{k} - 0{,}07354\,\hat{k}\,\big]
+                  = 0{,}8\,(-0{,}1892\,\hat{k})
+\end{align*}
+\[
+    \boxed{\vec{F}_{ab} = -0{,}1514\,\hat{k}\ [\text{N}]}
+\]
+
+\noindent\textit{Verificaci\'on:}
+$\;\vec{F}_{bc}+\vec{F}_{ca}+\vec{F}_{ab}
+= (0{,}0926+0{,}0588-0{,}1514)\,\hat{k} \approx \vec{0}$ \quad(lazo cerrado en campo uniforme).
+
+%==========================================================
+\subsection*{(c) Momento magn\'etico $\vec{\mu}$}
+
+\'Area del tri\'angulo:
+\[
+    A = \tfrac{1}{2}\,l_{bc}\,l_{ac} = \tfrac{1}{2}(0{,}15)(0{,}08) = 6{,}0\times10^{-3}\ [\text{m}^2]
+\]
+Como la corriente es \textbf{antihoraria}, la normal apunta hacia afuera de la p\'agina,
+$\hat{n}=+\hat{k}$:
+\[
+    \vec{\mu} = I\,A\,\hat{n} = (0{,}8)(6{,}0\times10^{-3})(+\hat{k})
+\]
+\[
+    \boxed{\vec{\mu} = +4{,}8\times10^{-3}\,\hat{k}\ [\text{A}\cdot\text{m}^2]}
+\]
+
+%==========================================================
+\subsection*{(d) Torque magn\'etico $\vec{\tau}$}
+
+\begin{align*}
+    \vec{\tau} = \vec{\mu}\times\vec{B}
+       &= (4{,}8\times10^{-3}\,\hat{k})\times(-0{,}919\,\hat{\imath}+0{,}771\,\hat{\jmath}) \\
+       &= 4{,}8\times10^{-3}\big[\,-0{,}919\,(\hat{k}\times\hat{\imath})
+          + 0{,}771\,(\hat{k}\times\hat{\jmath})\,\big] \\
+       &= 4{,}8\times10^{-3}\big[\,-0{,}919\,\hat{\jmath} + 0{,}771\,(-\hat{\imath})\,\big]
+\end{align*}
+\[
+    \boxed{\vec{\tau} = -3{,}70\times10^{-3}\,\hat{\imath} - 4{,}41\times10^{-3}\,\hat{\jmath}\ [\text{N}\cdot\text{m}]}
+    \qquad |\vec{\tau}| = 5{,}76\times10^{-3}\ [\text{N}\cdot\text{m}]
+\]
+
+\end{document}

@@ -1,0 +1,124 @@
+\documentclass[12pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[spanish,es-noshorthands]{babel}
+\usepackage{amsmath,amssymb}
+\usepackage[margin=2.5cm]{geometry}
+
+\begin{document}
+
+\begin{center}
+    {\Large\textbf{Pauta Pregunta 3}}
+\end{center}
+
+\vspace{0.4cm}
+
+\noindent\textbf{Datos:}
+\[
+    I = 1{,}5\ [\text{A}],\qquad
+    l_{ab} = 0{,}05\ [\text{m}],\qquad
+    l_{bc} = 0{,}13\ [\text{m}],\qquad
+    B = 0{,}3\ [\text{T}]\ \text{a } 30^\circ\ \text{sobre } +x
+\]
+
+\noindent Tri\'angulo rect\'angulo en $b$ (origen): $a=(0,\;0{,}05)$, $b=(0,0)$,
+$c=(0{,}13,\;0)$. La corriente circula $b\to a\to c\to b$ (sentido \textbf{horario}).
+Productos cruz de unitarios: $\hat{\imath}\times\hat{\jmath}=\hat{k}$,\;
+$\hat{\jmath}\times\hat{\imath}=-\hat{k}$,\;
+$\hat{k}\times\hat{\imath}=\hat{\jmath}$,\;
+$\hat{k}\times\hat{\jmath}=-\hat{\imath}$.
+
+%==========================================================
+\subsection*{(a) Campo magn\'etico $\vec{B}$}
+
+El campo est\'a en el plano $x$--$y$, a $30^\circ$ sobre el eje $+x$:
+\[
+    \vec{B} = B\cos30^\circ\,\hat{\imath} + B\sin30^\circ\,\hat{\jmath}
+            = 0{,}3\cos30^\circ\,\hat{\imath} + 0{,}3\sin30^\circ\,\hat{\jmath}
+\]
+\[
+    \boxed{\vec{B} = 0{,}260\,\hat{\imath} + 0{,}150\,\hat{\jmath}\ [\text{T}]}
+\]
+
+%==========================================================
+\subsection*{(b) Fuerza magn\'etica sobre cada segmento}
+
+Para cada segmento $\vec{F} = I\,\vec{L}\times\vec{B}$, con $\vec{L}$ en el sentido de la
+corriente. Los vectores de cada tramo son:
+\[
+    \vec{L}_{ab} = 0{,}05\,\hat{\jmath}
+    \quad(b\to a),\qquad
+    \vec{L}_{ac} = 0{,}13\,\hat{\imath} - 0{,}05\,\hat{\jmath}
+    \quad(a\to c),\qquad
+    \vec{L}_{cb} = -0{,}13\,\hat{\imath}
+    \quad(c\to b)
+\]
+
+\noindent\textbf{Segmento $ab$ ($b\to a$):}
+\begin{align*}
+    \vec{F}_{ab} &= I\,(0{,}05\,\hat{\jmath})\times(0{,}260\,\hat{\imath}+0{,}150\,\hat{\jmath}) \\
+                 &= I\big[\,0{,}05\cdot0{,}260\,(\hat{\jmath}\times\hat{\imath})
+                    + 0{,}05\cdot0{,}150\,(\hat{\jmath}\times\hat{\jmath})\,\big] \\
+                 &= 1{,}5\big[\,0{,}0130\,(-\hat{k}) + 0\,\big]
+\end{align*}
+\[
+    \boxed{\vec{F}_{ab} = -0{,}0195\,\hat{k}\ [\text{N}]}
+\]
+
+\noindent\textbf{Segmento $ac$ ($a\to c$, hipotenusa):}
+\begin{align*}
+    \vec{F}_{ac} &= I\,(0{,}13\,\hat{\imath}-0{,}05\,\hat{\jmath})\times(0{,}260\,\hat{\imath}+0{,}150\,\hat{\jmath}) \\
+                 &= I\big[\,0{,}13\cdot0{,}150\,(\hat{\imath}\times\hat{\jmath})
+                    - 0{,}05\cdot0{,}260\,(\hat{\jmath}\times\hat{\imath})\,\big] \\
+                 &= 1{,}5\big[\,0{,}0195\,\hat{k} - 0{,}0130\,(-\hat{k})\,\big]
+                  = 1{,}5\,(0{,}0325\,\hat{k})
+\end{align*}
+\[
+    \boxed{\vec{F}_{ac} = +0{,}0487\,\hat{k}\ [\text{N}]}
+\]
+
+\noindent\textbf{Segmento $bc$ ($c\to b$):}
+\begin{align*}
+    \vec{F}_{cb} &= I\,(-0{,}13\,\hat{\imath})\times(0{,}260\,\hat{\imath}+0{,}150\,\hat{\jmath}) \\
+                 &= I\big[\,-0{,}13\cdot0{,}150\,(\hat{\imath}\times\hat{\jmath})\,\big]
+                  = 1{,}5\,(-0{,}0195\,\hat{k})
+\end{align*}
+\[
+    \boxed{\vec{F}_{cb} = -0{,}0293\,\hat{k}\ [\text{N}]}
+\]
+
+\noindent\textit{Verificaci\'on:}
+$\;\vec{F}_{ab}+\vec{F}_{ac}+\vec{F}_{cb}
+= (-0{,}0195+0{,}0487-0{,}0293)\,\hat{k} \approx \vec{0}$ \quad(lazo cerrado en campo uniforme).
+
+%==========================================================
+\subsection*{(c) Momento magn\'etico $\vec{\mu}$}
+
+\'Area del tri\'angulo:
+\[
+    A = \tfrac{1}{2}\,l_{ab}\,l_{bc} = \tfrac{1}{2}(0{,}05)(0{,}13) = 3{,}25\times10^{-3}\ [\text{m}^2]
+\]
+Como la corriente es \textbf{horaria}, por la regla de la mano derecha la normal apunta
+hacia adentro de la p\'agina, $\hat{n}=-\hat{k}$:
+\[
+    \vec{\mu} = I\,A\,\hat{n} = (1{,}5)(3{,}25\times10^{-3})(-\hat{k})
+\]
+\[
+    \boxed{\vec{\mu} = -4{,}875\times10^{-3}\,\hat{k}\ [\text{A}\cdot\text{m}^2]}
+\]
+
+%==========================================================
+\subsection*{(d) Torque magn\'etico $\vec{\tau}$}
+
+\begin{align*}
+    \vec{\tau} = \vec{\mu}\times\vec{B}
+       &= (-4{,}875\times10^{-3}\,\hat{k})\times(0{,}260\,\hat{\imath}+0{,}150\,\hat{\jmath}) \\
+       &= -4{,}875\times10^{-3}\big[\,0{,}260\,(\hat{k}\times\hat{\imath})
+          + 0{,}150\,(\hat{k}\times\hat{\jmath})\,\big] \\
+       &= -4{,}875\times10^{-3}\big[\,0{,}260\,\hat{\jmath} + 0{,}150\,(-\hat{\imath})\,\big]
+\end{align*}
+\[
+    \boxed{\vec{\tau} = 7{,}31\times10^{-4}\,\hat{\imath} - 1{,}267\times10^{-3}\,\hat{\jmath}\ [\text{N}\cdot\text{m}]}
+    \qquad |\vec{\tau}| = 1{,}463\times10^{-3}\ [\text{N}\cdot\text{m}]
+\]
+
+\end{document}

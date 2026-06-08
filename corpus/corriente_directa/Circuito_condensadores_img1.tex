@@ -1,0 +1,157 @@
+\documentclass[12pt,letterpaper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[spanish,es-noshorthands]{babel}
+\usepackage{amsmath,amssymb}
+\usepackage{graphicx}
+\usepackage{xcolor}
+\usepackage{tikz}
+\usetikzlibrary{calc,arrows.meta}
+\usepackage[top=2.5cm, bottom=4cm, left=2cm, right=2cm, footskip=40pt]{geometry}
+\usepackage{fancyhdr}
+\usepackage{lastpage}
+
+\definecolor{ubbblue}{RGB}{0,51,102}
+\definecolor{capcol}{RGB}{0,0,170}
+
+\pagestyle{fancy}
+\fancyhf{}
+\renewcommand{\headrulewidth}{0pt}
+\renewcommand{\footrulewidth}{0.4pt}
+\fancyfoot[L]{\raisebox{-0.5cm}{\includegraphics[height=1.2cm]{logo ubb.png}}}
+\fancyfoot[C]{%
+    \begin{minipage}[b]{8cm}\centering
+        \footnotesize\textcolor{ubbblue}{\textbf{Dr.\ Arturo Fern\'andez P\'erez}}\\
+        \scriptsize Departamento de F\'isica -- Universidad del B\'io-B\'io\\
+        \scriptsize \textit{Electro\_Asistente\_AI-UBB}\\
+        \tiny P\'agina \thepage\ de \pageref{LastPage}
+    \end{minipage}}
+\fancyfoot[R]{\raisebox{-0.5cm}{\includegraphics[height=1.2cm]{logo dfis.png}}}
+\fancypagestyle{plain}{%
+    \fancyhf{}
+    \renewcommand{\headrulewidth}{0pt}
+    \renewcommand{\footrulewidth}{0.4pt}
+    \fancyfoot[L]{\raisebox{-0.5cm}{\includegraphics[height=1.2cm]{logo ubb.png}}}
+    \fancyfoot[C]{%
+        \begin{minipage}[b]{8cm}\centering
+            \footnotesize\textcolor{ubbblue}{\textbf{Dr.\ Arturo Fern\'andez P\'erez}}\\
+            \scriptsize Departamento de F\'isica -- Universidad del B\'io-B\'io\\
+            \scriptsize \textit{Electro\_Asistente\_AI-UBB}\\
+            \tiny P\'agina \thepage\ de \pageref{LastPage}
+        \end{minipage}}
+    \fancyfoot[R]{\raisebox{-0.5cm}{\includegraphics[height=1.2cm]{logo dfis.png}}}
+}
+
+\begin{document}
+
+%========================================
+% ENCABEZADO INSTITUCIONAL
+%========================================
+\begin{center}
+    \includegraphics[height=2cm]{logo ubb.png}\\[0.3cm]
+    {\large\textcolor{ubbblue}{\textbf{UNIVERSIDAD DEL B\'IO-B\'IO}}}\\[0.1cm]
+    {\normalsize Facultad de Ciencias -- Departamento de F\'isica}
+\end{center}
+
+\vspace{0.3cm}
+\hrule height 1pt
+\vspace{0.5cm}
+
+{\centering\Large\textbf{Circuito de Condensadores}\par}
+{\centering\normalsize\textit{Corriente Continua}\par}
+
+\vspace{0.8cm}
+
+%========================================
+% CIRCUITO
+%========================================
+\begin{center}
+\begin{tikzpicture}[scale=1.05, line width=1pt]
+
+% ============================================================
+% NODOS:  a=(0,5) sup-izq   c=(9,5) sup-der
+%         b=(4,5) union tras C1   d=(4,2.5) centro   e=(9,2.5) medio-der
+%         f=(0,0) inf-izq   g(riel inferior)
+%   Fuente V en el borde izquierdo. C3 es el condensador diagonal.
+% ============================================================
+
+% ---------- RIEL SUPERIOR: a -- C1 -- b -- C2 -- c ----------
+\draw (0,5)--(1.85,5);            % a -> C1
+\draw (2.15,5)--(4,5);            % C1 -> b
+\draw (4,5)--(6.35,5);            % b -> C2
+\draw (6.65,5)--(9,5);            % C2 -> c
+% C1 (placas verticales)
+\draw[capcol,line width=1.4pt] (1.85,4.65)--(1.85,5.35);
+\draw[capcol,line width=1.4pt] (2.15,4.65)--(2.15,5.35);
+\node[above] at (2.0,5.45) {$C_1$};
+% C2 (placas verticales)
+\draw[capcol,line width=1.4pt] (6.35,4.65)--(6.35,5.35);
+\draw[capcol,line width=1.4pt] (6.65,4.65)--(6.65,5.35);
+\node[above] at (6.5,5.45) {$C_2$};
+
+% ---------- BORDE DERECHO: c -- e -- C5 -- g ----------
+\draw (9,5)--(9,2.5);             % c -> e
+\draw (9,2.5)--(9,1.4);           % e -> C5
+\draw (9,1.1)--(9,0);             % C5 -> g
+% C5 (placas horizontales)
+\draw[capcol,line width=1.4pt] (8.65,1.4)--(9.35,1.4);
+\draw[capcol,line width=1.4pt] (8.65,1.1)--(9.35,1.1);
+\node[right] at (9.45,1.25) {$C_5$};
+
+% ---------- RAMA VERTICAL CENTRAL: b -- d ----------
+\draw (4,5)--(4,2.5);             % b -> d
+
+% ---------- CABLE HORIZONTAL CENTRAL: d -- e ----------
+\draw (4,2.5)--(9,2.5);           % d -> e
+
+% ---------- C4 (rama central, vertical): d -- C4 -- g ----------
+\draw (4,2.5)--(4,1.4);           % d -> C4
+\draw (4,1.1)--(4,0);             % C4 -> g
+\draw[capcol,line width=1.4pt] (3.65,1.4)--(4.35,1.4);
+\draw[capcol,line width=1.4pt] (3.65,1.1)--(4.35,1.1);
+\node[right] at (4.45,1.25) {$C_4$};
+
+% ---------- C3 (condensador diagonal): b -- C3 -- e ----------
+% direccion b->e: u=(0.894,-0.447); perpendicular p=(0.447,0.894)
+\draw (4,5)--(6.339,3.830);       % b -> placa 1
+\draw (6.661,3.670)--(9,2.5);     % placa 2 -> e
+\draw[capcol,line width=1.4pt] (6.138,3.428)--(6.540,4.232);   % placa 1
+\draw[capcol,line width=1.4pt] (6.460,3.268)--(6.862,4.072);   % placa 2
+\node at (7.05,3.95) {$C_3$};
+
+% ---------- RIEL INFERIOR: f -- C6 -- g ----------
+\draw (0,0)--(1.85,0);            % f -> C6
+\draw (2.15,0)--(9,0);            % C6 -> g (todo el riel inferior)
+% C6 (placas verticales)
+\draw[capcol,line width=1.4pt] (1.85,-0.35)--(1.85,0.35);
+\draw[capcol,line width=1.4pt] (2.15,-0.35)--(2.15,0.35);
+\node[below] at (2.0,-0.45) {$C_6$};
+
+% ---------- BORDE IZQUIERDO con FUENTE V: a -- V -- f ----------
+\draw (0,5)--(0,2.95);            % a -> V (+)
+\draw (0,2.55)--(0,0);            % V (-) -> f
+\draw[line width=1.8pt] (-0.40,2.95)--(0.40,2.95);   % placa larga (+)
+\draw[line width=3.4pt] (-0.20,2.55)--(0.20,2.55);   % placa corta (-)
+\node[left] at (-0.5,2.75) {$V$};
+\node[font=\footnotesize] at (0.62,2.95) {$+$};
+\node[font=\footnotesize] at (0.62,2.55) {$-$};
+
+% ---------- NODOS (puntos de uni\'on) ----------
+\fill (4,5) circle (2.6pt);    \node[above left] at (4,5) {\small$b$};
+\fill (4,2.5) circle (2.6pt);  \node[above left] at (4,2.5) {\small$d$};
+\fill (9,2.5) circle (2.6pt);  \node[above right] at (9,2.5) {\small$e$};
+\node[above left] at (0,5) {\small$a$};
+\node[above right] at (9,5) {\small$c$};
+\node[below left] at (0,0) {\small$f$};
+\node[below right] at (9,0) {\small$g$};
+
+\end{tikzpicture}
+\end{center}
+
+\vspace{0.6cm}
+
+\noindent\textbf{Componentes:} fuente $V$ y seis condensadores $C_1,\dots,C_6$.
+$C_3$ es el condensador dispuesto en \textbf{diagonal}. El diagrama reproduce
+fielmente la disposici\'on de la figura original (nodos $b$, $d$ y $e$ unidos por
+los cables central vertical, central horizontal y el borde derecho superior).
+
+\end{document}
