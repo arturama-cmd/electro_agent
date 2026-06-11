@@ -1,0 +1,287 @@
+\documentclass[12pt,letterpaper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[spanish,es-noshorthands]{babel}
+\usepackage{amsmath,amssymb}
+\usepackage{graphicx}
+\usepackage{xcolor}
+\usepackage{tikz}
+\usetikzlibrary{calc,arrows,decorations.markings,decorations.pathmorphing,patterns}
+\usepackage{enumerate}
+\usepackage[top=2.5cm, bottom=4cm, left=2cm, right=2cm, footskip=40pt]{geometry}
+\usepackage{fancyhdr}
+\usepackage{lastpage}
+
+% ===== COLORES =====
+\definecolor{ubbblue}{RGB}{0,51,102}
+\definecolor{colR1}{RGB}{180,0,0}       % rojo
+\definecolor{colR2}{RGB}{0,0,180}       % azul
+\definecolor{colR3}{RGB}{0,140,0}       % verde
+\definecolor{colR4}{RGB}{200,110,0}     % naranja
+\definecolor{capcol}{RGB}{0,0,170}      % azul (condensadores)
+
+% ===== ENCABEZADO / PIE =====
+\pagestyle{fancy}
+\fancyhf{}
+\renewcommand{\headrulewidth}{0pt}
+\renewcommand{\footrulewidth}{0.4pt}
+\fancyfoot[L]{\raisebox{-0.5cm}{\includegraphics[height=1.2cm]{logo ubb.png}}}
+\fancyfoot[C]{%
+    \begin{minipage}[b]{8cm}\centering
+        \footnotesize\textcolor{ubbblue}{\textbf{Dr.\ Arturo Fern\'andez P\'erez}}\\
+        \scriptsize Departamento de F\'isica -- Universidad del B\'io-B\'io\\
+        \scriptsize\textit{Electro\_Asistente\_AI-UBB}\\
+        \tiny P\'agina \thepage\ de \pageref{LastPage}
+    \end{minipage}}
+\fancyfoot[R]{\raisebox{-0.5cm}{\includegraphics[height=1.2cm]{logo dfis.png}}}
+
+\fancypagestyle{plain}{%
+  \fancyhf{}
+  \renewcommand{\headrulewidth}{0pt}
+  \renewcommand{\footrulewidth}{0.4pt}
+  \fancyfoot[L]{\raisebox{-0.5cm}{\includegraphics[height=1.2cm]{logo ubb.png}}}
+  \fancyfoot[C]{%
+    \begin{minipage}[b]{8cm}\centering
+        \footnotesize\textcolor{ubbblue}{\textbf{Dr.\ Arturo Fern\'andez P\'erez}}\\
+        \scriptsize Departamento de F\'isica -- Universidad del B\'io-B\'io\\
+        \scriptsize\textit{Electro\_Asistente\_AI-UBB}\\
+        \tiny P\'agina \thepage\ de \pageref{LastPage}
+    \end{minipage}}
+  \fancyfoot[R]{\raisebox{-0.5cm}{\includegraphics[height=1.2cm]{logo dfis.png}}}
+}
+
+\begin{document}
+
+%========================================
+% ENCABEZADO INSTITUCIONAL
+%========================================
+\begin{center}
+    \includegraphics[height=2cm]{logo ubb.png}\\[0.3cm]
+    {\large\textcolor{ubbblue}{\textbf{UNIVERSIDAD DEL B\'IO-B\'IO}}}\\[0.1cm]
+    {\normalsize Facultad de Ciencias -- Departamento de F\'isica}
+\end{center}
+
+\vspace{0.3cm}
+\hrule height 1pt
+\vspace{0.5cm}
+
+{\centering\Large\textbf{Problemas resueltos en la clase del 10/06/2026}\par}
+{\centering\normalsize Circuitos de Corriente Continua: Condensadores y Resistencias\par}
+
+\vspace{0.6cm}
+
+%========================================================
+% PROBLEMA 1: CONDENSADORES (Guía 7, Problema 9)
+%========================================================
+\section*{Problema 1: Reducci\'on de un circuito de condensadores}
+
+\noindent Para el circuito de la figura, con $C_1 = 12{,}5\ [\mu\text{F}]$,
+$C_2 = 5{,}30\ [\mu\text{F}]$, $C_3 = 4{,}50\ [\mu\text{F}]$ y $V = 12{,}5\ [\text{V}]$.
+\textbf{(a)} Determine la capacitancia equivalente. \textbf{(b)} Determine la carga
+almacenada en cada condensador.
+
+\medskip
+
+%--- DIAGRAMA ---
+\begin{center}
+\begin{tikzpicture}[scale=1.0, line width=1pt]
+% ---- FUENTE V (izquierda) ----
+\draw (0,0)--(0,1.7);
+\draw (0,2.3)--(0,4);
+\draw[line width=1.8pt] (-0.35,2.3)--(0.35,2.3);    % + (larga)
+\draw[line width=3.4pt] (-0.18,1.95)--(0.18,1.95);  % - (corta)
+\node[left] at (-0.42,2.1) {$V$};
+\node[font=\footnotesize] at (0.30,2.55) {$+$};
+% ---- RIEL SUPERIOR (nodo A) ----
+\draw (0,4)--(3.5,4);
+\node[above] at (0.7,4.02) {$A$};
+% ---- C1 (vertical) ----
+\draw (1.5,4)--(1.5,3.05);
+\draw[capcol,line width=1.6pt] (1.2,3.05)--(1.8,3.05);
+\draw[capcol,line width=1.6pt] (1.2,2.80)--(1.8,2.80);
+\draw (1.5,2.80)--(1.5,2.3);
+\node[left] at (1.15,2.925) {$C_1$};
+% ---- C2 (vertical) ----
+\draw (3.5,4)--(3.5,3.05);
+\draw[capcol,line width=1.6pt] (3.2,3.05)--(3.8,3.05);
+\draw[capcol,line width=1.6pt] (3.2,2.80)--(3.8,2.80);
+\draw (3.5,2.80)--(3.5,2.3);
+\node[right] at (3.85,2.925) {$C_2$};
+% ---- NODO B (une C1 y C2) ----
+\draw (1.5,2.3)--(3.5,2.3);
+\fill (2.5,2.3) circle (2.5pt);
+\node[above right] at (2.55,2.32) {$B$};
+% ---- C3 (vertical, de B al riel inferior) ----
+\draw (2.5,2.3)--(2.5,1.45);
+\draw[capcol,line width=1.6pt] (2.2,1.45)--(2.8,1.45);
+\draw[capcol,line width=1.6pt] (2.2,1.20)--(2.8,1.20);
+\draw (2.5,1.20)--(2.5,0);
+\node[right] at (2.85,1.325) {$C_3$};
+% ---- RIEL INFERIOR ----
+\draw (0,0)--(2.5,0);
+\end{tikzpicture}
+\end{center}
+
+\subsection*{An\'alisis del circuito}
+Los condensadores $C_1$ y $C_2$ comparten los mismos nodos $A$ y $B$, por lo que est\'an
+\textbf{en paralelo}. Esa combinaci\'on queda \textbf{en serie} con $C_3$ (entre $B$ y el riel
+inferior). La fuente $V$ se aplica al conjunto.
+
+\subsection*{(a) Capacitancia equivalente}
+Paralelo $C_1 \parallel C_2$:
+\[
+    C_{12} = C_1 + C_2 = 12{,}5 + 5{,}30 = 17{,}8\ [\mu\text{F}]
+\]
+Serie de $C_{12}$ con $C_3$:
+\[
+    C_{eq} = \frac{C_{12}\,C_3}{C_{12}+C_3}
+           = \frac{(17{,}8)(4{,}50)}{17{,}8+4{,}50}
+           = \frac{80{,}1}{22{,}3}
+\]
+\[
+    \boxed{C_{eq} = 3{,}592\ [\mu\text{F}]}
+\]
+
+\subsection*{(b) Carga en cada condensador}
+La carga total entregada por la fuente es la que circula por el elemento en serie $C_3$:
+\[
+    Q = q_3 = C_{eq}\,V = (3{,}592)(12{,}5) \;\Rightarrow\; \boxed{q_3 = 44{,}90\ [\mu\text{C}]}
+\]
+
+\noindent El voltaje se reparte entre el paralelo ($V_{12}$) y $C_3$ ($V_3$):
+\[
+    V_{12} = \frac{Q}{C_{12}} = \frac{44{,}90}{17{,}8} = 2{,}522\ [\text{V}],
+    \qquad
+    V_3 = \frac{Q}{C_3} = \frac{44{,}90}{4{,}50} = 9{,}978\ [\text{V}]
+\]
+\[
+    \text{(verificaci\'on: } V_{12}+V_3 = 2{,}522 + 9{,}978 = 12{,}5\ [\text{V}] = V \;\checkmark)
+\]
+
+\noindent Como $C_1$ y $C_2$ tienen el mismo voltaje $V_{12}$:
+\[
+    q_1 = C_1 V_{12} = (12{,}5)(2{,}522) \;\Rightarrow\; \boxed{q_1 = 31{,}53\ [\mu\text{C}]}
+\]
+\[
+    q_2 = C_2 V_{12} = (5{,}30)(2{,}522) \;\Rightarrow\; \boxed{q_2 = 13{,}37\ [\mu\text{C}]}
+\]
+
+\noindent\textbf{Verificaci\'on (nodo $B$):} $\;q_1 + q_2 = 31{,}53 + 13{,}37 = 44{,}90\ [\mu\text{C}] = q_3$ \checkmark
+
+\newpage
+
+%========================================================
+% PROBLEMA 2: RESISTENCIAS (Certamen 2 - 2020, Problema 3)
+%========================================================
+\section*{Problema 2: Circuito de resistencias por serie-paralelo}
+
+\noindent Para el circuito de la figura, con $R_1 = 100\ [\Omega]$, $R_2 = R_3 = 50\ [\Omega]$,
+$R_4 = 75\ [\Omega]$ y $\varepsilon = 6{,}0\ [\text{V}]$. Determine las corrientes que circulan
+en el circuito y la potencia disipada en $R_4$. \emph{(Se resuelve solo con ley de Ohm y
+combinaci\'on serie-paralelo, sin leyes de Kirchhoff.)}
+
+\medskip
+
+%--- DIAGRAMA ---
+\begin{center}
+\begin{tikzpicture}[scale=1.0, >=stealth, line width=1pt,
+    res/.style={decorate, decoration={zigzag, segment length=2.5mm, amplitude=2mm}}]
+% ---- FUENTE eps (izquierda) ----
+\draw (0,0)--(0,1.7);
+\draw (0,2.3)--(0,4);
+\draw[line width=1.8pt] (-0.35,2.3)--(0.35,2.3);    % + (larga)
+\draw[line width=3.4pt] (-0.18,1.95)--(0.18,1.95);  % - (corta)
+\node[left] at (-0.42,2.1) {$\varepsilon$};
+\node[font=\footnotesize] at (0.30,2.55) {$+$};
+% ---- RIEL SUPERIOR con R1 (zigzag horizontal) ----
+\draw (0,4)--(1.0,4);
+\draw[res] (1.0,4)--(2.4,4);
+\draw (2.4,4)--(6,4);
+\node[above] at (1.7,4.30) {$R_1$};
+\node[above] at (4.7,4.05) {$A$};
+% ---- R2 (zigzag vertical) ----
+\draw (3,4)--(3,2.7);
+\draw[res] (3,2.7)--(3,1.3);
+\draw (3,1.3)--(3,0);
+\node[left] at (2.7,2.0) {$R_2$};
+% ---- R4 (zigzag diagonal: une el vértice superior de R2 con el inferior de R3) ----
+\draw (3,4)--(3.75,3.0);
+\draw[res] (3.75,3.0)--(5.25,1.0);
+\draw (5.25,1.0)--(6,0);
+\fill (3,4) circle (2.2pt);
+\fill (6,0) circle (2.2pt);
+\node at (5.15,2.85) {$R_4$};
+% ---- R3 (zigzag vertical) ----
+\draw (6,4)--(6,2.7);
+\draw[res] (6,2.7)--(6,1.3);
+\draw (6,1.3)--(6,0);
+\node[right] at (6.3,2.0) {$R_3$};
+% ---- RIEL INFERIOR ----
+\draw (0,0)--(6,0);
+% ---- corriente principal ----
+\draw[->,line width=1.2pt] (0.45,4.3)--(0.95,4.3);
+\node[above,font=\small] at (0.7,4.3) {$I_1$};
+\end{tikzpicture}
+\end{center}
+
+\subsection*{An\'alisis del circuito}
+Las resistencias $R_2$, $R_4$ y $R_3$ unen los mismos dos nodos (el riel superior $A$ y el
+riel inferior), por lo que est\'an \textbf{las tres en paralelo}. Esa combinaci\'on queda
+\textbf{en serie} con $R_1$, todo conectado a la fuente $\varepsilon$. \emph{No es un puente},
+por eso basta la reducci\'on serie-paralelo.
+
+\subsection*{Resistencia equivalente}
+Paralelo $R_2 \parallel R_3 \parallel R_4$:
+\[
+    \frac{1}{R_p} = \frac{1}{R_2}+\frac{1}{R_3}+\frac{1}{R_4}
+                  = \frac{1}{50}+\frac{1}{50}+\frac{1}{75} = \frac{8}{150}
+    \;\Rightarrow\; R_p = 18{,}75\ [\Omega]
+\]
+Serie con $R_1$:
+\[
+    R_{eq} = R_1 + R_p = 100 + 18{,}75 = 118{,}75\ [\Omega]
+\]
+
+\subsection*{Corriente principal y voltaje del paralelo}
+\[
+    I_1 = \frac{\varepsilon}{R_{eq}} = \frac{6{,}0}{118{,}75} \;\Rightarrow\;
+    \boxed{I_1 = 50{,}5\ [\text{mA}]}
+\]
+\[
+    V_p = \varepsilon - I_1 R_1 = 6{,}0 - (0{,}0505)(100) = 0{,}947\ [\text{V}]
+\]
+
+\subsection*{Corrientes de rama (ley de Ohm)}
+\[
+    I_2 = \frac{V_p}{R_2} = \frac{0{,}947}{50} = 18{,}95\ [\text{mA}],
+    \qquad
+    I_3 = \frac{V_p}{R_3} = \frac{0{,}947}{50} = 18{,}95\ [\text{mA}]
+\]
+\[
+    I_4 = \frac{V_p}{R_4} = \frac{0{,}947}{75} = 12{,}63\ [\text{mA}]
+\]
+\noindent\textbf{Verificaci\'on:} $\;I_2 + I_3 + I_4 = 18{,}95 + 18{,}95 + 12{,}63 = 50{,}5\ [\text{mA}] = I_1$ \checkmark
+
+\subsection*{Potencia disipada en $R_4$}
+\[
+    P_4 = \frac{V_p^{\,2}}{R_4} = \frac{(0{,}947)^2}{75}
+    \;\Rightarrow\; \boxed{P_4 = 1{,}20\times10^{-2}\ [\text{W}] \approx 12{,}0\ [\text{mW}]}
+\]
+
+%--- RESUMEN ---
+\subsection*{Resumen de resultados}
+\begin{center}
+\begin{tabular}{|c|c|l|}
+\hline
+\textbf{Magnitud} & \textbf{Valor} & \textbf{Observaci\'on} \\
+\hline
+$R_{eq}$ & $118{,}75\ [\Omega]$ & $R_1 + (R_2\parallel R_3\parallel R_4)$ \\
+$I_1$ & $50{,}5\ [\text{mA}]$ & Corriente total (por $R_1$ y la fuente) \\
+$I_2$ & $18{,}95\ [\text{mA}]$ & Rama $R_2$ \\
+$I_3$ & $18{,}95\ [\text{mA}]$ & Rama $R_3$ \\
+$I_4$ & $12{,}63\ [\text{mA}]$ & Rama $R_4$ \\
+$P_4$ & $12{,}0\ [\text{mW}]$ & Potencia disipada en $R_4$ \\
+\hline
+\end{tabular}
+\end{center}
+
+\end{document}
