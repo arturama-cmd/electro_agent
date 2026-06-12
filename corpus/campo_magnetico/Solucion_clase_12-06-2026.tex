@@ -1,0 +1,422 @@
+\documentclass[12pt,letterpaper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[spanish,es-noshorthands]{babel}
+\usepackage{amsmath,amssymb}
+\usepackage{graphicx}
+\usepackage{xcolor}
+\usepackage{tikz}
+\usetikzlibrary{calc,arrows.meta,decorations.markings,decorations.pathmorphing}
+\usepackage[top=2.5cm, bottom=4cm, left=2cm, right=2cm, footskip=40pt]{geometry}
+\usepackage{fancyhdr}
+\usepackage{lastpage}
+
+\definecolor{ubbblue}{RGB}{0,51,102}
+
+\pagestyle{fancy}
+\fancyhf{}
+\renewcommand{\headrulewidth}{0pt}
+\renewcommand{\footrulewidth}{0.4pt}
+\fancyfoot[L]{\raisebox{-0.5cm}{\includegraphics[height=1.2cm]{logo ubb.png}}}
+\fancyfoot[C]{%
+    \begin{minipage}[b]{8cm}\centering
+        \footnotesize\textcolor{ubbblue}{\textbf{Dr.\ Arturo Fern\'andez P\'erez}}\\
+        \scriptsize Departamento de F\'isica -- Universidad del B\'io-B\'io\\
+        \scriptsize \textit{Electro\_Asistente\_AI-UBB}\\
+        \tiny P\'agina \thepage\ de \pageref{LastPage}
+    \end{minipage}}
+\fancyfoot[R]{\raisebox{-0.5cm}{\includegraphics[height=1.2cm]{logo dfis.png}}}
+\fancypagestyle{plain}{%
+    \fancyhf{}
+    \renewcommand{\headrulewidth}{0pt}
+    \renewcommand{\footrulewidth}{0.4pt}
+    \fancyfoot[L]{\raisebox{-0.5cm}{\includegraphics[height=1.2cm]{logo ubb.png}}}
+    \fancyfoot[C]{%
+        \begin{minipage}[b]{8cm}\centering
+            \footnotesize\textcolor{ubbblue}{\textbf{Dr.\ Arturo Fern\'andez P\'erez}}\\
+            \scriptsize Departamento de F\'isica -- Universidad del B\'io-B\'io\\
+            \scriptsize \textit{Electro\_Asistente\_AI-UBB}\\
+            \tiny P\'agina \thepage\ de \pageref{LastPage}
+        \end{minipage}}
+    \fancyfoot[R]{\raisebox{-0.5cm}{\includegraphics[height=1.2cm]{logo dfis.png}}}
+}
+
+\begin{document}
+
+%========================================
+% ENCABEZADO INSTITUCIONAL
+%========================================
+\begin{center}
+    \includegraphics[height=2cm]{logo ubb.png}\\[0.3cm]
+    {\large\textcolor{ubbblue}{\textbf{UNIVERSIDAD DEL B\'IO-B\'IO}}}\\[0.1cm]
+    {\normalsize Facultad de Ciencias -- Departamento de F\'isica}
+\end{center}
+
+\vspace{0.3cm}
+\hrule height 1pt
+\vspace{0.5cm}
+
+{\centering\Large\textbf{Problemas Resueltos en la clase del 12/06/2026}\par}
+{\centering\normalsize\textit{Leyes de Kirchhoff y Fuerza Magn\'etica}\par}
+
+\vspace{0.6cm}
+
+%========================================
+% PROBLEMA 1: KIRCHHOFF
+%========================================
+\section*{Problema 1: Leyes de Kirchhoff}
+
+\noindent En el circuito de la figura, $\varepsilon_1 = 6{,}0$, $\varepsilon_2 = 5{,}0$,
+$\varepsilon_3 = 4{,}0\ [\text{V}]$, $R_1 = 100\ [\Omega]$ y $R_2 = 50\ [\Omega]$. Determine las
+corrientes que circulan en el circuito y la diferencia de potencial entre los puntos $a$ y $b$.
+
+\medskip
+\begin{center}
+\begin{tikzpicture}[scale=0.92, line width=0.9pt,
+    res/.style={decorate, decoration={zigzag, segment length=2mm, amplitude=1.5mm}}]
+% ===== RAMA SUPERIOR: a - eps1 - R2 - b =====
+\draw (0,2)--(0,4)--(1.7,4);
+\draw[line width=1pt] (1.7,3.76)--(1.7,4.24);
+\draw[line width=2.6pt] (1.95,3.88)--(1.95,4.12);
+\node[font=\scriptsize] at (1.56,4.0){$+$};
+\node[above,font=\small] at (1.85,4.30){$\varepsilon_1$};
+\draw (1.95,4)--(6.5,4);
+\draw (6.5,4)--(6.5,3.55);
+\draw[res] (6.5,3.55)--(6.5,2.45);
+\draw (6.5,2.45)--(6.5,2);
+\node[right,font=\small] at (6.62,3.0){$R_2$};
+% ===== RAMA MEDIA: a - eps3 - m - eps2 - b =====
+\draw (0,2)--(0.85,2);
+\draw[line width=1pt] (0.85,1.76)--(0.85,2.24);
+\draw[line width=2.6pt] (1.10,1.88)--(1.10,2.12);
+\node[font=\scriptsize] at (0.71,2.0){$+$};
+\node[below,font=\small] at (1.0,1.70){$\varepsilon_3$};
+\draw (1.10,2)--(3.3,2);
+\draw (3.3,2)--(4.15,2);
+\draw[line width=1pt] (4.15,1.76)--(4.15,2.24);
+\draw[line width=2.6pt] (4.40,1.88)--(4.40,2.12);
+\node[font=\scriptsize] at (4.01,2.0){$+$};
+\node[below,font=\small] at (4.3,1.70){$\varepsilon_2$};
+\draw (4.40,2)--(6.5,2);
+% ===== RAMA INFERIOR: a - R1 - m =====
+\draw (0,2)--(0,0)--(0.9,0);
+\draw[res] (0.9,0)--(2.3,0);
+\node[above,font=\small] at (1.6,0.16){$R_1$};
+\draw (2.3,0)--(3.3,0)--(3.3,2);
+% ===== NODOS =====
+\fill (0,2) circle(2.2pt); \node[left] at (-0.08,2){$a$};
+\fill (6.5,2) circle(2.2pt); \node[right] at (6.58,2){$b$};
+\fill (3.3,2) circle(2.2pt); \node[above right,font=\small] at (3.34,2.06){$m$};
+% ===== CORRIENTES (sentido real) =====
+\draw[->,red,line width=1pt] (0.55,4.26)--(1.35,4.26);
+\node[red,above,font=\scriptsize] at (0.95,4.24){$I_1$};
+\draw[->,red,line width=1pt] (2.6,2.30)--(1.8,2.30);
+\node[red,above,font=\scriptsize] at (2.2,2.28){$I_3$};
+\draw[->,red,line width=1pt] (5.7,2.30)--(4.9,2.30);
+\node[red,above,font=\scriptsize] at (5.3,2.28){$I_2$};
+\draw[->,red,line width=1pt] (1.0,-0.38)--(1.8,-0.38);
+\node[red,below,font=\scriptsize] at (1.45,-0.45){$I_{R_1}$};
+\end{tikzpicture}
+\end{center}
+\medskip
+
+\subsection*{An\'alisis (potenciales de nodo)}
+Los nodos son $a$, $b$ y el nodo central $m$ (entre $\varepsilon_3$ y $\varepsilon_2$). Las
+fuentes $\varepsilon_3$ y $\varepsilon_2$ son \textbf{ideales} (sin resistencia, con su $+$
+hacia la izquierda), por lo que fijan directamente la ca\'ida de potencial:
+\[
+    V_a - V_m = \varepsilon_3 = 4\ [\text{V}], \qquad
+    V_m - V_b = \varepsilon_2 = 5\ [\text{V}]
+\]
+\[
+    \Rightarrow\quad
+    \boxed{V_{ab} = V_a - V_b = \varepsilon_3 + \varepsilon_2 = 9\ [\text{V}]}
+\]
+Tomando $V_b = 0$: $\;V_a = 9\ \text{V}$, $\;V_m = 5\ \text{V}$.
+
+\subsection*{C\'alculo de las corrientes}
+\textbf{Rama superior} ($\varepsilon_1$ y $R_2$ en serie entre $a$ y $b$):
+\[
+    V_a - V_b = \varepsilon_1 + I_1 R_2 \;\Rightarrow\; 9 = 6 + 50\,I_1
+    \;\Rightarrow\; \boxed{I_1 = 0{,}06\ [\text{A}]\ (a\to b)}
+\]
+\textbf{Rama de $R_1$} (entre $a$ y $m$, con $V_a-V_m = 4\ \text{V}$):
+\[
+    I_{R_1} = \frac{V_a - V_m}{R_1} = \frac{4}{100}
+    \;\Rightarrow\; \boxed{I_{R_1} = 0{,}04\ [\text{A}]\ (a\to m)}
+\]
+\textbf{Rama de $\varepsilon_3$} (KCL en el nodo $a$):
+\[
+    I_3 = I_1 + I_{R_1} = 0{,}06 + 0{,}04
+    \;\Rightarrow\; \boxed{I_3 = 0{,}10\ [\text{A}]\ (m\to a)}
+\]
+\textbf{Rama de $\varepsilon_2$} (KCL en el nodo $b$):
+\[
+    I_2 = I_1 = \boxed{0{,}06\ [\text{A}]\ (b\to m)}
+\]
+
+\newpage
+
+%========================================
+% PROBLEMA 2: KIRCHHOFF INVERSO
+%========================================
+\section*{Problema 2: Leyes de Kirchhoff (problema inverso)}
+
+\noindent En el circuito de la figura se dan algunas corrientes y las resistencias. Determine el
+valor de las fem $\varepsilon_1$ y $\varepsilon_2$, y la diferencia de potencial entre $a$ y $b$.
+
+\medskip
+\begin{center}
+\begin{tikzpicture}[scale=0.92, line width=0.9pt,
+    res/.style={decorate, decoration={zigzag, segment length=2mm, amplitude=1.5mm}}]
+% ===== RAMA SUPERIOR: 1ohm - 20V - 6ohm =====
+\draw (0,2)--(0,4)--(0.6,4);
+\draw[res] (0.6,4)--(1.8,4); \node[above,font=\small] at (1.2,4.16){$1\,\Omega$};
+\draw (1.8,4)--(2.4,4);
+\draw[line width=1pt] (2.4,3.76)--(2.4,4.24);
+\draw[line width=2.6pt] (2.65,3.88)--(2.65,4.12);
+\node[font=\scriptsize] at (2.26,4.0){$+$};
+\node[above,font=\small] at (2.55,4.30){$20\,$V};
+\draw (2.65,4)--(3.7,4);
+\draw[res] (3.7,4)--(4.9,4); \node[above,font=\small] at (4.3,4.16){$6\,\Omega$};
+\draw (4.9,4)--(6.5,4)--(6.5,2);
+% ===== RAMA MEDIA: 4ohm - 1ohm - eps1 =====
+\draw (0,2)--(0.6,2);
+\draw[res] (0.6,2)--(1.8,2); \node[above,font=\small] at (1.2,2.16){$4\,\Omega$};
+\draw (1.8,2)--(2.4,2);
+\draw[res] (2.4,2)--(3.4,2); \node[above,font=\small] at (2.9,2.16){$1\,\Omega$};
+\draw (3.4,2)--(4.2,2);
+\draw[line width=1pt] (4.2,1.76)--(4.2,2.24);
+\draw[line width=2.6pt] (4.45,1.88)--(4.45,2.12);
+\node[font=\scriptsize] at (4.06,2.0){$+$};
+\node[below,font=\small] at (4.35,1.70){$\varepsilon_1$};
+\draw (4.45,2)--(6.5,2);
+% ===== RAMA INFERIOR: 1ohm - eps2 - 2ohm =====
+\draw (0,2)--(0,0)--(0.6,0);
+\draw[res] (0.6,0)--(1.8,0); \node[below,font=\small] at (1.2,-0.16){$1\,\Omega$};
+\draw (1.8,0)--(2.4,0);
+\draw[line width=1pt] (2.4,-0.24)--(2.4,0.24);
+\draw[line width=2.6pt] (2.65,-0.12)--(2.65,0.12);
+\node[font=\scriptsize] at (2.26,0.0){$+$};
+\node[below,font=\small] at (2.55,-0.30){$\varepsilon_2$};
+\draw (2.65,0)--(3.7,0);
+\draw[res] (3.7,0)--(4.9,0); \node[below,font=\small] at (4.3,-0.16){$2\,\Omega$};
+\draw (4.9,0)--(6.5,0)--(6.5,2);
+% ===== NODOS =====
+\fill (0,2) circle(2.2pt); \node[left] at (-0.08,2){$a$};
+\fill (6.5,2) circle(2.2pt); \node[right] at (6.58,2){$b$};
+% ===== CORRIENTES DADAS =====
+\draw[->,red,line width=1.1pt] (0,3.15)--(0,2.55);
+\node[red,left,font=\small] at (-0.12,2.85){$1{,}0$ A};
+\draw[->,red,line width=1.1pt] (0,1.15)--(0,0.55);
+\node[red,left,font=\small] at (-0.12,0.85){$2{,}0$ A};
+\end{tikzpicture}
+\end{center}
+\medskip
+
+\subsection*{Corrientes de rama (KCL)}
+Las corrientes dadas circulan \textbf{hacia abajo} por el riel izquierdo: $1{,}0$ A en el
+segmento superior y $2{,}0$ A en el inferior. Aplicando KCL en el nodo $a$, las corrientes de
+rama resultan:
+\[
+    I_{\text{sup}} = 1{,}0\ \text{A}\ (b\to a),\qquad
+    I_{\text{med}} = 1{,}0\ \text{A}\ (b\to a),\qquad
+    I_{\text{inf}} = 2{,}0\ \text{A}\ (a\to b)
+\]
+
+\subsection*{Diferencia de potencial (rama superior, totalmente conocida)}
+Recorriendo la rama superior de $a$ a $b$ ($1\,\Omega$, fuente de $20$ V con su $-$ hacia $b$,
+$6\,\Omega$), con su corriente de $1$ A en sentido $b\to a$ (las resistencias \emph{suben} el
+potencial y la fuente lo \emph{baja}):
+\[
+    V_b - V_a = (1)(1) - 20 + (1)(6) = -13
+    \;\Rightarrow\; \boxed{V_{ab} = V_a - V_b = 13\ [\text{V}]}
+\]
+
+\subsection*{Determinaci\'on de $\varepsilon_1$ y $\varepsilon_2$}
+\textbf{Rama media} ($4\,\Omega$, $1\,\Omega$, $\varepsilon_1$; corriente $1$ A en sentido $b\to a$):
+\[
+    V_b - V_a = (1)(4) + (1)(1) - \varepsilon_1 = 5 - \varepsilon_1 = -13
+    \;\Rightarrow\; \boxed{\varepsilon_1 = 18\ [\text{V}]}
+\]
+\textbf{Rama inferior} ($1\,\Omega$, $\varepsilon_2$, $2\,\Omega$; corriente $2$ A en sentido $a\to b$):
+\[
+    V_b - V_a = -(2)(1) - \varepsilon_2 - (2)(2) = -6 - \varepsilon_2 = -13
+    \;\Rightarrow\; \boxed{\varepsilon_2 = 7\ [\text{V}]}
+\]
+
+\newpage
+
+%========================================
+% PROBLEMA 3
+%========================================
+\section*{Problema 3: Fuerza y torque sobre una espira triangular}
+
+\noindent Por una espira triangular (rect\'angulo en $a$) circula una corriente
+$I_0 = 1\ [\text{A}]$, inmersa en un campo magn\'etico uniforme $B = 0{,}5\ [\text{T}]$
+orientado a $30^\circ$ del eje $x$, seg\'un la figura. Los lados miden
+$l_{ab} = 3\ [\text{cm}]$, $l_{ac} = 4\ [\text{cm}]$ y $l_{bc} = 5\ [\text{cm}]$ (tri\'angulo
+$3$-$4$-$5$). Determine la fuerza magn\'etica sobre cada segmento, el momento magn\'etico de la
+espira y el torque que ejerce $\vec{B}$.
+
+\medskip
+
+\noindent
+\begin{minipage}[t]{0.42\textwidth}
+\centering
+\vspace{0pt}
+\begin{tikzpicture}[scale=1.0, >=Stealth, line width=1pt]
+    % ---- ejes ----
+    \draw[->,thick] (0,0)--(1.6,0) node[right]{$\hat{\imath}$};
+    \draw[->,thick] (0,0)--(0,1.4) node[above]{$\hat{\jmath}$};
+    % ---- 7 lineas de campo B paralelas (campo uniforme sobre la espira), a 30^o ----
+    \foreach \y in {1.2,0.7,0.2,-0.3,-0.8,-1.3,-1.8}{
+        \draw[red!65,->,line width=0.6pt] (1.55,\y) -- ++(-3.0,-1.732);
+    }
+    \node[red!80] at (1.50,1.35) {$\vec{B}$};
+    % arco de 30^o BAJO el eje x (la linea y=0.2 cruza el eje en ~(1.20,0))
+    \draw ([shift=(180:0.5)]1.20,0) arc(180:210:0.5);
+    \node[font=\small] at (0.58,-0.17) {$30^\circ$};
+    % ---- triangulo a=(0,0) b=(-1.8,0) c=(0,-2.4) ----
+    \coordinate (a) at (0,0);
+    \coordinate (b) at (-1.8,0);
+    \coordinate (c) at (0,-2.4);
+    \draw[very thick] (a)--(b)--(c)--cycle;
+    \node[above right] at (a) {$a$};
+    \node[above left]  at (b) {$b$};
+    \node[below right] at (c) {$c$};
+    % angulo recto en a
+    \draw (-0.2,0)--(-0.2,-0.2)--(0,-0.2);
+    % ---- sentido de la corriente ----
+    \draw[->,blue,line width=1.3pt] (-0.65,0)--(-1.15,0);          % a -> b
+    \node[above,blue,font=\small] at (-0.9,0.04) {$I_0$};
+    \draw[->,blue,line width=1.3pt] (-1.05,-1.0)--(-0.7,-1.47);    % b -> c
+    \draw[->,blue,line width=1.3pt] (0,-1.55)--(0,-1.0);          % c -> a
+\end{tikzpicture}
+\end{minipage}%
+\hfill
+\begin{minipage}[t]{0.55\textwidth}
+\vspace{0pt}
+\textbf{Datos:}
+\begin{itemize}\setlength\itemsep{1pt}
+    \item $I_0 = 1\ [\text{A}]$,\quad $B = 0{,}5\ [\text{T}]$ a $30^\circ$ de $\hat{\imath}$
+    \item $l_{ab}=0{,}03\ \text{m}$, $\;l_{ac}=0{,}04\ \text{m}$, $\;l_{bc}=0{,}05\ \text{m}$
+    \item $a=(0,0)$, $\;b=(-0{,}03,\,0)$, $\;c=(0,\,-0{,}04)$
+    \item Sentido de la corriente: $a\to b\to c\to a$
+\end{itemize}
+
+\smallskip
+\textbf{Productos cruz de unitarios:}
+\[
+    \hat{\imath}\times\hat{\jmath}=\hat{k},\quad
+    \hat{\jmath}\times\hat{\imath}=-\hat{k},\quad
+    \hat{k}\times\hat{\imath}=\hat{\jmath},\quad
+    \hat{k}\times\hat{\jmath}=-\hat{\imath}
+\]
+\end{minipage}
+
+\medskip
+
+%--------------------------------------------------
+\subsection*{(a) Campo magn\'etico $\vec{B}$}
+El campo est\'a en el plano de la espira, a $30^\circ$ del eje $x$ (apuntando hacia
+abajo-izquierda):
+\[
+    \vec{B} = -B\cos30^\circ\,\hat{\imath} - B\sin30^\circ\,\hat{\jmath}
+            = -0{,}5\cos30^\circ\,\hat{\imath} - 0{,}5\sin30^\circ\,\hat{\jmath}
+\]
+\[
+    \boxed{\vec{B} = -0{,}433\,\hat{\imath} - 0{,}250\,\hat{\jmath}\ [\text{T}]}
+\]
+
+%--------------------------------------------------
+\subsection*{(b) Fuerza magn\'etica sobre cada segmento}
+$\vec{F} = I_0\,\vec{L}\times\vec{B}$, con $\vec{L}$ en el sentido de la corriente:
+\[
+    \vec{L}_{ab} = -0{,}03\,\hat{\imath}\ (a\to b),\quad
+    \vec{L}_{bc} = 0{,}03\,\hat{\imath}-0{,}04\,\hat{\jmath}\ (b\to c),\quad
+    \vec{L}_{ca} = 0{,}04\,\hat{\jmath}\ (c\to a)
+\]
+
+\noindent\textbf{Segmento $ab$:}
+\begin{align*}
+    \vec{F}_{ab} &= I_0\,(-0{,}03\,\hat{\imath})\times(-0{,}433\,\hat{\imath}-0{,}250\,\hat{\jmath}) \\
+                 &= I_0\big[(-0{,}03)(-0{,}250)(\hat{\imath}\times\hat{\jmath})\big]
+                  = (1)(0{,}0075)\,\hat{k}
+\end{align*}
+\[
+    \boxed{\vec{F}_{ab} = +7{,}5\times10^{-3}\,\hat{k}\ [\text{N}]}
+\]
+
+\noindent\textbf{Segmento $bc$ (hipotenusa):}
+\begin{align*}
+    \vec{F}_{bc} &= I_0\,(0{,}03\,\hat{\imath}-0{,}04\,\hat{\jmath})\times(-0{,}433\,\hat{\imath}-0{,}250\,\hat{\jmath}) \\
+                 &= I_0\big[(0{,}03)(-0{,}250)(\hat{\imath}\times\hat{\jmath})
+                    + (-0{,}04)(-0{,}433)(\hat{\jmath}\times\hat{\imath})\big] \\
+                 &= I_0\big[-0{,}0075\,\hat{k} - 0{,}0173\,\hat{k}\big]
+\end{align*}
+\[
+    \boxed{\vec{F}_{bc} = -2{,}48\times10^{-2}\,\hat{k}\ [\text{N}]}
+\]
+
+\noindent\textbf{Segmento $ca$ (cateto vertical):}
+\begin{align*}
+    \vec{F}_{ca} &= I_0\,(0{,}04\,\hat{\jmath})\times(-0{,}433\,\hat{\imath}-0{,}250\,\hat{\jmath}) \\
+                 &= I_0\big[(0{,}04)(-0{,}433)(\hat{\jmath}\times\hat{\imath})\big]
+                  = (1)(-0{,}0173)(-\hat{k})
+\end{align*}
+\[
+    \boxed{\vec{F}_{ca} = +1{,}73\times10^{-2}\,\hat{k}\ [\text{N}]}
+\]
+
+\noindent\textit{Verificaci\'on:} $\vec{F}_{ab}+\vec{F}_{bc}+\vec{F}_{ca}
+= (7{,}5-24{,}8+17{,}3)\times10^{-3}\,\hat{k} \approx \vec{0}$ \;(lazo cerrado en campo uniforme).
+
+%--------------------------------------------------
+\subsection*{(c) Momento magn\'etico $\vec{\mu}$}
+\'Area del tri\'angulo:
+\[
+    A = \tfrac{1}{2}\,l_{ab}\,l_{ac} = \tfrac{1}{2}(0{,}03)(0{,}04) = 6{,}0\times10^{-4}\ [\text{m}^2]
+\]
+
+\noindent\textbf{La direcci\'on del momento magn\'etico se determina con la regla de la mano
+derecha:} al curvar los dedos de la mano derecha en el sentido de circulaci\'on de la corriente
+($a\to b\to c\to a$, antihorario), el \textbf{pulgar} apunta en la direcci\'on de $\vec{\mu}$, es
+decir, \textbf{saliendo del plano} de la espira ($+\hat{k}$). Por lo tanto $\hat{n}=+\hat{k}$ y:
+\[
+    \vec{\mu} = I_0\,A\,\hat{n} = (1)(6{,}0\times10^{-4})(+\hat{k})
+\]
+\[
+    \boxed{\vec{\mu} = +6{,}0\times10^{-4}\,\hat{k}\ [\text{A}\cdot\text{m}^2]}
+\]
+
+%--------------------------------------------------
+\subsection*{(d) Torque magn\'etico $\vec{\tau}$}
+\begin{align*}
+    \vec{\tau} = \vec{\mu}\times\vec{B}
+       &= (6{,}0\times10^{-4}\,\hat{k})\times(-0{,}433\,\hat{\imath}-0{,}250\,\hat{\jmath}) \\
+       &= 6{,}0\times10^{-4}\big[-0{,}433\,(\hat{k}\times\hat{\imath}) - 0{,}250\,(\hat{k}\times\hat{\jmath})\big] \\
+       &= 6{,}0\times10^{-4}\big[-0{,}433\,\hat{\jmath} - 0{,}250\,(-\hat{\imath})\big]
+\end{align*}
+\[
+    \boxed{\vec{\tau} = 1{,}50\times10^{-4}\,\hat{\imath} - 2{,}60\times10^{-4}\,\hat{\jmath}\ [\text{N}\cdot\text{m}]}
+    \qquad |\vec{\tau}| = 3{,}0\times10^{-4}\ [\text{N}\cdot\text{m}]
+\]
+
+\subsection*{Interpretaci\'on f\'isica del movimiento de torque}
+El torque hace \textbf{girar} la espira tendiendo a alinear su momento magn\'etico $\vec{\mu}$
+con el campo $\vec{B}$. La \textbf{regla de la mano derecha} indica el sentido del giro:
+
+\begin{itemize}
+    \item El \textbf{dedo pulgar} de la mano derecha apunta en la direcci\'on del vector torque
+          $\vec{\tau}$ (el \emph{eje de rotaci\'on}).
+    \item Los \textbf{dedos} de la mano (al curvarse) indican el \textbf{sentido de circulaci\'on
+          del giro} de la espira alrededor de ese eje.
+\end{itemize}
+
+\noindent As\'i, la espira rota en torno al eje
+$\vec{\tau} = (1{,}50\,\hat{\imath} - 2{,}60\,\hat{\jmath})\times10^{-4}\ [\text{N}\cdot\text{m}]$
+hasta que $\vec{\mu}$ quede paralelo a $\vec{B}$, posici\'on en la que el torque se anula
+($\vec{\mu}\parallel\vec{B}\Rightarrow\vec{\tau}=\vec{0}$): la configuraci\'on de equilibrio
+estable de la espira.
+
+\end{document}
