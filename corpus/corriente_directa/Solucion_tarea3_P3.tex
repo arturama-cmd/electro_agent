@@ -1,0 +1,308 @@
+\documentclass[12pt,letterpaper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[spanish,es-noshorthands]{babel}
+\usepackage{amsmath,amssymb}
+\usepackage{graphicx}
+\usepackage{xcolor}
+\usepackage{tikz}
+\usepackage[american]{circuitikz}
+\usetikzlibrary{calc,arrows,decorations.markings,patterns}
+\usepackage{enumerate}
+\usepackage[top=2.5cm, bottom=4cm, left=2cm, right=2cm, footskip=40pt]{geometry}
+\usepackage{fancyhdr}
+\usepackage{lastpage}
+
+% ===== COLORES =====
+\definecolor{ubbblue}{RGB}{0,51,102}
+
+% ===== ENCABEZADO / PIE =====
+\pagestyle{fancy}
+\fancyhf{}
+\renewcommand{\headrulewidth}{0pt}
+\renewcommand{\footrulewidth}{0.4pt}
+\fancyfoot[L]{\raisebox{-0.5cm}{\includegraphics[height=1.2cm]{logo ubb.png}}}
+\fancyfoot[C]{%
+    \begin{minipage}[b]{8cm}\centering
+        \footnotesize\textcolor{ubbblue}{\textbf{Dr. Arturo Fern\'andez P\'erez}}\\
+        \scriptsize Departamento de F\'isica -- Universidad del B\'io-B\'io\\
+        \scriptsize\textit{Electro\_Asistente\_AI-UBB}\\
+        \tiny P\'agina \thepage\ de \pageref{LastPage}
+    \end{minipage}}
+\fancyfoot[R]{\raisebox{-0.5cm}{\includegraphics[height=1.2cm]{logo dfis.png}}}
+
+\fancypagestyle{plain}{%
+  \fancyhf{}
+  \renewcommand{\headrulewidth}{0pt}
+  \renewcommand{\footrulewidth}{0.4pt}
+  \fancyfoot[L]{\raisebox{-0.5cm}{\includegraphics[height=1.2cm]{logo ubb.png}}}
+  \fancyfoot[C]{%
+    \begin{minipage}[b]{8cm}\centering
+        \footnotesize\textcolor{ubbblue}{\textbf{Dr. Arturo Fern\'andez P\'erez}}\\
+        \scriptsize Departamento de F\'isica -- Universidad del B\'io-B\'io\\
+        \scriptsize\textit{Electro\_Asistente\_AI-UBB}\\
+        \tiny P\'agina \thepage\ de \pageref{LastPage}
+    \end{minipage}}
+  \fancyfoot[R]{\raisebox{-0.5cm}{\includegraphics[height=1.2cm]{logo dfis.png}}}
+}
+
+\begin{document}
+
+%========================================
+% ENCABEZADO INSTITUCIONAL
+%========================================
+\begin{center}
+    \includegraphics[height=2cm]{logo ubb.png}\\[0.3cm]
+    {\large\textcolor{ubbblue}{\textbf{UNIVERSIDAD DEL B\'IO-B\'IO}}}\\[0.1cm]
+    {\normalsize Facultad de Ciencias -- Departamento de F\'isica}
+\end{center}
+
+\vspace{0.3cm}
+\hrule height 1pt
+\vspace{0.5cm}
+
+{\centering\Large\textbf{Soluci\'on -- Tarea 3, Problema 3}\par}
+{\centering\normalsize Reducci\'on serie-paralelo y Leyes de Kirchhoff (Fig.\ 3)\par}
+
+\vspace{0.5cm}
+
+%========================================
+% ENUNCIADO
+%========================================
+\section*{Enunciado del Problema}
+
+La Fig.\ 3 muestra un circuito que combina resistencias y bater\'ias en distintas
+configuraciones. Considere los sentidos de las corrientes $I_1$, $I_2$ e $I_3$, as\'i como
+el recorrido de cada malla, indicados como $M_1$ y $M_2$.
+\begin{enumerate}[(a)]
+    \item Simplifique el circuito todo lo posible obteniendo las resistencias equivalentes
+          y dibuje el esquema reducido resultante.
+    \item Para el circuito reducido, escriba las ecuaciones de Kirchhoff (corriente y voltaje)
+          de cada malla y del nodo relevante.
+    \item Resuelva el sistema para determinar $I_1$, $I_2$ e $I_3$.
+    \item Calcule la potencia disipada en cada resistencia del circuito reducido.
+\end{enumerate}
+
+%--- DIAGRAMA ORIGINAL (figura del enunciado) ---
+\begin{center}
+\begin{circuitikz}[scale=0.8, every node/.style={font=\small}]
+\draw (-1,1.5) to[battery1,l_=$12\,\mathrm{V}$] (-1,-1);
+\draw (-1,1.5) -- (0,1.5);
+\draw (0,1.5)  to[R,l=4~$\Omega$] (2,1.5);
+\draw (2,1.5) to[short, i>^={$I_1$}] (4,1.5);
+\draw (4,1.5) to[short] (4,1)
+             to[R,l_=6~$\Omega$, i<^={$I_2$}] (4,-3);
+\draw (4,1.5) to[battery1,l=$3\,\mathrm{V}$, i>^={$I_3$}] (6,1.5);
+\draw (6,1.5) -- (9,1.5);
+\draw (6,1.5)  to[short] (6,1)    to[R,l=2~$\Omega$] (6,-3);
+\draw (7.5,1.5) to[short] (7.5,1) to[R,l=3~$\Omega$] (7.5,-3);
+\draw (9,1.5)  to[short] (9,1)    to[R,l=6~$\Omega$] (9,-3);
+\draw (6,-3) -- (9,-3);
+\draw (2,-3) to[battery1,l_=$6\,\mathrm{V}$] (4,-3);
+\draw (4,-3) to[battery1,l_=$14\,\mathrm{V}$] (6,-3);
+\draw (-1,-1) to[R,l=18~$\Omega$] (2,-1);
+\draw (-1,-1) to[R,l=9~$\Omega$]  (2,-3);
+\draw (-1,-1) -- (-1,-3)
+             to[R,l_=3~$\Omega$] (2,-3);
+\draw (2,-1) -- (2,-3);
+
+% Malla M1
+\coordinate (C1) at (2,0.25);
+\def\rA{0.6}
+\draw[blue, dashed, very thick,
+      postaction={decorate},
+      decoration={markings,
+        mark=at position 1 with {\arrow[blue, scale=1.2]{>}}}]
+  (C1)+(90:\rA) arc[start angle=90, end angle=360, radius=\rA];
+\node[blue] at (C1) {\small $M_1$};
+
+% Malla M2
+\coordinate (C2) at (5,-0.5);
+\def\rB{0.5}
+\draw[blue, dashed, very thick,
+      postaction={decorate},
+      decoration={markings,
+        mark=at position 1 with {\arrow[blue, scale=1.2]{>}}}]
+  (C2)+(90:\rB) arc[start angle=90, end angle=360, radius=\rB];
+\node[blue] at (C2) {\small $M_2$};
+\end{circuitikz}\\[2pt]
+{\footnotesize\textcolor{gray}{Figura 3}}
+\end{center}
+
+%========================================
+% (a) SIMPLIFICACIÓN
+%========================================
+\section*{(a) Simplificaci\'on del circuito}
+
+Las resistencias de cada esquina inferior unen los mismos dos nodos, por lo que cada
+terna est\'a \textbf{en paralelo}.
+
+\medskip
+\noindent\textbf{Grupo izquierdo} $\rightarrow R_{eq1}$:
+\[
+    \frac{1}{R_{eq1}} = \frac{1}{18}+\frac{1}{9}+\frac{1}{3}
+        = \frac{1+2+6}{18} = \frac{9}{18}
+    \qquad\Rightarrow\qquad
+    \boxed{R_{eq1} = 2\,\Omega}
+\]
+
+\noindent\textbf{Grupo derecho} $\rightarrow R_{eq2}$:
+\[
+    \frac{1}{R_{eq2}} = \frac{1}{2}+\frac{1}{3}+\frac{1}{6}
+        = \frac{3+2+1}{6} = \frac{6}{6}
+    \qquad\Rightarrow\qquad
+    \boxed{R_{eq2} = 1\,\Omega}
+\]
+
+\noindent El $4\,\Omega$ (riel superior) y el $6\,\Omega$ (rama central) se conservan. El
+circuito queda con cuatro resistencias: $4\,\Omega$, $R_{eq1}=2\,\Omega$, $6\,\Omega$ y
+$R_{eq2}=1\,\Omega$, seg\'un el esquema reducido:
+
+%--- DIAGRAMA REDUCIDO (figura del enunciado) ---
+\begin{center}
+\begin{circuitikz}[scale=0.8, every node/.style={font=\small}]
+\draw (-1,1.5) to[battery1,l_=$12\,\mathrm{V}$] (-1,-1);
+\draw (-1,1.5) -- (0,1.5);
+\draw (0,1.5)  to[R,l=4~$\Omega$] (2,1.5);
+\draw (2,1.5) to[short, i>^={$I_1$}] (4,1.5);
+\draw (4,1.5) to[short] (4,1)
+             to[R,l_=6~$\Omega$, i<^={$I_2$}] (4,-3);
+\draw (4,1.5) to[battery1,l=$3\,\mathrm{V}$, i>^={$I_3$}] (6,1.5);
+  \draw (6,1.5)  to[short] (6,1)    to[R,l=$R_{eq2}$] (6,-3);
+  \draw (2,-3) to[battery1,l_=$6\,\mathrm{V}$] (4,-3);
+\draw (4,-3) to[battery1,l_=$14\,\mathrm{V}$] (6,-3);
+\draw (-1,-1) -- (-1,-3)
+             to[R,l_=$R_{eq1}$] (2,-3);
+
+% Malla M1
+\coordinate (C1) at (1,-0.5);
+\def\rA{0.6}
+\draw[blue, dashed, very thick,
+      postaction={decorate},
+      decoration={markings,
+        mark=at position 1 with {\arrow[blue, scale=1.2]{>}}}]
+  (C1)+(90:\rA) arc[start angle=90, end angle=360, radius=\rA];
+\node[blue] at (C1) {\small $M_1$};
+
+% Malla M2
+\coordinate (C2) at (5,-0.5);
+\def\rB{0.5}
+\draw[blue, dashed, very thick,
+      postaction={decorate},
+      decoration={markings,
+        mark=at position 1 with {\arrow[blue, scale=1.2]{>}}}]
+  (C2)+(90:\rB) arc[start angle=90, end angle=360, radius=\rB];
+\node[blue] at (C2) {\small $M_2$};
+\end{circuitikz}\\[2pt]
+{\footnotesize\textcolor{gray}{Esquema reducido}}
+\end{center}
+
+%========================================
+% (b) ECUACIONES DE KIRCHHOFF
+%========================================
+\section*{(b) Ecuaciones de Kirchhoff}
+
+\noindent\textbf{KCL --- Nodo $B$:} $I_1$ e $I_2$ entran, $I_3$ sale:
+\[
+    \boxed{I_1 + I_2 = I_3} \tag{1}
+\]
+
+\medskip
+\noindent\textbf{KVL --- Malla $M_1$} (izquierda + central). Recorri\'endola se atraviesan
+$4\,\Omega$ y $R_{eq1}=2\,\Omega$ (por $I_1$), las fuentes $12\,$V y $6\,$V (como ca\'idas seg\'un
+sus polaridades) y el $6\,\Omega$ central (por $I_2$):
+\[
+    \boxed{4I_1 - 12 + 2I_1 - 6 - 6I_2 = 0} \tag{2}
+\]
+
+\medskip
+\noindent\textbf{KVL --- Malla $M_2$} (central + derecha). Se atraviesan $R_{eq2}=1\,\Omega$
+(por $I_3$), la fuente $3\,$V, el $6\,\Omega$ central (por $I_2$) y la fuente $14\,$V:
+\[
+    \boxed{1\cdot I_3 + 3 + 6I_2 - 14 = 0} \tag{3}
+\]
+
+%========================================
+% (c) RESOLUCIÓN
+%========================================
+\section*{(c) Resoluci\'on del sistema}
+
+\noindent Trabajando la ecuaci\'on \textbf{(2)}:
+\begin{align*}
+    4I_1 - 12 + 2I_1 - 6 - 6I_2 &= 0 \\
+    6I_1 - 18 - 6I_2 &= 0 \qquad\Big/\ \tfrac{1}{6} \\
+    I_1 - 3 - I_2 &= 0 \;\;\Rightarrow\;\; I_1 = 3 + I_2 \tag{4}
+\end{align*}
+
+\noindent Reemplazando \textbf{(4)} en \textbf{(1)}:
+\begin{align*}
+    (3 + I_2) + I_2 &= I_3 \;\;\Rightarrow\;\; I_3 = 3 + 2I_2 \tag{5}
+\end{align*}
+
+\noindent Reemplazando \textbf{(5)} en \textbf{(3)}, $I_3 + 6I_2 - 11 = 0$:
+\begin{align*}
+    (3 + 2I_2) + 6I_2 - 11 &= 0 \\
+    8I_2 - 8 &= 0
+\end{align*}
+\[
+    \boxed{I_2 = 1\,[\text{A}]}
+\]
+
+\noindent Con $I_2 = 1$ en \textbf{(4)} y \textbf{(5)}:
+\[
+    I_1 = 3 + 1 \;\Rightarrow\; \boxed{I_1 = 4\,[\text{A}]}
+    \qquad\qquad
+    I_3 = 3 + 2(1) \;\Rightarrow\; \boxed{I_3 = 5\,[\text{A}]}
+\]
+
+\noindent\textbf{Verificaci\'on (nodo):} $\;I_1 + I_2 = 4 + 1 = 5 = I_3$ \checkmark
+
+%========================================
+% (d) POTENCIA DISIPADA
+%========================================
+\section*{(d) Potencia disipada en cada resistencia}
+
+Con $P = I^2 R$ y las corrientes de cada rama:
+
+\begin{align*}
+    P_{R_{eq1}} &= I_1^2\,R_{eq1} = (4)^2 (2) = 32\,[\text{W}] \\
+    P_{4\,\Omega} &= I_1^2\,(4) = (4)^2 (4) = 64\,[\text{W}] \\
+    P_{6\,\Omega} &= I_2^2\,(6) = (1)^2 (6) = 6\,[\text{W}] \\
+    P_{R_{eq2}} &= I_3^2\,R_{eq2} = (5)^2 (1) = 25\,[\text{W}]
+\end{align*}
+
+\[
+    \boxed{P_{\text{total}} = 32 + 64 + 6 + 25 = 127\,[\text{W}]}
+\]
+
+\noindent\small\textit{Comprobaci\'on (balance de potencia):} la potencia neta entregada por las
+fuentes es $\varepsilon_{\text{izq}}I_1 + \varepsilon_{\text{der}}I_3 = (12{+}6)(4) + (14{-}3)(5)
+= 72 + 55 = 127\,[\text{W}]$, igual a la disipada. \checkmark
+\normalsize
+
+%========================================
+% RESUMEN
+%========================================
+\section*{Resumen de Resultados}
+
+\begin{center}
+\begin{tabular}{|c|c|l|}
+\hline
+\textbf{Magnitud} & \textbf{Valor} & \textbf{Observaci\'on} \\
+\hline
+$R_{eq1} = 18\|9\|3$ & $2\,\Omega$ & Paralelo esquina izquierda \\
+$R_{eq2} = 2\|3\|6$  & $1\,\Omega$ & Paralelo esquina derecha \\
+\hline
+$I_1$ & $4\,[\text{A}]$ & Sentido supuesto correcto \\
+$I_2$ & $1\,[\text{A}]$ & Sentido supuesto correcto \\
+$I_3$ & $5\,[\text{A}]$ & Sentido supuesto correcto \\
+\hline
+$P_{R_{eq1}}$ & $32\,[\text{W}]$ & \\
+$P_{4\,\Omega}$ & $64\,[\text{W}]$ & \\
+$P_{6\,\Omega}$ & $6\,[\text{W}]$ & \\
+$P_{R_{eq2}}$ & $25\,[\text{W}]$ & \\
+$P_{\text{total}}$ & $127\,[\text{W}]$ & = potencia entregada por las fuentes \\
+\hline
+\end{tabular}
+\end{center}
+
+\end{document}

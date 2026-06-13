@@ -229,7 +229,7 @@ Always deduce R₂ position from the mesh equations (coefficient of I₁ vs I₃
 - Wires: always black (`\draw[black]`)
 - Node dots: `\fill[black] (x,y) circle (3.5pt)` with letter label beside
 - Current arrows: placed outside the circuit frame with `\draw[->,black,thick]`
-- MiKTeX 2.9 compatibility: use `\usetikzlibrary{calc,arrows,...}` (NOT `arrows.meta`) and `>=stealth` (lowercase)
+- LaTeX engine: **modern MiKTeX is installed** (since 2026-06-13, replacing the EOL MiKTeX 2.9). `arrows.meta`, `>=Stealth` and `circuitikz` all work now. The shell PATH may still point at the removed 2.9 — call pdflatex by full path: `C:/Users/Usuario/AppData/Local/Programs/MiKTeX/miktex/bin/x64/pdflatex.exe` (auto-installs missing packages; run twice for `\pageref{LastPage}`). Older hand-drawn files used `arrows`/`>=stealth` for 2.9 compat — leave them as-is.
 - Minipage layout for part a): 38% width for small circuit diagram + mesh arrows, 58% for KVL/KCL equations
 
 **Battery polarity rules** (verified against pauta):
@@ -237,6 +237,32 @@ Always deduce R₂ position from the mesh equations (coefficient of I₁ vs I₃
 - ε₁ (top branch, I₁ goes TR→TL): + at TL side
 - ε₂ (middle branch, I₂ goes a→b): + at a side  
 - ε₃ (bottom branch, I₃ goes BL→BR): + at BR side
+
+**circuitikz for circuit diagrams** (preferred since 2026-06-13, after the MiKTeX upgrade — `Solucion_tarea3_P1/P2/P3`): use circuitikz instead of hand-drawn TikZ rectangles for new circuit figures (cleaner, matches the professor's reference figures).
+- Preamble: `\usepackage[american]{circuitikz}` after `\usepackage{tikz}`; mesh-loop arrows need `\usetikzlibrary{decorations.markings}`.
+- Components: `to[battery1,l=...]` (DC source), `to[R,l=...]` (resistor, zigzag), `to[C,l=...]` (capacitor), `to[short,i>^={$I_1$}]` (wire carrying a labeled current).
+- **`battery1` polarity**: the long bar (+ terminal) sits at the FIRST coordinate of the `to[battery1]` path. Use the `invert` option to flip it. (e.g. `(0,2) to[battery1] (0,0)` → + at top; verified empirically.)
+- **Label math-mode gotcha**: circuitikz labels are typeset in TEXT mode — wrap `\mathrm`/`\,` in `$...$` (e.g. `l_=$10\,\mathrm{V}$`, not `l_=10\,\mathrm{V}`, which throws "\mathrm allowed only in math mode" and halts a normal compile). `l=$3\,\Omega$` is fine.
+- **Mesh loops** (M₁, M₂): blue dashed arc + arrowhead (professor's style):
+  ```latex
+  \draw[blue,dashed,very thick,postaction={decorate},
+        decoration={markings, mark=at position 1 with {\arrow[blue,scale=1.2]{>}}}]
+    (Mx)+(90:\rA) arc[start angle=90, end angle=360, radius=\rA];
+  \node[blue] at (Mx) {$M_1$};
+  ```
+- Node dots: `\node[circ] at (x,y){};`. The professor's circuitikz reference is `enunciado e imagen de p3 de la tarea 3 de 2026.tex` (use its figures verbatim when available — don't redraw).
+
+**Kirchhoff problem-solving method** (branch-current method — `Solucion_tarea3_P2/P3`, `Solucion_clase_12-06-2026`):
+1. **Simplify first**: reduce series/parallel resistor groups to equivalents (e.g. `18∥9∥3 = 2Ω`) and draw the reduced schematic, before applying Kirchhoff.
+2. **KCL** at the node: one current-balance equation (e.g. `I₁ + I₂ = I₃`), read from the assumed current-arrow directions.
+3. **KVL** per independent mesh (M₁, M₂): ΣEMF = ΣIR with signs from source polarities + traversal direction. Keep the professor's explicit form first (e.g. `4I₁ − 12 + 2I₁ − 6 − 6I₂ = 0`) then simplify.
+4. **Solve** by substitution; **verify** with the node equation and a power balance (Σε·I delivered = ΣI²R dissipated).
+5. A negative current ⇒ real direction opposite the assumed one.
+
+**Magnetic force/torque on a current loop** (`Solucion_tarea3_P4`, `Solucion_clase_12-06-2026` Prob 3):
+- Force per straight side `F = I L × B` (`L` = side length in the current direction). Net force on a closed loop in a **uniform** field is **zero** (check: opposite sides cancel).
+- Moment `μ = I A n̂` (`n̂` from right-hand rule on the circulation); torque `τ = μ × B` (only B⊥μ contributes).
+- The current circulation read from the figure sets the sign of μ and τ — **state the assumed direction explicitly** (see figure workflow below).
 
 **Correcting TikZ figures — mandatory workflow:**
 1. Read the PDF enunciado figure first (`guia[N].pdf`, `guia_tarea[N]_*.pdf`, etc.).

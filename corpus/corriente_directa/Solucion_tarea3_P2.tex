@@ -5,6 +5,7 @@
 \usepackage{graphicx}
 \usepackage{xcolor}
 \usepackage{tikz}
+\usepackage[american]{circuitikz}
 \usetikzlibrary{calc,arrows,decorations.markings,patterns}
 \usepackage{enumerate}
 \usepackage[top=2.5cm, bottom=4cm, left=2cm, right=2cm, footskip=40pt]{geometry}
@@ -79,68 +80,33 @@ Tabla~1, determinando la corriente, el voltaje y la potencia disipada en cada re
 
 %--- DIAGRAMA PRINCIPAL ---
 \begin{center}
-\begin{tikzpicture}[scale=1.15, >=stealth, line width=1pt]
-
-% Rieles superior e inferior
-\draw[black] (0,4) -- (7,4);
-\draw[black] (0,0) -- (7,0);
-
-% ---- Rama izquierda: R1=3 Ω (abajo) + ε1=10 V (arriba) ----
-\draw[black] (0,0) -- (0,0.6);
-\draw[black] (0,2.0) -- (0,2.7);
-\draw[black] (0,3.05) -- (0,4);
-% R1
-\fill[colR1!25] (-0.19,0.6) rectangle (0.19,2.0);
-\draw[colR1,line width=1.5pt] (-0.19,0.6) rectangle (0.19,2.0);
-\node[colR1,left,font=\small] at (-0.24,1.3) {$R_1{=}3\,[\Omega]$};
-% ε1 (+ arriba): línea larga fina = polo +, línea corta gruesa = polo -
-\draw[colE1,line width=2pt]  (-0.30,3.05) -- (0.30,3.05);
-\draw[colE1,line width=4pt]  (-0.16,2.70) -- (0.16,2.70);
-\node[colE1,left,font=\small] at (-0.36,2.87) {$\varepsilon_1{=}10\,[\text{V}]$};
-\node[colE1,font=\tiny,right] at (0.30,3.18) {$+$};
-
-% ---- Rama central: R2=2 Ω (abajo) + ε2=5 V (arriba) ----
-\draw[black] (3.5,0) -- (3.5,0.6);
-\draw[black] (3.5,2.0) -- (3.5,2.7);
-\draw[black] (3.5,3.05) -- (3.5,4);
-% R2
-\fill[colR2!25] (3.31,0.6) rectangle (3.69,2.0);
-\draw[colR2,line width=1.5pt] (3.31,0.6) rectangle (3.69,2.0);
-\node[colR2,left,font=\small] at (3.27,1.3) {$R_2{=}2\,[\Omega]$};
-% ε2 (+ arriba)
-\draw[colE2,line width=2pt]  (3.20,3.05) -- (3.80,3.05);
-\draw[colE2,line width=4pt]  (3.34,2.70) -- (3.66,2.70);
-\node[colE2,left,font=\small] at (3.15,2.87) {$\varepsilon_2{=}5\,[\text{V}]$};
-\node[colE2,font=\tiny,right] at (3.80,3.18) {$+$};
-
-% ---- Rama derecha: R3=7 Ω ----
-\draw[black] (7,0) -- (7,1.3);
-\draw[black] (7,2.7) -- (7,4);
-\fill[colR3!25] (6.81,1.3) rectangle (7.19,2.7);
-\draw[colR3,line width=1.5pt] (6.81,1.3) rectangle (7.19,2.7);
-\node[colR3,right,font=\small] at (7.22,2.0) {$R_3{=}7\,[\Omega]$};
-
-% ---- Flechas de corriente ----
-\draw[->,black,line width=1.3pt] (0.9,4.45) -- (2.2,4.45)
-    node[midway,above,font=\normalsize]{$I_1$};
-\draw[->,black,line width=1.3pt] (4.8,4.45) -- (6.1,4.45)
-    node[midway,above,font=\normalsize]{$I_3$};
-\draw[->,black,line width=1.3pt] (4.1,2.55) -- (4.1,1.45)
-    node[midway,right,font=\normalsize]{$I_2$};
-
-% ---- Nodos ----
-\fill[black] (3.5,4) circle (3pt);
-\node[above left,font=\small] at (3.45,4.06) {$c$};
-\fill[black] (3.5,0) circle (3pt);
-\node[below left,font=\small] at (3.45,-0.06) {$d$};
-
-% ---- Mallas (arcos punteados grises) ----
-\draw[->,gray,thick,dashed] (1.75,2.0) arc[start angle=120,end angle=-200,radius=0.55]
-    node[pos=0.5,font=\scriptsize,gray]{$M_1$};
-\draw[->,gray,thick,dashed] (5.25,2.0) arc[start angle=120,end angle=-200,radius=0.55]
-    node[pos=0.5,font=\scriptsize,gray]{$M_2$};
-
-\end{tikzpicture}
+\begin{circuitikz}[scale=1.0, every node/.style={font=\small}]
+% Riel superior (con I1 e I3) y riel inferior
+\draw (0,2) to[short,i>^={$I_1$}] (3.5,2) to[short,i>^={$I_3$}] (7,2);
+\draw (0,-2) -- (7,-2);
+% Rama izquierda: eps1=10V (+ arriba) + R1=3
+\draw (0,2) to[battery1,l_=$\varepsilon_1{=}10\,\mathrm{V}$] (0,0)
+            to[R,l_=$R_1{=}3\,\Omega$] (0,-2);
+% Rama central: eps2=5V (+ arriba) + R2=2, con I2 hacia abajo
+\draw (3.5,2) to[battery1,l_=$\varepsilon_2{=}5\,\mathrm{V}$] (3.5,0)
+              to[R,l_=$R_2{=}2\,\Omega$,i>^={$I_2$}] (3.5,-2);
+% Rama derecha: R3=7
+\draw (7,2) to[R,l=$R_3{=}7\,\Omega$] (7,-2);
+% Nodos c y d
+\node[circ] at (3.5,2){};  \node[above right] at (3.55,2.05) {$c$};
+\node[circ] at (3.5,-2){}; \node[below right] at (3.55,-2.05) {$d$};
+% Mallas (estilo P3: azul punteado con flecha)
+\coordinate (Ma) at (1.75,-0.1); \def\rA{0.55}
+\draw[blue, dashed, very thick, postaction={decorate},
+      decoration={markings, mark=at position 1 with {\arrow[blue,scale=1.2]{>}}}]
+  (Ma)+(90:\rA) arc[start angle=90, end angle=360, radius=\rA];
+\node[blue] at (Ma) {$M_1$};
+\coordinate (Mb) at (5.25,-0.1);
+\draw[blue, dashed, very thick, postaction={decorate},
+      decoration={markings, mark=at position 1 with {\arrow[blue,scale=1.2]{>}}}]
+  (Mb)+(90:\rA) arc[start angle=90, end angle=360, radius=\rA];
+\node[blue] at (Mb) {$M_2$};
+\end{circuitikz}
 \end{center}
 
 %========================================
@@ -187,44 +153,25 @@ y $M_2$ (ramas central + derecha).
 \begin{minipage}[t]{0.42\textwidth}
 \centering\vspace{0pt}
 % Diagrama pequeño con mallas
-\begin{tikzpicture}[scale=0.74, >=stealth, line width=0.9pt]
-\draw[black] (0,4)--(7,4); \draw[black] (0,0)--(7,0);
-% Rama izq
-\draw[black](0,0)--(0,0.6); \draw[black](0,2.0)--(0,2.7); \draw[black](0,3.05)--(0,4);
-\fill[colR1!25](-0.19,0.6) rectangle (0.19,2.0);
-\draw[colR1,line width=1.2pt](-0.19,0.6) rectangle (0.19,2.0);
-\node[colR1,left,font=\scriptsize] at (-0.22,1.3) {$R_1$};
-\draw[colE1,line width=1.8pt](-0.30,3.05)--(0.30,3.05);
-\draw[colE1,line width=3.5pt](-0.16,2.70)--(0.16,2.70);
-\node[colE1,left,font=\scriptsize] at (-0.34,2.87) {$\varepsilon_1$};
-\node[colE1,font=\tiny,right] at (0.26,3.15) {$+$};
-% Rama central
-\draw[black](3.5,0)--(3.5,0.6); \draw[black](3.5,2.0)--(3.5,2.7); \draw[black](3.5,3.05)--(3.5,4);
-\fill[colR2!25](3.31,0.6) rectangle (3.69,2.0);
-\draw[colR2,line width=1.2pt](3.31,0.6) rectangle (3.69,2.0);
-\node[colR2,left,font=\scriptsize] at (3.28,1.3) {$R_2$};
-\draw[colE2,line width=1.8pt](3.20,3.05)--(3.80,3.05);
-\draw[colE2,line width=3.5pt](3.34,2.70)--(3.66,2.70);
-\node[colE2,left,font=\scriptsize] at (3.16,2.87) {$\varepsilon_2$};
-\node[colE2,font=\tiny,right] at (3.76,3.15) {$+$};
-% Rama derecha
-\draw[black](7,0)--(7,1.3); \draw[black](7,2.7)--(7,4);
-\fill[colR3!25](6.81,1.3) rectangle (7.19,2.7);
-\draw[colR3,line width=1.2pt](6.81,1.3) rectangle (7.19,2.7);
-\node[colR3,right,font=\scriptsize] at (7.22,2.0) {$R_3$};
-% Corrientes
-\draw[->,black,line width=1pt](0.9,4.35)--(2.0,4.35) node[midway,above,font=\scriptsize]{$I_1$};
-\draw[->,black,line width=1pt](4.9,4.35)--(6.0,4.35) node[midway,above,font=\scriptsize]{$I_3$};
-\draw[->,black,line width=1pt](4.05,2.5)--(4.05,1.5) node[midway,right,font=\scriptsize]{$I_2$};
-% Mallas
-\draw[->,gray,thick,dashed](1.75,2.0) arc[start angle=120,end angle=-200,radius=0.55]
-    node[pos=0.5,font=\scriptsize,gray]{$M_1$};
-\draw[->,gray,thick,dashed](5.25,2.0) arc[start angle=120,end angle=-200,radius=0.55]
-    node[pos=0.5,font=\scriptsize,gray]{$M_2$};
-% Nodos
-\fill[black](3.5,4) circle (2.5pt); \node[above left,font=\scriptsize] at (3.45,4.05){$c$};
-\fill[black](3.5,0) circle (2.5pt); \node[below left,font=\scriptsize] at (3.45,-0.05){$d$};
-\end{tikzpicture}
+\begin{circuitikz}[scale=0.6, every node/.style={font=\scriptsize}]
+\draw (0,2) to[short,i>^={$I_1$}] (3.5,2) to[short,i>^={$I_3$}] (7,2);
+\draw (0,-2) -- (7,-2);
+\draw (0,2) to[battery1,l_=$\varepsilon_1$] (0,0) to[R,l_=$R_1$] (0,-2);
+\draw (3.5,2) to[battery1,l_=$\varepsilon_2$] (3.5,0) to[R,l_=$R_2$,i>^={$I_2$}] (3.5,-2);
+\draw (7,2) to[R,l=$R_3$] (7,-2);
+\node[circ] at (3.5,2){};  \node[above right] at (3.55,2.05) {$c$};
+\node[circ] at (3.5,-2){}; \node[below right] at (3.55,-2.05) {$d$};
+\coordinate (Ma) at (1.75,-0.1); \def\rA{0.6}
+\draw[blue, dashed, very thick, postaction={decorate},
+      decoration={markings, mark=at position 1 with {\arrow[blue,scale=1.2]{>}}}]
+  (Ma)+(90:\rA) arc[start angle=90, end angle=360, radius=\rA];
+\node[blue] at (Ma) {$M_1$};
+\coordinate (Mb) at (5.25,-0.1);
+\draw[blue, dashed, very thick, postaction={decorate},
+      decoration={markings, mark=at position 1 with {\arrow[blue,scale=1.2]{>}}}]
+  (Mb)+(90:\rA) arc[start angle=90, end angle=360, radius=\rA];
+\node[blue] at (Mb) {$M_2$};
+\end{circuitikz}
 \end{minipage}%
 \hfill
 \begin{minipage}[t]{0.54\textwidth}

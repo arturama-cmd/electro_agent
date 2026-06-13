@@ -1,0 +1,259 @@
+\documentclass[12pt,letterpaper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[spanish,es-noshorthands]{babel}
+\usepackage{amsmath,amssymb}
+\usepackage{graphicx}
+\usepackage{xcolor}
+\usepackage{tikz}
+\usetikzlibrary{calc,arrows.meta,decorations.markings,decorations.pathmorphing}
+\usepackage[top=2.5cm, bottom=4cm, left=2cm, right=2cm, footskip=40pt]{geometry}
+\usepackage{fancyhdr}
+\usepackage{lastpage}
+
+\definecolor{ubbblue}{RGB}{0,51,102}
+
+\pagestyle{fancy}
+\fancyhf{}
+\renewcommand{\headrulewidth}{0pt}
+\renewcommand{\footrulewidth}{0.4pt}
+\fancyfoot[L]{\raisebox{-0.5cm}{\includegraphics[height=1.2cm]{logo ubb.png}}}
+\fancyfoot[C]{%
+    \begin{minipage}[b]{8cm}\centering
+        \footnotesize\textcolor{ubbblue}{\textbf{Dr.\ Arturo Fern\'andez P\'erez}}\\
+        \scriptsize Departamento de F\'isica -- Universidad del B\'io-B\'io\\
+        \scriptsize \textit{Electro\_Asistente\_AI-UBB}\\
+        \tiny P\'agina \thepage\ de \pageref{LastPage}
+    \end{minipage}}
+\fancyfoot[R]{\raisebox{-0.5cm}{\includegraphics[height=1.2cm]{logo dfis.png}}}
+\fancypagestyle{plain}{%
+    \fancyhf{}
+    \renewcommand{\headrulewidth}{0pt}
+    \renewcommand{\footrulewidth}{0.4pt}
+    \fancyfoot[L]{\raisebox{-0.5cm}{\includegraphics[height=1.2cm]{logo ubb.png}}}
+    \fancyfoot[C]{%
+        \begin{minipage}[b]{8cm}\centering
+            \footnotesize\textcolor{ubbblue}{\textbf{Dr.\ Arturo Fern\'andez P\'erez}}\\
+            \scriptsize Departamento de F\'isica -- Universidad del B\'io-B\'io\\
+            \scriptsize \textit{Electro\_Asistente\_AI-UBB}\\
+            \tiny P\'agina \thepage\ de \pageref{LastPage}
+        \end{minipage}}
+    \fancyfoot[R]{\raisebox{-0.5cm}{\includegraphics[height=1.2cm]{logo dfis.png}}}
+}
+
+\begin{document}
+
+%========================================
+% ENCABEZADO INSTITUCIONAL
+%========================================
+\begin{center}
+    \includegraphics[height=2cm]{logo ubb.png}\\[0.3cm]
+    {\large\textcolor{ubbblue}{\textbf{UNIVERSIDAD DEL B\'IO-B\'IO}}}\\[0.1cm]
+    {\normalsize Facultad de Ciencias -- Departamento de F\'isica}
+\end{center}
+
+\vspace{0.3cm}
+\hrule height 1pt
+\vspace{0.5cm}
+
+{\centering\Large\textbf{Soluci\'on -- Tarea 3, Problema 4}\par}
+{\centering\normalsize\textit{Fuerza, momento y torque magn\'etico sobre un lazo cuadrado (Fig.\ 4)}\par}
+
+\vspace{0.6cm}
+
+%========================================
+% ENUNCIADO
+%========================================
+\section*{Enunciado del Problema}
+
+La Fig.\ 4 representa un lazo de corriente cuadrado de lado $a=10{,}0\ [\text{cm}]$ por donde
+circula $I_0=1{,}8\ [\text{A}]$. Los sentidos de circulaci\'on en cada lado se indican en la
+figura, as\'i como el sistema de referencia. Si el lazo est\'a sujeto a un campo magn\'etico
+$\vec{B}=1{,}2\,\hat{\jmath}+0{,}7\,\hat{k}\ [\text{T}]$, determine:
+\textbf{(a)} la fuerza magn\'etica $\vec{F}_m$ sobre cada lado; \textbf{(b)} el momento
+magn\'etico $\vec{\mu}$ del lazo; \textbf{(c)} el torque magn\'etico $\vec{\tau}_m$.
+
+\medskip
+
+\noindent
+\begin{minipage}[t]{0.44\textwidth}
+\centering
+\vspace{0pt}
+\begin{tikzpicture}[scale=1.0, >=Stealth, line width=1pt]
+    % ---- ejes ----
+    \draw[->,thick] (0,0)--(0,2.3) node[above]{$\mathbf{Z}$};
+    \draw[->,thick] (0,0)--(3.9,0) node[right]{$\mathbf{Y}$};
+    \draw[->,thick] (0,0)--(-1.35,-1.75) node[below left]{$\mathbf{X}$};
+    % ---- lazo cuadrado (en el plano XY, perspectiva) ----
+    % corners: BL=(0.4,0.25) BR=(3.4,0.25) FR=(2.4,-1.05) FL=(-0.6,-1.05)
+    \coordinate (BL) at (0.4,0.25);
+    \coordinate (BR) at (3.4,0.25);
+    \coordinate (FR) at (2.4,-1.05);
+    \coordinate (FL) at (-0.6,-1.05);
+    \draw[very thick, blue!70!black] (BL)--(BR)--(FR)--(FL)--cycle;
+    % ---- corrientes (flechas rojas) ----
+    % frontal FL->FR : +y (derecha), lleva I0
+    \draw[->,red,line width=1.3pt] (0.45,-1.05)--(1.45,-1.05);
+    \node[red,above,font=\small] at (0.95,-1.0){$I_0$};
+    % posterior BR->BL : -y (izquierda)
+    \draw[->,red,line width=1.3pt] (2.45,0.25)--(1.45,0.25);
+    % derecho FR->BR : -x (hacia atras, arriba-derecha)
+    \draw[->,red,line width=1.3pt] (2.62,-0.71)--(3.08,-0.11);
+    % izquierdo BL->FL : +x (hacia el frente, abajo-izquierda)
+    \draw[->,red,line width=1.3pt] (0.18,-0.14)--(-0.28,-0.74);
+    % ---- cotas a ----
+    \node[font=\small] at (1.95,0.5){$a$};
+    \node[font=\small] at (3.15,-0.55){$a$};
+\end{tikzpicture}\\[2pt]
+{\footnotesize Figura 4: lazo en el plano $XY$, $\vec{\mu}\parallel+\hat{k}$}
+\end{minipage}%
+\hfill
+\begin{minipage}[t]{0.54\textwidth}
+\vspace{0pt}
+\textbf{Datos:}
+\begin{itemize}\setlength\itemsep{1pt}
+    \item $I_0=1{,}8\ [\text{A}]$,\quad $a=0{,}10\ [\text{m}]$,\quad $A=a^2=0{,}01\ [\text{m}^2]$
+    \item $\vec{B}=1{,}2\,\hat{\jmath}+0{,}7\,\hat{k}\ [\text{T}]$
+\end{itemize}
+
+\smallskip
+\textbf{Sentido de la corriente} (vectores $\vec{L}$, magnitud $a$):
+\[
+    \vec{L}_1 = +a\,\hat{\jmath}\ (\text{frontal},\,I_0),\qquad
+    \vec{L}_2 = -a\,\hat{\imath}\ (\text{derecho})
+\]
+\[
+    \vec{L}_3 = -a\,\hat{\jmath}\ (\text{posterior}),\qquad
+    \vec{L}_4 = +a\,\hat{\imath}\ (\text{izquierdo})
+\]
+
+\smallskip
+\textbf{Productos cruz de unitarios:}
+\[
+    \hat{\imath}\times\hat{\jmath}=\hat{k},\quad
+    \hat{\jmath}\times\hat{k}=\hat{\imath},\quad
+    \hat{k}\times\hat{\imath}=\hat{\jmath}
+\]
+\[
+    \hat{\imath}\times\hat{k}=-\hat{\jmath},\quad
+    \hat{k}\times\hat{\jmath}=-\hat{\imath},\quad
+    \hat{\jmath}\times\hat{\imath}=-\hat{k}
+\]
+\end{minipage}
+
+\medskip
+
+%--------------------------------------------------
+\section*{(a) Fuerza magn\'etica sobre cada lado}
+
+La fuerza sobre un segmento recto es $\vec{F}=I_0\,\vec{L}\times\vec{B}$, con $\vec{L}$ en el
+sentido de la corriente. Con $I_0 a = (1{,}8)(0{,}10)=0{,}18$:
+
+\medskip
+\noindent\textbf{Lado 1 -- frontal} ($\vec{L}_1=+a\,\hat{\jmath}$):
+\begin{align*}
+    \vec{F}_1 &= I_0\,(a\,\hat{\jmath})\times(1{,}2\,\hat{\jmath}+0{,}7\,\hat{k})
+             = I_0 a\big[1{,}2(\hat{\jmath}\times\hat{\jmath})+0{,}7(\hat{\jmath}\times\hat{k})\big]\\
+             &= (0{,}18)(0{,}7)\,\hat{\imath}
+\end{align*}
+\[
+    \boxed{\vec{F}_1 = +0{,}126\,\hat{\imath}\ [\text{N}]}
+\]
+
+\noindent\textbf{Lado 2 -- derecho} ($\vec{L}_2=-a\,\hat{\imath}$):
+\begin{align*}
+    \vec{F}_2 &= I_0\,(-a\,\hat{\imath})\times(1{,}2\,\hat{\jmath}+0{,}7\,\hat{k})
+             = -I_0 a\big[1{,}2(\hat{\imath}\times\hat{\jmath})+0{,}7(\hat{\imath}\times\hat{k})\big]\\
+             &= -I_0 a\big[1{,}2\,\hat{k}-0{,}7\,\hat{\jmath}\big]
+              = (0{,}18)\big[0{,}7\,\hat{\jmath}-1{,}2\,\hat{k}\big]
+\end{align*}
+\[
+    \boxed{\vec{F}_2 = +0{,}126\,\hat{\jmath}-0{,}216\,\hat{k}\ [\text{N}]}
+\]
+
+\noindent\textbf{Lado 3 -- posterior} ($\vec{L}_3=-a\,\hat{\jmath}$):
+\[
+    \vec{F}_3 = I_0\,(-a\,\hat{\jmath})\times\vec{B} = -(0{,}18)(0{,}7)\,\hat{\imath}
+    \quad\Rightarrow\quad
+    \boxed{\vec{F}_3 = -0{,}126\,\hat{\imath}\ [\text{N}]}
+\]
+
+\noindent\textbf{Lado 4 -- izquierdo} ($\vec{L}_4=+a\,\hat{\imath}$):
+\[
+    \vec{F}_4 = I_0\,(a\,\hat{\imath})\times\vec{B} = (0{,}18)\big[1{,}2\,\hat{k}-0{,}7\,\hat{\jmath}\big]
+    \quad\Rightarrow\quad
+    \boxed{\vec{F}_4 = -0{,}126\,\hat{\jmath}+0{,}216\,\hat{k}\ [\text{N}]}
+\]
+
+\noindent\textit{Verificaci\'on:} $\vec{F}_1+\vec{F}_2+\vec{F}_3+\vec{F}_4=\vec{0}$: la fuerza
+neta sobre un lazo cerrado en un campo \textbf{uniforme} es nula (los lados opuestos se cancelan,
+$\vec{F}_3=-\vec{F}_1$ y $\vec{F}_4=-\vec{F}_2$). \checkmark
+
+%--------------------------------------------------
+\section*{(b) Momento magn\'etico $\vec{\mu}$}
+
+El \'area del lazo es $A=a^2=(0{,}10)^2=0{,}01\ [\text{m}^2]$.
+
+\medskip
+\noindent\textbf{Direcci\'on (regla de la mano derecha):} al curvar los dedos de la mano derecha
+en el sentido de circulaci\'on de la corriente (frontal $+\hat{\jmath}\to$ derecho $-\hat{\imath}
+\to$ posterior $-\hat{\jmath}\to$ izquierdo $+\hat{\imath}$, es decir \emph{antihorario visto
+desde} $+Z$), el pulgar apunta en $+\hat{k}$ (saliendo del plano $XY$). Por tanto $\hat{n}=+\hat{k}$:
+\[
+    \vec{\mu} = I_0\,A\,\hat{n} = (1{,}8)(0{,}01)\,\hat{k}
+\]
+\[
+    \boxed{\vec{\mu} = +1{,}8\times10^{-2}\,\hat{k}\ [\text{A}\cdot\text{m}^2]}
+\]
+
+%--------------------------------------------------
+\section*{(c) Torque magn\'etico $\vec{\tau}_m$}
+
+\[
+    \vec{\tau}_m = \vec{\mu}\times\vec{B}
+       = (1{,}8\times10^{-2}\,\hat{k})\times(1{,}2\,\hat{\jmath}+0{,}7\,\hat{k})
+\]
+\begin{align*}
+    &= 1{,}8\times10^{-2}\big[1{,}2\,(\hat{k}\times\hat{\jmath})+0{,}7\,(\hat{k}\times\hat{k})\big]
+     = 1{,}8\times10^{-2}\big[1{,}2\,(-\hat{\imath})+0\big]
+\end{align*}
+\[
+    \boxed{\vec{\tau}_m = -2{,}16\times10^{-2}\,\hat{\imath}\ [\text{N}\cdot\text{m}]}
+    \qquad |\vec{\tau}_m| = 2{,}16\times10^{-2}\ [\text{N}\cdot\text{m}]
+\]
+
+\noindent\textit{Nota:} s\'olo la componente de $\vec{B}$ \emph{perpendicular} a $\vec{\mu}$
+(la parte $1{,}2\,\hat{\jmath}$) genera torque; la componente paralela ($0{,}7\,\hat{k}$) no
+contribuye.
+
+\subsection*{Interpretaci\'on f\'isica}
+
+El torque tiende a \textbf{alinear} el momento magn\'etico $\vec{\mu}$ (inicialmente en $+\hat{k}$)
+con el campo $\vec{B}$. Por la regla de la mano derecha, el vector $\vec{\tau}_m=-2{,}16\times
+10^{-2}\,\hat{\imath}$ es el \textbf{eje de rotaci\'on}: el lazo gira en torno al eje $-\hat{\imath}$
+hasta que $\vec{\mu}$ quede paralelo a $\vec{B}$, posici\'on de equilibrio estable en la que
+$\vec{\tau}_m=\vec{0}$.
+
+%========================================
+% RESUMEN
+%========================================
+\section*{Resumen de Resultados}
+
+\begin{center}
+\renewcommand{\arraystretch}{1.2}
+\begin{tabular}{|l|c|}
+\hline
+\textbf{Magnitud} & \textbf{Valor} \\
+\hline
+$\vec{F}_1$ (frontal, $+\hat{\jmath}$)   & $+0{,}126\,\hat{\imath}\ [\text{N}]$ \\
+$\vec{F}_2$ (derecho, $-\hat{\imath}$)   & $+0{,}126\,\hat{\jmath}-0{,}216\,\hat{k}\ [\text{N}]$ \\
+$\vec{F}_3$ (posterior, $-\hat{\jmath}$) & $-0{,}126\,\hat{\imath}\ [\text{N}]$ \\
+$\vec{F}_4$ (izquierdo, $+\hat{\imath}$) & $-0{,}126\,\hat{\jmath}+0{,}216\,\hat{k}\ [\text{N}]$ \\
+$\sum\vec{F}$ & $\vec{0}$ \\
+\hline
+$\vec{\mu}$   & $+1{,}8\times10^{-2}\,\hat{k}\ [\text{A}\cdot\text{m}^2]$ \\
+$\vec{\tau}_m$ & $-2{,}16\times10^{-2}\,\hat{\imath}\ [\text{N}\cdot\text{m}]$ \\
+\hline
+\end{tabular}
+\end{center}
+
+\end{document}

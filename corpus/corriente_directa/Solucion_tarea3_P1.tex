@@ -1,0 +1,307 @@
+\documentclass[12pt,letterpaper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[spanish,es-noshorthands]{babel}
+\usepackage{amsmath,amssymb}
+\usepackage{graphicx}
+\usepackage{xcolor}
+\usepackage{tikz}
+\usepackage[american]{circuitikz}
+\usetikzlibrary{calc,arrows,decorations.markings,patterns}
+\usepackage{enumerate}
+\usepackage[top=2.5cm, bottom=4cm, left=2cm, right=2cm, footskip=40pt]{geometry}
+\usepackage{fancyhdr}
+\usepackage{lastpage}
+
+% ===== COLORES =====
+\definecolor{ubbblue}{RGB}{0,51,102}
+\definecolor{diel1}{RGB}{248,200,170}   % kappa1 (salmon)
+\definecolor{diel2}{RGB}{255,240,160}   % kappa2 (amarillo)
+\definecolor{diel3}{RGB}{180,215,250}   % kappa3 (azul claro)
+
+% ===== ENCABEZADO / PIE =====
+\pagestyle{fancy}
+\fancyhf{}
+\renewcommand{\headrulewidth}{0pt}
+\renewcommand{\footrulewidth}{0.4pt}
+\fancyfoot[L]{\raisebox{-0.5cm}{\includegraphics[height=1.2cm]{logo ubb.png}}}
+\fancyfoot[C]{%
+    \begin{minipage}[b]{8cm}\centering
+        \footnotesize\textcolor{ubbblue}{\textbf{Dr. Arturo Fern\'andez P\'erez}}\\
+        \scriptsize Departamento de F\'isica -- Universidad del B\'io-B\'io\\
+        \scriptsize\textit{Electro\_Asistente\_AI-UBB}\\
+        \tiny P\'agina \thepage\ de \pageref{LastPage}
+    \end{minipage}}
+\fancyfoot[R]{\raisebox{-0.5cm}{\includegraphics[height=1.2cm]{logo dfis.png}}}
+
+\fancypagestyle{plain}{%
+  \fancyhf{}
+  \renewcommand{\headrulewidth}{0pt}
+  \renewcommand{\footrulewidth}{0.4pt}
+  \fancyfoot[L]{\raisebox{-0.5cm}{\includegraphics[height=1.2cm]{logo ubb.png}}}
+  \fancyfoot[C]{%
+    \begin{minipage}[b]{8cm}\centering
+        \footnotesize\textcolor{ubbblue}{\textbf{Dr. Arturo Fern\'andez P\'erez}}\\
+        \scriptsize Departamento de F\'isica -- Universidad del B\'io-B\'io\\
+        \scriptsize\textit{Electro\_Asistente\_AI-UBB}\\
+        \tiny P\'agina \thepage\ de \pageref{LastPage}
+    \end{minipage}}
+  \fancyfoot[R]{\raisebox{-0.5cm}{\includegraphics[height=1.2cm]{logo dfis.png}}}
+}
+
+\newcommand{\eps}{\varepsilon_0}
+
+\begin{document}
+
+%========================================
+% ENCABEZADO INSTITUCIONAL
+%========================================
+\begin{center}
+    \includegraphics[height=2cm]{logo ubb.png}\\[0.3cm]
+    {\large\textcolor{ubbblue}{\textbf{UNIVERSIDAD DEL B\'IO-B\'IO}}}\\[0.1cm]
+    {\normalsize Facultad de Ciencias -- Departamento de F\'isica}
+\end{center}
+
+\vspace{0.3cm}
+\hrule height 1pt
+\vspace{0.5cm}
+
+{\centering\Large\textbf{Soluci\'on -- Tarea 3, Problema 1}\par}
+{\centering\normalsize Condensadores con diel\'ectricos: capacitancia, carga y energ\'ia (Fig.\ 1)\par}
+
+\vspace{0.5cm}
+
+%========================================
+% ENUNCIADO
+%========================================
+\section*{Enunciado y datos}
+
+En el circuito de la Fig.\ 1, $C_1=12{,}0$ [pF], $C_2=C_5=5{,}0$ [pF] y $C_6=C_7=8{,}0$ [pF].
+El capacitor $C_3$ es un condensador de placas planas \emph{cuadradas} de lado $l=5{,}0$ [cm] y
+separaci\'on $d=2{,}0$ [mm], con tres diel\'ectricos ($\kappa_1=2$, $\kappa_2=3$, $\kappa_3=5$)
+dispuestos como muestra la figura. El capacitor $C_4$ es cil\'indrico de largo $\ell=5{,}0$ [cm],
+radio interior $r_a=2{,}0$ [mm] y radio exterior $r_b=3{,}0$ [mm], con diel\'ectrico $\kappa_1=2$.
+Se aplica $V_{ab}=12$ [V]. Determine: \textbf{(a)} $C_3$ y $C_4$; \textbf{(b)} la capacitancia
+equivalente $C_{eq}$; \textbf{(c)} la carga $q$ y la energ\'ia $U$ en cada condensador.
+
+%--- FIGURAS ---
+\begin{center}
+\begin{minipage}{0.46\textwidth}\centering
+% ----- Disposición de dieléctricos de C3 -----
+\begin{tikzpicture}[scale=1.0, line width=0.8pt]
+% caja completa: ancho 4 (=l), alto 2 (=d)
+% kappa1 izquierda (x 0..2, y 0..2)
+\fill[diel1] (0,0) rectangle (2,2);
+% kappa2 arriba-derecha (x 2..4, y 1..2)
+\fill[diel2] (2,1) rectangle (4,2);
+% kappa3 abajo-derecha (x 2..4, y 0..1)
+\fill[diel3] (2,0) rectangle (4,1);
+% bordes internos
+\draw (2,0)--(2,2);
+\draw (2,1)--(4,1);
+% placas (gruesas)
+\draw[line width=2pt] (0,2)--(4,2);
+\draw[line width=2pt] (0,0)--(4,0);
+% etiquetas dieléctricos
+\node at (1,1) {$\kappa_1{=}2$};
+\node at (3,1.5) {$\kappa_2{=}3$};
+\node at (3,0.5) {$\kappa_3{=}5$};
+% cotas
+\draw[<->] (0,2.35)--(4,2.35) node[midway,above]{$l$};
+\draw[<->] (0,-0.35)--(2,-0.35) node[midway,below]{$l/2$};
+\draw[<->] (-0.4,0)--(-0.4,2) node[midway,left]{$d$};
+\draw[<->] (4.4,1)--(4.4,2) node[midway,right]{$d/2$};
+\end{tikzpicture}\\[2pt]
+{\footnotesize Diel\'ectricos de $C_3$ (vista lateral)}
+\end{minipage}\hfill
+\begin{minipage}{0.50\textwidth}\centering
+% ----- Circuito -----
+\begin{circuitikz}[scale=0.85, every node/.style={font=\small}]
+% Fuente V (desplazada a la izquierda; + en a, - en f)
+\draw (-3.3,0) to[battery1,l_=$V$,invert] (-3.3,7.5);
+\draw (-3.3,7.5) -- (0,7.5);
+\draw (-3.3,0)   -- (0,0);
+\node[font=\small] at (-3.02,7.05) {$+$};
+\node[font=\small] at (-3.02,0.45) {$-$};
+% a
+\fill (0,7.5) circle(2pt); \node[above right] at (0,7.5) {$a$};
+% C1: a -> b
+\draw (0,7.5) to[C,l_=$C_1$] (0,6.2);
+\fill (0,6.2) circle(2pt); \node[above right] at (0.05,6.25) {$b$};
+% grupo paralelo C7,C3,C2 entre b(6.2) y M(4.0)
+\draw (-1.6,6.2)--(1.6,6.2);
+\draw (-1.6,4.0)--(1.6,4.0);
+\draw (-1.6,6.2) to[C,l_=$C_7$] (-1.6,4.0);
+\draw (0,6.2)    to[C,l_=$C_3$] (0,4.0);
+\draw (1.6,6.2)  to[C,l=$C_2$]  (1.6,4.0);
+\fill (0,4.0) circle(2pt); \node[right] at (1.7,3.85) {$d\!\equiv\!e$};
+% grupo paralelo C4,C5 entre M(4.0) y g(1.8)
+\draw (-1.0,4.0)--(1.0,4.0);
+\draw (-1.0,1.8)--(1.0,1.8);
+\draw (-1.0,4.0) to[C,l_=$C_4$] (-1.0,1.8);
+\draw (1.0,4.0)  to[C,l=$C_5$]  (1.0,1.8);
+\fill (0,1.8) circle(2pt); \node[right] at (1.05,1.7) {$g$};
+% C6: g(1.8) -> f(0)
+\draw (0,1.8) to[C,l_=$C_6$] (0,0);
+\fill (0,0) circle(2pt); \node[below right] at (0,0) {$f$};
+\end{circuitikz}\\[2pt]
+{\footnotesize Circuito (Fig.\ 1)}
+\end{minipage}
+\end{center}
+
+%========================================
+% (a) C3 y C4
+%========================================
+\section*{(a) C\'alculo de $C_3$ y $C_4$}
+
+\subsection*{Condensador $C_3$ (3 diel\'ectricos)}
+
+Las placas son cuadradas de \'area $A=l^2=(0{,}05)^2=2{,}5\times10^{-3}$ [m$^2$]. Conviene definir
+la capacitancia base de vac\'io
+\[
+    C_0 \equiv \frac{\eps A}{d}
+        = \frac{(8{,}854\times10^{-12})(2{,}5\times10^{-3})}{2{,}0\times10^{-3}}
+        = 11{,}07\ [\text{pF}].
+\]
+
+\noindent\textbf{Mitad izquierda} ($\kappa_1$): ocupa \'area $A/2$ con separaci\'on completa $d$:
+\[
+    C_{\kappa_1} = \kappa_1\,\eps\,\frac{A/2}{d} = \frac{\kappa_1}{2}\,C_0
+                 = \frac{2}{2}(11{,}07) = 11{,}07\ [\text{pF}].
+\]
+
+\noindent\textbf{Mitad derecha} ($\kappa_2$ sobre $\kappa_3$): cada capa ocupa \'area $A/2$ con
+separaci\'on $d/2$, por lo que $C_{\kappa_i}=\kappa_i\,\eps\,\dfrac{A/2}{d/2}=\kappa_i\,C_0$:
+\[
+    C_{\kappa_2} = \kappa_2\,C_0 = 3(11{,}07)=33{,}20\ [\text{pF}],
+    \qquad
+    C_{\kappa_3} = \kappa_3\,C_0 = 5(11{,}07)=55{,}34\ [\text{pF}].
+\]
+Como $\kappa_2$ y $\kappa_3$ est\'an \textbf{apiladas} (en \emph{serie}):
+\[
+    C_{23} = \frac{C_{\kappa_2}C_{\kappa_3}}{C_{\kappa_2}+C_{\kappa_3}}
+           = \frac{(33{,}20)(55{,}34)}{33{,}20+55{,}34} = 20{,}75\ [\text{pF}].
+\]
+La mitad izquierda y la derecha unen las mismas placas $\Rightarrow$ est\'an en \textbf{paralelo}:
+\[
+    \boxed{C_3 = C_{\kappa_1} + C_{23} = 11{,}07 + 20{,}75 = 31{,}82\ [\text{pF}]}
+\]
+
+\subsection*{Condensador $C_4$ (cil\'indrico)}
+
+Para un condensador cil\'indrico con diel\'ectrico $\kappa$:
+\[
+    C_4 = \frac{2\pi\kappa\,\eps\,\ell}{\ln(r_b/r_a)}
+        = \frac{2\pi(2)(8{,}854\times10^{-12})(0{,}05)}{\ln(3{,}0/2{,}0)}
+        = \frac{5{,}563\times10^{-12}}{0{,}4055}.
+\]
+\[
+    \boxed{C_4 = 13{,}72\ [\text{pF}]}
+\]
+
+%========================================
+% (b) C_eq
+%========================================
+\section*{(b) Capacitancia equivalente}
+
+Seg\'un la figura, $C_2$, $C_3$ y $C_7$ unen los mismos nodos ($b$ y $d\!\equiv\!e$): est\'an en
+\textbf{paralelo}. Por debajo, $C_4$ y $C_5$ est\'an en \textbf{paralelo} y esa combinaci\'on en
+\textbf{serie} con $C_6$. Todo ello queda en \textbf{serie} con $C_1$.
+
+\[
+    C_{234\text{(sup)}} \equiv C_2+C_3+C_7 = 5{,}0 + 31{,}82 + 8{,}0 = 44{,}82\ [\text{pF}]
+\]
+\[
+    C_4 \parallel C_5 = 13{,}72 + 5{,}0 = 18{,}72\ [\text{pF}],
+    \qquad
+    C_{\text{inf}} = \frac{(C_4\!\parallel\!C_5)\,C_6}{(C_4\!\parallel\!C_5)+C_6}
+                   = \frac{(18{,}72)(8{,}0)}{18{,}72+8{,}0} = 5{,}605\ [\text{pF}]
+\]
+
+Tres bloques en serie ($C_1$, el paralelo superior y $C_{\text{inf}}$):
+\[
+    \frac{1}{C_{eq}} = \frac{1}{C_1} + \frac{1}{C_2{+}C_3{+}C_7} + \frac{1}{C_{\text{inf}}}
+                     = \frac{1}{12{,}0} + \frac{1}{44{,}82} + \frac{1}{5{,}605}
+\]
+\[
+    \boxed{C_{eq} = 3{,}520\ [\text{pF}]}
+\]
+
+%========================================
+% (c) Carga y energía
+%========================================
+\section*{(c) Carga y energ\'ia en cada condensador}
+
+\subsection*{Carga total y reparto de voltaje}
+
+Los tres bloques en serie comparten la \textbf{misma carga} $Q$:
+\[
+    Q = C_{eq}\,V_{ab} = (3{,}520\times10^{-12})(12) = 42{,}24\ [\text{pC}].
+\]
+El voltaje se reparte entre los bloques ($V=Q/C$):
+\[
+    V_{C_1} = \frac{Q}{C_1} = 3{,}520\ [\text{V}],\quad
+    V_{\text{sup}} = \frac{Q}{44{,}82\,\text{pF}} = 0{,}9425\ [\text{V}],\quad
+    V_{\text{inf}} = \frac{Q}{5{,}605\,\text{pF}} = 7{,}537\ [\text{V}].
+\]
+\noindent\textit{Verificaci\'on:} $3{,}520+0{,}9425+7{,}537 = 12{,}0$ [V] \checkmark
+
+\subsection*{Carga en cada condensador}
+
+\noindent$\bullet$ \textbf{$C_1$} (en serie): $q_1 = Q = 42{,}24$ [pC].
+
+\noindent$\bullet$ \textbf{Paralelo superior} ($C_2,C_3,C_7$ con $V_{\text{sup}}=0{,}9425$ V):
+\[
+    q_2 = C_2 V_{\text{sup}} = 4{,}71\ \text{pC},\quad
+    q_3 = C_3 V_{\text{sup}} = 29{,}99\ \text{pC},\quad
+    q_7 = C_7 V_{\text{sup}} = 7{,}54\ \text{pC}.
+\]
+($q_2+q_3+q_7 = 42{,}24$ pC $=Q$ \checkmark)
+
+\noindent$\bullet$ \textbf{Bloque inferior:} $C_6$ (en serie con $C_4\!\parallel\!C_5$) lleva
+$q_6 = Q = 42{,}24$ pC, con $V_{C_6}=Q/C_6 = 5{,}280$ V. El paralelo $C_4\!\parallel\!C_5$ soporta
+$V_{45}=V_{\text{inf}}-V_{C_6}=2{,}257$ V:
+\[
+    q_4 = C_4 V_{45} = 30{,}96\ \text{pC},\qquad
+    q_5 = C_5 V_{45} = 11{,}28\ \text{pC}.
+\]
+($q_4+q_5 = 42{,}24$ pC $=Q$ \checkmark)
+
+\subsection*{Energ\'ia en cada condensador}
+
+Con $U=\tfrac{1}{2}C V^2$:
+\begin{align*}
+    U_1 &= 74{,}36\ \text{pJ}, & U_2 &= 2{,}22\ \text{pJ}, & U_3 &= 14{,}13\ \text{pJ}, &
+    U_7 &= 3{,}55\ \text{pJ},\\
+    U_4 &= 34{,}93\ \text{pJ}, & U_5 &= 12{,}73\ \text{pJ}, & U_6 &= 111{,}54\ \text{pJ}. & &
+\end{align*}
+\[
+    \boxed{U_{\text{total}} = \tfrac{1}{2}C_{eq}V_{ab}^2
+        = \tfrac{1}{2}(3{,}520\times10^{-12})(12)^2 = 253{,}5\ [\text{pJ}]}
+\]
+\noindent\textit{Verificaci\'on:} $\sum U_i = 253{,}5$ [pJ] \checkmark
+
+%========================================
+% RESUMEN
+%========================================
+\section*{Resumen de Resultados}
+
+\begin{center}
+\renewcommand{\arraystretch}{1.15}
+\begin{tabular}{|c|c|c|c|c|}
+\hline
+\textbf{Cond.} & \textbf{$C$ [pF]} & \textbf{$V$ [V]} & \textbf{$q$ [pC]} & \textbf{$U$ [pJ]} \\
+\hline
+$C_1$ & $12{,}0$  & $3{,}520$ & $42{,}24$ & $74{,}36$ \\
+$C_2$ & $5{,}0$   & $0{,}9425$ & $4{,}71$ & $2{,}22$ \\
+$C_3$ & $31{,}82$ & $0{,}9425$ & $29{,}99$ & $14{,}13$ \\
+$C_4$ & $13{,}72$ & $2{,}257$ & $30{,}96$ & $34{,}93$ \\
+$C_5$ & $5{,}0$   & $2{,}257$ & $11{,}28$ & $12{,}73$ \\
+$C_6$ & $8{,}0$   & $5{,}280$ & $42{,}24$ & $111{,}54$ \\
+$C_7$ & $8{,}0$   & $0{,}9425$ & $7{,}54$ & $3{,}55$ \\
+\hline
+\multicolumn{1}{|c|}{$C_{eq}$} & $3{,}520$ & $12{,}0$ & $42{,}24$ & $253{,}5$ \\
+\hline
+\end{tabular}
+\end{center}
+
+\end{document}
