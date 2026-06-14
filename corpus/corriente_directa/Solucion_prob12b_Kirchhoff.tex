@@ -1,0 +1,241 @@
+\documentclass[12pt,letterpaper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[spanish,es-noshorthands]{babel}
+\usepackage{amsmath,amssymb}
+\usepackage{graphicx}
+\usepackage{xcolor}
+\usepackage{tikz}
+\usepackage[american]{circuitikz}
+\usetikzlibrary{calc,arrows,decorations.markings,patterns}
+\usepackage{enumerate}
+\usepackage[top=2.5cm, bottom=4cm, left=2cm, right=2cm, footskip=40pt]{geometry}
+\usepackage{fancyhdr}
+\usepackage{lastpage}
+
+% ===== COLORES =====
+\definecolor{ubbblue}{RGB}{0,51,102}
+
+% ===== PIE DE PÁGINA =====
+\pagestyle{fancy}
+\fancyhf{}
+\renewcommand{\headrulewidth}{0pt}
+\renewcommand{\footrulewidth}{0.4pt}
+\fancyfoot[L]{\raisebox{-0.5cm}{\includegraphics[height=1.2cm]{logo ubb.png}}}
+\fancyfoot[C]{%
+    \begin{minipage}[b]{8cm}\centering
+        \footnotesize\textcolor{ubbblue}{\textbf{Dr. Arturo Fern\'andez P\'erez}}\\
+        \scriptsize Departamento de F\'isica -- Universidad del B\'io-B\'io\\
+        \scriptsize\textit{Electro\_Asistente\_AI-UBB}\\
+        \tiny P\'agina \thepage\ de \pageref{LastPage}
+    \end{minipage}}
+\fancyfoot[R]{\raisebox{-0.5cm}{\includegraphics[height=1.2cm]{logo dfis.png}}}
+\fancypagestyle{plain}{%
+  \fancyhf{}
+  \renewcommand{\headrulewidth}{0pt}
+  \renewcommand{\footrulewidth}{0.4pt}
+  \fancyfoot[L]{\raisebox{-0.5cm}{\includegraphics[height=1.2cm]{logo ubb.png}}}
+  \fancyfoot[C]{%
+    \begin{minipage}[b]{8cm}\centering
+        \footnotesize\textcolor{ubbblue}{\textbf{Dr. Arturo Fern\'andez P\'erez}}\\
+        \scriptsize Departamento de F\'isica -- Universidad del B\'io-B\'io\\
+        \scriptsize\textit{Electro\_Asistente\_AI-UBB}\\
+        \tiny P\'agina \thepage\ de \pageref{LastPage}
+    \end{minipage}}
+  \fancyfoot[R]{\raisebox{-0.5cm}{\includegraphics[height=1.2cm]{logo dfis.png}}}
+}
+
+\begin{document}
+
+%========================================
+% ENCABEZADO INSTITUCIONAL
+%========================================
+\begin{center}
+    \includegraphics[height=2cm]{logo ubb.png}\\[0.3cm]
+    {\large\textcolor{ubbblue}{\textbf{UNIVERSIDAD DEL B\'IO-B\'IO}}}\\[0.1cm]
+    {\normalsize Facultad de Ciencias -- Departamento de F\'isica}
+\end{center}
+
+\vspace{0.3cm}
+\hrule height 1pt
+\vspace{0.5cm}
+
+{\centering\Large\textbf{Soluci\'on -- Leyes de Kirchhoff (Problema 12, inverso)}\par}
+{\centering\normalsize Determinaci\'on de las fem a partir de corrientes dadas (Fig.\ 3)\par}
+
+\vspace{0.5cm}
+
+%========================================
+% ENUNCIADO
+%========================================
+\section*{Enunciado del Problema}
+
+En el circuito de la Fig.\ 3 se dan los valores de algunas corrientes y de las resistencias.
+Con esa informaci\'on, determine el valor de las fem $\varepsilon_1$ y $\varepsilon_2$ y la
+diferencia de potencial $V_{ab}$ entre los puntos $a$ y $b$.
+
+%--- DIAGRAMA ---
+\begin{center}
+\begin{circuitikz}[scale=0.95, every node/.style={font=\small}]
+% ===== RAMA SUPERIOR (a-b): 1ohm - 20V - 6ohm =====
+\draw (0,2.5) to[R,l=$1\,\Omega$] (2,2.5)
+              to[battery1,l=$20\,$V] (4,2.5)
+              to[R,l=$6\,\Omega$] (6,2.5) -- (8,2.5);
+% ===== RAMA MEDIA (a-b): 4ohm - 1ohm - eps1 =====
+\draw (0,0) to[R,l_=$4\,\Omega$] (2.2,0)
+            to[R,l_=$1\,\Omega$] (4.4,0)
+            to[battery1,l_=$\varepsilon_1$] (6.4,0) -- (8,0);
+% ===== RAMA INFERIOR (a-b): 1ohm - eps2 - 2ohm =====
+\draw (0,-2.5) to[R,l_=$1\,\Omega$] (2,-2.5)
+               to[battery1,l_=$\varepsilon_2$] (4,-2.5)
+               to[R,l_=$2\,\Omega$] (6,-2.5) -- (8,-2.5);
+% ===== RIELES =====
+\draw (0,2.5) -- (0,-2.5);
+\draw (8,2.5) -- (8,-2.5);
+% ===== NODOS =====
+\node[circ] at (0,0){}; \node[left] at (-0.15,0){$a$};
+\node[circ] at (8,0){}; \node[right] at (8.15,0){$b$};
+% ===== CORRIENTES DADAS (riel izquierdo, hacia abajo) =====
+\draw[->,red,line width=1.2pt] (0,1.75)--(0,0.85);
+\node[red,left,font=\small] at (-0.12,1.3){$I_1{=}1{,}00$ A};
+\draw[->,red,line width=1.2pt] (0,-0.85)--(0,-1.75);
+\node[red,left,font=\small] at (-0.12,-1.3){$I_3{=}2{,}00$ A};
+% ===== CORRIENTE MEDIA (derivada) =====
+\draw[->,red,line width=1.1pt] (7.5,0.45)--(6.7,0.45)
+    node[midway,above,red,font=\small]{$I_2$};
+% ===== MALLAS =====
+\coordinate (Mone) at (4,1.25); \def\rA{0.55}
+\draw[blue, dashed, very thick, postaction={decorate},
+      decoration={markings, mark=at position 1 with {\arrow[blue,scale=1.2]{>}}}]
+  (Mone)+(90:\rA) arc[start angle=90, end angle=360, radius=\rA];
+\node[blue] at (Mone){$M_1$};
+\coordinate (Mtwo) at (4,-1.25);
+\draw[blue, dashed, very thick, postaction={decorate},
+      decoration={markings, mark=at position 1 with {\arrow[blue,scale=1.2]{>}}}]
+  (Mtwo)+(90:\rA) arc[start angle=90, end angle=360, radius=\rA];
+\node[blue] at (Mtwo){$M_2$};
+\end{circuitikz}
+\end{center}
+
+%========================================
+% DATOS
+%========================================
+\section*{Datos del Problema}
+\[
+    I_1 = 1{,}00\ [\text{A}]\ (\text{rama superior}),\qquad
+    I_3 = 2{,}00\ [\text{A}]\ (\text{rama inferior})
+\]
+\[
+    \text{Sup.: } 1\,\Omega,\,20\,\text{V},\,6\,\Omega \qquad
+    \text{Media: } 4\,\Omega,\,1\,\Omega,\,\varepsilon_1 \qquad
+    \text{Inf.: } 1\,\Omega,\,\varepsilon_2,\,2\,\Omega
+\]
+
+%========================================
+% ANÁLISIS
+%========================================
+\section*{An\'alisis del Circuito}
+
+El circuito tiene \textbf{dos nodos} ($a$ y $b$) y \textbf{tres ramas en paralelo} entre ellos, lo
+que define \textbf{dos mallas} independientes ($M_1$ y $M_2$). Todas las fuentes tienen su polo $+$
+hacia la izquierda. Las corrientes dadas bajan por el riel izquierdo: $I_1=1{,}00$ A (rama superior,
+$b\!\to\! a$) e $I_3=2{,}00$ A (rama inferior, $a\!\to\! b$).
+
+\medskip
+\noindent\textbf{Convenci\'on (al recorrer una malla):} una resistencia recorrida \emph{a favor}
+de su corriente \emph{baja} el potencial ($-IR$); \emph{en contra}, lo \emph{sube} ($+IR$). Una
+fuente recorrida de $+$ a $-$ \emph{baja} el potencial; de $-$ a $+$ lo \emph{sube}. La suma de
+cambios de potencial en una malla cerrada es \textbf{cero}.
+
+%========================================
+% ECUACIONES DE KIRCHHOFF
+%========================================
+\section*{Ecuaciones de Kirchhoff}
+
+\textbf{KCL --- Nodo $a$:} $I_1$ e $I_2$ entran al nodo, $I_3$ sale:
+\[
+    \boxed{I_1 + I_2 = I_3} \tag{N}
+\]
+
+\medskip
+\textbf{KVL --- Malla $M_1$} (rama superior $+$ rama media, recorrida completa
+$a\to\!1\Omega\!\to\!20\text{V}\!\to\!6\Omega\to b\to\varepsilon_1\to\!1\Omega\!\to\!4\Omega\to a$).
+En la rama superior las resistencias se recorren \emph{en contra} de $I_1$ (suben) y la fuente de
+$20$ V de $+$ a $-$ (baja); en la rama media $\varepsilon_1$ se recorre de $-$ a $+$ (sube) y sus
+resistencias \emph{a favor} de $I_2$ (bajan):
+\[
+    I_1(1+6) - 20 + \varepsilon_1 - I_2(1+4) = 0
+    \;\Rightarrow\;
+    \boxed{7\,I_1 - 20 + \varepsilon_1 - 5\,I_2 = 0} \tag{M1}
+\]
+
+\medskip
+\textbf{KVL --- Malla $M_2$} (rama media $+$ rama inferior, recorrida completa
+$a\to\!4\Omega\!\to\!1\Omega\!\to\!\varepsilon_1\to b\to\!2\Omega\!\to\!\varepsilon_2\!\to\!1\Omega\to a$).
+En la rama media las resistencias se recorren \emph{en contra} de $I_2$ (suben) y $\varepsilon_1$ de
+$+$ a $-$ (baja); en la rama inferior las resistencias \emph{en contra} de $I_3$ (suben) y
+$\varepsilon_2$ de $-$ a $+$ (sube):
+\[
+    I_2(4+1) - \varepsilon_1 + I_3(2+1) + \varepsilon_2 = 0
+    \;\Rightarrow\;
+    \boxed{5\,I_2 - \varepsilon_1 + 3\,I_3 + \varepsilon_2 = 0} \tag{M2}
+\]
+
+%========================================
+% RESOLUCIÓN
+%========================================
+\section*{Resoluci\'on del sistema}
+
+\noindent De \textbf{(N)}, la corriente de la rama media:
+\[
+    I_2 = I_3 - I_1 = 2{,}00 - 1{,}00
+    \;\Rightarrow\; \boxed{I_2 = 1{,}00\ [\text{A}]\ (b\to a)}
+\]
+
+\noindent De \textbf{(M1)}, despejando $\varepsilon_1$:
+\[
+    \varepsilon_1 = 20 + 5\,I_2 - 7\,I_1 = 20 + 5(1) - 7(1)
+    \;\Rightarrow\; \boxed{\varepsilon_1 = 18{,}0\ [\text{V}]}
+\]
+
+\noindent De \textbf{(M2)}, despejando $\varepsilon_2$ (con $\varepsilon_1=18$):
+\[
+    \varepsilon_2 = \varepsilon_1 - 5\,I_2 - 3\,I_3 = 18 - 5(1) - 3(2)
+    \;\Rightarrow\; \boxed{\varepsilon_2 = 7{,}0\ [\text{V}]}
+\]
+
+\section*{Diferencia de potencial $V_{ab}$}
+
+Como las tres ramas unen los mismos nodos, $V_{ab}$ se obtiene recorriendo la \textbf{rama superior}
+(totalmente conocida) de $b$ a $a$, en el sentido de $I_1$ (las resistencias bajan, $+I_1R$; la
+fuente de $20$ V se cruza de $-$ a $+$, sube):
+\[
+    V_b - V_a = I_1(1) - 20 + I_1(6) = 1 - 20 + 6 = -13
+\]
+\[
+    \boxed{V_{ab} = V_a - V_b = 13{,}0\ [\text{V}]}
+\]
+
+\noindent\textbf{Verificaci\'on:} la malla externa (rama superior $+$ rama inferior) tambi\'en cierra:
+$\;7\,I_1 - 20 + 3\,I_3 + \varepsilon_2 = 7 - 20 + 6 + 7 = 0$ \checkmark
+
+%========================================
+% RESUMEN
+%========================================
+\section*{Resumen de Resultados}
+
+\begin{center}
+\renewcommand{\arraystretch}{1.2}
+\begin{tabular}{|c|c|l|}
+\hline
+\textbf{Variable} & \textbf{Valor} & \textbf{Observaci\'on} \\
+\hline
+$I_2$ (rama media)    & $1{,}00\ [\text{A}]$ & $b\to a$ (por KCL) \\
+\hline
+$\varepsilon_1$       & $18{,}0\ [\text{V}]$ & malla $M_1$ \\
+$\varepsilon_2$       & $7{,}0\ [\text{V}]$  & malla $M_2$ \\
+$V_{ab}$              & $13{,}0\ [\text{V}]$ & $V_a>V_b$ \\
+\hline
+\end{tabular}
+\end{center}
+
+\end{document}
