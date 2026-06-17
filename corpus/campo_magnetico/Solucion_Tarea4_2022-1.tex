@@ -1,0 +1,211 @@
+\documentclass[12pt,letterpaper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[spanish,es-noshorthands]{babel}
+\usepackage{amsmath,amssymb}
+\usepackage{graphicx}
+\usepackage{xcolor}
+\usepackage{tikz}
+\usetikzlibrary{calc,arrows.meta,decorations.markings}
+\usepackage[top=2.5cm, bottom=4cm, left=2cm, right=2cm, footskip=40pt]{geometry}
+\usepackage{fancyhdr}
+\usepackage{lastpage}
+
+\definecolor{ubbblue}{RGB}{0,51,102}
+
+\pagestyle{fancy}
+\fancyhf{}
+\renewcommand{\headrulewidth}{0pt}
+\renewcommand{\footrulewidth}{0.4pt}
+\fancyfoot[L]{\raisebox{-0.5cm}{\includegraphics[height=1.2cm]{logo ubb.png}}}
+\fancyfoot[C]{%
+    \begin{minipage}[b]{8cm}\centering
+        \footnotesize\textcolor{ubbblue}{\textbf{Dr.\ Arturo Fern\'andez P\'erez}}\\
+        \scriptsize Departamento de F\'isica -- Universidad del B\'io-B\'io\\
+        \scriptsize \textit{Electro\_Asistente\_AI-UBB}\\
+        \tiny P\'agina \thepage\ de \pageref{LastPage}
+    \end{minipage}}
+\fancyfoot[R]{\raisebox{-0.5cm}{\includegraphics[height=1.2cm]{logo dfis.png}}}
+\fancypagestyle{plain}{%
+    \fancyhf{}
+    \renewcommand{\headrulewidth}{0pt}
+    \renewcommand{\footrulewidth}{0.4pt}
+    \fancyfoot[L]{\raisebox{-0.5cm}{\includegraphics[height=1.2cm]{logo ubb.png}}}
+    \fancyfoot[C]{%
+        \begin{minipage}[b]{8cm}\centering
+            \footnotesize\textcolor{ubbblue}{\textbf{Dr.\ Arturo Fern\'andez P\'erez}}\\
+            \scriptsize Departamento de F\'isica -- Universidad del B\'io-B\'io\\
+            \scriptsize \textit{Electro\_Asistente\_AI-UBB}\\
+            \tiny P\'agina \thepage\ de \pageref{LastPage}
+        \end{minipage}}
+    \fancyfoot[R]{\raisebox{-0.5cm}{\includegraphics[height=1.2cm]{logo dfis.png}}}
+}
+
+\begin{document}
+
+%========================================
+% ENCABEZADO INSTITUCIONAL
+%========================================
+\begin{center}
+    \includegraphics[height=2cm]{logo ubb.png}\\[0.3cm]
+    {\large\textcolor{ubbblue}{\textbf{UNIVERSIDAD DEL B\'IO-B\'IO}}}\\[0.1cm]
+    {\normalsize Facultad de Ciencias -- Departamento de F\'isica}
+\end{center}
+
+\vspace{0.3cm}
+\hrule height 1pt
+\vspace{0.5cm}
+
+{\centering\Large\textbf{Soluci\'on Tarea 4: Campo Magn\'etico e Inducci\'on}\par}
+{\centering\normalsize\textit{Electromagnetismo (2022-1)}\par}
+
+\vspace{0.6cm}
+
+%========================================================
+% PROBLEMA 1
+%========================================================
+\section*{Problema 1: Tres alambres y una carga puntual}
+
+\noindent Tres conductores rectos muy extensos conducen $I_1 = 2{,}6$, $I_2 = 5{,}1$ e
+$I_3 = 3{,}2\ [\text{A}]$ (direcciones de la figura). Una carga $q = 5{,}8\ [\text{mC}]$ se mueve
+con rapidez $v = 50\ [\text{m/s}]$. Con $a = 5{,}4$, $b = 2{,}8$ y $c = 7{,}3\ [\text{cm}]$,
+determine $\vec{B}$ y $\vec{F}_m$ sobre $q$, y la fuerza sobre $2\ [\text{m}]$ de $I_2$.
+
+\medskip
+
+\noindent
+\begin{minipage}[t]{0.42\textwidth}
+\centering
+\vspace{0pt}
+\begin{tikzpicture}[scale=0.95, >=Stealth, line width=0.9pt]
+    % ejes
+    \draw[->,gray] (-0.7,1.4)--(-0.7,2.4) node[above,black,font=\footnotesize]{$y$};
+    \draw[->,gray] (-0.7,1.4)--(0.3,1.4) node[right,black,font=\footnotesize]{$x$};
+    % carga q
+    \shade[ball color=red!70] (0,1.4) circle (3.5pt);
+    \node[below left,font=\small] at (0.0,1.35){$q$};
+    % velocidad v
+    \draw[->,green!60!black,line width=1.4pt] (0,1.4)--(-0.65,2.45);
+    \node[left,font=\small] at (-0.5,2.1){$\vec{v}$};
+    \node[font=\footnotesize] at (-0.32,1.66){$60^\circ$};
+    % I1 vertical up
+    \draw[orange!75!black,line width=1.8pt] (1.5,-0.2)--(1.5,3.0);
+    \draw[->,line width=1.1pt] (1.5,2.2)--(1.5,2.8); \node[right,font=\small] at (1.55,2.6){$I_1$};
+    % I2 vertical down
+    \draw[orange!75!black,line width=1.8pt] (2.6,-0.2)--(2.6,3.0);
+    \draw[->,line width=1.1pt] (2.6,2.8)--(2.6,2.2); \node[right,font=\small] at (2.65,2.6){$I_2$};
+    % I3 horizontal right
+    \draw[orange!75!black,line width=1.8pt] (-0.5,0)--(3.1,0);
+    \draw[->,line width=1.1pt] (1.9,0)--(2.5,0); \node[below,font=\small] at (2.2,-0.08){$I_3$};
+    % cotas
+    \draw[<->,gray] (0,1.4)--(1.5,1.4); \node[above,font=\footnotesize] at (0.75,1.4){$a$};
+    \draw[<->,gray] (1.5,3.1)--(2.6,3.1); \node[above,font=\footnotesize] at (2.05,3.05){$b$};
+    \draw[<->,gray] (0.18,1.25)--(0.18,0.1); \node[right,font=\footnotesize] at (0.18,0.65){$c$};
+\end{tikzpicture}
+\end{minipage}%
+\hfill
+\begin{minipage}[t]{0.55\textwidth}
+\vspace{0pt}
+\textbf{(a) Campo magn\'etico en la posici\'on de $q$:}
+\[
+    \vec{B} = \frac{\mu_0 I_1}{2\pi a}\hat{k}
+            + \frac{\mu_0 I_2}{2\pi (a+b)}(-\hat{k})
+            + \frac{\mu_0 I_3}{2\pi c}\hat{k}
+\]
+\[
+    = 2\times10^{-7}\!\left[\frac{2{,}6}{0{,}054} - \frac{5{,}1}{0{,}082} + \frac{3{,}2}{0{,}073}\right]\hat{k}
+\]
+\[
+    \boxed{\vec{B} = 5{,}958\times10^{-6}\,\hat{k}\ [\text{T}]}
+\]
+\end{minipage}
+
+\medskip
+
+\noindent\textbf{(b) Fuerza magn\'etica sobre la carga} $\vec{F}_m = q\,\vec{v}\times\vec{B}$, con
+$\vec{v} = 50\cos60^\circ(-\hat{\imath}) + 50\sin60^\circ\,\hat{\jmath}$:
+\begin{align*}
+    \vec{F}_m &= (5{,}8\times10^{-3})\big[-25\,\hat{\imath} + 43{,}3\,\hat{\jmath}\big]\times(5{,}958\times10^{-6}\,\hat{k}) \\
+              &= (5{,}8\times10^{-3})(5{,}958\times10^{-6})\big[-25(\hat{\imath}\times\hat{k}) + 43{,}3(\hat{\jmath}\times\hat{k})\big] \\
+              &= (3{,}456\times10^{-8})\big[25\,\hat{\jmath} + 43{,}3\,\hat{\imath}\big]
+\end{align*}
+\[
+    \boxed{\vec{F}_m = 1{,}496\times10^{-6}\,\hat{\imath} + 8{,}639\times10^{-7}\,\hat{\jmath}\ [\text{N}]}
+\]
+
+\medskip
+
+\noindent\textbf{(c) Fuerza sobre $2\ [\text{m}]$ de $I_2$ debida a $I_1$:} el campo de $I_1$ en la
+posici\'on de $I_2$ (a distancia $b$) es $\vec{B}_1 = \dfrac{\mu_0 I_1}{2\pi b}(-\hat{k})$. Con
+$\vec{L} = 2(-\hat{\jmath})$ (sentido de $I_2$):
+\[
+    \vec{F} = I_2\,\vec{L}\times\vec{B}_1
+            = (5{,}1)(2)(-\hat{\jmath})\times\frac{\mu_0(2{,}6)}{2\pi(0{,}028)}(-\hat{k})
+\]
+\[
+    \boxed{\vec{F} = 1{,}894\times10^{-4}\,\hat{\imath}\ [\text{N}]}
+\]
+
+\newpage
+
+%========================================================
+% PROBLEMA 2
+%========================================================
+\section*{Problema 2: Espira en el centro de un solenoide variable}
+
+\noindent Una espira de $N = 20$ vueltas, radio $R_1 = 7{,}0\ [\text{cm}]$ y resistencia
+$R = 45\ [\Omega]$ rodea (en su centro) a un solenoide muy largo de $n = 200\ [\text{vueltas/m}]$
+y radio $R_2 = 5{,}0\ [\text{cm}]$. Por el solenoide circula $I(t) = 3\sqrt{t}\ [\text{A}]$.
+Determine el flujo, la fem inducida y la corriente inducida en la espira.
+
+\medskip
+
+\noindent\textbf{(a) Flujo magn\'etico} (el campo solo existe dentro del solenoide,
+$A = \pi R_2^2$):
+\begin{align*}
+    \Phi = \int \vec{B}\cdot d\vec{S} = \mu_0\,n\,I(t)\,(\pi R_2^2)
+       &= (4\pi\times10^{-7})(200)(3\sqrt{t})\,\pi(0{,}05)^2
+\end{align*}
+\[
+    \boxed{\Phi(t) = 5{,}922\times10^{-6}\,\sqrt{t}\ [\text{Wb}]}
+\]
+
+\noindent\textbf{(b) Fem inducida} (ley de Faraday, $N$ vueltas):
+\[
+    \varepsilon = -N\frac{d\Phi}{dt}
+                = -20\cdot 5{,}922\times10^{-6}\cdot\frac{1}{2\sqrt{t}}
+\]
+\[
+    \boxed{\varepsilon(t) = -\frac{5{,}922\times10^{-5}}{\sqrt{t}}\ [\text{V}]}
+\]
+
+\noindent\textbf{(c) Corriente inducida:}
+\[
+    I(t) = \frac{|\varepsilon|}{R} = \frac{5{,}922\times10^{-5}}{45\sqrt{t}}
+    \;\Rightarrow\; \boxed{I(t) = \frac{1{,}316\times10^{-6}}{\sqrt{t}}\ [\text{A}]}
+\]
+Como el flujo \textbf{aumenta} con $t$, por la ley de Lenz la corriente inducida circula en
+\textbf{sentido opuesto} a la corriente del solenoide (para oponerse al aumento del flujo).
+
+\vspace{0.7cm}
+
+%========================================================
+% PROBLEMA 3
+%========================================================
+\section*{Problema 3: Problema 7 de la Gu\'ia 9}
+
+\noindent Una espira circular de radio $R = 10\ [\text{cm}]$ con $I_2 = 1\ [\text{A}]$ (horaria),
+cuyo centro est\'a a $D = 20\ [\text{cm}]$ de un alambre recto. Hallar $I_1$ para que el campo en
+el centro sea cero.
+
+\medskip
+
+\noindent El campo de la espira en su centro y el del alambre deben anularse:
+\[
+    \frac{\mu_0 I_1}{2\pi D} = \frac{\mu_0 I_2}{2R}
+    \;\Rightarrow\;
+    I_1 = \frac{\pi D}{R}\,I_2 = \frac{\pi(0{,}20)}{0{,}10}(1)
+    \;\Rightarrow\; \boxed{I_1 = 6{,}28\ [\text{A}]\ \text{(de izquierda a derecha)}}
+\]
+\noindent\small\textit{(Desarrollo completo en la soluci\'on de la Gu\'ia 9, Problema 7.)}\normalsize
+
+\end{document}

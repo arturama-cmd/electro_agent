@@ -1,0 +1,186 @@
+\documentclass[12pt,letterpaper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[spanish,es-noshorthands]{babel}
+\usepackage{amsmath,amssymb}
+\usepackage{graphicx}
+\usepackage{xcolor}
+\usepackage{tikz}
+\usetikzlibrary{calc,arrows.meta,decorations.markings}
+\usepackage[top=2.5cm, bottom=4cm, left=2cm, right=2cm, footskip=40pt]{geometry}
+\usepackage{fancyhdr}
+\usepackage{lastpage}
+
+\definecolor{ubbblue}{RGB}{0,51,102}
+
+\pagestyle{fancy}
+\fancyhf{}
+\renewcommand{\headrulewidth}{0pt}
+\renewcommand{\footrulewidth}{0.4pt}
+\fancyfoot[L]{\raisebox{-0.5cm}{\includegraphics[height=1.2cm]{logo ubb.png}}}
+\fancyfoot[C]{%
+    \begin{minipage}[b]{8cm}\centering
+        \footnotesize\textcolor{ubbblue}{\textbf{Dr.\ Arturo Fern\'andez P\'erez}}\\
+        \scriptsize Departamento de F\'isica -- Universidad del B\'io-B\'io\\
+        \scriptsize \textit{Electro\_Asistente\_AI-UBB}\\
+        \tiny P\'agina \thepage\ de \pageref{LastPage}
+    \end{minipage}}
+\fancyfoot[R]{\raisebox{-0.5cm}{\includegraphics[height=1.2cm]{logo dfis.png}}}
+\fancypagestyle{plain}{%
+    \fancyhf{}
+    \renewcommand{\headrulewidth}{0pt}
+    \renewcommand{\footrulewidth}{0.4pt}
+    \fancyfoot[L]{\raisebox{-0.5cm}{\includegraphics[height=1.2cm]{logo ubb.png}}}
+    \fancyfoot[C]{%
+        \begin{minipage}[b]{8cm}\centering
+            \footnotesize\textcolor{ubbblue}{\textbf{Dr.\ Arturo Fern\'andez P\'erez}}\\
+            \scriptsize Departamento de F\'isica -- Universidad del B\'io-B\'io\\
+            \scriptsize \textit{Electro\_Asistente\_AI-UBB}\\
+            \tiny P\'agina \thepage\ de \pageref{LastPage}
+        \end{minipage}}
+    \fancyfoot[R]{\raisebox{-0.5cm}{\includegraphics[height=1.2cm]{logo dfis.png}}}
+}
+
+\begin{document}
+
+%========================================
+% ENCABEZADO INSTITUCIONAL
+%========================================
+\begin{center}
+    \includegraphics[height=2cm]{logo ubb.png}\\[0.3cm]
+    {\large\textcolor{ubbblue}{\textbf{UNIVERSIDAD DEL B\'IO-B\'IO}}}\\[0.1cm]
+    {\normalsize Facultad de Ciencias -- Departamento de F\'isica}
+\end{center}
+
+\vspace{0.3cm}
+\hrule height 1pt
+\vspace{0.5cm}
+
+{\centering\Large\textbf{Soluci\'on Gu\'ia 9: Fuentes de Campo Magn\'etico}\par}
+{\centering\normalsize\textit{Problemas 5 y 7}\par}
+
+\vspace{0.6cm}
+
+%========================================================
+% PROBLEMA 5
+%========================================================
+\section*{Problema 5: Punto donde el campo magn\'etico se anula}
+
+\noindent Dos conductores rectos muy extensos y perpendiculares conducen corrientes
+$I_1 = 10\ [\text{A}]$ (vertical, hacia arriba, sobre el eje $y$) e $I_2 = 3\ [\text{A}]$
+(horizontal, hacia la derecha, sobre el eje $x$). Determine en qu\'e puntos el campo magn\'etico
+total es cero.
+
+\medskip
+
+\noindent
+\begin{minipage}[t]{0.42\textwidth}
+\centering
+\vspace{0pt}
+\begin{tikzpicture}[scale=1.0, >=Stealth, line width=0.9pt]
+    % alambre vertical (I1) sobre eje y
+    \draw[orange!75!black,line width=2pt] (0,-2)--(0,2.3);
+    \draw[->,line width=1.2pt] (0,1.3)--(0,2.0);
+    \node[left,font=\small] at (-0.1,1.8){$I_1$};
+    % alambre horizontal (I2) sobre eje x
+    \draw[orange!75!black,line width=2pt] (-2,0)--(2.6,0);
+    \draw[->,line width=1.2pt] (1.4,0)--(2.1,0);
+    \node[below,font=\small] at (1.9,-0.1){$I_2$};
+    % linea y = 3/10 x (donde B=0)
+    \draw[blue,dashed,line width=1pt] (0,0)--(2.4,0.72);
+    \node[blue,font=\small] at (2.05,0.95){$y=\tfrac{3}{10}x$};
+    % punto P
+    \filldraw[black] (1.6,0.48) circle (1.6pt);
+    \node[above left,font=\footnotesize] at (1.6,0.48){$P$};
+    \node[font=\footnotesize] at (1.75,0.30){\textcolor{black}{$\vec{B}=0$}};
+\end{tikzpicture}
+\end{minipage}%
+\hfill
+\begin{minipage}[t]{0.55\textwidth}
+\vspace{0pt}
+\textbf{Campo de cada alambre} en un punto $P=(x,y)$ del primer cuadrante:
+\[
+    \vec{B}_1 = \frac{\mu_0 I_1}{2\pi x}\,(-\hat{k}),
+    \qquad
+    \vec{B}_2 = \frac{\mu_0 I_2}{2\pi y}\,(+\hat{k})
+\]
+($\vec{B}_1$ entra a la p\'agina, $\vec{B}_2$ sale; se pueden cancelar).
+\end{minipage}
+
+\medskip
+
+\noindent Imponiendo $\vec{B}_1 + \vec{B}_2 = \vec{0}$:
+\[
+    \frac{\mu_0 I_1}{2\pi x} = \frac{\mu_0 I_2}{2\pi y}
+    \quad\Longrightarrow\quad
+    \frac{y}{x} = \frac{I_2}{I_1} = \frac{3}{10}
+\]
+\[
+    \boxed{y = \frac{3}{10}\,x}
+\]
+El campo se anula en todos los puntos de esta recta (primer cuadrante).
+
+\vspace{0.8cm}
+
+%========================================================
+% PROBLEMA 7
+%========================================================
+\section*{Problema 7: Corriente para anular el campo en el centro de una espira}
+
+\noindent Una espira circular de radio $R = 10\ [\text{cm}]$ conduce una corriente
+$I_2 = 1\ [\text{A}]$ en sentido horario. Su centro est\'a a una distancia $D = 20\ [\text{cm}]$
+de un alambre recto muy extenso. Determine la magnitud y direcci\'on de la corriente $I_1$ del
+alambre para que el campo magn\'etico en el centro de la espira sea cero.
+
+\medskip
+
+\noindent
+\begin{minipage}[t]{0.40\textwidth}
+\centering
+\vspace{0pt}
+\begin{tikzpicture}[scale=1.0, >=Stealth, line width=0.9pt]
+    % espira circular
+    \draw[orange!75!black,line width=1.6pt] (0,1.2) circle (0.95);
+    \draw[->,line width=1pt] (0.55,2.0) arc (55:5:0.95);
+    \node[right,font=\small] at (0.95,1.7){$I_2$};
+    \filldraw (0,1.2) circle (1.4pt);
+    \node[right,font=\footnotesize] at (0.1,1.2){centro};
+    % radio
+    \draw[gray] (0,1.2)--(-0.67,1.87); \node[font=\footnotesize] at (-0.5,1.75){$R$};
+    % distancia D
+    \draw[<->,gray] (0.55,1.2)--(0.55,0); \node[right,font=\footnotesize] at (0.55,0.6){$D$};
+    % alambre recto
+    \draw[orange!75!black,line width=2pt] (-1.8,0)--(1.9,0);
+    \draw[->,line width=1.2pt] (0.9,0)--(1.6,0);
+    \node[below,font=\small] at (1.4,-0.1){$I_1$};
+\end{tikzpicture}
+\end{minipage}%
+\hfill
+\begin{minipage}[t]{0.56\textwidth}
+\vspace{0pt}
+\textbf{Campo de la espira} en su centro (corriente horaria, entra a la p\'agina):
+\[
+    B_{\text{espira}} = \frac{\mu_0 I_2}{2R}
+    = \frac{4\pi\times10^{-7}\cdot 1}{2(0{,}1)} = 6{,}28\times10^{-6}\ [\text{T}]
+\]
+
+\smallskip
+\textbf{Campo del alambre recto} en el centro:
+\[
+    B_{\text{alambre}} = \frac{\mu_0 I_1}{2\pi D}
+\]
+\end{minipage}
+
+\medskip
+
+\noindent Para que el campo total sea cero, ambos deben tener igual magnitud y sentidos opuestos:
+\[
+    \frac{\mu_0 I_1}{2\pi D} = \frac{\mu_0 I_2}{2R}
+    \quad\Longrightarrow\quad
+    I_1 = \frac{2\pi D}{2R}\,I_2 = \frac{\pi D}{R}\,I_2
+    = \frac{\pi (0{,}20)}{0{,}10}\,(1)
+\]
+\[
+    \boxed{I_1 = 6{,}28\ [\text{A}]\quad\text{(circulando de izquierda a derecha)}}
+\]
+
+\end{document}
