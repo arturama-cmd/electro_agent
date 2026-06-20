@@ -1,0 +1,201 @@
+\documentclass[12pt,letterpaper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[spanish,es-noshorthands]{babel}
+\usepackage{amsmath,amssymb}
+\usepackage{graphicx}
+\usepackage{xcolor}
+\usepackage{tikz}
+\usetikzlibrary{calc,arrows.meta,decorations.markings}
+\usepackage[top=2.5cm, bottom=4cm, left=2cm, right=2cm, footskip=40pt]{geometry}
+\usepackage{fancyhdr}
+\usepackage{lastpage}
+
+\definecolor{ubbblue}{RGB}{0,51,102}
+
+\pagestyle{fancy}
+\fancyhf{}
+\renewcommand{\headrulewidth}{0pt}
+\renewcommand{\footrulewidth}{0.4pt}
+\fancyfoot[L]{\raisebox{-0.5cm}{\includegraphics[height=1.2cm]{logo ubb.png}}}
+\fancyfoot[C]{%
+    \begin{minipage}[b]{8cm}\centering
+        \footnotesize\textcolor{ubbblue}{\textbf{Dr.\ Arturo Fern\'andez P\'erez}}\\
+        \scriptsize Departamento de F\'isica -- Universidad del B\'io-B\'io\\
+        \scriptsize \textit{Electro\_Asistente\_AI-UBB}\\
+        \tiny P\'agina \thepage\ de \pageref{LastPage}
+    \end{minipage}}
+\fancyfoot[R]{\raisebox{-0.5cm}{\includegraphics[height=1.2cm]{logo dfis.png}}}
+\fancypagestyle{plain}{%
+    \fancyhf{}
+    \renewcommand{\headrulewidth}{0pt}
+    \renewcommand{\footrulewidth}{0.4pt}
+    \fancyfoot[L]{\raisebox{-0.5cm}{\includegraphics[height=1.2cm]{logo ubb.png}}}
+    \fancyfoot[C]{%
+        \begin{minipage}[b]{8cm}\centering
+            \footnotesize\textcolor{ubbblue}{\textbf{Dr.\ Arturo Fern\'andez P\'erez}}\\
+            \scriptsize Departamento de F\'isica -- Universidad del B\'io-B\'io\\
+            \scriptsize \textit{Electro\_Asistente\_AI-UBB}\\
+            \tiny P\'agina \thepage\ de \pageref{LastPage}
+        \end{minipage}}
+    \fancyfoot[R]{\raisebox{-0.5cm}{\includegraphics[height=1.2cm]{logo dfis.png}}}
+}
+
+\begin{document}
+
+%========================================
+% ENCABEZADO INSTITUCIONAL
+%========================================
+\begin{center}
+    \includegraphics[height=2cm]{logo ubb.png}\\[0.3cm]
+    {\large\textcolor{ubbblue}{\textbf{UNIVERSIDAD DEL B\'IO-B\'IO}}}\\[0.1cm]
+    {\normalsize Facultad de Ciencias -- Departamento de F\'isica}
+\end{center}
+
+\vspace{0.3cm}
+\hrule height 1pt
+\vspace{0.5cm}
+
+{\centering\Large\textbf{Soluci\'on Gu\'ia 9: Fuentes de Campo Magn\'etico}\par}
+{\centering\normalsize\textit{Problema 2}\par}
+
+\vspace{0.6cm}
+
+%========================================================
+% PROBLEMA 2
+%========================================================
+\section*{Problema 2: Fuerza entre tres alambres paralelos}
+
+\noindent Tres alambres rectos, paralelos y muy largos transportan cada uno una corriente
+$I = 4\ [\text{A}]$ y est\'an separados una distancia $d = 15\ [\text{cm}]$ entre alambres vecinos,
+como muestra la Fig.\ 2. Los alambres extremos (1) y (3) conducen la corriente en el mismo sentido,
+y el alambre central (2) en sentido opuesto. Calcule la \textbf{fuerza magn\'etica por unidad de
+longitud} sobre cada alambre.
+
+\medskip
+
+\noindent
+\begin{minipage}[t]{0.44\textwidth}
+\centering
+\vspace{0pt}
+\begin{tikzpicture}[scale=0.85, >=Stealth, line width=0.9pt]
+    % ---- alambre 1 (arriba) ----
+    \draw[orange!75!black,line width=2pt] (-2.6,2)--(2.6,2);
+    \draw[->,line width=1.2pt] (0.1,2)--(1.0,2);
+    \node[above,font=\small] at (0.55,2.08){$I$};
+    \node[left,font=\small] at (-2.65,2){$(1)$};
+    % ---- alambre 2 (centro) ----
+    \draw[orange!75!black,line width=2pt] (-2.6,0)--(2.6,0);
+    \draw[<-,line width=1.2pt] (-1.0,0)--(-0.1,0);
+    \node[above,font=\small] at (-0.55,0.08){$I$};
+    \node[left,font=\small] at (-2.65,0){$(2)$};
+    % ---- alambre 3 (abajo) ----
+    \draw[orange!75!black,line width=2pt] (-2.6,-2)--(2.6,-2);
+    \draw[->,line width=1.2pt] (0.1,-2)--(1.0,-2);
+    \node[below,font=\small] at (0.55,-2.08){$I$};
+    \node[left,font=\small] at (-2.65,-2){$(3)$};
+    % ---- distancias d ----
+    \draw[<->,gray] (2.3,2)--(2.3,0);  \node[right,font=\footnotesize,gray] at (2.3,1){$d$};
+    \draw[<->,gray] (2.3,0)--(2.3,-2); \node[right,font=\footnotesize,gray] at (2.3,-1){$d$};
+    % ---- fuerzas ----
+    \draw[->,red,line width=1.5pt] (-1.7,2)--(-1.7,2.9);
+    \node[red,left,font=\small] at (-1.75,2.6){$\vec{F}_1$};
+    \node[blue,font=\small] at (-1.6,0.42){$\vec{F}_2=\vec{0}$};
+    \draw[->,red,line width=1.5pt] (-1.7,-2)--(-1.7,-2.9);
+    \node[red,left,font=\small] at (-1.75,-2.6){$\vec{F}_3$};
+\end{tikzpicture}\\[2pt]
+{\footnotesize Figura 2}
+\end{minipage}%
+\hfill
+\begin{minipage}[t]{0.54\textwidth}
+\vspace{0pt}
+\textbf{Datos:}
+\[
+    I = 4\ [\text{A}],\qquad d = 0{,}15\ [\text{m}]
+\]
+
+\smallskip
+\textbf{Fuerza por unidad de longitud} entre dos alambres paralelos separados $r$:
+\[
+    \frac{F}{l} = \frac{\mu_0\,I_a\,I_b}{2\pi\,r}
+\]
+\noindent\emph{Atractiva} si las corrientes son paralelas (mismo sentido); \emph{repulsiva} si son
+antiparalelas (sentidos opuestos).
+\end{minipage}
+
+\medskip
+
+\noindent\textbf{Las dos magnitudes que intervienen} (con $I_a=I_b=I$):
+
+\noindent Entre alambres \emph{vecinos} (separaci\'on $d$):
+\[
+    \frac{F_d}{l} = \frac{\mu_0 I^2}{2\pi d}
+    = \frac{(4\pi\times10^{-7})(4)^2}{2\pi(0{,}15)}
+    = 2{,}13\times10^{-5}\ [\text{N/m}]
+\]
+Entre los alambres \emph{extremos} (1) y (3) (separaci\'on $2d$):
+\[
+    \frac{F_{2d}}{l} = \frac{\mu_0 I^2}{2\pi (2d)} = \frac{1}{2}\,\frac{F_d}{l}
+    = 1{,}07\times10^{-5}\ [\text{N/m}]
+\]
+
+%--------------------------------------------------
+\subsection*{Alambre central (2)}
+
+Recibe una fuerza de cada vecino, ambos a distancia $d$ y \emph{antiparalelos} a \'el, por lo que
+lo \textbf{repelen}: el alambre (1) lo empuja hacia abajo y el alambre (3) lo empuja hacia arriba,
+con \emph{igual magnitud}. Se cancelan:
+\[
+    \boxed{\frac{F_2}{l} = 0}
+\]
+
+%--------------------------------------------------
+\subsection*{Alambre superior (1)}
+
+Sobre \'el act\'uan:
+\begin{itemize}\setlength\itemsep{1pt}
+    \item el alambre (2), antiparalelo y a distancia $d$ $\Rightarrow$ \textbf{repulsi\'on hacia
+          arriba}, $\dfrac{F_d}{l}=2{,}13\times10^{-5}$ [N/m];
+    \item el alambre (3), paralelo y a distancia $2d$ $\Rightarrow$ \textbf{atracci\'on hacia abajo},
+          $\dfrac{F_{2d}}{l}=1{,}07\times10^{-5}$ [N/m].
+\end{itemize}
+La fuerza neta (hacia arriba) es la diferencia:
+\[
+    \frac{F_1}{l} = \frac{F_d}{l} - \frac{F_{2d}}{l}
+    = (2{,}13 - 1{,}07)\times10^{-5}
+\]
+\[
+    \boxed{\frac{F_1}{l} = 1{,}07\times10^{-5}\ [\text{N/m}]\quad\text{(hacia arriba)}}
+\]
+
+%--------------------------------------------------
+\subsection*{Alambre inferior (3)}
+
+Por simetr\'ia con el alambre (1): el alambre (2) lo \textbf{repele hacia abajo}
+($2{,}13\times10^{-5}$ [N/m]) y el alambre (1) lo \textbf{atrae hacia arriba}
+($1{,}07\times10^{-5}$ [N/m]). La fuerza neta (hacia abajo) es:
+\[
+    \boxed{\frac{F_3}{l} = 1{,}07\times10^{-5}\ [\text{N/m}]\quad\text{(hacia abajo)}}
+\]
+
+%--------------------------------------------------
+\subsection*{Resumen}
+
+\begin{center}
+\renewcommand{\arraystretch}{1.3}
+\begin{tabular}{|c|c|l|}
+\hline
+\textbf{Alambre} & \textbf{$F/l$ [N/m]} & \textbf{Direcci\'on} \\
+\hline
+(1) superior & $1{,}07\times10^{-5}$ & hacia arriba (se aleja del conjunto) \\
+(2) central  & $0$                   & se cancelan las repulsiones \\
+(3) inferior & $1{,}07\times10^{-5}$ & hacia abajo (se aleja del conjunto) \\
+\hline
+\end{tabular}
+\end{center}
+
+\medskip
+\noindent\textbf{Interpretaci\'on:} el alambre central, repelido sim\'etricamente por sus dos
+vecinos, queda en equilibrio; los alambres extremos son expulsados del arreglo (la repulsi\'on del
+vecino cercano supera la atracci\'on del extremo lejano).
+
+\end{document}
