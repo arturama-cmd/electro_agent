@@ -1,0 +1,425 @@
+\documentclass[12pt,letterpaper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[spanish,es-noshorthands]{babel}
+\usepackage{amsmath,amssymb}
+\usepackage{graphicx}
+\usepackage{xcolor}
+\usepackage{tikz}
+\usetikzlibrary{calc,arrows.meta,decorations.markings}
+\usepackage[top=2.5cm, bottom=4cm, left=2cm, right=2cm, footskip=40pt]{geometry}
+\usepackage{fancyhdr}
+\usepackage{lastpage}
+
+\definecolor{ubbblue}{RGB}{0,51,102}
+
+\pagestyle{fancy}
+\fancyhf{}
+\renewcommand{\headrulewidth}{0pt}
+\renewcommand{\footrulewidth}{0.4pt}
+\fancyfoot[L]{\raisebox{-0.5cm}{\includegraphics[height=1.2cm]{logo ubb.png}}}
+\fancyfoot[C]{%
+    \begin{minipage}[b]{8cm}\centering
+        \footnotesize\textcolor{ubbblue}{\textbf{Dr.\ Arturo Fern\'andez P\'erez}}\\
+        \scriptsize Departamento de F\'isica -- Universidad del B\'io-B\'io\\
+        \scriptsize \textit{Electro\_Asistente\_AI-UBB}\\
+        \tiny P\'agina \thepage\ de \pageref{LastPage}
+    \end{minipage}}
+\fancyfoot[R]{\raisebox{-0.5cm}{\includegraphics[height=1.2cm]{logo dfis.png}}}
+\fancypagestyle{plain}{%
+    \fancyhf{}
+    \renewcommand{\headrulewidth}{0pt}
+    \renewcommand{\footrulewidth}{0.4pt}
+    \fancyfoot[L]{\raisebox{-0.5cm}{\includegraphics[height=1.2cm]{logo ubb.png}}}
+    \fancyfoot[C]{%
+        \begin{minipage}[b]{8cm}\centering
+            \footnotesize\textcolor{ubbblue}{\textbf{Dr.\ Arturo Fern\'andez P\'erez}}\\
+            \scriptsize Departamento de F\'isica -- Universidad del B\'io-B\'io\\
+            \scriptsize \textit{Electro\_Asistente\_AI-UBB}\\
+            \tiny P\'agina \thepage\ de \pageref{LastPage}
+        \end{minipage}}
+    \fancyfoot[R]{\raisebox{-0.5cm}{\includegraphics[height=1.2cm]{logo dfis.png}}}
+}
+
+\begin{document}
+
+%========================================
+% ENCABEZADO INSTITUCIONAL
+%========================================
+\begin{center}
+    \includegraphics[height=2cm]{logo ubb.png}\\[0.3cm]
+    {\large\textcolor{ubbblue}{\textbf{UNIVERSIDAD DEL B\'IO-B\'IO}}}\\[0.1cm]
+    {\normalsize Facultad de Ciencias -- Departamento de F\'isica}
+\end{center}
+
+\vspace{0.3cm}
+\hrule height 1pt
+\vspace{0.5cm}
+
+{\centering\Large\textbf{Problemas resueltos en la clase del 22/06}\par}
+{\centering\normalsize\textit{Gu\'ia 9: Fuentes de Campo Magn\'etico}\par}
+
+\vspace{0.6cm}
+
+%========================================================
+% REPASO: PRODUCTO CRUZ
+%========================================================
+\section*{Repaso: el producto cruz}
+
+\noindent El \textbf{producto cruz} (o producto vectorial) de dos vectores $\vec{A}$ y $\vec{B}$
+es un \textbf{vector} $\vec{A}\times\vec{B}$ con las siguientes propiedades:
+
+\begin{itemize}\setlength\itemsep{3pt}
+    \item \textbf{M\'odulo:} su magnitud es el producto de las magnitudes (m\'odulos) de ambos
+          vectores por el seno del \'angulo $\theta$ que forman:
+          \[ |\vec{A}\times\vec{B}| = |\vec{A}|\,|\vec{B}|\operatorname{sen}\theta \]
+          donde $|\vec{A}|$ y $|\vec{B}|$ son las magnitudes de cada vector y
+          $0 \le \theta \le \pi$ es el \'angulo entre ellos.
+    \item \textbf{Direcci\'on:} es \textbf{perpendicular} al plano que contiene a $\vec{A}$ y
+          $\vec{B}$, y se determina con la \textbf{regla de la mano derecha}.
+    \item \textbf{Casos l\'imite:}
+          \begin{itemize}
+              \item Si $\vec{A}\parallel\vec{B}$ ($\theta = 0$ o $\pi$): $\operatorname{sen}\theta = 0$,
+                    el producto cruz es \textbf{nulo}.
+              \item Si $\vec{A}\perp\vec{B}$ ($\theta = \pi/2$): $\operatorname{sen}\theta = 1$,
+                    el m\'odulo es \textbf{m\'aximo}: $|\vec{A}\times\vec{B}| = |\vec{A}||\vec{B}|$.
+          \end{itemize}
+\end{itemize}
+
+\noindent En estos problemas estas dos ideas son clave: el \textbf{m\'odulo}
+$|\vec{A}\times\vec{B}| = |\vec{A}||\vec{B}|\operatorname{sen}\theta$ entrega la \emph{magnitud}, y
+la \textbf{regla de la mano derecha} entrega la \emph{direcci\'on}.
+
+\vspace{0.4cm}
+
+%========================================================
+% PROBLEMA 3
+%========================================================
+\section*{Problema 3: Fuerza sobre una espira rectangular junto a un alambre}
+
+\noindent Un alambre recto y muy largo $AB$ conduce una corriente $I_1 = 14{,}0\ [\text{A}]$
+(hacia la derecha). Una espira rectangular, cuyos lados largos son paralelos al alambre,
+conduce una corriente $I_2 = 5{,}00\ [\text{A}]$ en sentido horario, como muestra la Fig.\ 3.
+El lado superior de la espira est\'a a $2{,}6\ [\text{cm}]$ del alambre y el lado inferior a
+$10{,}0\ [\text{cm}]$; los lados largos miden $20{,}0\ [\text{cm}]$. Determine el
+\textbf{momento magn\'etico} de la espira y la \textbf{fuerza} que el campo del alambre ejerce
+sobre cada lado.
+
+\medskip
+
+\begin{center}
+\begin{tikzpicture}[scale=1.0, >=Stealth, line width=0.9pt]
+    %---- alambre recto AB ----
+    \draw[orange!75!black,line width=2pt] (-3.4,3.5)--(3.4,3.5);
+    \draw[->,line width=1.2pt] (-0.5,3.5)--(0.5,3.5);
+    \node[above,font=\small] at (0.0,3.58){$I_1=14{,}0$ A};
+    \node[left,font=\small]  at (-3.45,3.5){$A$};
+    \node[right,font=\small] at (3.45,3.5){$B$};
+
+    %---- espira rectangular ----
+    \draw[orange!75!black,line width=1.8pt]
+        (-2.5,2.85)--(2.5,2.85)--(2.5,1.0)--(-2.5,1.0)--cycle;
+
+    % corrientes en cada lado (sentido horario)
+    \draw[->,line width=1.1pt] (-0.45,2.85)--(0.55,2.85);
+    \draw[->,line width=1.1pt] (2.5,2.25)--(2.5,1.55);
+    \draw[->,line width=1.1pt] (0.55,1.0)--(-0.45,1.0);
+    \draw[->,line width=1.1pt] (-2.5,1.55)--(-2.5,2.25);
+    \node[font=\footnotesize] at (0.0,1.92){$I_2=5{,}00$ A};
+
+    % fuerzas (rojo)
+    \draw[->,red,line width=1.4pt] (1.4,2.85)--(1.4,3.35);
+    \node[red,right,font=\small] at (1.45,3.15){$\vec{F}_{\text{sup}}$};
+    \draw[->,red,line width=1.4pt] (1.4,1.0)--(1.4,0.55);
+    \node[red,right,font=\small] at (1.45,0.78){$\vec{F}_{\text{inf}}$};
+    \draw[->,red,line width=1.4pt] (-2.5,1.4)--(-3.2,1.4);
+    \node[red,below,font=\small] at (-2.9,1.4){$\vec{F}_{\text{izq}}$};
+    \draw[->,red,line width=1.4pt] (2.5,1.4)--(3.2,1.4);
+    \node[red,below,font=\small] at (2.9,1.4){$\vec{F}_{\text{der}}$};
+
+    % distancias (gris)
+    \draw[<->,gray] (-2.0,3.5)--(-2.0,2.85);
+    \node[left,font=\footnotesize,gray] at (-2.0,3.18){$2{,}6$ cm};
+    \draw[<->,gray] (3.3,3.5)--(3.3,1.0);
+    \node[right,font=\footnotesize,gray] at (3.3,2.25){$10{,}0$ cm};
+    \draw[<->,gray] (-2.5,0.45)--(2.5,0.45);
+    \node[below,font=\footnotesize,gray] at (0,0.45){$20{,}0$ cm};
+
+    % sistema de referencia
+    \begin{scope}[shift={(-3.25,-0.15)}]
+        \draw[->,blue,line width=1pt] (0,0)--(0.6,0);
+        \draw[->,blue,line width=1pt] (0,0)--(0,0.6);
+        \node[blue,font=\scriptsize,right] at (0.6,0){$\hat{\imath}$};
+        \node[blue,font=\scriptsize,above] at (0,0.6){$\hat{\jmath}$};
+        \draw[blue,line width=0.8pt] (0,0) circle (0.09);
+        \fill[blue] (0,0) circle (0.025);
+        \node[blue,font=\scriptsize,below right] at (0.09,-0.02){$\hat{k}$};
+    \end{scope}
+\end{tikzpicture}\\[2pt]
+{\footnotesize Figura 3}
+\end{center}
+
+\medskip
+
+\noindent\textbf{Datos:}
+\[
+    I_1 = 14{,}0\ [\text{A}],\quad I_2 = 5{,}00\ [\text{A}],\quad
+    a = 0{,}026\ [\text{m}],\quad b = 0{,}10\ [\text{m}],\quad L = 0{,}20\ [\text{m}]
+\]
+donde $a$ y $b$ son las distancias del alambre a los lados superior e inferior, y $L$ la
+longitud de los lados largos. La altura de la espira (lados cortos) es
+$h = b - a = 0{,}074\ [\text{m}]$.
+
+\medskip
+
+\noindent\textbf{Sistema de referencia.} Adoptamos ejes cartesianos con
+$\hat{\imath}$ hacia la \emph{derecha} ($+x$), $\hat{\jmath}$ hacia \emph{arriba} ($+y$) y
+$\hat{k}$ \emph{saliendo de la p\'agina} ($+z$). Recordamos los productos cruz de la base:
+\[
+    \hat{\imath}\times\hat{\jmath}=\hat{k},\qquad
+    \hat{\jmath}\times\hat{k}=\hat{\imath},\qquad
+    \hat{k}\times\hat{\imath}=\hat{\jmath},\qquad
+    \hat{\imath}\times\hat{k}=-\hat{\jmath}.
+\]
+
+\medskip
+
+\noindent\textbf{Campo del alambre recto.} El alambre lleva $I_1$ en $+\hat{\imath}$. En un punto
+a distancia $r$ \emph{por debajo} del alambre, el vector que va del alambre al punto es
+$\hat{r}=-\hat{\jmath}$, y por la regla de la mano derecha
+$\hat{B}\propto\hat{\imath}\times(-\hat{\jmath})=-\hat{k}$. As\'i, en toda la regi\'on de la espira
+el campo \textbf{entra a la p\'agina}:
+\[
+    \vec{B}(r) = -\,\frac{\mu_0 I_1}{2\pi r}\,\hat{k}.
+\]
+La fuerza sobre un tramo recto con corriente es $\vec{F} = I_2\,\vec{L}\times\vec{B}$, con
+$\vec{L}$ apuntando en el sentido de la corriente.
+
+%--------------------------------------------------
+\subsection*{Momento magn\'etico de la espira}
+
+El \'area encerrada es $A = L\,h = (0{,}20)(0{,}074) = 1{,}48\times10^{-2}\ [\text{m}^2]$.
+La corriente circula en sentido \emph{horario} en el plano $xy$; por la regla de la mano derecha
+la normal asociada apunta \textbf{entrando a la p\'agina}, es decir $\hat{n}=-\hat{k}$. Por lo tanto
+\[
+    \vec{\mu} = I_2\,A\,\hat{n} = (5{,}00)(1{,}48\times10^{-2})\,(-\hat{k})
+\]
+\[
+    \boxed{\vec{\mu} = -7{,}4\times10^{-2}\,\hat{k}\ [\text{A}\cdot\text{m}^2]\quad\text{(entrando a la p\'agina)}}
+\]
+
+%--------------------------------------------------
+\subsection*{Lado superior (a $a=2{,}6$ cm, corriente hacia la derecha)}
+
+La corriente va hacia la derecha, $\vec{L}_{\text{sup}}=L\,\hat{\imath}$, y el campo a distancia
+$a$ es $\vec{B}(a)=-\dfrac{\mu_0 I_1}{2\pi a}\,\hat{k}$. El producto cruz da
+\begin{align*}
+    \vec{F}_{\text{sup}} &= I_2\,\vec{L}_{\text{sup}}\times\vec{B}(a)
+    = I_2\,(L\,\hat{\imath})\times\!\left(-\frac{\mu_0 I_1}{2\pi a}\,\hat{k}\right)
+    = -\frac{\mu_0 I_1 I_2 L}{2\pi a}\,(\hat{\imath}\times\hat{k}) \\[2pt]
+    &= -\frac{\mu_0 I_1 I_2 L}{2\pi a}\,(-\hat{\jmath})
+    = +\frac{\mu_0 I_1 I_2 L}{2\pi a}\,\hat{\jmath}
+    = \frac{(2\times10^{-7})(14)(5)(0{,}20)}{0{,}026}\,\hat{\jmath}
+\end{align*}
+\[
+    \boxed{\vec{F}_{\text{sup}} = +1{,}08\times10^{-4}\,\hat{\jmath}\ [\text{N}]\quad\text{(hacia el alambre, atracci\'on)}}
+\]
+El signo $+\hat{\jmath}$ (hacia arriba, hacia el alambre) confirma la \textbf{atracci\'on} entre
+corrientes paralelas.
+
+%--------------------------------------------------
+\subsection*{Lado inferior (a $b=10{,}0$ cm, corriente hacia la izquierda)}
+
+La corriente va hacia la izquierda, $\vec{L}_{\text{inf}}=-L\,\hat{\imath}$, y el campo a distancia
+$b$ es $\vec{B}(b)=-\dfrac{\mu_0 I_1}{2\pi b}\,\hat{k}$. Entonces
+\begin{align*}
+    \vec{F}_{\text{inf}} &= I_2\,\vec{L}_{\text{inf}}\times\vec{B}(b)
+    = I_2\,(-L\,\hat{\imath})\times\!\left(-\frac{\mu_0 I_1}{2\pi b}\,\hat{k}\right)
+    = +\frac{\mu_0 I_1 I_2 L}{2\pi b}\,(\hat{\imath}\times\hat{k}) \\[2pt]
+    &= +\frac{\mu_0 I_1 I_2 L}{2\pi b}\,(-\hat{\jmath})
+    = -\frac{\mu_0 I_1 I_2 L}{2\pi b}\,\hat{\jmath}
+    = -\frac{(2\times10^{-7})(14)(5)(0{,}20)}{0{,}10}\,\hat{\jmath}
+\end{align*}
+\[
+    \boxed{\vec{F}_{\text{inf}} = -2{,}8\times10^{-5}\,\hat{\jmath}\ [\text{N}]\quad\text{(alej\'andose del alambre, repulsi\'on)}}
+\]
+El signo $-\hat{\jmath}$ (hacia abajo, alej\'andose del alambre) confirma la \textbf{repulsi\'on}
+entre corrientes antiparalelas.
+
+%--------------------------------------------------
+\subsection*{Lados laterales (verticales, de $a$ a $b$)}
+
+Sobre estos lados verticales el campo $\vec{B}=-\frac{\mu_0 I_1}{2\pi r}\hat{k}$ \emph{var\'ia}
+con la distancia $r$, pero su \emph{direcci\'on} ($-\hat{k}$) es constante; lo mismo la
+direcci\'on de la corriente. Por ello la \textbf{direcci\'on} de la fuerza sale del producto cruz
+de los versores y la \textbf{magnitud} de integrar $1/r$ entre $a$ y $b$.
+
+\medskip
+
+\noindent\emph{Lado izquierdo} (corriente hacia arriba, $\hat{L}=\hat{\jmath}$):
+\[
+    \hat{L}\times\hat{B} = \hat{\jmath}\times(-\hat{k}) = -(\hat{\jmath}\times\hat{k}) = -\hat{\imath}
+    \quad\Rightarrow\quad \vec{F}_{\text{izq}}\parallel -\hat{\imath}\ \text{(hacia la izquierda).}
+\]
+\noindent\emph{Lado derecho} (corriente hacia abajo, $\hat{L}=-\hat{\jmath}$):
+\[
+    \hat{L}\times\hat{B} = (-\hat{\jmath})\times(-\hat{k}) = \hat{\jmath}\times\hat{k} = \hat{\imath}
+    \quad\Rightarrow\quad \vec{F}_{\text{der}}\parallel +\hat{\imath}\ \text{(hacia la derecha).}
+\]
+La magnitud com\'un es
+\begin{align*}
+    F_{\text{lat}} &= I_2\!\int_a^b \frac{\mu_0 I_1}{2\pi r}\,dr
+    = \frac{\mu_0 I_1 I_2}{2\pi}\int_a^b \frac{dr}{r}
+    = \frac{\mu_0 I_1 I_2}{2\pi}\,\ln\!\left(\frac{b}{a}\right) \\[2pt]
+    &= (2\times10^{-7})(14)(5)\,\ln\!\left(\frac{0{,}10}{0{,}026}\right)
+    = (1{,}4\times10^{-5})\,\ln(3{,}85)
+\end{align*}
+\[
+    \boxed{\vec{F}_{\text{izq}} = -1{,}89\times10^{-5}\,\hat{\imath}\ [\text{N}],\qquad
+           \vec{F}_{\text{der}} = +1{,}89\times10^{-5}\,\hat{\imath}\ [\text{N}]}
+\]
+Son iguales y opuestas ($\pm\hat{\imath}$): solo tienden a \emph{estirar} la espira y su suma es nula.
+
+%--------------------------------------------------
+\subsection*{Resumen}
+
+\begin{center}
+\renewcommand{\arraystretch}{1.3}
+\begin{tabular}{|c|c|l|}
+\hline
+\textbf{Lado} & \textbf{$\vec{F}$ [N]} & \textbf{Direcci\'on} \\
+\hline
+Superior  & $+1{,}08\times10^{-4}\,\hat{\jmath}$ & hacia el alambre (atracci\'on) \\
+Inferior  & $-2{,}8\times10^{-5}\,\hat{\jmath}$  & alej\'andose del alambre (repulsi\'on) \\
+Izquierdo & $-1{,}89\times10^{-5}\,\hat{\imath}$ & hacia la izquierda \\
+Derecho   & $+1{,}89\times10^{-5}\,\hat{\imath}$ & hacia la derecha \\
+\hline
+\end{tabular}
+\end{center}
+
+\medskip
+\noindent\textbf{Fuerza neta.} Sumando las cuatro contribuciones vectoriales, las laterales se
+cancelan ($-1{,}89\times10^{-5}\,\hat{\imath}+1{,}89\times10^{-5}\,\hat{\imath}=\vec{0}$) y quedan
+solo las verticales:
+\begin{align*}
+    \vec{F}_{\text{neta}} &= \vec{F}_{\text{sup}}+\vec{F}_{\text{inf}}+\vec{F}_{\text{izq}}+\vec{F}_{\text{der}} \\[2pt]
+    &= \left(1{,}08\times10^{-4} - 2{,}8\times10^{-5}\right)\hat{\jmath}
+    = +8{,}0\times10^{-5}\,\hat{\jmath}\ [\text{N}]
+\end{align*}
+\[
+    \boxed{\vec{F}_{\text{neta}} = +8{,}0\times10^{-5}\,\hat{\jmath}\ [\text{N}]\quad\text{(hacia el alambre)}}
+\]
+El signo $+\hat{\jmath}$ indica que la espira es atra\'ida netamente \textbf{hacia el conductor}:
+la atracci\'on del lado superior (m\'as cercano) supera a la repulsi\'on del inferior.
+
+\newpage
+
+%========================================================
+% PROBLEMA 4
+%========================================================
+\section*{Problema 4: Campo magn\'etico de un arco (Ley de Biot--Savart)}
+
+\noindent El cable de la figura conduce una corriente $I = 5\ [\text{A}]$ y forma un arco
+circular de radio $R = 4\ [\text{cm}]$. Determine el campo magn\'etico en el origen.
+
+\medskip
+
+\noindent
+\begin{minipage}[t]{0.40\textwidth}
+\centering
+\vspace{0pt}
+\begin{tikzpicture}[scale=1.1, >=Stealth, line width=0.9pt]
+    % tramo recto vertical (I baja) sobre el eje y
+    \draw[orange!80!black,line width=1.8pt] (0,2.6)--(0,1.4);
+    \draw[->,line width=1.2pt] (0,2.25)--(0,1.7);
+    \node[left,font=\small] at (-0.1,2.0){$I$};
+    % arco de cuarto de circunferencia, radio 1.4, centrado en el origen
+    \draw[orange!80!black,line width=1.8pt] (0,1.4) arc (90:0:1.4);
+    \draw[->,line width=1.2pt]
+        ({1.4*cos(50)},{1.4*sin(50)})--({1.4*cos(44)},{1.4*sin(44)});
+    % tramo recto horizontal (I a la derecha) sobre el eje x
+    \draw[orange!80!black,line width=1.8pt] (1.4,0)--(2.8,0);
+    \draw[->,line width=1.2pt] (1.95,0)--(2.5,0);
+    \node[below,font=\small] at (2.25,-0.08){$I$};
+    % origen
+    \fill (0,0) circle (1.8pt);
+    \node[below left,font=\small] at (0.02,0){$O$};
+    % radio R
+    \draw[gray,dashed] (0,0)--({1.4*cos(45)},{1.4*sin(45)});
+    \node[font=\small] at (0.58,0.42){$R$};
+    % campo entrante (x)
+    \node[font=\normalsize] at (0.42,-0.32){$\otimes$};
+    \node[font=\footnotesize] at (0.78,-0.34){$\vec{B}$};
+\end{tikzpicture}
+\end{minipage}%
+\hfill
+\begin{minipage}[t]{0.57\textwidth}
+\vspace{0pt}
+\textbf{Vectores de posici\'on:}
+\begin{itemize}\setlength\itemsep{2pt}
+    \item $\vec{r}_{P}$: punto donde se \textbf{calcula} el campo magn\'etico (el origen $O$):
+          \[ \vec{r}_{P} = \vec{0} \]
+    \item $\vec{r}_{I}$: punto de la \textbf{fuente} (elemento de corriente sobre el arco):
+          \[ \vec{r}_{I} = R\cos\theta\,\hat{\imath} + R\operatorname{sen}\theta\,\hat{\jmath} \]
+    \item $\vec{r}_{P} - \vec{r}_{I} = -R\cos\theta\,\hat{\imath} - R\operatorname{sen}\theta\,\hat{\jmath}$
+\end{itemize}
+\end{minipage}
+
+\medskip
+
+\noindent\textbf{M\'odulo de $\vec{r}_{P}-\vec{r}_{I}$.} Usando la identidad trigonom\'etrica
+$\cos^2\theta + \operatorname{sen}^2\theta = 1$, los t\'erminos de seno y coseno se cancelan:
+\begin{align*}
+    |\vec{r}_{P}-\vec{r}_{I}|
+       &= \sqrt{(-R\cos\theta)^2 + (-R\operatorname{sen}\theta)^2}
+        = \sqrt{R^2\cos^2\theta + R^2\operatorname{sen}^2\theta} \\
+       &= \sqrt{R^2\big(\cos^2\theta + \operatorname{sen}^2\theta\big)}
+        = \sqrt{R^2\,(1)} = R
+\end{align*}
+La distancia de cada elemento del arco al origen es \textbf{constante} e igual a $R$.
+
+\medskip
+
+\noindent\textbf{Ley de Biot--Savart:}
+\[
+    d\vec{B} = \frac{\mu_0 I}{4\pi}\,\frac{d\vec{\ell}\times(\vec{r}_{P}-\vec{r}_{I})}{|\vec{r}_{P}-\vec{r}_{I}|^3}
+\]
+
+%--------------------------------------------------------
+\subsection*{Contribuci\'on de los tramos rectos: nula}
+En cada tramo recto, el elemento $d\vec{\ell}$ apunta \textbf{a lo largo del mismo eje} que une la
+fuente con el origen, es decir $d\vec{\ell} \parallel (\vec{r}_{P}-\vec{r}_{I})$. Por lo tanto:
+\[
+    d\vec{\ell}\times(\vec{r}_{P}-\vec{r}_{I}) = \vec{0}
+    \quad\Longrightarrow\quad
+    \vec{B}_{\text{rectos}} = \vec{0}
+\]
+Solo el \textbf{arco} contribuye al campo en el origen.
+
+%--------------------------------------------------------
+\subsection*{Contribuci\'on del arco (m\'odulo del producto cruz)}
+Sobre el arco, $d\vec{\ell}$ (tangente) es \textbf{perpendicular} a $(\vec{r}_{P}-\vec{r}_{I})$
+(radial), de modo que $\operatorname{sen}90^\circ = 1$. Tomando el m\'odulo, con
+$|\vec{r}_{P}-\vec{r}_{I}| = R$ y $d\ell = R\,d\theta$:
+\[
+    dB = \frac{\mu_0 I}{4\pi}\,\frac{d\ell\,|\vec{r}_{P}-\vec{r}_{I}|\,\operatorname{sen}90^\circ}{|\vec{r}_{P}-\vec{r}_{I}|^3}
+       = \frac{\mu_0 I}{4\pi}\,\frac{(R\,d\theta)(R)(1)}{R^3}
+       = \frac{\mu_0 I}{4\pi R}\,d\theta
+\]
+Integrando sobre el cuarto de circunferencia ($\theta$ de $0$ a $\pi/2$):
+\[
+    B = \frac{\mu_0 I}{4\pi R}\int_{0}^{\pi/2} d\theta
+      = \frac{\mu_0 I}{4\pi R}\cdot\frac{\pi}{2}
+      = \frac{\mu_0 I}{8R}
+\]
+\[
+    B = \frac{(4\pi\times10^{-7})(5)}{8\,(0{,}04)} = 1{,}96\times10^{-5}\ [\text{T}]
+\]
+
+\noindent\textbf{Direcci\'on (regla de la mano derecha):} la corriente recorre el arco en sentido
+horario (de $+\hat{\jmath}$ hacia $+\hat{\imath}$); el pulgar apunta \textbf{hacia adentro de la
+p\'agina} ($-\hat{k}$). Por lo tanto:
+\[
+    \boxed{\vec{B} = 1{,}96\times10^{-5}\,(-\hat{k})\ [\text{T}]\quad\text{(entrando a la p\'agina)}}
+\]
+
+\end{document}

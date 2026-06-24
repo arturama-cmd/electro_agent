@@ -1,0 +1,203 @@
+\documentclass[12pt,letterpaper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[spanish,es-noshorthands]{babel}
+\usepackage{amsmath,amssymb}
+\usepackage{graphicx}
+\usepackage{xcolor}
+\usepackage{tikz}
+\usetikzlibrary{calc,arrows.meta,decorations.markings}
+\usepackage[top=2.5cm, bottom=4cm, left=2cm, right=2cm, footskip=40pt]{geometry}
+\usepackage{fancyhdr}
+\usepackage{lastpage}
+
+\definecolor{ubbblue}{RGB}{0,51,102}
+
+\pagestyle{fancy}
+\fancyhf{}
+\renewcommand{\headrulewidth}{0pt}
+\renewcommand{\footrulewidth}{0.4pt}
+\fancyfoot[L]{\raisebox{-0.5cm}{\includegraphics[height=1.2cm]{logo ubb.png}}}
+\fancyfoot[C]{%
+    \begin{minipage}[b]{8cm}\centering
+        \footnotesize\textcolor{ubbblue}{\textbf{Dr.\ Arturo Fern\'andez P\'erez}}\\
+        \scriptsize Departamento de F\'isica -- Universidad del B\'io-B\'io\\
+        \scriptsize \textit{Electro\_Asistente\_AI-UBB}\\
+        \tiny P\'agina \thepage\ de \pageref{LastPage}
+    \end{minipage}}
+\fancyfoot[R]{\raisebox{-0.5cm}{\includegraphics[height=1.2cm]{logo dfis.png}}}
+\fancypagestyle{plain}{%
+    \fancyhf{}
+    \renewcommand{\headrulewidth}{0pt}
+    \renewcommand{\footrulewidth}{0.4pt}
+    \fancyfoot[L]{\raisebox{-0.5cm}{\includegraphics[height=1.2cm]{logo ubb.png}}}
+    \fancyfoot[C]{%
+        \begin{minipage}[b]{8cm}\centering
+            \footnotesize\textcolor{ubbblue}{\textbf{Dr.\ Arturo Fern\'andez P\'erez}}\\
+            \scriptsize Departamento de F\'isica -- Universidad del B\'io-B\'io\\
+            \scriptsize \textit{Electro\_Asistente\_AI-UBB}\\
+            \tiny P\'agina \thepage\ de \pageref{LastPage}
+        \end{minipage}}
+    \fancyfoot[R]{\raisebox{-0.5cm}{\includegraphics[height=1.2cm]{logo dfis.png}}}
+}
+
+\begin{document}
+
+%========================================
+% ENCABEZADO INSTITUCIONAL
+%========================================
+\begin{center}
+    \includegraphics[height=2cm]{logo ubb.png}\\[0.3cm]
+    {\large\textcolor{ubbblue}{\textbf{UNIVERSIDAD DEL B\'IO-B\'IO}}}\\[0.1cm]
+    {\normalsize Facultad de Ciencias -- Departamento de F\'isica}
+\end{center}
+
+\vspace{0.3cm}
+\hrule height 1pt
+\vspace{0.5cm}
+
+{\centering\Large\textbf{Soluci\'on Gu\'ia 9 -- Problema 4}\par}
+{\centering\normalsize\textit{Campo magn\'etico de un arco (Ley de Biot--Savart)}\par}
+
+\vspace{0.6cm}
+
+%========================================================
+% REPASO: PRODUCTO CRUZ
+%========================================================
+\section*{Repaso: el producto cruz}
+
+\noindent El \textbf{producto cruz} (o producto vectorial) de dos vectores $\vec{A}$ y $\vec{B}$
+es un \textbf{vector} $\vec{A}\times\vec{B}$ con las siguientes propiedades:
+
+\begin{itemize}\setlength\itemsep{3pt}
+    \item \textbf{M\'odulo:} su magnitud es el producto de las magnitudes (m\'odulos) de ambos
+          vectores por el seno del \'angulo $\theta$ que forman:
+          \[ |\vec{A}\times\vec{B}| = |\vec{A}|\,|\vec{B}|\operatorname{sen}\theta \]
+          donde $|\vec{A}|$ y $|\vec{B}|$ son las magnitudes de cada vector y
+          $0 \le \theta \le \pi$ es el \'angulo entre ellos.
+    \item \textbf{Direcci\'on:} es \textbf{perpendicular} al plano que contiene a $\vec{A}$ y
+          $\vec{B}$, y se determina con la \textbf{regla de la mano derecha}.
+    \item \textbf{Casos l\'imite:}
+          \begin{itemize}
+              \item Si $\vec{A}\parallel\vec{B}$ ($\theta = 0$ o $\pi$): $\operatorname{sen}\theta = 0$,
+                    el producto cruz es \textbf{nulo}.
+              \item Si $\vec{A}\perp\vec{B}$ ($\theta = \pi/2$): $\operatorname{sen}\theta = 1$,
+                    el m\'odulo es \textbf{m\'aximo}: $|\vec{A}\times\vec{B}| = |\vec{A}||\vec{B}|$.
+          \end{itemize}
+\end{itemize}
+
+\noindent En la ley de Biot--Savart estas dos ideas son clave: el \textbf{m\'odulo}
+$|\vec{A}\times\vec{B}| = |\vec{A}||\vec{B}|\operatorname{sen}\theta$ entrega la \emph{magnitud} del
+campo, y la \textbf{regla de la mano derecha} entrega su \emph{direcci\'on}.
+
+\vspace{0.4cm}
+
+%========================================================
+% ENUNCIADO + FIGURA
+%========================================================
+\section*{Enunciado}
+
+\noindent El cable de la figura conduce una corriente $I = 5\ [\text{A}]$ y forma un arco
+circular de radio $R = 4\ [\text{cm}]$. Determine el campo magn\'etico en el origen.
+
+\medskip
+
+\noindent
+\begin{minipage}[t]{0.40\textwidth}
+\centering
+\vspace{0pt}
+\begin{tikzpicture}[scale=1.1, >=Stealth, line width=0.9pt]
+    % tramo recto vertical (I baja) sobre el eje y
+    \draw[orange!80!black,line width=1.8pt] (0,2.6)--(0,1.4);
+    \draw[->,line width=1.2pt] (0,2.25)--(0,1.7);
+    \node[left,font=\small] at (-0.1,2.0){$I$};
+    % arco de cuarto de circunferencia, radio 1.4, centrado en el origen
+    \draw[orange!80!black,line width=1.8pt] (0,1.4) arc (90:0:1.4);
+    \draw[->,line width=1.2pt]
+        ({1.4*cos(50)},{1.4*sin(50)})--({1.4*cos(44)},{1.4*sin(44)});
+    % tramo recto horizontal (I a la derecha) sobre el eje x
+    \draw[orange!80!black,line width=1.8pt] (1.4,0)--(2.8,0);
+    \draw[->,line width=1.2pt] (1.95,0)--(2.5,0);
+    \node[below,font=\small] at (2.25,-0.08){$I$};
+    % origen
+    \fill (0,0) circle (1.8pt);
+    \node[below left,font=\small] at (0.02,0){$O$};
+    % radio R
+    \draw[gray,dashed] (0,0)--({1.4*cos(45)},{1.4*sin(45)});
+    \node[font=\small] at (0.58,0.42){$R$};
+    % campo entrante (x)
+    \node[font=\normalsize] at (0.42,-0.32){$\otimes$};
+    \node[font=\footnotesize] at (0.78,-0.34){$\vec{B}$};
+\end{tikzpicture}
+\end{minipage}%
+\hfill
+\begin{minipage}[t]{0.57\textwidth}
+\vspace{0pt}
+\textbf{Vectores de posici\'on:}
+\begin{itemize}\setlength\itemsep{2pt}
+    \item $\vec{r}_{P}$: punto donde se \textbf{calcula} el campo magn\'etico (el origen $O$):
+          \[ \vec{r}_{P} = \vec{0} \]
+    \item $\vec{r}_{I}$: punto de la \textbf{fuente} (elemento de corriente sobre el arco):
+          \[ \vec{r}_{I} = R\cos\theta\,\hat{\imath} + R\operatorname{sen}\theta\,\hat{\jmath} \]
+    \item $\vec{r}_{P} - \vec{r}_{I} = -R\cos\theta\,\hat{\imath} - R\operatorname{sen}\theta\,\hat{\jmath}$
+\end{itemize}
+\end{minipage}
+
+\medskip
+
+\noindent\textbf{M\'odulo de $\vec{r}_{P}-\vec{r}_{I}$.} Usando la identidad trigonom\'etrica
+$\cos^2\theta + \operatorname{sen}^2\theta = 1$, los t\'erminos de seno y coseno se cancelan:
+\begin{align*}
+    |\vec{r}_{P}-\vec{r}_{I}|
+       &= \sqrt{(-R\cos\theta)^2 + (-R\operatorname{sen}\theta)^2}
+        = \sqrt{R^2\cos^2\theta + R^2\operatorname{sen}^2\theta} \\
+       &= \sqrt{R^2\big(\cos^2\theta + \operatorname{sen}^2\theta\big)}
+        = \sqrt{R^2\,(1)} = R
+\end{align*}
+La distancia de cada elemento del arco al origen es \textbf{constante} e igual a $R$.
+
+\medskip
+
+\noindent\textbf{Ley de Biot--Savart:}
+\[
+    d\vec{B} = \frac{\mu_0 I}{4\pi}\,\frac{d\vec{\ell}\times(\vec{r}_{P}-\vec{r}_{I})}{|\vec{r}_{P}-\vec{r}_{I}|^3}
+\]
+
+%--------------------------------------------------------
+\subsection*{Contribuci\'on de los tramos rectos: nula}
+En cada tramo recto, el elemento $d\vec{\ell}$ apunta \textbf{a lo largo del mismo eje} que une la
+fuente con el origen, es decir $d\vec{\ell} \parallel (\vec{r}_{P}-\vec{r}_{I})$. Por lo tanto:
+\[
+    d\vec{\ell}\times(\vec{r}_{P}-\vec{r}_{I}) = \vec{0}
+    \quad\Longrightarrow\quad
+    \vec{B}_{\text{rectos}} = \vec{0}
+\]
+Solo el \textbf{arco} contribuye al campo en el origen.
+
+%--------------------------------------------------------
+\subsection*{Contribuci\'on del arco (m\'odulo del producto cruz)}
+Sobre el arco, $d\vec{\ell}$ (tangente) es \textbf{perpendicular} a $(\vec{r}_{P}-\vec{r}_{I})$
+(radial), de modo que $\operatorname{sen}90^\circ = 1$. Tomando el m\'odulo, con
+$|\vec{r}_{P}-\vec{r}_{I}| = R$ y $d\ell = R\,d\theta$:
+\[
+    dB = \frac{\mu_0 I}{4\pi}\,\frac{d\ell\,|\vec{r}_{P}-\vec{r}_{I}|\,\operatorname{sen}90^\circ}{|\vec{r}_{P}-\vec{r}_{I}|^3}
+       = \frac{\mu_0 I}{4\pi}\,\frac{(R\,d\theta)(R)(1)}{R^3}
+       = \frac{\mu_0 I}{4\pi R}\,d\theta
+\]
+Integrando sobre el cuarto de circunferencia ($\theta$ de $0$ a $\pi/2$):
+\[
+    B = \frac{\mu_0 I}{4\pi R}\int_{0}^{\pi/2} d\theta
+      = \frac{\mu_0 I}{4\pi R}\cdot\frac{\pi}{2}
+      = \frac{\mu_0 I}{8R}
+\]
+\[
+    B = \frac{(4\pi\times10^{-7})(5)}{8\,(0{,}04)} = 1{,}96\times10^{-5}\ [\text{T}]
+\]
+
+\noindent\textbf{Direcci\'on (regla de la mano derecha):} la corriente recorre el arco en sentido
+horario (de $+\hat{\jmath}$ hacia $+\hat{\imath}$); el pulgar apunta \textbf{hacia adentro de la
+p\'agina} ($-\hat{k}$). Por lo tanto:
+\[
+    \boxed{\vec{B} = 1{,}96\times10^{-5}\,(-\hat{k})\ [\text{T}]\quad\text{(entrando a la p\'agina)}}
+\]
+
+\end{document}
