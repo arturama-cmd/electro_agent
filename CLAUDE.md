@@ -86,8 +86,8 @@ Documents in `corpus/` by topic (categories defined in `rag_system.py:13-19` -> 
 | Category | Status | Content |
 |----------|--------|---------|
 | `campo_electrico/` | Active | Exams, solutions, Sears/Serway textbook chapters |
-| `campo_magnetico/` | Active | Homework solutions, Biot-Savart problems |
-| `corriente_directa/` | Active | Capacitors, dielectrics, DC circuits (Guía 7 + class solutions + Certamen 2 Kirchhoff) |
+| `campo_magnetico/` | Active | Biot-Savart, fuerza/torque magnético, inducción electromagnética (Faraday/Lenz); soluciones de guías 8/9/10, certámenes (C3, C4) y tareas |
+| `corriente_directa/` | Active | Capacitors, dielectrics, DC circuits (Guía 7 + class solutions + Certamen 2 Kirchhoff + Tarea 3 + Problema 12 Kirchhoff) |
 | `corriente_alterna/` | Planned | AC circuits (empty) |
 | `maquinas_electricas/` | Planned | Electric machines (empty) |
 

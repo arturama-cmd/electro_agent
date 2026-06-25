@@ -1,0 +1,363 @@
+\documentclass[12pt,letterpaper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[spanish,es-noshorthands]{babel}
+\usepackage{amsmath,amssymb}
+\usepackage{graphicx}
+\usepackage{xcolor}
+\usepackage{tikz}
+\usetikzlibrary{calc,arrows.meta,decorations.markings,decorations.pathmorphing}
+\usepackage[top=2.5cm, bottom=4cm, left=2cm, right=2cm, footskip=40pt]{geometry}
+\usepackage{fancyhdr}
+\usepackage{lastpage}
+
+\definecolor{ubbblue}{RGB}{0,51,102}
+
+\pagestyle{fancy}
+\fancyhf{}
+\renewcommand{\headrulewidth}{0pt}
+\renewcommand{\footrulewidth}{0.4pt}
+\fancyfoot[L]{\raisebox{-0.5cm}{\includegraphics[height=1.2cm]{logo ubb.png}}}
+\fancyfoot[C]{%
+    \begin{minipage}[b]{8cm}\centering
+        \footnotesize\textcolor{ubbblue}{\textbf{Dr.\ Arturo Fern\'andez P\'erez}}\\
+        \scriptsize Departamento de F\'isica -- Universidad del B\'io-B\'io\\
+        \scriptsize \textit{Electro\_Asistente\_AI-UBB}\\
+        \tiny P\'agina \thepage\ de \pageref{LastPage}
+    \end{minipage}}
+\fancyfoot[R]{\raisebox{-0.5cm}{\includegraphics[height=1.2cm]{logo dfis.png}}}
+\fancypagestyle{plain}{%
+    \fancyhf{}
+    \renewcommand{\headrulewidth}{0pt}
+    \renewcommand{\footrulewidth}{0.4pt}
+    \fancyfoot[L]{\raisebox{-0.5cm}{\includegraphics[height=1.2cm]{logo ubb.png}}}
+    \fancyfoot[C]{%
+        \begin{minipage}[b]{8cm}\centering
+            \footnotesize\textcolor{ubbblue}{\textbf{Dr.\ Arturo Fern\'andez P\'erez}}\\
+            \scriptsize Departamento de F\'isica -- Universidad del B\'io-B\'io\\
+            \scriptsize \textit{Electro\_Asistente\_AI-UBB}\\
+            \tiny P\'agina \thepage\ de \pageref{LastPage}
+        \end{minipage}}
+    \fancyfoot[R]{\raisebox{-0.5cm}{\includegraphics[height=1.2cm]{logo dfis.png}}}
+}
+
+\newcommand{\eps}{\varepsilon}
+
+\begin{document}
+
+%========================================
+% ENCABEZADO INSTITUCIONAL
+%========================================
+\begin{center}
+    \includegraphics[height=2cm]{logo ubb.png}\\[0.3cm]
+    {\large\textcolor{ubbblue}{\textbf{UNIVERSIDAD DEL B\'IO-B\'IO}}}\\[0.1cm]
+    {\normalsize Facultad de Ciencias -- Departamento de F\'isica}
+\end{center}
+
+\vspace{0.3cm}
+\hrule height 1pt
+\vspace{0.5cm}
+
+{\centering\Large\textbf{Soluci\'on Gu\'ia 10: Inducci\'on Electromagn\'etica}\par}
+{\centering\normalsize\textit{Problemas 1, 2, 5, 7 y 8}\par}
+
+\vspace{0.6cm}
+
+%========================================================
+% PROBLEMA 1
+%========================================================
+\section*{Problema 1: Flujo y fem en un lazo cercano a un alambre}
+
+\noindent Un lazo rectangular de lados $L = 1\ [\text{m}]$ (paralelo al alambre) y
+$w = 10\ [\text{cm}]$ est\'a a una distancia $h = 1\ [\text{cm}]$ de un alambre recto muy largo que
+conduce una corriente $I(t) = 3 + 10t\ [\text{A}]$. Determine el flujo magn\'etico a trav\'es del
+lazo, la fem inducida y la direcci\'on de la corriente inducida.
+
+\medskip
+
+\noindent
+\begin{minipage}[t]{0.42\textwidth}
+\centering\vspace{0pt}
+\begin{tikzpicture}[scale=1.0, >=Stealth, line width=0.9pt]
+    % alambre
+    \draw[orange!75!black,line width=2pt] (-0.6,2.6)--(3.8,2.6);
+    \draw[->,line width=1.2pt] (1.4,2.6)--(2.4,2.6);
+    \node[above,font=\small] at (1.9,2.7){$I(t)$};
+    % lazo
+    \draw[blue!60!black,line width=1.3pt] (0,0) rectangle (3.2,1.9);
+    % campo entrante (cruces)
+    \foreach \x in {0.5,1.1,1.7,2.3,2.9} \foreach \y in {0.45,1.0,1.5}
+        \draw[blue,line width=0.4pt] (\x-0.06,\y-0.06)--(\x+0.06,\y+0.06)
+                                     (\x-0.06,\y+0.06)--(\x+0.06,\y-0.06);
+    % corriente inducida (antihoraria)
+    \draw[->,red,line width=1pt] (0,0.95)--(0,1.5); \node[red,left,font=\footnotesize] at (-0.05,1.2){$I_{\text{ind}}$};
+    \draw[->,red,line width=1pt] (3.2,0.95)--(3.2,0.4);
+    % cotas
+    \draw[<->,gray] (3.5,2.6)--(3.5,1.9); \node[right,font=\footnotesize,gray] at (3.5,2.25){$h$};
+    \draw[<->,gray] (3.5,1.9)--(3.5,0);   \node[right,font=\footnotesize,gray] at (3.5,0.95){$w$};
+    \node[below,font=\footnotesize] at (1.6,0){$L$};
+\end{tikzpicture}\\[2pt]
+{\footnotesize Figura 1}
+\end{minipage}%
+\hfill
+\begin{minipage}[t]{0.55\textwidth}
+\vspace{0pt}
+El campo del alambre a distancia $r$ es $B=\dfrac{\mu_0 I}{2\pi r}$ (entra a la p\'agina dentro
+del lazo). Como $B$ var\'ia con $r$, se integra sobre franjas de ancho $dr$ y \'area $L\,dr$:
+\[
+    \Phi = \int_{h}^{h+w}\!\frac{\mu_0 I}{2\pi r}\,L\,dr
+         = \frac{\mu_0 I L}{2\pi}\ln\!\frac{h+w}{h}
+\]
+\end{minipage}
+
+\medskip
+
+\noindent Con $\dfrac{\mu_0 L}{2\pi}\ln\dfrac{h+w}{h}
+= (2\times10^{-7})\ln\!\dfrac{0{,}11}{0{,}01} = (2\times10^{-7})\ln 11 = 4{,}80\times10^{-7}$:
+\[
+    \Phi(t) = 4{,}80\times10^{-7}\,(3+10t)
+    \;\Rightarrow\;
+    \boxed{\Phi(t) = 1{,}439\times10^{-6} + 4{,}80\times10^{-6}\,t\ [\text{Wb}]}
+\]
+\textbf{Fem inducida} (ley de Faraday):
+\[
+    \eps = -\frac{d\Phi}{dt} = -4{,}80\times10^{-6}
+    \;\Rightarrow\;
+    \boxed{\eps = -4{,}80\ [\mu\text{V}]}
+\]
+\textbf{Direcci\'on:} la corriente del alambre crece, as\'i que el flujo entrante aumenta. Por la
+ley de Lenz, la corriente inducida se opone creando flujo \emph{saliente} dentro del lazo, es decir
+circula en \textbf{sentido antihorario}.
+
+\vspace{0.5cm}
+
+%========================================================
+% PROBLEMA 2
+%========================================================
+\section*{Problema 2: Fem inducida en una bobina sobre un solenoide}
+
+\noindent Una bobina de $N = 15$ vueltas y radio $R = 10\ [\text{cm}]$ rodea un solenoide muy
+extenso de radio $r = 2\ [\text{cm}]$ y $n = 1000\ [\text{vueltas/m}]$. Por el solenoide circula
+$I(t) = 5\sin(120t)\ [\text{A}]$. Determine la fem inducida en la bobina.
+
+\medskip
+
+\noindent
+\begin{minipage}[t]{0.34\textwidth}
+\centering\vspace{0pt}
+\begin{tikzpicture}[scale=1.0, >=Stealth, line width=0.9pt]
+    \draw[blue!55!black,line width=1.3pt] (0,0) circle (1.5);
+    \draw[orange!80!black,line width=1.3pt] (0,0) circle (0.7);
+    % campo del solenoide (sale)
+    \foreach \p in {(0,0),(0.3,0.2),(-0.3,0.2),(0.3,-0.2),(-0.3,-0.2)}
+        \filldraw[orange!80!black] \p circle (1.2pt);
+    \draw[<->,gray] (0,0)--(150:1.5); \node[gray,font=\footnotesize] at (-0.75,0.85){$R$};
+    \draw[<->,gray] (0,0)--(-35:0.7); \node[gray,font=\footnotesize] at (0.45,-0.32){$r$};
+    \node[blue!55!black,font=\footnotesize] at (1.15,1.15){bobina};
+\end{tikzpicture}\\[2pt]
+{\footnotesize Figura 2 (corte)}
+\end{minipage}%
+\hfill
+\begin{minipage}[t]{0.63\textwidth}
+\vspace{0pt}
+\textbf{Campo del solenoide} (uniforme dentro, nulo fuera):
+\[
+    B = \mu_0\,n\,I(t)
+\]
+\textbf{Flujo} a trav\'es de la bobina: el campo s\'olo existe en el \'area del \emph{solenoide}
+($A=\pi r^2$), no en toda la bobina:
+\[
+    \Phi = B\,\pi r^2 = \mu_0\,n\,I(t)\,\pi r^2
+\]
+\end{minipage}
+
+\medskip
+
+\noindent\textbf{Fem inducida} ($N$ vueltas):
+\begin{align*}
+    \eps = -N\frac{d\Phi}{dt}
+       &= -N\,\mu_0\,n\,\pi r^2\,\frac{dI}{dt} \\
+       &= -15\,(4\pi\times10^{-7})(1000)\,\pi(0{,}02)^2\,(5)(120)\cos(120t)
+\end{align*}
+\[
+    \boxed{\eps = -14\cos(120t)\ [\text{mV}]}
+\]
+
+\newpage
+
+%========================================================
+% PROBLEMA 5
+%========================================================
+\section*{Problema 5: Fem m\'axima en un lazo que rota}
+
+\noindent El lazo de corriente de la Fig.\ 5 (\'area $A = 600\ [\text{cm}^2] = 0{,}06\ [\text{m}^2]$)
+rota con rapidez angular $\omega = 35\ [\text{rad/s}]$ en un campo $B = 0{,}45\ [\text{T}]$ dirigido
+a lo largo del eje $x$. Determine la fem inducida m\'axima si el lazo gira alrededor de: el eje
+$y$, el eje $x$ y el eje $z$.
+
+\medskip
+
+\noindent
+\begin{minipage}[t]{0.40\textwidth}
+\centering\vspace{0pt}
+\begin{tikzpicture}[scale=1.0, >=Stealth, line width=0.9pt]
+    % ejes
+    \draw[->,thick] (0,0)--(2.4,0) node[right]{$x$};
+    \draw[->,thick] (0,0)--(0,2.1) node[above]{$z$};
+    \draw[->,thick] (0,0)--(-1.3,-1.0) node[below left]{$y$};
+    % lazo en el plano yz (normal hacia +x)
+    \draw[blue!60!black,line width=1.3pt]
+        (-0.65,-0.5)--(0.65,-0.5)--(0.65,1.3)--(-0.65,1.3)--cycle;
+    \node[blue!60!black,font=\footnotesize] at (0,0.4){$A$};
+    % campo B a lo largo de x
+    \foreach \y in {-0.1,0.5,1.1}{
+        \draw[red!75!black,->,line width=1pt] (0.8,\y)--(2.0,\y);}
+    \node[red!75!black,font=\small] at (1.9,1.45){$\vec{B}$};
+\end{tikzpicture}\\[2pt]
+{\footnotesize Figura 5}
+\end{minipage}%
+\hfill
+\begin{minipage}[t]{0.57\textwidth}
+\vspace{0pt}
+Para un lazo que gira con su eje \textbf{perpendicular} a $\vec{B}$, el flujo es
+$\Phi = BA\cos(\omega t)$ y la fem
+\[
+    \eps = -\frac{d\Phi}{dt} = BA\,\omega\sin(\omega t),
+    \qquad \eps_{\max} = BA\,\omega
+\]
+Si el eje de rotaci\'on es \textbf{paralelo} a $\vec{B}$, el flujo no cambia y $\eps = 0$.
+\end{minipage}
+
+\medskip
+
+\noindent Como $\vec{B}$ apunta seg\'un $x$:
+
+\noindent\textbf{Eje $y$ y eje $z$} (perpendiculares a $\vec{B}$):
+\[
+    \eps_{\max} = BA\,\omega = (0{,}45)(0{,}06)(35)
+    \;\Rightarrow\; \boxed{\eps_{\max} = 0{,}945\ [\text{V}]}
+\]
+\textbf{Eje $x$} (paralelo a $\vec{B}$): el flujo permanece constante,
+\[
+    \boxed{\eps_{\max} = 0\ [\text{V}]}
+\]
+
+\vspace{0.5cm}
+
+%========================================================
+% PROBLEMA 7
+%========================================================
+\section*{Problema 7: Corriente inducida en un disco sobre un solenoide}
+
+\noindent Un disco (anillo) de aluminio de radio $r_1 = 5\ [\text{cm}]$ y resistencia
+$R = 0{,}0003\ [\Omega]$ se ubica sobre un solenoide de $n = 1000\ [\text{vueltas/m}]$ y radio
+$r_2 = 3\ [\text{cm}]$. En el extremo superior del solenoide el campo es la \emph{mitad} que en su
+centro. Si la corriente del solenoide aumenta a $\dfrac{dI}{dt} = 25\ [\text{A/s}]$, determine la
+corriente inducida en el anillo y el campo magn\'etico que ella produce en el centro del anillo.
+
+\medskip
+
+\noindent
+\begin{minipage}[t]{0.32\textwidth}
+\centering\vspace{0pt}
+\begin{tikzpicture}[scale=1.0, line width=0.9pt]
+    % solenoide (vertical)
+    \foreach \y in {0,0.32,...,1.6}{
+        \draw[orange!80!black,line width=1pt] (-0.5,\y) .. controls (0,\y+0.18) .. (0.5,\y);}
+    \draw[orange!80!black] (-0.5,0)--(-0.5,1.6);
+    \draw[orange!80!black] (0.5,0)--(0.5,1.6);
+    \node[font=\footnotesize] at (0,-0.25){$r_2$};
+    \draw[<->,gray] (-0.5,-0.05)--(0.5,-0.05);
+    % disco encima (elipse)
+    \draw[blue!60!black,line width=1.3pt] (0,1.85) ellipse (1.1 and 0.3);
+    \node[blue!60!black,font=\footnotesize] at (0,1.85){anillo};
+    \draw[<->,gray] (0,1.85)--(1.1,1.85); \node[gray,font=\footnotesize] at (0.6,2.1){$r_1$};
+\end{tikzpicture}\\[2pt]
+{\footnotesize Figura 7}
+\end{minipage}%
+\hfill
+\begin{minipage}[t]{0.65\textwidth}
+\vspace{0pt}
+Campo en el extremo superior (donde est\'a el anillo): la mitad del central,
+\[
+    B_{\text{sup}} = \tfrac{1}{2}\,\mu_0 n I
+\]
+\textbf{Flujo} a trav\'es del anillo: el campo s\'olo ocupa el \'area del \emph{solenoide}
+($\pi r_2^2$):
+\[
+    \Phi = B_{\text{sup}}\,\pi r_2^2 = \tfrac{1}{2}\,\mu_0 n I\,\pi r_2^2
+\]
+\end{minipage}
+
+\medskip
+
+\noindent\textbf{Fem inducida:}
+\[
+    |\eps| = \frac{d\Phi}{dt} = \tfrac{1}{2}\,\mu_0 n\,\pi r_2^2\,\frac{dI}{dt}
+    = \tfrac{1}{2}(4\pi\times10^{-7})(1000)\,\pi(0{,}03)^2(25) = 4{,}44\times10^{-5}\ [\text{V}]
+\]
+\textbf{Corriente inducida} (ley de Ohm en el anillo):
+\[
+    I_{\text{ind}} = \frac{|\eps|}{R} = \frac{4{,}44\times10^{-5}}{0{,}0003}
+    \;\Rightarrow\; \boxed{I_{\text{ind}} = 0{,}148\ [\text{A}]}
+\]
+\textbf{Campo en el centro del anillo} (espira de radio $r_1$, $B=\mu_0 I/2r_1$):
+\[
+    B = \frac{\mu_0 I_{\text{ind}}}{2 r_1} = \frac{(4\pi\times10^{-7})(0{,}148)}{2(0{,}05)}
+    \;\Rightarrow\; \boxed{B = 1{,}86\times10^{-6}\ [\text{T}]}
+\]
+
+\newpage
+
+%========================================================
+% PROBLEMA 8
+%========================================================
+\section*{Problema 8: Signo de $V_a - V_b$ (im\'an que se acerca)}
+
+\noindent En la Fig.\ 8 un im\'an se dirige hacia un lazo de corriente. Determine si la diferencia
+de potencial $V_a - V_b$ es positiva, negativa o cero.
+
+\medskip
+
+\noindent
+\begin{minipage}[t]{0.44\textwidth}
+\centering\vspace{0pt}
+\begin{tikzpicture}[scale=1.0, >=Stealth, line width=0.9pt]
+    % iman
+    \draw[fill=red!25] (-2.6,0.25) rectangle (-1.7,0.75);
+    \draw[fill=blue!20] (-1.7,0.25) rectangle (-0.8,0.75);
+    \node[font=\footnotesize] at (-2.15,0.5){N};
+    \node[font=\footnotesize] at (-1.25,0.5){S};
+    \draw[->,line width=1.2pt] (-0.7,1.05)--(0.1,1.05); \node[above,font=\small] at (-0.3,1.05){$\vec{v}$};
+    % lazo
+    \draw[blue!60!black,line width=1.3pt] (1.2,0.5) circle (0.85);
+    \filldraw (1.2,1.35) circle (1.4pt); \node[above,font=\small] at (1.2,1.4){$a$};
+    \filldraw (1.2,-0.35) circle (1.4pt); \node[below,font=\small] at (1.2,-0.4){$b$};
+    % corriente inducida (de b hacia a por el exterior)
+    \draw[->,red,line width=1pt] (2.05,0.5) arc (0:60:0.85);
+    \node[red,right,font=\footnotesize] at (1.95,0.95){$I_{\text{ind}}$};
+\end{tikzpicture}\\[2pt]
+{\footnotesize Figura 8}
+\end{minipage}%
+\hfill
+\begin{minipage}[t]{0.53\textwidth}
+\vspace{0pt}
+\textbf{An\'alisis (ley de Lenz):}
+\begin{itemize}\setlength\itemsep{2pt}
+    \item Al acercarse el im\'an, el flujo magn\'etico a trav\'es del lazo \textbf{aumenta}.
+    \item La corriente inducida se \emph{opone} a ese aumento (Lenz), generando un campo que
+          repele al im\'an.
+    \item La regla de la mano derecha fija el sentido de $I_{\text{ind}}$: circula de modo que,
+          por la rama del lazo, va \textbf{desde $b$ hacia $a$}.
+\end{itemize}
+\end{minipage}
+
+\medskip
+
+\noindent El lazo act\'ua como fuente: la corriente sale por el terminal de mayor potencial. Como
+$I_{\text{ind}}$ circula de $b$ hacia $a$, el punto $b$ queda a mayor potencial que $a$, por lo
+tanto:
+\[
+    \boxed{V_a - V_b < 0 \quad\text{(negativa)}}
+\]
+
+\end{document}
