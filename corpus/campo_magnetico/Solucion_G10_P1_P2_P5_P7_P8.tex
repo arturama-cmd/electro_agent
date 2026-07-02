@@ -88,9 +88,9 @@ lazo, la fem inducida y la direcci\'on de la corriente inducida.
     \foreach \x in {0.5,1.1,1.7,2.3,2.9} \foreach \y in {0.45,1.0,1.5}
         \draw[blue,line width=0.4pt] (\x-0.06,\y-0.06)--(\x+0.06,\y+0.06)
                                      (\x-0.06,\y+0.06)--(\x+0.06,\y-0.06);
-    % corriente inducida (antihoraria)
-    \draw[->,red,line width=1pt] (0,0.95)--(0,1.5); \node[red,left,font=\footnotesize] at (-0.05,1.2){$I_{\text{ind}}$};
-    \draw[->,red,line width=1pt] (3.2,0.95)--(3.2,0.4);
+    % corriente inducida (antihoraria): lado izq. baja, lado der. sube
+    \draw[->,red,line width=1pt] (0,1.5)--(0,0.95); \node[red,left,font=\footnotesize] at (-0.05,1.2){$i_{\text{ind}}$};
+    \draw[->,red,line width=1pt] (3.2,0.4)--(3.2,0.95);
     % cotas
     \draw[<->,gray] (3.5,2.6)--(3.5,1.9); \node[right,font=\footnotesize,gray] at (3.5,2.25){$h$};
     \draw[<->,gray] (3.5,1.9)--(3.5,0);   \node[right,font=\footnotesize,gray] at (3.5,0.95){$w$};
