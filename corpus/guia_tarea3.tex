@@ -1,0 +1,188 @@
+% Sections won't have numbers
+% Make the page area as large as possible
+% Set the first level numbering to arabic and the second level
+% to alphabetic. The remaining two levels are arabic
+%Change to \pagestyle{empty} to suppress numbers on following pages
+%\pagestyle{empty}
+% Do not reset outermost enumerate counter
+
+
+\documentclass[onecolumn]{article}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\usepackage{amsmath}
+\usepackage{sw20exm2}
+\usepackage[compat2]{geometry}
+
+\setcounter{MaxMatrixCols}{10}
+%TCIDATA{OutputFilter=LATEX.DLL}
+%TCIDATA{Version=5.50.0.2953}
+%TCIDATA{<META NAME="SaveForMode" CONTENT="1">}
+%TCIDATA{BibliographyScheme=Manual}
+%TCIDATA{Created=Sunday, August 26, 2012 12:26:36}
+%TCIDATA{LastRevised=Monday, June 08, 2026 10:47:53}
+%TCIDATA{<META NAME="ViewSettings" CONTENT="0">}
+%TCIDATA{<META NAME="GraphicsSave" CONTENT="32">}
+%TCIDATA{<META NAME="DocumentShell" CONTENT="Exams and Syllabi\SW\SW Exam #1 - 8.5x14 Page">}
+%TCIDATA{CSTFile=Exam.cst}
+
+\setlength{\topmargin}{-0.75in}
+\setlength{\textheight}{12.25in}
+\setlength{\oddsidemargin}{0.0in}
+\setlength{\evensidemargin}{0.0in}
+\setlength{\textwidth}{6.5in}
+\def\labelenumi{\arabic{enumi}.}
+\def\theenumi{\arabic{enumi}}
+\def\labelenumii{(\alph{enumii})}
+\def\theenumii{\alph{enumii}}
+\def\p@enumii{\theenumi.}
+\def\labelenumiii{\arabic{enumiii}.}
+\def\theenumiii{\arabic{enumiii}}
+\def\p@enumiii{(\theenumi)(\theenumii)}
+\def\labelenumiv{\arabic{enumiv}.}
+\def\theenumiv{\arabic{enumiv}}
+\def\p@enumiv{\p@enumiii.\theenumiii}
+\pagestyle{plain}
+\setcounter{secnumdepth}{0}
+\newtheorem{theorem}{Theorem}
+\newtheorem{acknowledgement}[theorem]{Acknowledgement}
+\newtheorem{algorithm}[theorem]{Algorithm}
+\newtheorem{axiom}[theorem]{Axiom}
+\newtheorem{case}[theorem]{Case}
+\newtheorem{claim}[theorem]{Claim}
+\newtheorem{conclusion}[theorem]{Conclusion}
+\newtheorem{condition}[theorem]{Condition}
+\newtheorem{conjecture}[theorem]{Conjecture}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{criterion}[theorem]{Criterion}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{example}[theorem]{Example}
+\newtheorem{exercise}[theorem]{Exercise}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{notation}[theorem]{Notation}
+\newtheorem{problem}[theorem]{Problem}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{remark}[theorem]{Remark}
+\newtheorem{solution}[theorem]{Solution}
+\newtheorem{summary}[theorem]{Summary}
+\newenvironment{proof}[1][Proof]{\noindent\textbf{#1.} }{\ \rule{0.5em}{0.5em}}
+\input{tcilatex}
+\begin{document}
+
+
+\begin{center}
+\begin{equation*}
+\FRAME{itbpF}{1.0525in}{0.7515in}{0in}{}{}{Figure}{\special{language
+"Scientific Word";type "GRAPHIC";maintain-aspect-ratio TRUE;display
+"USEDEF";valid_file "T";width 1.0525in;height 0.7515in;depth
+0in;original-width 2.3168in;original-height 1.6466in;cropleft "0";croptop
+"1";cropright "1";cropbottom "0";tempfilename
+'TCTQIQ04.bmp';tempfile-properties "XPR";}}
+\end{equation*}%
+\textbf{F\'{\i}sica II (2026-1)}
+
+\textbf{Tarea 3}\emph{: Condensadores, Leyes de Kirchhoff y Fuerza magn\'{e}%
+tica}
+
+\textit{Profesor: Arturo Fern\'{a}ndez P\'{e}rez}
+
+\textbf{Plazo de Entrega: S\'{a}bado 13 de junio a las 20:00 hrs.}
+\end{center}
+
+\begin{enumerate}
+\item (2 puntos) En el circuito de la Fig. 1, $C_{1}=12,0$ [pF], $%
+C_{2}=C_{5}=5,0$ $[$pF$]$ y $C_{6}=C_{7}=8,0$ [pF]. El capacitor $C_{3}$ es
+un condensador de placas planas \textit{de forma cuadrada}, con lado $l=5,0$
+[cm] y distancia entre placas $d=2,0$ [mm]. Entre sus placas hay 3 diel\'{e}%
+ctricos con constantes $\kappa _{1}=2,$ $\kappa _{2}=3,$ $\kappa _{3}=5$, en
+la distribuci\'{o}n que se muestra en la Fig. 1. Por otro lado, el capacitor 
+$C_{4}$ es un condensador cil\'{\i}ndrico de largo $\ell =5,0$ [cm], radio
+interior $r_{a}=2,0$ [mm] y radio exterior $r_{b}=3,0$ [mm], con un diel\'{e}%
+ctrico de constante $\kappa _{1}=2\,\ $entre sus electrodos. Si $V_{ab}=12$
+[V],
+
+\begin{enumerate}
+\item Determine las capacitancias $C_{3}$ y $C_{4}.$
+
+\item Determine la capacitancia equivalente $C_{eq}$ del circuito.
+
+\item Determine la carga $q$ y la energ\'{\i}a almacenada $U$ en cada
+condensador. 
+\begin{equation*}
+\FRAME{itbpFU}{6.0494in}{2.0946in}{0.1254in}{\Qcb{Figura 1}}{}{Figure}{%
+\special{language "Scientific Word";type "GRAPHIC";maintain-aspect-ratio
+TRUE;display "USEDEF";valid_file "T";width 6.0494in;height 2.0946in;depth
+0.1254in;original-width 14.976in;original-height 5.1586in;cropleft
+"0";croptop "1";cropright "1";cropbottom "0";tempfilename
+'TGBI6E01.bmp';tempfile-properties "XPR";}}
+\end{equation*}
+\end{enumerate}
+
+\item (1 punto) Considerando el circuito de la Fig. 2, utilize las leyes
+Kirchhoff para completar la Tabla 1.%
+\begin{equation*}
+\FRAME{itbpFU}{3.4912in}{0.8743in}{0in}{\Qcb{Tabla 1}}{}{Figure}{\special%
+{language "Scientific Word";type "GRAPHIC";maintain-aspect-ratio
+TRUE;display "USEDEF";valid_file "T";width 3.4912in;height 0.8743in;depth
+0in;original-width 6.6565in;original-height 1.6457in;cropleft "0";croptop
+"1";cropright "1";cropbottom "0";tempfilename
+'TGA9GN04.wmf';tempfile-properties "XPR";}}
+\end{equation*}
+
+\begin{equation*}
+\FRAME{itbpFU}{2.2122in}{0.9868in}{0in}{\Qcb{Figura 2}}{}{Figure}{\special%
+{language "Scientific Word";type "GRAPHIC";maintain-aspect-ratio
+TRUE;display "USEDEF";valid_file "T";width 2.2122in;height 0.9868in;depth
+0in;original-width 6.3858in;original-height 2.8331in;cropleft "0";croptop
+"1";cropright "1";cropbottom "0";tempfilename
+'TGA9GB03.wmf';tempfile-properties "XPR";}}
+\end{equation*}%
+\pagebreak 
+
+\item (1 punto) La Fig. 3 muestra un circuito que combina resistencias y
+bater\'{\i}as en distintas configuraciones. Considere los sentidos de las
+corrientes $I_{1}$, $I_{2}$ e $I_{3}$, as\'{\i} como el recorrido de c/u \
+de las mallas, indicados como $M_{1}$ y $M_{2}$.
+
+\begin{enumerate}
+\item Simplifique el circuito todo lo posible obteniendo las resistencias
+equivalentes $R_{eq}$ y dibuje el esquema reducido resultante.
+
+\item Utilizando las leyes de Kirchhoff, determine los valores de $I_{1}$, $%
+I_{2}$ e $I_{3}$.%
+\begin{equation*}
+\FRAME{itbpFU}{3.5604in}{1.9285in}{0in}{\Qcb{Figura 3}}{}{Figure}{\special%
+{language "Scientific Word";type "GRAPHIC";maintain-aspect-ratio
+TRUE;display "USEDEF";valid_file "T";width 3.5604in;height 1.9285in;depth
+0in;original-width 7.3129in;original-height 3.9479in;cropleft "0";croptop
+"1";cropright "1";cropbottom "0";tempfilename
+'TGA9MA05.wmf';tempfile-properties "XPR";}}
+\end{equation*}
+\end{enumerate}
+
+\item (1 punto) La Fig. 4 representa un lazo de corriente cuadrado de lado $%
+a=10,0$ [cm] por donde circula una corriente $I_{0}=1,8$ [A]. Los sentidos
+de circulaci\'{o}n de las corrientes en cada lado del cuadrado est\'{a}n
+indicadas en la Fig. 4, as\'{\i} como el sistema de referencia. Si este lazo
+de corriente est\'{a} sujeto a un campo magn\'{e}tico $\vec{B}=1,2\hat{\jmath%
+}+0.7\hat{k}$ [T], determine:
+
+\begin{enumerate}
+\item La fuerza magn\'{e}tica $\vec{F}_{m}$ sobre c/u de los lados del
+cuadrado.
+
+\item El momento magn\'{e}tico $\vec{\mu}$ del lazo de corriente.
+
+\item El torque magn\'{e}tico $\vec{\tau}_{m}$ inducido por el campo magn%
+\'{e}tico $\vec{B}$ sobre el lazo de corriente. 
+\begin{equation*}
+\FRAME{itbpFU}{3.5492in}{2.0124in}{0in}{\Qcb{Figura 4}}{}{Figure}{\special%
+{language "Scientific Word";type "GRAPHIC";maintain-aspect-ratio
+TRUE;display "USEDEF";valid_file "T";width 3.5492in;height 2.0124in;depth
+0in;original-width 6.0105in;original-height 3.3961in;cropleft "0";croptop
+"1";cropright "1";cropbottom "0";tempfilename
+'TGA9W707.wmf';tempfile-properties "XPR";}}
+\end{equation*}
+\end{enumerate}
+\end{enumerate}
+
+\end{document}

@@ -1,0 +1,318 @@
+\documentclass[12pt,letterpaper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[spanish,es-noshorthands]{babel}
+\usepackage{amsmath,amssymb}
+\usepackage{graphicx}
+\usepackage{xcolor}
+\usepackage{tikz}
+\usetikzlibrary{calc,arrows.meta,decorations.markings,decorations.pathmorphing,angles,quotes}
+\usepackage[top=2.5cm, bottom=4cm, left=2cm, right=2cm, footskip=40pt]{geometry}
+\usepackage{fancyhdr}
+\usepackage{lastpage}
+
+\definecolor{ubbblue}{RGB}{0,51,102}
+
+\pagestyle{fancy}
+\fancyhf{}
+\renewcommand{\headrulewidth}{0pt}
+\renewcommand{\footrulewidth}{0.4pt}
+\fancyfoot[L]{\raisebox{-0.5cm}{\includegraphics[height=1.2cm]{logo ubb.png}}}
+\fancyfoot[C]{%
+    \begin{minipage}[b]{8cm}\centering
+        \footnotesize\textcolor{ubbblue}{\textbf{Dr.\ Arturo Fern\'andez P\'erez}}\\
+        \scriptsize Departamento de F\'isica -- Universidad del B\'io-B\'io\\
+        \scriptsize \textit{Electro\_Asistente\_AI-UBB}\\
+        \tiny P\'agina \thepage\ de \pageref{LastPage}
+    \end{minipage}}
+\fancyfoot[R]{\raisebox{-0.5cm}{\includegraphics[height=1.2cm]{logo dfis.png}}}
+\fancypagestyle{plain}{%
+    \fancyhf{}
+    \renewcommand{\headrulewidth}{0pt}
+    \renewcommand{\footrulewidth}{0.4pt}
+    \fancyfoot[L]{\raisebox{-0.5cm}{\includegraphics[height=1.2cm]{logo ubb.png}}}
+    \fancyfoot[C]{%
+        \begin{minipage}[b]{8cm}\centering
+            \footnotesize\textcolor{ubbblue}{\textbf{Dr.\ Arturo Fern\'andez P\'erez}}\\
+            \scriptsize Departamento de F\'isica -- Universidad del B\'io-B\'io\\
+            \scriptsize \textit{Electro\_Asistente\_AI-UBB}\\
+            \tiny P\'agina \thepage\ de \pageref{LastPage}
+        \end{minipage}}
+    \fancyfoot[R]{\raisebox{-0.5cm}{\includegraphics[height=1.2cm]{logo dfis.png}}}
+}
+
+\begin{document}
+
+%========================================
+% ENCABEZADO INSTITUCIONAL
+%========================================
+\begin{center}
+    \includegraphics[height=2cm]{logo ubb.png}\\[0.3cm]
+    {\large\textcolor{ubbblue}{\textbf{UNIVERSIDAD DEL B\'IO-B\'IO}}}\\[0.1cm]
+    {\normalsize Facultad de Ciencias -- Departamento de F\'isica}
+\end{center}
+
+\vspace{0.3cm}
+\hrule height 1pt
+\vspace{0.5cm}
+
+{\centering\Large\textbf{Problemas resueltos en la clase del 03/07/2026}\par}
+{\centering\normalsize\textit{Certamen 4: Biot--Savart, ley de Amp\`ere y fuerza magn\'etica}\par}
+
+\vspace{0.6cm}
+
+%========================================================
+% PROBLEMA 1
+%========================================================
+\section*{Problema 1: Campo magn\'etico de dos arcos (Biot--Savart)}
+
+\noindent Dos filamentos circulares centrados en el origen transportan una corriente constante $I$.
+El filamento~1 es un arco de radio $R_1$ en el plano $xy$, desde $\theta=\pi/8$ hasta $\theta=3\pi/8$,
+con corriente \textbf{antihoraria}. El filamento~2 es un arco de radio $R_2$ en el plano $yz$, que
+abarca un \'angulo total de $\pi/2$, con corriente \textbf{horaria}. Determine el campo magn\'etico
+en el origen debido a cada filamento y el total (desprecie los segmentos rectos).
+
+\medskip
+
+\begin{center}
+\begin{tikzpicture}[scale=0.95, >=Stealth, line width=0.9pt]
+    % ejes
+    \draw[->,thick] (0,0)--(3,0) node[right]{$x$};
+    \draw[->,thick] (0,0)--(0,2.7) node[above]{$y$};
+    \draw[->,thick] (0,0)--(-1.5,-1.15) node[below left]{$z$};
+    % Arco 1 en plano xy (R1), de 22.5 a 67.5 grados
+    \draw[blue!70!black,line width=1.5pt,->] (22.5:1.5) arc (22.5:67.5:1.5);
+    \node[blue!70!black,font=\small] at (45:1.85){$R_1$};
+    % Arco 2 en plano yz (R2), cuarto de circulo (proyectado)
+    \draw[red!70!black,line width=1.5pt,->]
+        plot[domain=90:0,samples=40,variable=\t]
+        ({-0.5*2.1*sin(\t)},{2.1*cos(\t) - 0.4*2.1*sin(\t)});
+    \node[red!70!black,font=\small] at (-1.15,0.35){$R_2$};
+    \node[font=\small] at (0.55,2.35){$I$};
+    \node[font=\small] at (-1.25,-0.6){$I$};
+\end{tikzpicture}\\[2pt]
+{\footnotesize Arco $R_1$ en el plano $xy$; arco $R_2$ en el plano $yz$.}
+\end{center}
+
+\subsection*{Deducci\'on del m\'odulo del diferencial de campo $dB$}
+
+Partimos de la ley de Biot--Savart en forma vectorial:
+\[
+    d\vec{B} = \frac{\mu_0 I}{4\pi}\,
+    \frac{d\vec{\ell}\times(\vec{r}-\vec{r}\,')}{\|\vec{r}-\vec{r}\,'\|^{3}}
+\]
+
+\noindent\textbf{Paso 1 (m\'odulo).} La magnitud del producto cruz es
+$\|d\vec{\ell}\times(\vec{r}-\vec{r}\,')\| = d\ell\,\|\vec{r}-\vec{r}\,'\|\sin\phi$, donde $\phi$ es el
+\'angulo entre $d\vec{\ell}$ y $(\vec{r}-\vec{r}\,')$. Luego:
+\[
+    dB = \frac{\mu_0 I}{4\pi}\,
+    \frac{d\ell\,\|\vec{r}-\vec{r}\,'\|\,\sin\phi}{\|\vec{r}-\vec{r}\,'\|^{3}}
+    = \frac{\mu_0 I}{4\pi}\,\frac{d\ell\,\sin\phi}{\|\vec{r}-\vec{r}\,'\|^{2}}
+\]
+
+\noindent\textbf{Paso 2 (geometr\'ia).} El campo se eval\'ua en el origen, $\vec{r}=\vec{0}$, y la
+fuente est\'a sobre el arco, $\vec{r}\,' = R\cos\theta\,\hat{\imath}+R\sin\theta\,\hat{\jmath}$.
+Entonces $\vec{r}-\vec{r}\,'=-\vec{r}\,'$ y su norma es el radio:
+\[
+    \|\vec{r}-\vec{r}\,'\| = \sqrt{(R\cos\theta)^2+(R\sin\theta)^2} = R
+\]
+
+\noindent\textbf{Paso 3 (\'angulo $\phi$).} El elemento $d\vec{\ell}$ es \emph{tangente} al arco y
+$(\vec{r}-\vec{r}\,')$ es \emph{radial} (apunta al centro). Tangente y radio son perpendiculares:
+\[
+    \phi = 90^\circ \quad\Rightarrow\quad \sin\phi = 1
+\]
+
+\noindent\textbf{Paso 4 (elemento de arco).} La longitud de arco subtendida por $d\theta$ es
+$d\ell = R\,d\theta$.
+
+\noindent\textbf{Paso 5 (sustituci\'on).} Reemplazando los pasos 2--4 en el m\'odulo:
+\[
+    dB = \frac{\mu_0 I}{4\pi}\,\frac{(R\,d\theta)(1)}{R^{2}}
+    \quad\Rightarrow\quad
+    \boxed{dB = \frac{\mu_0 I}{4\pi R}\,d\theta}
+\]
+Este resultado vale para \emph{cualquier} arco centrado en el punto de observaci\'on; s\'olo cambian
+el radio $R$ y los l\'imites de integraci\'on.
+
+\subsection*{(a) Filamento de radio $R_1$}
+
+El arco va de $\theta=\pi/8$ a $3\pi/8$ (abarca $\Delta\theta=\pi/4$):
+\[
+    B_1 = \frac{\mu_0 I}{4\pi R_1}\int_{\pi/8}^{3\pi/8}\! d\theta
+        = \frac{\mu_0 I}{4\pi R_1}\cdot\frac{\pi}{4} = \frac{\mu_0 I}{16 R_1}
+\]
+Por la regla de la mano derecha (corriente antihoraria en el plano $xy$), el campo \textbf{sale del
+plano $xy$}, en $+\hat{k}$:
+\[
+    \boxed{\vec{B}_1 = \frac{\mu_0 I}{16 R_1}\,\hat{k}}
+\]
+
+\subsection*{(b) Filamento de radio $R_2$}
+
+El arco en el plano $yz$ abarca $\Delta\theta=\pi/2$:
+\[
+    B_2 = \frac{\mu_0 I}{4\pi R_2}\int_{0}^{\pi/2}\! d\theta
+        = \frac{\mu_0 I}{4\pi R_2}\cdot\frac{\pi}{2} = \frac{\mu_0 I}{8 R_2}
+\]
+Por la regla de la mano derecha (corriente horaria en el plano $yz$), el campo apunta en
+$-\hat{\imath}$:
+\[
+    \boxed{\vec{B}_2 = \frac{\mu_0 I}{8 R_2}\,(-\hat{\imath})}
+\]
+
+\subsection*{(c) Campo total en el origen}
+\[
+    \boxed{\vec{B} = \vec{B}_1 + \vec{B}_2
+        = \mu_0 I\left(\frac{1}{16 R_1}\,\hat{k} - \frac{1}{8 R_2}\,\hat{\imath}\right)}
+\]
+
+\newpage
+
+%========================================================
+% PROBLEMA 2
+%========================================================
+\section*{Problema 2: Campo y fuerza entre tres alambres (Amp\`ere y $\vec{F}=I\vec{L}\times\vec{B}$)}
+
+\noindent Tres alambres rectos, muy largos y paralelos conducen corrientes uniformes. Las corrientes
+(1) y (2) \textbf{salen} del plano; la (3) \textbf{entra}. Las corrientes (2) y (3) est\'an a una
+distancia $d$ de la (1), con $\theta=60^\circ$ y $\alpha=30^\circ$. Determine: (a) el campo de (2) y
+(3) por Amp\`ere; (b) la fuerza sobre una secci\'on $L$ de la corriente (1); (c) la fuerza neta si
+$I_1=1$ [A], $I_2=I_3=2$ [A], $d=2L=20$ [cm].
+
+\medskip
+
+\noindent
+\begin{minipage}[t]{0.40\textwidth}
+\centering\vspace{0pt}
+\begin{tikzpicture}[scale=1.0, >=Stealth, line width=0.9pt]
+    \draw[->,thick] (-2.3,0)--(3,0) node[right]{$x$};
+    \draw[->,thick] (0,-1.2)--(0,2.7) node[above]{$y$};
+    % I1 en origen (sale del plano)
+    \draw[thick] (0,0) circle(0.22); \fill (0,0) circle(2pt);
+    \node[below right,font=\small] at (0.18,-0.05){$I_1$};
+    % I3 en +x (entra al plano)
+    \draw[thick] (2,0) circle(0.22);
+    \draw (1.845,-0.155)--(2.155,0.155) (1.845,0.155)--(2.155,-0.155);
+    \node[above right,font=\small] at (2.15,0.12){$I_3$};
+    % I2 arriba-izquierda (sale del plano): (-d/2, d sqrt3/2), d=2
+    \coordinate (I2) at (-1,1.732);
+    \draw[thick] (I2) circle(0.22); \fill (I2) circle(2pt);
+    \node[above left,font=\small] at (-1.1,1.83){$I_2$};
+    \draw[dashed,gray] (0,0)--(I2); \node[gray,font=\footnotesize] at (-0.68,1.05){$d$};
+    \draw[dashed,gray] (0,0)--(2,0); \node[gray,below,font=\footnotesize] at (1.0,-0.02){$d$};
+    \draw (-0.6,0) arc (180:120:0.6); \node[font=\footnotesize] at (-0.82,0.3){$\theta$};
+\end{tikzpicture}\\[2pt]
+{\footnotesize Vista de perfil (corrientes $\perp$ al plano)}
+\end{minipage}%
+\hfill
+\begin{minipage}[t]{0.57\textwidth}
+\vspace{0pt}
+\textbf{(a) Campo por la ley de Amp\`ere.} Para un alambre recto infinito, con un lazo amperiano
+circular de radio $r$ centrado en el alambre, $\vec{B}$ es tangente y de m\'odulo constante:
+\[
+    \oint \vec{B}\cdot d\vec{\ell} = B\,(2\pi r) = \mu_0 I
+    \;\Rightarrow\; B = \frac{\mu_0 I}{2\pi r}
+\]
+\end{minipage}
+
+\medskip
+
+\noindent\textbf{Signo del vector unitario angular $\hat{\varphi}$ (regla de la mano derecha).}
+El sentido de $\vec{B}$ lo fija la mano derecha: se apunta el \textbf{pulgar} en el sentido de la
+corriente y los \textbf{dedos} se curvan indicando el sentido de circulaci\'on de $\vec{B}$.
+\begin{itemize}\setlength\itemsep{1pt}
+    \item Corriente (2), que \textbf{sale} del plano ($+\hat{k}$): $\vec{B}$ circula
+          \textbf{antihorario} $\Rightarrow +\hat{\varphi}$.
+    \item Corriente (3), que \textbf{entra} al plano ($-\hat{k}$): $\vec{B}$ circula
+          \textbf{horario} $\Rightarrow -\hat{\varphi}$.
+\end{itemize}
+\[
+    \vec{B}_2 = \frac{\mu_0 I_2}{2\pi r}\,\hat{\varphi},
+    \qquad
+    \vec{B}_3 = \frac{\mu_0 I_3}{2\pi r}\,(-\hat{\varphi})
+\]
+
+\subsection*{(b) Fuerza sobre una secci\'on $L$ de la corriente (1)}
+
+\noindent\textbf{Geometr\'ia de los vectores unitarios.} En la posici\'on de la corriente (1), el
+campo $\vec{B}_2$ es \emph{perpendicular} a la recta $I_1$--$I_2$ (direcci\'on radial). Como esa
+recta forma un \'angulo $\theta=60^\circ$ con la horizontal, y $\vec{B}_2\perp$ a ella, el campo
+$\vec{B}_2$ forma con el eje $x$ el \'angulo complementario $\alpha=90^\circ-\theta=30^\circ$:
+
+\medskip
+\noindent
+\begin{minipage}[t]{0.42\textwidth}
+\centering\vspace{0pt}
+\begin{tikzpicture}[scale=1.35, >=Stealth, line width=0.9pt, font=\small]
+    % ejes
+    \draw[->,gray] (-1.4,0)--(1.9,0) node[right,black]{$x$};
+    \draw[->,gray] (0,-0.2)--(0,1.85) node[above,black]{$y$};
+    \fill (0,0) circle(1.6pt); \node[font=\footnotesize] at (-0.2,-0.28){$I_1$};
+    % recta radial a I2 (120 grados)
+    \coordinate (I2) at (120:1.75);
+    \draw[dashed,gray,line width=1pt] (0,0)--(I2);
+    \fill (I2) circle(1.6pt); \node[left,font=\footnotesize] at (I2){$I_2$};
+    \node[gray,font=\footnotesize] at (120:1.0){$d$};
+    % B2 a 30 grados (alpha)  -> tip=(1.299,0.75) para L=1.5
+    \coordinate (B2) at (1.299,0.75);
+    \draw[->,red!75!black,line width=1.3pt] (0,0)--(B2); \node[red!75!black] at (1.5,0.83){$\vec{B}_2$};
+    % componentes
+    \draw[dashed,blue!55!black] (B2)--(1.299,0);
+    \draw[dashed,blue!55!black] (B2)--(0,0.75);
+    \draw[->,blue!60!black,line width=1pt] (0,0)--(1.299,0);
+    \node[below,blue!60!black,font=\footnotesize] at (0.9,-0.30){$B_2\cos\alpha$};
+    \draw[->,blue!60!black,line width=1pt] (0,0)--(0,0.75);
+    \node[blue!60!black,font=\footnotesize] at (-0.5,0.62){$B_2\sin\alpha$};
+    % angulo recto entre B2 (30) y radial (120)
+    \draw (0.173,0.1)--(0.073,0.273)--(-0.1,0.173);
+    % angulo alpha (0 a 30)
+    \draw (0.5,0) arc (0:30:0.5); \node[font=\footnotesize] at (15:0.66){$\alpha$};
+    % angulo theta (180 a 120)
+    \draw (-0.5,0) arc (180:120:0.5); \node[font=\footnotesize] at (150:0.68){$\theta$};
+\end{tikzpicture}\\[2pt]
+{\footnotesize Descomposici\'on de $\vec{B}_2$: $\alpha=90^\circ-\theta$.}
+\end{minipage}%
+\hfill
+\begin{minipage}[t]{0.55\textwidth}
+\vspace{0pt}
+Con $\alpha=30^\circ$ ($\cos\alpha=\tfrac{\sqrt3}{2}$, $\sin\alpha=\tfrac12$), el campo de (2) en la
+posici\'on de (1) es:
+\[
+    \vec{B}_2 = \frac{\mu_0 I_2}{2\pi d}\big(\cos\alpha\,\hat{\imath}+\sin\alpha\,\hat{\jmath}\big)
+              = \frac{\mu_0 I_2}{2\pi d}\Big(\tfrac{\sqrt{3}}{2}\,\hat{\imath}+\tfrac{1}{2}\,\hat{\jmath}\Big)
+\]
+La corriente (3) est\'a sobre el eje $x$ y entra al plano; su campo en (1) apunta en $+\hat{\jmath}$:
+\[
+    \vec{B}_3 = \frac{\mu_0 I_3}{2\pi d}\,\hat{\jmath}
+\]
+\end{minipage}
+
+\medskip
+
+\noindent Con $\vec{L}=L\,\hat{k}$ (la corriente (1) sale del plano) y $\vec{F}=I_1\vec{L}\times\vec{B}$,
+usando $\hat{k}\times\hat{\imath}=\hat{\jmath}$ y $\hat{k}\times\hat{\jmath}=-\hat{\imath}$:
+\begin{align*}
+    \vec{F}_{12} &= I_1 L\,\hat{k}\times\frac{\mu_0 I_2}{2\pi d}
+        \Big(\tfrac{\sqrt{3}}{2}\hat{\imath}+\tfrac12\hat{\jmath}\Big)
+        = \frac{\mu_0 I_1 I_2 L}{2\pi d}\Big(\tfrac{\sqrt{3}}{2}\,\hat{\jmath}-\tfrac12\,\hat{\imath}\Big)\\
+    \vec{F}_{13} &= I_1 L\,\hat{k}\times\frac{\mu_0 I_3}{2\pi d}\,\hat{\jmath}
+        = \frac{\mu_0 I_1 I_3 L}{2\pi d}\,(-\hat{\imath})
+\end{align*}
+
+\subsection*{(c) Fuerza neta sobre la corriente (1)}
+
+Con $I_1=1$, $I_2=I_3=2$ [A], $L=0{,}10$ [m], $d=0{,}20$ [m], el coeficiente
+$\dfrac{\mu_0 I_1 I_2 L}{2\pi d}=\dfrac{\mu_0 I_1 I_3 L}{2\pi d}=\dfrac{\mu_0}{2\pi}$. Por
+superposici\'on:
+\begin{align*}
+    \vec{F}_1 = \vec{F}_{12}+\vec{F}_{13}
+      &= \frac{\mu_0}{2\pi}\Big(\tfrac{\sqrt{3}}{2}\,\hat{\jmath}-\tfrac12\,\hat{\imath}\Big)
+         + \frac{\mu_0}{2\pi}\,(-\hat{\imath})
+       = \frac{\mu_0}{2\pi}\Big(-\tfrac{3}{2}\,\hat{\imath}+\tfrac{\sqrt{3}}{2}\,\hat{\jmath}\Big)
+\end{align*}
+\[
+    \boxed{\vec{F}_1 = \frac{\mu_0}{4\pi}\left(-3\,\hat{\imath}+\sqrt{3}\,\hat{\jmath}\right)\ [\text{N}]}
+\]
+
+\end{document}
