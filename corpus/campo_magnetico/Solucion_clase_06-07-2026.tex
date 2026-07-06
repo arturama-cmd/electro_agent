@@ -1,0 +1,249 @@
+\documentclass[12pt,letterpaper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[spanish,es-noshorthands]{babel}
+\usepackage{amsmath,amssymb}
+\usepackage{graphicx}
+\usepackage{xcolor}
+\usepackage{tikz}
+\usetikzlibrary{calc,arrows.meta,decorations.markings,decorations.pathmorphing,angles,quotes}
+\usepackage[top=2.5cm, bottom=4cm, left=2cm, right=2cm, footskip=40pt]{geometry}
+\usepackage{fancyhdr}
+\usepackage{lastpage}
+
+\definecolor{ubbblue}{RGB}{0,51,102}
+
+\pagestyle{fancy}
+\fancyhf{}
+\renewcommand{\headrulewidth}{0pt}
+\renewcommand{\footrulewidth}{0.4pt}
+\fancyfoot[L]{\raisebox{-0.5cm}{\includegraphics[height=1.2cm]{logo ubb.png}}}
+\fancyfoot[C]{%
+    \begin{minipage}[b]{8cm}\centering
+        \footnotesize\textcolor{ubbblue}{\textbf{Dr.\ Arturo Fern\'andez P\'erez}}\\
+        \scriptsize Departamento de F\'isica -- Universidad del B\'io-B\'io\\
+        \scriptsize \textit{Electro\_Asistente\_AI-UBB}\\
+        \tiny P\'agina \thepage\ de \pageref{LastPage}
+    \end{minipage}}
+\fancyfoot[R]{\raisebox{-0.5cm}{\includegraphics[height=1.2cm]{logo dfis.png}}}
+\fancypagestyle{plain}{%
+    \fancyhf{}
+    \renewcommand{\headrulewidth}{0pt}
+    \renewcommand{\footrulewidth}{0.4pt}
+    \fancyfoot[L]{\raisebox{-0.5cm}{\includegraphics[height=1.2cm]{logo ubb.png}}}
+    \fancyfoot[C]{%
+        \begin{minipage}[b]{8cm}\centering
+            \footnotesize\textcolor{ubbblue}{\textbf{Dr.\ Arturo Fern\'andez P\'erez}}\\
+            \scriptsize Departamento de F\'isica -- Universidad del B\'io-B\'io\\
+            \scriptsize \textit{Electro\_Asistente\_AI-UBB}\\
+            \tiny P\'agina \thepage\ de \pageref{LastPage}
+        \end{minipage}}
+    \fancyfoot[R]{\raisebox{-0.5cm}{\includegraphics[height=1.2cm]{logo dfis.png}}}
+}
+
+\begin{document}
+
+%========================================
+% ENCABEZADO INSTITUCIONAL
+%========================================
+\begin{center}
+    \includegraphics[height=2cm]{logo ubb.png}\\[0.3cm]
+    {\large\textcolor{ubbblue}{\textbf{UNIVERSIDAD DEL B\'IO-B\'IO}}}\\[0.1cm]
+    {\normalsize Facultad de Ciencias -- Departamento de F\'isica}
+\end{center}
+
+\vspace{0.3cm}
+\hrule height 1pt
+\vspace{0.5cm}
+
+{\centering\Large\textbf{Problema resuelto en la clase del 06/07/2026}\par}
+{\centering\normalsize\textit{Certamen 4 -- Problema 3: inducci\'on electromagn\'etica (ley de Faraday)}\par}
+
+\vspace{0.6cm}
+
+%========================================================
+% PROBLEMA 3
+%========================================================
+\section*{Problema 3: Flujo, fem y corriente inducida (solenoide y bobina)}
+
+\noindent Un solenoide de radio $a=2$ [cm] y $n=10^{3}$ vueltas/m est\'a rodeado por una bobina de
+radio $R=10$ [cm] y $N=15$ vueltas, de resistencia $20\ \Omega$. La corriente del solenoide var\'ia
+seg\'un $I(t)=5\sin(120t)$ [A]. Determine: (a) el flujo magn\'etico $\Phi_B$ a trav\'es de la bobina;
+(b) la fem inducida $\varepsilon$; (c) la corriente inducida.
+
+\medskip
+
+\begin{center}
+\begin{tikzpicture}[scale=1.0,>=Stealth,line width=0.9pt]
+    \def\sa{0.5}
+    % solenoide: vueltas
+    \foreach \x in {-2.0,-1.6,...,2.0}{\draw[gray!75!black,line width=1pt] (\x,0) ellipse (0.12 and \sa);}
+    \draw[gray!45] (-2.0,\sa)--(2.0,\sa); \draw[gray!45] (-2.0,-\sa)--(2.0,-\sa);
+    \node[gray!70!black,right,font=\footnotesize] at (-3.0,\sa+0.55){solenoide ($n=10^{3}$/m)};
+    % bobina exterior (2 vueltas azules mayores) en el centro
+    \def\Rb{0.95}
+    \draw[blue!70!black,line width=1.5pt] (-0.07,0) ellipse (0.17 and \Rb);
+    \draw[blue!70!black,line width=1.5pt] (0.07,0) ellipse (0.17 and \Rb);
+    \draw[<->,blue!70!black,line width=0.7pt] (0,0)--(0,\Rb);
+    \node[blue!70!black,right,font=\footnotesize] at (0.06,0.5){$R$};
+    \node[blue!70!black,left,font=\footnotesize] at (3.0,\Rb+0.32){bobina ($N=15$)};
+    % circuito del solenoide con fuente CA
+    \draw[gray!75!black] (2.0,-\sa)--(2.0,-1.75)--(0.32,-1.75);
+    \draw[gray!75!black] (-2.0,-\sa)--(-2.0,-1.75)--(-0.32,-1.75);
+    \draw[gray!75!black] (0,-1.75) circle(0.28); \node at (0,-1.75){$\sim$};
+    \draw[->,red,line width=1pt] (2.0,-1.05)--(2.0,-0.5); \node[red,right,font=\footnotesize] at (2.02,-0.8){$I(t)$};
+\end{tikzpicture}\\[2pt]
+{\footnotesize La corriente CA circula por el solenoide ($a=2$ cm); la bobina exterior ($R=10$ cm, $20\,\Omega$) es el circuito inducido.}
+\end{center}
+
+\subsection*{(a) Flujo magn\'etico a trav\'es de la bobina}
+
+\noindent\textbf{Idea clave.} El campo de un solenoide largo es \emph{uniforme en su interior y nulo
+fuera de \'el}. Por eso, aunque la bobina tiene radio $R=10$ cm (\'area $\pi R^2$), el flujo que la
+atraviesa \textbf{no cubre toda su \'area}: s\'olo la porci\'on donde realmente hay campo, es decir la
+secci\'on transversal del \emph{solenoide} ($\pi a^2$). La corona entre $a$ y $R$ no aporta flujo
+porque all\'i $\vec B=0$.
+
+\medskip
+\noindent
+\begin{minipage}[t]{0.36\textwidth}
+\centering\vspace{0pt}
+\begin{tikzpicture}[scale=1.1,>=Stealth,line width=0.9pt]
+    % bobina (radio R)
+    \draw[blue!70!black,line width=1.4pt] (0,0) circle(1.55);
+    % solenoide (radio a) con campo saliente
+    \fill[orange!12] (0,0) circle(0.68);
+    \draw[gray!75!black,line width=1.2pt] (0,0) circle(0.68);
+    \foreach \p in {(0,0),(0.3,0.22),(-0.3,0.22),(0.3,-0.22),(-0.3,-0.22),(0,0.44),(0,-0.44),(0.46,0),(-0.46,0)}{\fill[orange!80!black] \p circle(1.1pt);}
+    \node[orange!70!black,font=\footnotesize] at (0,0.88){$\vec B\odot$};
+    \node[font=\footnotesize] at (0.78,1.08){$\vec B=0$};
+    % radios a y R
+    \draw[<->,orange!75!black] (0,0)--(0.68,0); \node[orange!75!black,font=\footnotesize,below] at (0.4,-0.01){$a$};
+    \draw[<->,blue!70!black] (0,0)--(150:1.55); \node[blue!70!black,font=\footnotesize] at (152:0.9){$R$};
+\end{tikzpicture}\\[2pt]
+{\footnotesize Corte transversal: el campo llena s\'olo $\pi a^2$.}
+\end{minipage}%
+\hfill
+\begin{minipage}[t]{0.60\textwidth}
+\vspace{0pt}
+\textbf{Paso 1 — campo del solenoide:}
+\[
+    B(t)=\mu_0 n I(t)=(4\pi\times10^{-7})(10^{3})(5\sin 120t)
+\]
+\[
+    B(t)=2\pi\times10^{-3}\sin(120t)\ [\text{T}]
+\]
+\textbf{Paso 2 — \'area efectiva} (la del solenoide, \underline{no} la de la bobina):
+\[
+    A=\pi a^{2}=\pi(2\times10^{-2})^{2}=4\pi\times10^{-4}\ [\text{m}^2]
+\]
+\textbf{Paso 3 — flujo por una vuelta:}
+\[
+    \Phi_1=\int_S\vec B\cdot d\vec S=B\,A=8\pi^{2}\times10^{-7}\sin(120t)
+\]
+\end{minipage}
+
+\medskip
+\noindent\textbf{Paso 4 — flujo total en la bobina} ($N=15$ vueltas):
+\[
+    \boxed{\Phi_B(t)=N\,\Phi_1=1{,}2\times10^{-5}\,\pi^{2}\sin(120t)\ [\text{Wb}]}
+\]
+
+\subsection*{(b) Fem inducida en la bobina}
+
+Por la ley de Faraday, $\varepsilon=-\dfrac{d\Phi_B}{dt}$:
+\[
+    \varepsilon(t)=-\frac{d}{dt}\Big[1{,}2\times10^{-5}\pi^{2}\sin(120t)\Big]
+    =-\big(1{,}2\times10^{-5}\pi^{2}\big)(120)\cos(120t)
+\]
+\[
+    \boxed{\varepsilon(t)=-1{,}44\times10^{-3}\,\pi^{2}\cos(120t)\approx-1{,}42\times10^{-2}\cos(120t)\ [\text{V}]}
+\]
+
+\subsection*{(c) Corriente inducida en la bobina}
+
+La corriente se obtiene con la ley de Ohm, usando el \textbf{valor absoluto} de la fem inducida:
+\[
+    i_{\text{ind}}(t)=\frac{|\varepsilon(t)|}{R}
+    =\frac{1{,}44\times10^{-3}\,\pi^{2}}{20}\,\big|\cos(120t)\big|
+\]
+\[
+    \boxed{i_{\text{ind}}(t)=7{,}2\times10^{-5}\,\pi^{2}\big|\cos(120t)\big|\approx7{,}1\times10^{-4}\big|\cos(120t)\big|\ [\text{A}]}
+\]
+con valor m\'aximo $i_{\max}\approx0{,}71$ [mA].
+
+\newpage
+
+%========================================================
+% NOTA COMPLEMENTARIA (no es parte del problema del certamen)
+%========================================================
+\begin{center}
+\vspace*{0.2cm}
+\hrule height 1pt
+\vspace{0.35cm}
+{\large\textcolor{ubbblue}{\textbf{Nota complementaria}}}\\[0.15cm]
+{\normalsize\textit{Material de apoyo -- no forma parte de la soluci\'on del Problema 3 del certamen.}}
+\vspace{0.35cm}
+\hrule height 1pt
+\end{center}
+
+\vspace{0.5cm}
+
+\section*{Relaci\'on con el caso de la espira \emph{dentro} del solenoide}
+
+El resultado de la parte (a) depende de \emph{qui\'en es m\'as grande}: la regi\'on con campo (el
+solenoide) o la superficie de la espira. En general,
+\[
+    \Phi=\int_S\vec B\cdot d\vec S = B\times(\text{\'area de la regi\'on con campo que atraviesa la espira}),
+\]
+es decir, el flujo es $B$ multiplicado por el \'area de la \emph{intersecci\'on} entre la zona de
+campo (secci\'on del solenoide) y la superficie encerrada por la espira. Comparemos los dos casos:
+
+\medskip
+\begin{center}
+\begin{tikzpicture}[scale=1.0,>=Stealth,line width=0.9pt]
+    % ---- IZQUIERDA: bobina rodea al solenoide (R>a) ----
+    \begin{scope}[shift={(0,0)}]
+        \draw[blue!70!black,line width=1.4pt] (0,0) circle(1.5);
+        \fill[orange!12] (0,0) circle(0.62);
+        \draw[gray!75!black,line width=1.1pt] (0,0) circle(0.62);
+        \foreach \p in {(0,0),(0.28,0.2),(-0.28,0.2),(0.28,-0.2),(-0.28,-0.2),(0,0.4),(0,-0.4)}{\fill[orange!80!black] \p circle(1pt);}
+        \draw[<->,orange!75!black] (0,0)--(0.62,0); \node[orange!75!black,font=\scriptsize,below] at (0.34,0){$a$};
+        \draw[<->,blue!70!black] (0,0)--(120:1.5); \node[blue!70!black,font=\scriptsize] at (120:0.85){$R$};
+        \node[font=\scriptsize] at (0,1.05){$\vec B=0$};
+        \node[blue!70!black,font=\footnotesize] at (0,-1.9){bobina afuera ($R>a$)};
+        \node[font=\footnotesize] at (0,-2.32){$\Phi=B\,\pi a^{2}$};
+    \end{scope}
+    % ---- DERECHA: espira dentro del solenoide (r<a) ----
+    \begin{scope}[shift={(4.6,0)}]
+        \fill[orange!12] (0,0) circle(1.5);
+        \draw[gray!75!black,line width=1.1pt] (0,0) circle(1.5);
+        \foreach \p in {(0,0),(0.5,0.3),(-0.5,0.3),(0.5,-0.3),(-0.5,-0.3),(0,0.75),(0,-0.75),(0.95,0),(-0.95,0),(0.75,0.75),(-0.75,0.75),(0.75,-0.75),(-0.75,-0.75)}{\fill[orange!80!black] \p circle(1pt);}
+        \draw[red!75!black,line width=1.4pt] (0,0) circle(0.75);
+        \draw[<->,red!75!black] (0,0)--(55:0.75); \node[red!75!black,font=\scriptsize] at (55:0.42){$r$};
+        \draw[<->,gray!75!black] (0,0)--(150:1.5); \node[gray!70!black,font=\scriptsize] at (150:0.9){$a$};
+        \node[red!75!black,font=\footnotesize] at (0,-1.9){espira adentro ($r<a$)};
+        \node[font=\footnotesize] at (0,-2.32){$\Phi=B\,\pi r^{2}$};
+    \end{scope}
+\end{tikzpicture}
+\end{center}
+
+\medskip
+\noindent\textbf{Caso de este problema (bobina rodeando al solenoide, $R>a$).} La espira es
+\emph{m\'as grande} que el solenoide, as\'i que la intersecci\'on con la zona de campo es toda la
+secci\'on del solenoide. El \'area que aporta flujo es la del \emph{solenoide}:
+\[
+    \Phi=B\,\pi a^{2}\qquad(\text{no }\pi R^2).
+\]
+
+\noindent\textbf{Caso de una espira dentro del solenoide ($r<a$).} La espira es \emph{m\'as
+peque\~na} y queda completamente inmersa en el campo uniforme. Ahora la intersecci\'on es toda la
+espira, y el \'area que aporta flujo es la de la \emph{espira}:
+\[
+    \Phi=B\,\pi r^{2}.
+\]
+
+\noindent\textbf{En resumen:} siempre se integra sobre la regi\'on donde $\vec B\neq 0$. Si la espira
+\emph{contiene} al solenoide, manda el \'area del solenoide ($\pi a^2$); si la espira est\'a
+\emph{dentro}, manda el \'area de la espira ($\pi r^2$).
+
+\end{document}
