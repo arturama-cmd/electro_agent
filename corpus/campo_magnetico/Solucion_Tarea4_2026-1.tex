@@ -1,0 +1,379 @@
+\documentclass[12pt,letterpaper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[spanish,es-noshorthands]{babel}
+\usepackage{amsmath,amssymb}
+\usepackage{graphicx}
+\usepackage{xcolor}
+\usepackage{tikz}
+\usetikzlibrary{calc,arrows.meta,decorations.markings}
+\usepackage[top=2.5cm, bottom=4cm, left=2cm, right=2cm, footskip=40pt]{geometry}
+\usepackage{fancyhdr}
+\usepackage{lastpage}
+
+\definecolor{ubbblue}{RGB}{0,51,102}
+
+\pagestyle{fancy}
+\fancyhf{}
+\renewcommand{\headrulewidth}{0pt}
+\renewcommand{\footrulewidth}{0.4pt}
+\fancyfoot[L]{\raisebox{-0.5cm}{\includegraphics[height=1.2cm]{logo ubb.png}}}
+\fancyfoot[C]{%
+    \begin{minipage}[b]{8cm}\centering
+        \footnotesize\textcolor{ubbblue}{\textbf{Dr.\ Arturo Fern\'andez P\'erez}}\\
+        \scriptsize Departamento de F\'isica -- Universidad del B\'io-B\'io\\
+        \scriptsize \textit{Electro\_Asistente\_AI-UBB}\\
+        \tiny P\'agina \thepage\ de \pageref{LastPage}
+    \end{minipage}}
+\fancyfoot[R]{\raisebox{-0.5cm}{\includegraphics[height=1.2cm]{logo dfis.png}}}
+\fancypagestyle{plain}{%
+    \fancyhf{}
+    \renewcommand{\headrulewidth}{0pt}
+    \renewcommand{\footrulewidth}{0.4pt}
+    \fancyfoot[L]{\raisebox{-0.5cm}{\includegraphics[height=1.2cm]{logo ubb.png}}}
+    \fancyfoot[C]{%
+        \begin{minipage}[b]{8cm}\centering
+            \footnotesize\textcolor{ubbblue}{\textbf{Dr.\ Arturo Fern\'andez P\'erez}}\\
+            \scriptsize Departamento de F\'isica -- Universidad del B\'io-B\'io\\
+            \scriptsize \textit{Electro\_Asistente\_AI-UBB}\\
+            \tiny P\'agina \thepage\ de \pageref{LastPage}
+        \end{minipage}}
+    \fancyfoot[R]{\raisebox{-0.5cm}{\includegraphics[height=1.2cm]{logo dfis.png}}}
+}
+
+\begin{document}
+
+%========================================
+% ENCABEZADO INSTITUCIONAL
+%========================================
+\begin{center}
+    \includegraphics[height=2cm]{logo ubb.png}\\[0.3cm]
+    {\large\textcolor{ubbblue}{\textbf{UNIVERSIDAD DEL B\'IO-B\'IO}}}\\[0.1cm]
+    {\normalsize Facultad de Ciencias -- Departamento de F\'isica}
+\end{center}
+
+\vspace{0.3cm}
+\hrule height 1pt
+\vspace{0.5cm}
+
+{\centering\Large\textbf{Soluci\'on Tarea 4 (2026-1)}\par}
+{\centering\normalsize\textit{Ley de Biot--Savart, Ley de Amp\`ere y Ley de Faraday--Lenz}\par}
+
+\vspace{0.6cm}
+
+%========================================================
+% PROBLEMA 1
+%========================================================
+\section*{Problema 1: Tres alambres -- campo en $P$ y fuerza sobre $I_2$}
+
+\noindent Tres conductores rectos muy extensos llevan $I_1 = 2$, $I_2 = 5$ e $I_3 = 3\ [\text{A}]$.
+Con $a = 5$, $b = 2$ y $c = 7\ [\text{cm}]$ las distancias al punto $P$, determine (a) el campo
+$\vec{B}$ en $P$ y (b) la fuerza sobre $2\ [\text{m}]$ de $I_2$ debida a $I_1$.
+
+\medskip
+
+\noindent
+\begin{minipage}[t]{0.40\textwidth}
+\centering
+\vspace{0pt}
+\begin{tikzpicture}[scale=0.9, >=Stealth, line width=0.9pt]
+    % P
+    \filldraw (0,2.6) circle (1.8pt); \node[left,font=\small] at (-0.08,2.6){$P$};
+    % I1 vertical (up)
+    \draw[orange!75!black,line width=1.8pt] (1.6,-0.3)--(1.6,3.5);
+    \draw[->,line width=1.1pt] (1.6,2.9)--(1.6,3.4); \node[right,font=\small] at (1.65,3.2){$I_1$};
+    % I2 vertical (down)
+    \draw[orange!75!black,line width=1.8pt] (2.4,-0.3)--(2.4,3.5);
+    \draw[->,line width=1.1pt] (2.4,0.3)--(2.4,-0.2); \node[right,font=\small] at (2.45,-0.05){$I_2$};
+    % I3 horizontal (right)
+    \draw[orange!75!black,line width=1.8pt] (-0.5,0.5)--(3.3,0.5);
+    \draw[->,line width=1.1pt] (2.7,0.5)--(3.2,0.5); \node[above,font=\small] at (3.0,0.55){$I_3$};
+    % cotas
+    \draw[<->,gray] (0,2.6)--(1.6,2.6); \node[above,font=\footnotesize] at (0.8,2.6){$a$};
+    \draw[<->,gray] (1.6,3.15)--(2.4,3.15); \node[above,font=\footnotesize] at (2.0,3.1){$b$};
+    \draw[<->,gray] (0.18,2.45)--(0.18,0.6); \node[right,font=\footnotesize] at (0.18,1.5){$c$};
+    % ejes
+    \begin{scope}[shift={(-0.4,-0.05)}]
+        \draw[->,blue,line width=0.8pt] (0,0)--(0.5,0); \node[blue,font=\scriptsize,right] at (0.5,0){$x$};
+        \draw[->,blue,line width=0.8pt] (0,0)--(0,0.5); \node[blue,font=\scriptsize,above] at (0,0.5){$y$};
+        \fill[blue] (0,0) circle (0.05); \node[blue,font=\scriptsize,below left] at (0,0){$z$};
+    \end{scope}
+\end{tikzpicture}
+\end{minipage}%
+\hfill
+\begin{minipage}[t]{0.56\textwidth}
+\vspace{0pt}
+\textbf{(a)} Cada alambre aporta $B=\dfrac{\mu_0 I}{2\pi r}$; la direcci\'on ($\pm\hat{k}$) sale de
+la regla de la mano derecha ($\vec{B}\propto \hat{I}\times\hat{r}$):
+\[
+    \vec{B}_1 = \frac{\mu_0 I_1}{2\pi a}\hat{k},\quad
+    \vec{B}_2 = \frac{\mu_0 I_2}{2\pi (a+b)}(-\hat{k}),\quad
+    \vec{B}_3 = \frac{\mu_0 I_3}{2\pi c}\hat{k}
+\]
+\end{minipage}
+
+\medskip
+
+\noindent Sumando ($\vec{B} = \vec{B}_1+\vec{B}_2+\vec{B}_3$):
+\[
+    \vec{B} = \frac{\mu_0}{2\pi}\!\left[\frac{I_1}{a} - \frac{I_2}{a+b} + \frac{I_3}{c}\right]\hat{k}
+            = 2\times10^{-7}\!\left[\frac{2}{0{,}05} - \frac{5}{0{,}07} + \frac{3}{0{,}07}\right]\hat{k}
+\]
+\[
+    \boxed{\vec{B} = 2{,}29\times10^{-6}\,\hat{k}\ [\text{T}]\quad\text{(saliendo del plano)}}
+\]
+
+\noindent\textbf{(b)} El campo de $I_1$ sobre $I_2$ (a distancia $b$) es
+$\vec{B}_1 = \dfrac{\mu_0 I_1}{2\pi b}(-\hat{k})$. Con $\vec{L} = 2(-\hat{\jmath})$ (sentido de $I_2$):
+\[
+    \vec{F} = I_2\,\vec{L}\times\vec{B}_1
+    = (5)(2)(-\hat{\jmath})\times\frac{\mu_0 (2)}{2\pi (0{,}02)}(-\hat{k})
+    = \frac{(2\times10^{-7})(2)(5)(2)}{0{,}02}\,\hat{\imath}
+\]
+\[
+    \boxed{\vec{F} = 2{,}0\times10^{-4}\,\hat{\imath}\ [\text{N}]\quad\text{(repulsi\'on: }I_1\uparrow,\ I_2\downarrow\text{)}}
+\]
+
+\newpage
+
+%========================================================
+% PROBLEMA 2
+%========================================================
+\section*{Problema 2: Tres corrientes -- campo en el centro de la hipotenusa}
+
+\noindent Tres corrientes en los v\'ertices de un tri\'angulo rect\'angulo (catetos $a$):
+$I_1 = 0{,}35$, $I_2 = 2I_1 = 0{,}70$, $I_3 = 3I_1 = 1{,}05\ [\text{A}]$. $I_1$ e $I_2$ \emph{entran}
+al plano, $I_3$ \emph{sale}. Determine $\vec{B}$ en el centro $M$ de la hipotenusa.
+
+\medskip
+
+\noindent
+\begin{minipage}[t]{0.38\textwidth}
+\centering
+\vspace{0pt}
+\begin{tikzpicture}[scale=1.1, >=Stealth, line width=0.9pt]
+    % vertices: I1(0,0) x, I3(2,0) dot, I2(2,2) x
+    \draw[gray,dashed] (0,0)--(2,0)--(2,2)--cycle;
+    \node at (0,0){$\otimes$}; \node[below left,font=\small] at (0,0){$I_1$};
+    \node at (2,0){$\odot$};   \node[below right,font=\small] at (2,0){$I_3$};
+    \node at (2,2){$\otimes$}; \node[above right,font=\small] at (2,2){$I_2$};
+    % centro hipotenusa
+    \filldraw[red] (1,1) circle (1.6pt); \node[red,above left,font=\small] at (1,1){$M$};
+    % cotas
+    \node[below,font=\footnotesize] at (1,0){$a$};
+    \node[right,font=\footnotesize] at (2,1){$a$};
+    % ejes
+    \begin{scope}[shift={(-0.55,-0.05)}]
+        \draw[->,blue,line width=0.7pt] (0,0)--(0.4,0); \node[blue,font=\scriptsize,right] at (0.4,0){$\hat{\imath}$};
+        \draw[->,blue,line width=0.7pt] (0,0)--(0,0.4); \node[blue,font=\scriptsize,above] at (0,0.4){$\hat{\jmath}$};
+    \end{scope}
+\end{tikzpicture}
+\end{minipage}%
+\hfill
+\begin{minipage}[t]{0.58\textwidth}
+\vspace{0pt}
+$M$ es el \textbf{circuncentro} del tri\'angulo rect\'angulo: equidista de los tres v\'ertices a
+\[
+    R = \frac{\text{hipotenusa}}{2} = \frac{a\sqrt{2}}{2} = \frac{a}{\sqrt{2}}
+\]
+Por Amp\`ere, cada corriente produce en $M$
+\[
+    B_i = \frac{\mu_0 I_i}{2\pi R} = \frac{\mu_0 I_i \sqrt{2}}{2\pi a},
+\]
+con direcci\'on $\pm\hat{\phi}$ (perpendicular al radio, mano derecha).
+\end{minipage}
+
+\medskip
+
+\noindent Cada hilo aporta en $M$ un campo de m\'odulo $B_i=\dfrac{\mu_0 I_i}{2\pi R}$ dirigido seg\'un
+su propio unitario azimutal $\hat{\phi}_i$ (perpendicular a la l\'inea hilo$_i\!\to\!M$, sentido por la
+mano derecha, $\hat{\phi}_i=\hat{I}_i\times\hat{r}_i$). Por superposici\'on, con $I_1=0{,}35$,
+$I_2=0{,}70$, $I_3=1{,}05\ [\text{A}]$:
+\begin{align*}
+    \vec{B} &= B_1\,(-\hat{\phi}_1) + B_2\,\hat{\phi}_2 + B_3\,\hat{\phi}_3
+            = \frac{\mu_0}{2\pi R}\big(I_1\,(-\hat{\phi}_1) + I_2\,\hat{\phi}_2 + I_3\,\hat{\phi}_3\big)\\[2pt]
+            &= \frac{\mu_0\sqrt{2}}{2\pi a}\big(0{,}35\,(-\hat{\phi}_1) + 0{,}70\,\hat{\phi}_2 + 1{,}05\,\hat{\phi}_3\big)
+\end{align*}
+\[
+    \boxed{\;\vec{B} = \frac{\mu_0}{2\pi R}\big(I_1\,(-\hat{\phi}_1) + I_2\,\hat{\phi}_2 + I_3\,\hat{\phi}_3\big)
+    = \frac{\mu_0\sqrt{2}}{2\pi a}\big(0{,}35\,(-\hat{\phi}_1) + 0{,}70\,\hat{\phi}_2 + 1{,}05\,\hat{\phi}_3\big)\ [\text{T}],
+    \quad R=\tfrac{a}{\sqrt{2}}\;}
+\]
+
+\medskip
+\noindent\small\textbf{Comentario (forma cartesiana).} Descomponiendo cada unitario azimutal en la
+base $\{\hat{\imath},\hat{\jmath}\}$,
+\[
+    -\hat{\phi}_1 = \tfrac{1}{\sqrt2}(\hat{\imath}-\hat{\jmath}),\quad
+    \hat{\phi}_2 = \tfrac{1}{\sqrt2}(-\hat{\imath}+\hat{\jmath}),\quad
+    \hat{\phi}_3 = \tfrac{1}{\sqrt2}(-\hat{\imath}-\hat{\jmath}),
+\]
+se obtiene $\vec{B} = -\dfrac{\mu_0}{2\pi a}\big(1{,}40\,\hat{\imath} + 0{,}70\,\hat{\jmath}\big)$, con
+$|\vec{B}| = \dfrac{3{,}13\times10^{-7}}{a}\ [\text{T}]$. No obstante, la soluci\'on pedida se expresa en
+funci\'on de $\hat{\phi}$.\normalsize
+
+\newpage
+
+%========================================================
+% PROBLEMA 3
+%========================================================
+\section*{Problema 3: Dos lazos con arcos de $30^\circ$ -- campo en $O$}
+
+\noindent Dos lazos de corriente conducen $I = 1{,}5\ [\text{A}]$ y sus arcos circulares
+subtienden $\Delta\theta = 30^\circ = \pi/6$. Cada lazo es un \textbf{sector anular} en el
+\textbf{plano horizontal $X$-$Y$}, con arco \textbf{interior} de radio $a = 5\ [\text{cm}]$ y arco
+\textbf{exterior} de radio $b = 8\ [\text{cm}]$. Determine $\vec{B}$ en $O$ (forma escalar de
+Biot--Savart + regla de la mano derecha).
+
+\medskip
+
+\noindent
+\begin{minipage}[t]{0.42\textwidth}
+\centering
+\vspace{0pt}
+\begin{tikzpicture}[scale=1.5, >=Stealth, line width=0.9pt]
+    \def\ra{0.75} \def\rb{1.25}
+    % ejes
+    \draw[->,gray] (-1.45,0)--(1.55,0) node[right,black,font=\small]{$X$};
+    \draw[->,gray] (0,-1.45)--(0,1.55) node[above,black,font=\small]{$Y$};
+    \node[below left,font=\small] at (0,0){$O$};
+    % k out of page
+    \draw[blue] (0,0) circle (0.055); \fill[blue] (0,0) circle (0.02);
+    \node[blue,font=\scriptsize,above right] at (0.05,0.05){$\hat{k}$};
+    % circulos guia
+    \draw[dotted,gray] (0,0) circle (\ra);
+    \draw[dotted,gray] (0,0) circle (\rb);
+    % --- Lazo +X (phi 0..30) ---
+    \draw[->,red!70!black,line width=1.3pt] (30:\ra) arc (30:0:\ra);   % interior horario
+    \draw[->,red!70!black,line width=1.3pt] (0:\rb) arc (0:30:\rb);    % exterior antihorario
+    \draw[red!70!black,line width=1.3pt] (0:\ra)--(0:\rb);
+    \draw[red!70!black,line width=1.3pt] (30:\ra)--(30:\rb);
+    \node[font=\scriptsize] at (15:1.5){$30^\circ$};
+    % --- Lazo +Y (phi 90..120) ---
+    \draw[->,red!70!black,line width=1.3pt] (120:\ra) arc (120:90:\ra);
+    \draw[->,red!70!black,line width=1.3pt] (90:\rb) arc (90:120:\rb);
+    \draw[red!70!black,line width=1.3pt] (90:\ra)--(90:\rb);
+    \draw[red!70!black,line width=1.3pt] (120:\ra)--(120:\rb);
+    \node[font=\scriptsize] at (105:1.5){$30^\circ$};
+    % rotulos radios
+    \node[font=\footnotesize] at (48:0.5){$a$};
+    \node[font=\footnotesize] at (60:1.08){$b$};
+\end{tikzpicture}\\[2pt]
+{\scriptsize Vista superior (desde $+z$). Ambos lazos en el plano $X$-$Y$.}
+\end{minipage}%
+\hfill
+\begin{minipage}[t]{0.54\textwidth}
+\vspace{0pt}
+\textbf{M\'etodo.} Para un arco de radio $R$ y apertura $\Delta\theta$, tomando el \textbf{m\'odulo}
+del producto cruz ($d\vec{\ell}\perp\vec{r}$, $\operatorname{sen}90^\circ=1$):
+\[
+    dB = \frac{\mu_0 I}{4\pi R}\,d\theta
+    \;\Longrightarrow\;
+    B = \frac{\mu_0 I}{4\pi R}\,\Delta\theta = \frac{\mu_0 I}{24\,R}
+\]
+\textbf{Segmentos radiales:} $d\vec{\ell}\parallel\vec{r}$, luego $d\vec{\ell}\times\vec{r}=0$; \textbf{no aportan}.
+
+\smallskip
+Como todo est\'a en el plano $X$-$Y$, el campo en $O$ queda a lo largo de $\pm\hat{k}$
+(direcci\'on por la regla de la mano derecha).
+\end{minipage}
+
+\medskip
+
+\noindent\textbf{Magnitudes de cada arco:}
+\begin{align*}
+    B_a &= \frac{\mu_0 I}{24\,a} = \frac{(4\pi\times10^{-7})(1{,}5)}{24\,(0{,}05)} = 1{,}571\times10^{-6}\ [\text{T}]\quad(\text{arco interior}),\\[2pt]
+    B_b &= \frac{\mu_0 I}{24\,b} = \frac{(4\pi\times10^{-7})(1{,}5)}{24\,(0{,}08)} = 0{,}982\times10^{-6}\ [\text{T}]\quad(\text{arco exterior}).
+\end{align*}
+
+\noindent\textbf{Sentidos (mano derecha, vistos desde $+z$).} En cada lazo el arco interior y el
+exterior circulan en sentidos \emph{opuestos} (lazo cerrado):
+\[
+    \text{arco interior}\ (a):\ \text{horario} \to -\hat{k},
+    \qquad
+    \text{arco exterior}\ (b):\ \text{antihorario} \to +\hat{k}.
+\]
+Como $a<b$, domina el arco interior. El campo de \textbf{un} lazo es
+\[
+    \vec{B}_{\text{lazo}} = (B_b - B_a)\,\hat{k} = (0{,}982 - 1{,}571)\times10^{-6}\,\hat{k}
+    = -0{,}589\times10^{-6}\,\hat{k}\ [\text{T}]
+\]
+
+\noindent\textbf{Campo total.} Los \textbf{dos} lazos tienen id\'entico sentido de circulaci\'on,
+por lo que sus campos \emph{se suman}:
+\[
+    \boxed{\vec{B}_O = 2\,(B_b - B_a)\,\hat{k} = -1{,}18\times10^{-6}\,\hat{k}\ [\text{T}]}
+\]
+\noindent\small El campo total apunta en $-\hat{k}$ (hacia adentro del plano de la figura).\normalsize
+
+\vspace{0.5cm}
+
+%========================================================
+% PROBLEMA 4
+%========================================================
+\section*{Problema 4: Espira rotatoria -- fem inducida}
+
+\noindent Una espira ($N=1$) de \'area $A = 50\ [\text{cm}^2] = 5\times10^{-3}\ [\text{m}^2]$ gira
+con $\omega = 720\ [\text{rpm}]$ en un campo uniforme $B = 0{,}5\ [\text{T}]$.
+
+\medskip
+
+\noindent\textbf{Velocidad angular:}
+\[
+    \omega = 720\ \frac{\text{rev}}{\text{min}} = 720\cdot\frac{2\pi}{60}\ \frac{\text{rad}}{\text{s}}
+           = 24\pi \approx 75{,}4\ [\text{rad/s}]
+\]
+
+\noindent\textbf{Flujo y fem.} El \'angulo entre $\vec{B}$ y la normal $\vec{A}$ es $\varphi=\omega t$:
+\[
+    \Phi = BA\cos(\omega t)
+    \quad\Longrightarrow\quad
+    \varepsilon = -\frac{d\Phi}{dt} = BA\,\omega\,\operatorname{sen}(\omega t)
+\]
+\[
+    \varepsilon_{\max} = BA\,\omega = (0{,}5)(5\times10^{-3})(24\pi) = 0{,}06\pi
+\]
+\[
+    \boxed{\varepsilon(t) = 0{,}188\,\operatorname{sen}(75{,}4\,t)\ [\text{V}],
+    \qquad \varepsilon_{\max} \approx 0{,}188\ [\text{V}]}
+\]
+
+\vspace{0.5cm}
+
+%========================================================
+% PROBLEMA 5
+%========================================================
+\section*{Problema 5: Espira en un solenoide variable}
+
+\noindent Una espira de $N = 20$ vueltas, radio $R = 8\ [\text{cm}]$ y resistencia $20\ [\Omega]$
+rodea un solenoide muy largo ($n = 200\ [\text{vueltas/m}]$, radio $r = 5\ [\text{cm}]$). Por el
+solenoide circula $I(t) = 5/\sqrt{t}\ [\text{A}]$.
+
+\medskip
+
+\noindent\textbf{(a) Flujo magn\'etico} (el campo s\'olo abarca el \'area del solenoide,
+$\pi r^2$):
+\[
+    \Phi_B = N\,\mu_0\,n\,I(t)\,\pi r^2
+           = (20)(4\pi\times10^{-7})(200)\frac{5}{\sqrt{t}}\,\pi(0{,}05)^2
+\]
+\[
+    \boxed{\Phi_B(t) = \frac{1{,}974\times10^{-4}}{\sqrt{t}}\ [\text{Wb}]}
+\]
+
+\noindent\textbf{(b) Fem y corriente inducida:}
+\[
+    \varepsilon = -\frac{d\Phi_B}{dt} = -1{,}974\times10^{-4}\cdot\left(-\frac{1}{2}\,t^{-3/2}\right)
+    \quad\Longrightarrow\quad
+    \boxed{|\varepsilon(t)| = \frac{9{,}87\times10^{-5}}{t^{3/2}}\ [\text{V}]}
+\]
+\[
+    i(t) = \frac{|\varepsilon|}{R} = \frac{9{,}87\times10^{-5}}{20\,t^{3/2}}
+    \quad\Longrightarrow\quad
+    \boxed{i(t) = \frac{4{,}94\times10^{-6}}{t^{3/2}}\ [\text{A}]}
+\]
+
+\noindent\textbf{Direcci\'on (Lenz).} Como $I(t)=5/\sqrt{t}$ \textbf{disminuye} con el tiempo, el
+flujo tambi\'en disminuye; la corriente inducida se opone a esa disminuci\'on, por lo que circula
+en la \textbf{misma direcci\'on} que la corriente del solenoide (para intentar mantener el flujo).
+
+\end{document}
