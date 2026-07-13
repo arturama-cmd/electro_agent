@@ -1,0 +1,352 @@
+\documentclass[addpoints,12pt]{exam}
+\usepackage[utf8]{inputenc}
+\usepackage[spanish,es-noshorthands]{babel}
+\usepackage{amsmath,amssymb}
+\usepackage{graphicx}
+\usepackage{array}
+\usepackage{xcolor}
+\usepackage{tikz}
+\usetikzlibrary{calc,arrows.meta,decorations.markings}
+\usepackage[americanvoltages,americanresistors]{circuitikz}
+\usepackage[most]{tcolorbox}
+\usepackage[margin=2cm,top=1.8cm]{geometry}
+
+% ---- formato del encabezado de pregunta: numero + caja de puntaje van dentro
+%      del cuerpo (macro \qhead) para quedar en una sola linea con el texto ----
+\qformat{}
+\newcommand{\qpts}[1]{{\setlength{\fboxsep}{2.5pt}\fbox{#1}}\hspace{0.6em}\ignorespaces}
+\newcommand{\qhead}[1]{\thequestion.\hspace{0.5em}\qpts{#1}}
+
+% ---- macro para los puntajes por parte, en rojo (como el original) ----
+\newcommand{\pts}[1]{\textcolor{red}{\textbf{(#1 pts)}}}
+
+% ---- encabezado / pie de pagina (clase exam) ----
+\pagestyle{headandfoot}
+\runningheadrule
+\firstpageheader{}{}{}
+\runningheader{\small F\'isica II - Electromagnetismo}%
+              {\small\textbf{Certamen Integrador 2026-01}}%
+              {\small 13 de Junio, 2026}
+\firstpagefooter{}{\thepage}{}
+\runningfooter{}{Page \thepage\ of \numpages}{}
+
+\begin{document}
+
+%========================================================
+% PORTADA
+%========================================================
+\begin{center}
+    \includegraphics[height=1.9cm]{logo ubb.png}\hspace{1cm}%
+    \includegraphics[height=1.5cm]{logo dfis.png}\\[0.5cm]
+    {\Large F\'isica II - Electromagnetismo}\\[0.15cm]
+    {\LARGE\textbf{Certamen Integrador 2026-01}}\\[0.9cm]
+    13 de Junio, 2026
+\end{center}
+
+\vspace{0.7cm}
+
+\noindent\textbf{Nombre}: \hrulefill\\[0.7cm]
+\noindent\textbf{Rut}: \makebox[6.5cm]{\hrulefill}\hspace{0.3cm}\textbf{Folio}: \hrulefill
+
+\vspace{0.4cm}
+\noindent\rule{\textwidth}{1pt}
+\vspace{0.2cm}
+
+\noindent\textbf{Algunas consideraciones para esta evaluaci\'on:}
+\begin{itemize}\setlength\itemsep{2pt}
+    \item El certamen 1 contiene 5 p\'aginas (incluida la portada) y 3 preguntas, con un total de
+          59 puntos.
+    \item Cada pregunta debe ser respondida por s\'olo una respuesta. En caso de presentar m\'as de
+          una, se anulan las respuestas.
+    \item \textbf{No est\'a permitido el uso de celulares o tablet en el desarrollo de esta
+          evaluaci\'on. De ser sorprendido utilizando estos art\'iculos su evaluaci\'on ser\'a
+          califica con nota 1.0.}
+    \item Buena suerte!
+\end{itemize}
+
+\noindent Seleccione con una \textbf{X} el nombre del profesor de su secci\'on:
+
+\vspace{0.15cm}
+\noindent
+\begin{minipage}{0.49\textwidth}
+\begin{tabular}{|l|p{1.1cm}|}
+\hline
+Prof.\ Roberto Aedo & \\ \hline
+Prof.\ Diego Ramirez & \\ \hline
+Prof.\ Arturo Fern\'andez & \\ \hline
+Prof.\ Morin Ordenes & \\ \hline
+Prof.\ Ismael C\'aceres & \\ \hline
+\end{tabular}
+\end{minipage}%
+\begin{minipage}{0.49\textwidth}
+\begin{tabular}{|l|p{1.1cm}|}
+\hline
+Prof.\ Evelyn Riveros & \\ \hline
+Prof.\ Cristobal Gatica & \\ \hline
+Prof.\ Gabriel D\'iaz & \\ \hline
+Prof.\ Luis Liempi & \\ \hline
+~ & \\ \hline
+\end{tabular}
+\end{minipage}
+
+\vspace{0.9cm}
+\begin{center}
+{\large\textbf{Puntaje}}\\[0.2cm]
+\gradetable[v][questions]
+\end{center}
+
+\newpage
+
+%========================================================
+% PREGUNTAS
+%========================================================
+\begin{questions}
+
+%--------------------------------------------------------
+% PREGUNTA 1
+%--------------------------------------------------------
+\question[20]
+\begin{minipage}[t]{0.60\textwidth}
+\vspace{0pt}
+\qhead{20}Tres cargas puntuales $q_1 = 20\,[\mu C]$, $q_2 = -40\,[\mu C]$ y $q_3 = -30\,[\mu C]$ se ubican en
+un sistema de referencia, cuyas coordenadas y posiciones (en metros, [m]) se muestran en la
+Fig.\ 1. La carga $q_2$ se encuentra a $0.5\,[m]$ del origen. Determine:
+\end{minipage}\hfill
+\begin{minipage}[t]{0.37\textwidth}
+\vspace{0pt}
+\centering
+\begin{tikzpicture}[scale=0.8, line width=0.7pt]
+    \draw[-{Stealth[length=6pt]}] (-2.9,0)--(1.5,0) node[right]{$x$ [m]};
+    \draw[-{Stealth[length=6pt]}] (0,-1.7)--(0,3.6) node[above]{$y$ [m]};
+    % q1 en (-1,3)
+    \node[circle,fill=blue!25,minimum size=15pt,inner sep=0pt] at (-1,3){\footnotesize$q_1$};
+    \node[above,font=\scriptsize] at (-1,3.3){(-1,3)};
+    % q3 en (-2,-1)
+    \node[circle,fill=blue!25,minimum size=15pt,inner sep=0pt] at (-2,-1){\footnotesize$q_3$};
+    \node[below,font=\scriptsize] at (-2,-1.32){(-2,-1)};
+    % q2 en la direccion -30 grados
+    \draw (0,0)--(-30:2.0);
+    \node[circle,fill=blue!25,minimum size=15pt,inner sep=0pt] at (-30:2.0){\footnotesize$q_2$};
+    \draw (0.95,0) arc (0:-30:0.95);
+    \node[font=\scriptsize] at (1.25,-0.4){$30^\circ$};
+\end{tikzpicture}\\[2pt]
+{\footnotesize Fig.\ 1}
+\end{minipage}
+
+\medskip
+\noindent\textbf{(a)} La fuerza el\'ectrica resultante $\vec{F}$ ejercida sobre la carga $q_3$.
+
+\vspace{4.5cm}
+\noindent\textbf{(b)} El potencial el\'ectrico resultante en el origen.
+
+\vspace{4.5cm}
+\noindent\textbf{(c)} El campo el\'ectrico resultante $\vec{E}$ en el origen.
+
+\vspace{3cm}
+
+%--------------------------------------------------------
+% PREGUNTA 2
+%--------------------------------------------------------
+\question[19]
+\begin{minipage}[t]{0.40\textwidth}
+\vspace{0pt}
+\qhead{19}La figura muestra un circuito que combina resistencias y bater\'ias en distintas configuraciones.
+Considere los sentidos de las corrientes $I_1$, $I_2$ e $I_3$, as\'i como el recorrido de malla
+indicado, y responda:
+\end{minipage}\hfill
+\begin{minipage}[t]{0.58\textwidth}
+\vspace{0pt}
+\centering
+\begin{circuitikz}[american, scale=0.58, transform shape, line width=0.6pt]
+    \coordinate (TL) at (0,5);
+    \coordinate (A)  at (4,5);
+    \coordinate (P)  at (0,2);
+    \coordinate (E)  at (0,0);
+    \coordinate (D)  at (2.2,2);
+    \coordinate (F)  at (2.2,0);
+    \coordinate (B)  at (4,0);
+    % --- top-left: 4 ohm + I1 ---
+    \draw (TL) to[R=$4\,\Omega$] (2.6,5);
+    \draw (2.6,5) -- (3.2,5);
+    \draw[-{Stealth[length=7pt]}] (3.2,5)--(3.95,5);
+    \node at (3.45,5.45){$I_1$};
+    \draw (3.95,5)--(A);
+    % --- 12 V en riel izquierdo ---
+    \draw (TL) to[battery1, l=$12\,\mathrm{V}$] (0,2.7);
+    \draw (0,2.7)--(P);
+    % --- bloque 18||9||3 ---
+    \draw (P) to[R=$18\,\Omega$] (D);
+    \draw (P)--(E);
+    \draw (D)--(F);
+    \draw (E) to[R=$3\,\Omega$] (F);
+    \draw (P) to[R=$9\,\Omega$] (F);
+    % --- 6 V (abajo, de F a B) ---
+    \draw (F) to[battery1, l=$6\,\mathrm{V}$] (B);
+    % --- 6 ohm central (A hacia B) + I2 ---
+    \draw (A) to[R=$6\,\Omega$] (B);
+    \draw[-{Stealth[length=7pt]}] (4,3.1)--(4,3.9);
+    \node at (4.35,3.5){$I_2$};
+    % --- I3 y 3 V arriba ---
+    \draw[-{Stealth[length=7pt]}] (A)--(4.85,5);
+    \node at (4.45,5.45){$I_3$};
+    \draw (4.85,5) to[battery1, l=$3\,\mathrm{V}$] (6.1,5);
+    % --- 14 V (abajo, de B a la derecha) ---
+    \draw (B) to[battery1, l=$14\,\mathrm{V}$] (5.7,0);
+    % --- banco derecho 2, 3, 6 ohm ---
+    \draw (6.1,5) -- (9.7,5);
+    \draw (5.7,0) -- (9.7,0);
+    \draw (6.7,5) to[R=$2\,\Omega$] (6.7,0);
+    \draw (8.2,5) to[R=$3\,\Omega$] (8.2,0);
+    \draw (9.7,5) to[R=$6\,\Omega$] (9.7,0);
+    % --- mallas M1 y M2 ---
+    \draw[blue,dashed,line width=1pt,-{Stealth[length=7pt]}] (2.35,3.15) arc (-70:250:0.5);
+    \node[blue] at (2.1,2.75){$M_1$};
+    \draw[blue,dashed,line width=1pt,-{Stealth[length=7pt]}] (5.1,2.7) arc (-70:250:0.46);
+    \node[blue] at (4.85,2.3){$M_2$};
+\end{circuitikz}
+\end{minipage}
+
+\medskip
+\noindent\textbf{(a)} Simplifique el circuito todo lo posible obteniendo las resistencias
+equivalentes y dibuje el esquema reducido resultante \pts{7}.
+
+\vspace{4.5cm}
+\noindent\textbf{(b)} Para el circuito reducido, escriba las ecuaciones de las leyes de Kirchhoff
+(corriente y voltaje) correspondientes a cada malla y a cada nodo relevante \pts{4}.
+
+\vspace{4.5cm}
+\noindent\textbf{(c)} Resuelva el sistema obtenido para determinar los valores num\'ericos de las
+corrientes $I_1$, $I_2$ e $I_3$ \pts{8}.
+
+\newpage
+
+%--------------------------------------------------------
+% PREGUNTA 3
+%--------------------------------------------------------
+\question[20]
+\qhead{20}\textbf{(a)} Un prot\'on se mueve con una velocidad $\vec{v} = (2\cdot10^{6}\,\hat{\jmath})\,[m/s]$.
+Al entrar en una regi\'on del espacio donde existe un campo $\vec{B}$, se observa que experimenta una
+fuerza $\vec{F} = 3.2\cdot10^{-13}\,\hat{\imath}\,[N]$. Como la carga del prot\'on es
+$q = 1.6\times10^{-19}\,[C]$, se pide determinar el vector de inducci\'on magn\'etico $\vec{B}$.
+(Se desprecia cualquier otra fuerza). \pts{5}
+
+\vspace{5.5cm}
+
+\begin{minipage}[t]{0.56\textwidth}
+\vspace{0pt}
+\noindent\textbf{(b)} Se tiene una espira cuadrada de lados $a = 1$ m por la que circula una
+corriente $I_0 = 0{,}5$ A (ver figura). Si la espira est\'a inmersa en una regi\'on del espacio donde
+existe un vector de inducci\'on magn\'etico
+\[
+    \vec{B}(\vec{r}) = B_0\left(\hat{\jmath} + \tfrac{1}{2}\hat{k}\right),
+\]
+con $B_0 = 0.05\,[T]$, se pide:
+\end{minipage}\hfill
+\begin{minipage}[t]{0.40\textwidth}
+\vspace{0pt}
+\centering
+\begin{tikzpicture}[scale=0.95, line width=0.7pt]
+    % ejes 3D
+    \draw[-{Stealth[length=7pt]},thick] (0,0)--(-1.5,-1.05) node[below left]{\textbf{X}};
+    \draw[-{Stealth[length=7pt]},thick] (0,0)--(3.2,0) node[right]{\textbf{Y}};
+    \draw[-{Stealth[length=7pt]},thick] (0,0)--(0,2.3) node[above]{\textbf{Z}};
+    % espira (paralelogramo en el plano XY)
+    \coordinate (o0) at (0.1,-0.1);
+    \coordinate (o1) at (2.3,-0.1);
+    \coordinate (o2) at (1.45,-0.75);
+    \coordinate (o3) at (-0.75,-0.75);
+    \draw[blue,double,double distance=1.3pt,thick] (o0)--(o1)--(o2)--(o3)--cycle;
+    % flechas de corriente (rojo)
+    \draw[-{Stealth[length=6pt]},red,thick] ($(o0)!0.35!(o1)$)--($(o0)!0.65!(o1)$); % borde lejano ->
+    \draw[-{Stealth[length=6pt]},red,thick] ($(o1)!0.35!(o2)$)--($(o1)!0.65!(o2)$); % borde derecho
+    \draw[-{Stealth[length=6pt]},red,thick] ($(o2)!0.35!(o3)$)--($(o2)!0.65!(o3)$); % borde cercano <-
+    % etiquetas
+    \node[font=\scriptsize] at ($(o0)!0.5!(o3)+(-0.28,0.02)$){$a$};
+    \node[font=\scriptsize] at ($(o0)!0.5!(o1)+(0,0.22)$){1};
+    \node[font=\scriptsize] at ($(o2)!0.5!(o3)+(0,-0.22)$){$I_0$};
+\end{tikzpicture}
+\end{minipage}
+
+\medskip
+\noindent\textbf{(b.1)} Determinar la fuerza en el tramo 1 de la espira \pts{8}.
+
+\vspace{4.5cm}
+\noindent\textbf{(b.2)} Calcular el momento magn\'etico de la espira \pts{3}.
+
+\vspace{4cm}
+\noindent\textbf{(b.3)} Calcular el torque magn\'etico sobre la espira \pts{4}.
+
+\end{questions}
+
+\newpage
+
+%========================================================
+% FORMULARIO
+%========================================================
+\newtcolorbox{formbox}[1]{colback=gray!3, colframe=gray!55, coltitle=white,
+    colbacktitle=gray!45, fonttitle=\bfseries, boxrule=0.5pt, arc=2pt,
+    left=6pt,right=6pt,top=2pt,bottom=2pt, before skip=4pt, after skip=4pt,
+    title={#1}}
+\setlength{\jot}{2pt}
+
+\begin{formbox}{Ley de Coulomb (forma vectorial)}
+\[
+    \vec{F}_{12} = k_e\,\frac{q_1 q_2}{|\vec{r}_1 - \vec{r}_2|^{3}}\,(\vec{r}_1 - \vec{r}_2)
+\]
+\textbf{Descripci\'on:} La fuerza que ejerce la carga $q_2$ sobre $q_1$ es dirigida a lo largo de la
+l\'inea que une ambas cargas, con direcci\'on dependiente del signo de las cargas.
+\end{formbox}
+
+\begin{formbox}{Campo el\'ectrico debido a una distribuci\'on discreta}
+\[
+    \vec{E} = k_e\sum_i \frac{q_i}{|\vec{r} - \vec{r}_i|^{3}}\,(\vec{r} - \vec{r}_i)
+\]
+\textbf{Descripci\'on:} Superposici\'on de los campos el\'ectricos producidos por un conjunto discreto
+de cargas puntuales $q_i$.
+\end{formbox}
+
+\begin{formbox}{Potencial el\'ectrico de una carga puntual}
+\[
+    V(\vec{r}) = k_e\,\frac{q}{|\vec{r} - \vec{r}_q|}
+\]
+\textbf{Descripci\'on:} El potencial en un punto $\vec{r}$ debido a una carga puntual $q$ ubicada en
+$\vec{r}_q$.
+\end{formbox}
+
+\begin{formbox}{Formulario}
+\begin{align*}
+    R_{/\!/} &= \left(\frac{1}{R_1} + \frac{1}{R_2} + \dots \frac{1}{R_n}\right)^{-1}
+        && \rightarrow \textbf{Resistencia paralelo}\\
+    R_{serie} &= R_1 + R_2 + \dots R_n && \rightarrow \textbf{Resistencia Serie}\\
+    \textstyle\sum V &= I\cdot R && \rightarrow \textbf{Ley de Ohm}\\
+    \textstyle\sum I_{in} &= \textstyle\sum I_{out} && \rightarrow \textbf{Ley de nodos}\\
+    \textstyle\sum V_{in} &= 0 && \rightarrow \textbf{Ley de Mallas}\\
+    \vec{F} &= q(\vec{v}_q \times \vec{B}) && \rightarrow \textbf{Fuerza}\\
+    d\vec{F} &= I_0\,d\vec{l} \times \vec{B} && \rightarrow \textbf{Fuerza en un cable}\\
+    \vec{m} &= I A\,\hat{n} && \rightarrow \textbf{Momento Magn\'etico}\\
+    \vec{\tau} &= \vec{m} \times \vec{B} && \rightarrow \textbf{Torque}
+\end{align*}
+\end{formbox}
+
+\begin{formbox}{Ejemplos de integrales t\'ipicas en electrost\'atica}
+\noindent
+\begin{minipage}{0.52\textwidth}
+\begin{itemize}\setlength\itemsep{1pt}
+    \item $\displaystyle\int \frac{x\,dx}{(R^2 + x^2)^{3/2}} = -\frac{1}{(x^2 + R^2)^{1/2}} + C$
+    \item $\displaystyle\int \frac{dx}{\sqrt{a^2 + x^2}} = \ln\left|x + \sqrt{x^2 + a^2}\right| + C$
+    \item $\displaystyle\int \frac{1}{r}\,dr = \ln(r) + C$
+    \item $\displaystyle\int \frac{1}{r^2}\,dr = -\frac{1}{r} + C$
+    \item $\displaystyle\int \frac{dx}{(x^2 + a^2)^{3/2}} = \frac{x}{a^2\sqrt{x^2 + a^2}}$
+\end{itemize}
+\end{minipage}%
+\begin{minipage}{0.46\textwidth}
+\begin{itemize}\setlength\itemsep{1pt}
+    \item $\displaystyle\int_0^{2\pi} d\theta = 2\pi$
+    \item $\displaystyle\int \cos\theta\,d\theta = \sin\theta + C$
+    \item $\displaystyle\int \sin\theta\,d\theta = -\cos\theta + C$
+    \item $\displaystyle\int r^n\,dr = \frac{r^{n+1}}{n+1}$
+\end{itemize}
+\end{minipage}
+\end{formbox}
+
+\end{document}
