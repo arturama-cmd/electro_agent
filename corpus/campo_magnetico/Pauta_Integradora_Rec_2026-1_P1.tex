@@ -1,0 +1,152 @@
+\documentclass[12pt,letterpaper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[spanish,es-noshorthands]{babel}
+\usepackage{amsmath,amssymb}
+\usepackage{graphicx}
+\usepackage{xcolor}
+\usepackage{tikz}
+\usetikzlibrary{calc,arrows.meta,decorations.markings}
+\usepackage[top=2.5cm, bottom=4cm, left=2cm, right=2cm, footskip=40pt]{geometry}
+\usepackage{fancyhdr}
+\usepackage{lastpage}
+
+\definecolor{ubbblue}{RGB}{0,51,102}
+
+\pagestyle{fancy}
+\fancyhf{}
+\renewcommand{\headrulewidth}{0pt}
+\renewcommand{\footrulewidth}{0.4pt}
+\fancyfoot[L]{\raisebox{-0.5cm}{\includegraphics[height=1.2cm]{logo ubb.png}}}
+\fancyfoot[C]{%
+    \begin{minipage}[b]{8cm}\centering
+        \footnotesize\textcolor{ubbblue}{\textbf{Dr.\ Arturo Fern\'andez P\'erez}}\\
+        \scriptsize Departamento de F\'isica -- Universidad del B\'io-B\'io\\
+        \scriptsize \textit{Electro\_Asistente\_AI-UBB}\\
+        \tiny P\'agina \thepage\ de \pageref{LastPage}
+    \end{minipage}}
+\fancyfoot[R]{\raisebox{-0.5cm}{\includegraphics[height=1.2cm]{logo dfis.png}}}
+\fancypagestyle{plain}{%
+    \fancyhf{}
+    \renewcommand{\headrulewidth}{0pt}
+    \renewcommand{\footrulewidth}{0.4pt}
+    \fancyfoot[L]{\raisebox{-0.5cm}{\includegraphics[height=1.2cm]{logo ubb.png}}}
+    \fancyfoot[C]{%
+        \begin{minipage}[b]{8cm}\centering
+            \footnotesize\textcolor{ubbblue}{\textbf{Dr.\ Arturo Fern\'andez P\'erez}}\\
+            \scriptsize Departamento de F\'isica -- Universidad del B\'io-B\'io\\
+            \scriptsize \textit{Electro\_Asistente\_AI-UBB}\\
+            \tiny P\'agina \thepage\ de \pageref{LastPage}
+        \end{minipage}}
+    \fancyfoot[R]{\raisebox{-0.5cm}{\includegraphics[height=1.2cm]{logo dfis.png}}}
+}
+
+\begin{document}
+
+%========================================
+% ENCABEZADO INSTITUCIONAL
+%========================================
+\begin{center}
+    \includegraphics[height=2cm]{logo ubb.png}\\[0.3cm]
+    {\large\textcolor{ubbblue}{\textbf{UNIVERSIDAD DEL B\'IO-B\'IO}}}\\[0.1cm]
+    {\normalsize Facultad de Ciencias -- Departamento de F\'isica}
+\end{center}
+
+\vspace{0.3cm}
+\hrule height 1pt
+\vspace{0.5cm}
+
+{\centering\Large\textbf{Pauta Evaluaci\'on Integradora Recuperativa 2026-1}\par}
+{\centering\normalsize\textit{F\'isica II -- Electromagnetismo \quad(27/07/2026)}\par}
+
+\vspace{0.5cm}
+{\centering\footnotesize (Constante de Coulomb: $k=9\times10^{9}\ \mathrm{N\,m^2/C^2}$;
+$1\ \text{nC}=10^{-9}$ C; $1\ \text{cm}=10^{-2}$ m)\par}
+
+\vspace{0.5cm}
+
+%========================================================
+% PREGUNTA 1
+%========================================================
+\section*{Pregunta 1: Tres cargas puntuales}
+
+\noindent $q_1 = 1{,}5\ \text{nC}$ en $\vec r_1 = -3\,\hat\imath + 5\,\hat\jmath$;
+$q_2 = 3{,}5\ \text{nC}$ en $\vec r_2 = 4\,\hat\imath + \hat\jmath$;
+$q_3 = -1{,}8\ \text{nC}$ en $\vec r_3 = -4\,\hat\imath - 3\,\hat\jmath$ (coordenadas en cm).
+
+\medskip
+
+\noindent
+\begin{minipage}[t]{0.38\textwidth}
+\centering
+\vspace{0pt}
+\begin{tikzpicture}[scale=0.44, >=Stealth, line width=0.8pt]
+    \draw[->,gray] (-5,0)--(5,0) node[right,black,font=\small]{$x$};
+    \draw[->,gray] (0,-4)--(0,6) node[above,black,font=\small]{$y$};
+    \foreach \i in {-4,-2,2,4} {\draw[gray!40] (\i,-0.12)--(\i,0.12);}
+    \foreach \j in {-2,2,4} {\draw[gray!40] (-0.12,\j)--(0.12,\j);}
+    % q1 (-3,5)
+    \filldraw[blue!70] (-3,5) circle (4pt); \node[above left,font=\footnotesize] at (-3,5){$q_1$};
+    % q2 (4,1)
+    \filldraw[blue!70] (4,1) circle (4pt); \node[above right,font=\footnotesize] at (4,1){$q_2$};
+    % q3 (-4,-3)
+    \filldraw[blue!70] (-4,-3) circle (4pt); \node[below left,font=\footnotesize] at (-4,-3){$q_3$};
+    % punto P (1,2)
+    \draw[red,line width=1pt] (0.6,1.6)--(1.4,2.4) (0.6,2.4)--(1.4,1.6);
+    \node[red,right,font=\footnotesize] at (1.5,2.3){$P(1,2)$};
+\end{tikzpicture}\\[2pt]
+{\scriptsize Figura 1 (coordenadas en cm).}
+\end{minipage}%
+\hfill
+\begin{minipage}[t]{0.58\textwidth}
+\vspace{0pt}
+\textbf{(a) Fuerza neta sobre $q_2$} (forma vectorial de Coulomb, superposici\'on de $q_1$ y $q_3$):
+\[
+    \vec F_2 = k\,q_2\!\left[\frac{q_1(\vec r_2-\vec r_1)}{|\vec r_2-\vec r_1|^3}
+                          + \frac{q_3(\vec r_2-\vec r_3)}{|\vec r_2-\vec r_3|^3}\right]
+\]
+Vectores relativos (en metros):
+\[
+    \vec r_2-\vec r_1 = 0{,}07\,\hat\imath - 0{,}04\,\hat\jmath,\quad |\vec r_2-\vec r_1| = 0{,}0806
+\]
+\[
+    \vec r_2-\vec r_3 = 0{,}08\,\hat\imath + 0{,}04\,\hat\jmath,\quad |\vec r_2-\vec r_3| = 0{,}0894
+\]
+\end{minipage}
+
+\smallskip
+\noindent Con $k\,q_2q_1 = 4{,}725\times10^{-8}$ y $k\,q_2q_3 = -5{,}67\times10^{-8}$:
+\begin{align*}
+    \vec F_{21} &= \frac{4{,}725\times10^{-8}}{(0{,}0806)^3}\,(0{,}07\,\hat\imath - 0{,}04\,\hat\jmath)
+        = 6{,}31\times10^{-6}\,\hat\imath - 3{,}61\times10^{-6}\,\hat\jmath\ [\text{N}],\\[2pt]
+    \vec F_{23} &= \frac{-5{,}67\times10^{-8}}{(0{,}0894)^3}\,(0{,}08\,\hat\imath + 0{,}04\,\hat\jmath)
+        = -6{,}34\times10^{-6}\,\hat\imath - 3{,}17\times10^{-6}\,\hat\jmath\ [\text{N}].
+\end{align*}
+Sumando (las componentes en $\hat\imath$ casi se cancelan):
+\[
+    \boxed{\vec F_2 = -0{,}03\times10^{-6}\,\hat\imath - 6{,}78\times10^{-6}\,\hat\jmath
+    \approx -6{,}78\times10^{-6}\,\hat\jmath\ [\text{N}],\qquad |\vec F_2| = 6{,}78\times10^{-6}\ [\text{N}]}
+\]
+
+\medskip
+\noindent\textbf{(b) Campo el\'ectrico neto en $P=(1,2)$ cm}
+$\left(\vec E = k\sum_i q_i\dfrac{(\vec r_P-\vec r_i)}{|\vec r_P-\vec r_i|^3}\right)$,
+con $\vec r_P = 0{,}01\,\hat\imath + 0{,}02\,\hat\jmath$ m. Vectores relativos (en metros):
+\[
+    \vec r_P-\vec r_1 = 0{,}04\,\hat\imath - 0{,}03\,\hat\jmath\ (0{,}05),\quad
+    \vec r_P-\vec r_2 = -0{,}03\,\hat\imath + 0{,}01\,\hat\jmath\ (0{,}0316),\quad
+    \vec r_P-\vec r_3 = 0{,}05\,\hat\imath + 0{,}05\,\hat\jmath\ (0{,}0707)
+\]
+\begin{align*}
+    \vec E_1 &= k\,q_1\frac{0{,}04\,\hat\imath - 0{,}03\,\hat\jmath}{(0{,}05)^3}
+        = 4{,}32\times10^{3}\,\hat\imath - 3{,}24\times10^{3}\,\hat\jmath,\\[2pt]
+    \vec E_2 &= k\,q_2\frac{-0{,}03\,\hat\imath + 0{,}01\,\hat\jmath}{(0{,}0316)^3}
+        = -2{,}99\times10^{4}\,\hat\imath + 9{,}96\times10^{3}\,\hat\jmath,\\[2pt]
+    \vec E_3 &= k\,q_3\frac{0{,}05\,\hat\imath + 0{,}05\,\hat\jmath}{(0{,}0707)^3}
+        = -2{,}29\times10^{3}\,\hat\imath - 2{,}29\times10^{3}\,\hat\jmath.
+\end{align*}
+\[
+    \boxed{\vec E_P = -2{,}79\times10^{4}\,\hat\imath + 4{,}43\times10^{3}\,\hat\jmath\ [\text{V/m}],
+    \qquad |\vec E_P| = 2{,}82\times10^{4}\ [\text{V/m}]}
+\]
+
+\end{document}
