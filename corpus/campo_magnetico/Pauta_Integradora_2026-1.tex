@@ -74,10 +74,12 @@
 %========================================================
 \section*{Pregunta 1: Tres cargas puntuales}
 
-\noindent $q_1=20\ \mu C$ en $(-1,3)$; $q_2=-40\ \mu C$ a $0{,}5$ m del origen, $30^\circ$ bajo el eje
-$x$; $q_3=-30\ \mu C$ en $(-2,-1)$ (metros). Posici\'on de $q_2$:
+\noindent $q_1=20\ \mu C$ en $\vec r_1=-\hat\imath+3\hat\jmath$; $q_2=-40\ \mu C$ a $0{,}5$ m del origen,
+$30^\circ$ bajo el eje $x$; $q_3=-30\ \mu C$ en $\vec r_3=-2\hat\imath-\hat\jmath$ (metros). Posici\'on de
+$q_2$:
 \[
-    \vec r_2 = 0{,}5\big(\cos(-30^\circ),\,\operatorname{sen}(-30^\circ)\big) = (0{,}433,\,-0{,}25)\ [\text{m}].
+    \vec r_2 = 0{,}5\big(\cos(-30^\circ)\,\hat\imath + \operatorname{sen}(-30^\circ)\,\hat\jmath\big)
+    = 0{,}433\,\hat\imath - 0{,}25\,\hat\jmath\ [\text{m}].
 \]
 
 \noindent
@@ -88,10 +90,9 @@ $x$; $q_3=-30\ \mu C$ en $(-2,-1)$ (metros). Posici\'on de $q_2$:
     \draw[->,gray] (-2.8,0)--(1.4,0) node[right,black,font=\small]{$x$};
     \draw[->,gray] (0,-1.8)--(0,3.6) node[above,black,font=\small]{$y$};
     % q1
-    \filldraw[blue!70] (-1,3) circle (3pt); \node[above,font=\footnotesize] at (-1,3.1){$q_1(-1,3)$};
+    \filldraw[blue!70] (-1,3) circle (3pt); \node[above,font=\footnotesize] at (-1,3.1){$q_1$};
     % q3
     \filldraw[blue!70] (-2,-1) circle (3pt); \node[left,font=\footnotesize] at (-2.1,-1){$q_3$};
-    \node[below,font=\scriptsize] at (-2,-1.25){$(-2,-1)$};
     % q2
     \filldraw[blue!70] (0.433,-0.25) circle (3pt); \node[right,font=\footnotesize] at (0.55,-0.32){$q_2$};
     \draw[dashed,gray] (0,0)--(0.433,-0.25);
@@ -109,21 +110,21 @@ $x$; $q_3=-30\ \mu C$ en $(-2,-1)$ (metros). Posici\'on de $q_2$:
 \]
 Vectores de posici\'on relativos:
 \[
-    \vec r_3-\vec r_1=(-1,-4),\ |\vec r_3-\vec r_1|=\sqrt{17}=4{,}12
+    \vec r_3-\vec r_1=-\hat\imath-4\hat\jmath,\ |\vec r_3-\vec r_1|=\sqrt{17}=4{,}12
 \]
 \[
-    \vec r_3-\vec r_2=(-2{,}433,-0{,}75),\ |\vec r_3-\vec r_2|=2{,}55
+    \vec r_3-\vec r_2=-2{,}433\,\hat\imath-0{,}75\,\hat\jmath,\ |\vec r_3-\vec r_2|=2{,}55
 \]
 \end{minipage}
 
 \smallskip
 \noindent Contribuciones (con $kq_3q_1=-5{,}4$ y $kq_3q_2=+10{,}8$):
 \begin{align*}
-    \vec F_{31} &= \frac{-5{,}4}{(4{,}12)^3}\,(-1,-4) = (0{,}077,\ 0{,}308)\ [\text{N}],\\[2pt]
-    \vec F_{32} &= \frac{+10{,}8}{(2{,}55)^3}\,(-2{,}433,-0{,}75) = (-1{,}592,\ -0{,}491)\ [\text{N}].
+    \vec F_{31} &= \frac{-5{,}4}{(4{,}12)^3}\,(-\hat\imath-4\hat\jmath) = 0{,}077\,\hat\imath + 0{,}308\,\hat\jmath\ [\text{N}],\\[2pt]
+    \vec F_{32} &= \frac{+10{,}8}{(2{,}55)^3}\,(-2{,}433\,\hat\imath-0{,}75\,\hat\jmath) = -1{,}592\,\hat\imath - 0{,}491\,\hat\jmath\ [\text{N}].
 \end{align*}
 \[
-    \boxed{\vec F_3 = (-1{,}52,\ -0{,}18)\ [\text{N}],\qquad |\vec F_3| = 1{,}53\ [\text{N}]}
+    \boxed{\vec F_3 = -1{,}52\,\hat\imath - 0{,}18\,\hat\jmath\ [\text{N}],\qquad |\vec F_3| = 1{,}53\ [\text{N}]}
 \]
 
 \medskip
@@ -141,12 +142,12 @@ $|\vec r_2|=0{,}5$, $|\vec r_3|=\sqrt{5}$):
 \noindent\textbf{(c) Campo el\'ectrico en el origen}
 $\left(\vec E=k\sum q_i\dfrac{(\vec 0-\vec r_i)}{|\vec r_i|^3}\right)$:
 \begin{align*}
-    \vec E_1 &= k\,q_1\frac{(1,-3)}{(\sqrt{10})^3} = (5{,}69\times10^{3},\ -1{,}71\times10^{4}),\\[2pt]
-    \vec E_2 &= k\,q_2\frac{(-0{,}433,\,0{,}25)}{(0{,}5)^3} = (1{,}25\times10^{6},\ -7{,}20\times10^{5}),\\[2pt]
-    \vec E_3 &= k\,q_3\frac{(2,1)}{(\sqrt{5})^3} = (-4{,}83\times10^{4},\ -2{,}42\times10^{4}).
+    \vec E_1 &= k\,q_1\frac{\hat\imath-3\hat\jmath}{(\sqrt{10})^3} = 5{,}69\times10^{3}\,\hat\imath - 1{,}71\times10^{4}\,\hat\jmath,\\[2pt]
+    \vec E_2 &= k\,q_2\frac{-0{,}433\,\hat\imath+0{,}25\,\hat\jmath}{(0{,}5)^3} = 1{,}25\times10^{6}\,\hat\imath - 7{,}20\times10^{5}\,\hat\jmath,\\[2pt]
+    \vec E_3 &= k\,q_3\frac{2\hat\imath+\hat\jmath}{(\sqrt{5})^3} = -4{,}83\times10^{4}\,\hat\imath - 2{,}42\times10^{4}\,\hat\jmath.
 \end{align*}
 \[
-    \boxed{\vec E_O = (1{,}20\times10^{6},\ -7{,}61\times10^{5})\ [\text{V/m}],\qquad
+    \boxed{\vec E_O = 1{,}20\times10^{6}\,\hat\imath - 7{,}61\times10^{5}\,\hat\jmath\ [\text{V/m}],\qquad
     |\vec E_O| = 1{,}42\times10^{6}\ [\text{V/m}]}
 \]
 
