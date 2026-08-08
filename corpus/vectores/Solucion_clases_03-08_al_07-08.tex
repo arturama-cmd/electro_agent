@@ -1,0 +1,375 @@
+\documentclass[12pt,letterpaper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[spanish,es-noshorthands]{babel}
+\usepackage{amsmath,amssymb}
+\usepackage{graphicx}
+\usepackage{xcolor}
+\usepackage[top=2.5cm, bottom=4cm, left=2cm, right=2cm, footskip=40pt]{geometry}
+\usepackage{fancyhdr}
+\usepackage{lastpage}
+
+\definecolor{ubbblue}{RGB}{0,51,102}
+
+\pagestyle{fancy}
+\fancyhf{}
+\renewcommand{\headrulewidth}{0pt}
+\renewcommand{\footrulewidth}{0.4pt}
+\fancyfoot[L]{\raisebox{-0.5cm}{\includegraphics[height=1.2cm]{logo ubb.png}}}
+\fancyfoot[C]{%
+    \begin{minipage}[b]{8cm}\centering
+        \footnotesize\textcolor{ubbblue}{\textbf{Dr.\ Arturo Fern\'andez P\'erez}}\\
+        \scriptsize Departamento de F\'isica -- Universidad del B\'io-B\'io\\
+        \scriptsize \textit{Electro\_Asistente\_AI-UBB}\\
+        \tiny P\'agina \thepage\ de \pageref{LastPage}
+    \end{minipage}}
+\fancyfoot[R]{\raisebox{-0.5cm}{\includegraphics[height=1.2cm]{logo dfis.png}}}
+\fancypagestyle{plain}{%
+    \fancyhf{}
+    \renewcommand{\headrulewidth}{0pt}
+    \renewcommand{\footrulewidth}{0.4pt}
+    \fancyfoot[L]{\raisebox{-0.5cm}{\includegraphics[height=1.2cm]{logo ubb.png}}}
+    \fancyfoot[C]{%
+        \begin{minipage}[b]{8cm}\centering
+            \footnotesize\textcolor{ubbblue}{\textbf{Dr.\ Arturo Fern\'andez P\'erez}}\\
+            \scriptsize Departamento de F\'isica -- Universidad del B\'io-B\'io\\
+            \scriptsize \textit{Electro\_Asistente\_AI-UBB}\\
+            \tiny P\'agina \thepage\ de \pageref{LastPage}
+        \end{minipage}}
+    \fancyfoot[R]{\raisebox{-0.5cm}{\includegraphics[height=1.2cm]{logo dfis.png}}}
+}
+
+\newcommand{\ii}{\hat{\imath}}
+\newcommand{\jj}{\hat{\jmath}}
+\newcommand{\kk}{\hat{k}}
+
+\begin{document}
+
+%========================================
+% ENCABEZADO INSTITUCIONAL
+%========================================
+\begin{center}
+    \includegraphics[height=2cm]{logo ubb.png}\\[0.3cm]
+    {\large\textcolor{ubbblue}{\textbf{UNIVERSIDAD DEL B\'IO-B\'IO}}}\\[0.1cm]
+    {\normalsize Facultad de Ciencias -- Departamento de F\'isica}
+\end{center}
+
+\vspace{0.3cm}
+\hrule height 1pt
+\vspace{0.5cm}
+
+{\centering\Large\textbf{Soluciones a los problemas vistos en clases: 03-08 al 07-08}\par}
+{\centering\normalsize\textit{\'Algebra de vectores: Actividades 1.3, 1.4 y 1.5}\par}
+
+\vspace{0.6cm}
+
+%========================================================
+% ACTIVIDAD 1.3
+%========================================================
+\section*{Actividad 1.3}
+
+\noindent Dados los vectores
+\[
+    \vec{A} = -3{,}45\,\ii - 0{,}84\,\jj + 1{,}21\,\kk,\qquad
+    \vec{B} = (4\pi\times10^{-1})\,\ii + (0{,}04\times10^{2})\,\jj + 1{,}7\,\kk,\qquad
+    \vec{C} = \ii - 6\,\jj - 8\,\kk.
+\]
+Primero conviene reducir las componentes de $\vec{B}$:
+\[
+    B_x = 4\pi\times10^{-1} = 0{,}4\pi \approx 1{,}25664,\qquad
+    B_y = 0{,}04\times10^{2} = 4,\qquad
+    B_z = 1{,}7,
+\]
+\[
+    \Rightarrow\quad \vec{B} \approx 1{,}25664\,\ii + 4\,\jj + 1{,}7\,\kk.
+\]
+
+\subsection*{(1)\quad $\left\lVert\, 2\vec{A} - \sqrt{3}\,\vec{B} + 0{,}361\,\vec{C} \,\right\rVert$}
+
+\noindent\textbf{Paso 1 — escalar cada vector:}
+\begin{align*}
+    2\vec{A} &= (-6{,}90,\ -1{,}68,\ 2{,}42),\\
+    \sqrt{3}\,\vec{B} &= 1{,}73205\,(1{,}25664,\ 4,\ 1{,}7) = (2{,}17656,\ 6{,}92820,\ 2{,}94449),\\
+    0{,}361\,\vec{C} &= (0{,}361,\ -2{,}166,\ -2{,}888).
+\end{align*}
+
+\noindent\textbf{Paso 2 — combinar componente a componente} ($2\vec{A}-\sqrt{3}\,\vec{B}+0{,}361\,\vec{C}$):
+\begin{align*}
+    x &= -6{,}90 - 2{,}17656 + 0{,}361 = -8{,}71556,\\
+    y &= -1{,}68 - 6{,}92820 - 2{,}166 = -10{,}77420,\\
+    z &= \phantom{-}2{,}42 - 2{,}94449 - 2{,}888 = -3{,}41249.
+\end{align*}
+\[
+    \Rightarrow\quad 2\vec{A}-\sqrt{3}\,\vec{B}+0{,}361\,\vec{C}
+    = -8{,}71556\,\ii - 10{,}77420\,\jj - 3{,}41249\,\kk.
+\]
+
+\noindent\textbf{Paso 3 — m\'odulo:}
+\begin{align*}
+    \left\lVert\cdots\right\rVert
+    &= \sqrt{(-8{,}71556)^2 + (-10{,}77420)^2 + (-3{,}41249)^2}\\
+    &= \sqrt{75{,}961 + 116{,}083 + 11{,}645} = \sqrt{203{,}689}.
+\end{align*}
+\[
+    \boxed{\left\lVert\, 2\vec{A} - \sqrt{3}\,\vec{B} + 0{,}361\,\vec{C} \,\right\rVert \approx 14{,}27}
+\]
+
+\subsection*{(2)\quad $\dfrac{\vec{A}}{\sqrt{3}} - \left(\dfrac{\vec{B}}{2} + \dfrac{\vec{C}}{\sqrt{\sin 20^\circ}}\right)$}
+
+\noindent Con $\sin 20^\circ = 0{,}34202$ (\'angulo en grados), $\sqrt{\sin 20^\circ} = 0{,}58482$.
+
+\noindent\textbf{Paso 1 — escalar cada t\'ermino:}
+\begin{align*}
+    \frac{\vec{A}}{\sqrt{3}} &= \frac{1}{1{,}73205}(-3{,}45,\ -0{,}84,\ 1{,}21)
+        = (-1{,}99186,\ -0{,}48497,\ 0{,}69859),\\
+    \frac{\vec{B}}{2} &= (0{,}62832,\ 2,\ 0{,}85),\\
+    \frac{\vec{C}}{\sqrt{\sin 20^\circ}} &= \frac{1}{0{,}58482}(1,\ -6,\ -8)
+        = (1{,}70991,\ -10{,}25947,\ -13{,}67929).
+\end{align*}
+
+\noindent\textbf{Paso 2 — sumar el par\'entesis} $\left(\dfrac{\vec{B}}{2}+\dfrac{\vec{C}}{\sqrt{\sin 20^\circ}}\right)$:
+\[
+    (0{,}62832+1{,}70991,\ \ 2-10{,}25947,\ \ 0{,}85-13{,}67929)
+    = (2{,}33823,\ -8{,}25947,\ -12{,}82929).
+\]
+
+\noindent\textbf{Paso 3 — restar del primer t\'ermino:}
+\begin{align*}
+    x &= -1{,}99186 - 2{,}33823 = -4{,}33009,\\
+    y &= -0{,}48497 - (-8{,}25947) = \phantom{-}7{,}77450,\\
+    z &= \phantom{-}0{,}69859 - (-12{,}82929) = 13{,}52788.
+\end{align*}
+\[
+    \boxed{\dfrac{\vec{A}}{\sqrt{3}} - \left(\dfrac{\vec{B}}{2} + \dfrac{\vec{C}}{\sqrt{\sin 20^\circ}}\right)
+    \approx -4{,}33\,\ii + 7{,}77\,\jj + 13{,}53\,\kk}
+\]
+(su magnitud es $\sqrt{4{,}33009^2+7{,}77450^2+13{,}52788^2}=\sqrt{262{,}20}\approx 16{,}19$).
+
+\newpage
+
+%========================================================
+% ACTIVIDAD 1.4
+%========================================================
+\section*{Actividad 1.4}
+
+\noindent A partir de la figura (cubo de aristas $5$, $10$ y $8$ [m]) se leen los vectores
+\[
+    \vec{A} = (10,\ 8,\ -5),\qquad
+    \vec{B} = (-8,\ 10,\ -5),\qquad
+    \vec{C} = (8,\ -10,\ 0).
+\]
+
+\subsection*{(1)\quad $-3\vec{A} + 2(\vec{C}\times\vec{B})$}
+
+\noindent\textbf{Paso 1 — producto cruz $\vec{C}\times\vec{B}$} (determinante y expansi\'on por cofactores):
+\begin{align*}
+    \vec{C}\times\vec{B}
+    &= \begin{vmatrix} \ii & \jj & \kk \\ 8 & -10 & 0 \\ -8 & 10 & -5 \end{vmatrix}\\[2pt]
+    &= \ii\big[(-10)(-5)-(0)(10)\big] - \jj\big[(8)(-5)-(0)(-8)\big] + \kk\big[(8)(10)-(-10)(-8)\big]\\
+    &= \ii\,[50] - \jj\,[-40] + \kk\,[80-80]
+     = (50,\ 40,\ 0).
+\end{align*}
+
+\noindent\textbf{Paso 2 — escalar y sumar:}
+\[
+    -3\vec{A} = (-30,\ -24,\ 15),\qquad 2(\vec{C}\times\vec{B}) = (100,\ 80,\ 0),
+\]
+\[
+    -3\vec{A} + 2(\vec{C}\times\vec{B}) = (-30+100,\ -24+80,\ 15+0).
+\]
+\[
+    \boxed{-3\vec{A} + 2(\vec{C}\times\vec{B}) = 70\,\ii + 56\,\jj + 15\,\kk}
+\]
+
+\subsection*{(2)\quad $(\vec{A}\times\vec{B}) - (\vec{C}\times\vec{A})$}
+
+\noindent\textbf{Paso 1 — $\vec{A}\times\vec{B}$:}
+\begin{align*}
+    \vec{A}\times\vec{B}
+    &= \begin{vmatrix} \ii & \jj & \kk \\ 10 & 8 & -5 \\ -8 & 10 & -5 \end{vmatrix}\\[2pt]
+    &= \ii\big[(8)(-5)-(-5)(10)\big] - \jj\big[(10)(-5)-(-5)(-8)\big] + \kk\big[(10)(10)-(8)(-8)\big]\\
+    &= \ii\,[-40+50] - \jj\,[-50-40] + \kk\,[100+64]
+     = (10,\ 90,\ 164).
+\end{align*}
+
+\noindent\textbf{Paso 2 — $\vec{C}\times\vec{A}$:}
+\begin{align*}
+    \vec{C}\times\vec{A}
+    &= \begin{vmatrix} \ii & \jj & \kk \\ 8 & -10 & 0 \\ 10 & 8 & -5 \end{vmatrix}\\[2pt]
+    &= \ii\big[(-10)(-5)-(0)(8)\big] - \jj\big[(8)(-5)-(0)(10)\big] + \kk\big[(8)(8)-(-10)(10)\big]\\
+    &= \ii\,[50] - \jj\,[-40] + \kk\,[64+100]
+     = (50,\ 40,\ 164).
+\end{align*}
+
+\noindent\textbf{Paso 3 — restar:}
+\[
+    (\vec{A}\times\vec{B}) - (\vec{C}\times\vec{A})
+    = (10-50,\ 90-40,\ 164-164).
+\]
+\[
+    \boxed{(\vec{A}\times\vec{B}) - (\vec{C}\times\vec{A}) = -40\,\ii + 50\,\jj + 0\,\kk}
+\]
+
+\newpage
+
+%========================================================
+% ACTIVIDAD 1.5
+%========================================================
+\section*{Actividad 1.5}
+
+\noindent Dados los vectores
+\[
+    \vec{A} = -9\,\ii + 12\,\jj - 8\,\kk,\qquad
+    \vec{B} = 4\,\ii - 5\,\jj + 10\,\kk.
+\]
+
+\subsection*{(1)\quad Producto escalar $\vec{A}\cdot\vec{B}$}
+\[
+    \vec{A}\cdot\vec{B} = (-9)(4) + (12)(-5) + (-8)(10) = -36 - 60 - 80.
+\]
+\[
+    \boxed{\vec{A}\cdot\vec{B} = -176}
+\]
+
+\subsection*{(2)\quad Producto vectorial $\vec{A}\times\vec{B}$}
+\begin{align*}
+    \vec{A}\times\vec{B}
+    &= \begin{vmatrix} \ii & \jj & \kk \\ -9 & 12 & -8 \\ 4 & -5 & 10 \end{vmatrix}\\[2pt]
+    &= \ii\big[(12)(10)-(-8)(-5)\big] - \jj\big[(-9)(10)-(-8)(4)\big] + \kk\big[(-9)(-5)-(12)(4)\big]\\
+    &= \ii\,[120-40] - \jj\,[-90+32] + \kk\,[45-48]
+     = (80,\ 58,\ -3).
+\end{align*}
+\[
+    \boxed{\vec{A}\times\vec{B} = 80\,\ii + 58\,\jj - 3\,\kk}
+\]
+
+\subsection*{(3)\quad \'Angulo entre $\vec{A}$ y $\vec{B}$ (usando el producto punto)}
+
+\noindent\textbf{Paso 1 — m\'odulos:}
+\[
+    |\vec{A}| = \sqrt{(-9)^2+12^2+(-8)^2} = \sqrt{81+144+64} = \sqrt{289} = 17,
+\]
+\[
+    |\vec{B}| = \sqrt{4^2+(-5)^2+10^2} = \sqrt{16+25+100} = \sqrt{141} \approx 11{,}8743.
+\]
+
+\noindent\textbf{Paso 2 — despejar el \'angulo de} $\vec{A}\cdot\vec{B}=|\vec{A}||\vec{B}|\cos\theta$:
+\[
+    \cos\theta = \frac{\vec{A}\cdot\vec{B}}{|\vec{A}|\,|\vec{B}|}
+    = \frac{-176}{17\sqrt{141}} = \frac{-176}{201{,}864} = -0{,}87188.
+\]
+\[
+    \boxed{\theta = \arccos(-0{,}87188) \approx 150{,}7^\circ}
+\]
+
+\newpage
+
+%========================================================
+% PROBLEMA 1
+%========================================================
+\section*{Problema 1}
+
+\noindent Dados los vectores
+\[
+    \vec{A} = -0{,}05\,\ii + 0{,}08\,\jj - 0{,}10\,\kk,\qquad
+    \vec{B} = 0{,}25\,\ii + 0\,\jj - 0{,}10\,\kk,
+\]
+determine:
+
+\subsection*{(1)\quad $\dfrac{1}{3}\,(\vec{A}\cdot\vec{B})$}
+\[
+    \vec{A}\cdot\vec{B} = (-0{,}05)(0{,}25) + (0{,}08)(0) + (-0{,}10)(-0{,}10)
+    = -0{,}0125 + 0 + 0{,}01 = -0{,}0025.
+\]
+\[
+    \boxed{\dfrac{1}{3}\,(\vec{A}\cdot\vec{B}) = \frac{-0{,}0025}{3} \approx -8{,}33\times10^{-4}}
+\]
+
+\subsection*{(2)\quad $\dfrac{1}{5}\,(\vec{B}\times\vec{A})$}
+\begin{align*}
+    \vec{B}\times\vec{A}
+    &= \begin{vmatrix} \ii & \jj & \kk \\ 0{,}25 & 0 & -0{,}10 \\ -0{,}05 & 0{,}08 & -0{,}10 \end{vmatrix}\\[2pt]
+    &= \ii\big[(0)(-0{,}10)-(-0{,}10)(0{,}08)\big]
+     - \jj\big[(0{,}25)(-0{,}10)-(-0{,}10)(-0{,}05)\big]
+     + \kk\big[(0{,}25)(0{,}08)-(0)(-0{,}05)\big]\\
+    &= \ii\,[0{,}008] - \jj\,[-0{,}025-0{,}005] + \kk\,[0{,}02]
+     = (0{,}008,\ 0{,}030,\ 0{,}02).
+\end{align*}
+\[
+    \boxed{\dfrac{1}{5}\,(\vec{B}\times\vec{A})
+    = (0{,}0016,\ 0{,}006,\ 0{,}004)
+    = 1{,}6\times10^{-3}\,\ii + 6\times10^{-3}\,\jj + 4\times10^{-3}\,\kk}
+\]
+
+\subsection*{(3)\quad \'Angulo entre $\vec{A}$ y $\vec{B}$}
+\[
+    |\vec{A}| = \sqrt{0{,}05^2+0{,}08^2+0{,}10^2} = \sqrt{0{,}0189} \approx 0{,}13748,\qquad
+    |\vec{B}| = \sqrt{0{,}25^2+0{,}10^2} = \sqrt{0{,}0725} \approx 0{,}26926.
+\]
+\[
+    \cos\theta = \frac{\vec{A}\cdot\vec{B}}{|\vec{A}|\,|\vec{B}|}
+    = \frac{-0{,}0025}{(0{,}13748)(0{,}26926)} = \frac{-0{,}0025}{0{,}037018} \approx -0{,}06754.
+\]
+\[
+    \boxed{\theta = \arccos(-0{,}06754) \approx 93{,}87^\circ}
+\]
+
+\newpage
+
+%========================================================
+% PROBLEMA 2
+%========================================================
+\section*{Problema 2}
+
+\noindent Para el paralelep\'ipedo rectangular de lados $2$, $4$ y $6$ [m] (Figura 1), las coordenadas
+cartesianas de los vectores son
+\[
+    \boxed{\vec{A} = (2,\ 6,\ 0),\qquad \vec{B} = (0,\ -6,\ 0),\qquad \vec{C} = (2,\ -6,\ 4).}
+\]
+
+\subsection*{(1)\quad $\dfrac{\vec{A} - \vec{B}}{\left\lVert \vec{A} + \vec{B}\right\rVert^{3}}$}
+\[
+    \vec{A} - \vec{B} = (2,\ 12,\ 0),\qquad \vec{A} + \vec{B} = (2,\ 0,\ 0),
+\]
+\[
+    \left\lVert \vec{A} + \vec{B}\right\rVert = \sqrt{2^2+0^2+0^2} = 2
+    \quad\Rightarrow\quad \left\lVert \vec{A} + \vec{B}\right\rVert^{3} = 8.
+\]
+\[
+    \boxed{\dfrac{\vec{A} - \vec{B}}{\left\lVert \vec{A} + \vec{B}\right\rVert^{3}}
+    = \frac{(2,\ 12,\ 0)}{8} = 0{,}25\,\ii + 1{,}5\,\jj}
+\]
+
+\subsection*{(2)\quad $\dfrac{\vec{C} + 2\vec{A}}{\left\lVert \vec{B}\right\rVert^{2}}$}
+\[
+    2\vec{A} = (4,\ 12,\ 0),\qquad \vec{C} + 2\vec{A} = (6,\ 6,\ 4),
+\]
+\[
+    \left\lVert \vec{B}\right\rVert = \sqrt{0^2+(-6)^2+0^2} = 6
+    \quad\Rightarrow\quad \left\lVert \vec{B}\right\rVert^{2} = 36.
+\]
+\[
+    \boxed{\dfrac{\vec{C} + 2\vec{A}}{\left\lVert \vec{B}\right\rVert^{2}}
+    = \frac{(6,\ 6,\ 4)}{36} = \tfrac{1}{6}\,\ii + \tfrac{1}{6}\,\jj + \tfrac{1}{9}\,\kk
+    \approx (0{,}167,\ 0{,}167,\ 0{,}111)}
+\]
+
+\subsection*{(3)\quad $\vec{C}\cdot\vec{B}$}
+\[
+    \vec{C}\cdot\vec{B} = (2)(0) + (-6)(-6) + (4)(0) = 0 + 36 + 0.
+\]
+\[
+    \boxed{\vec{C}\cdot\vec{B} = 36}
+\]
+
+\subsection*{(4)\quad $\vec{B}\times 2\vec{A}$}
+\begin{align*}
+    \vec{B}\times 2\vec{A}
+    &= \begin{vmatrix} \ii & \jj & \kk \\ 0 & -6 & 0 \\ 4 & 12 & 0 \end{vmatrix}\\[2pt]
+    &= \ii\big[(-6)(0)-(0)(12)\big] - \jj\big[(0)(0)-(0)(4)\big] + \kk\big[(0)(12)-(-6)(4)\big]\\
+    &= \ii\,[0] - \jj\,[0] + \kk\,[24].
+\end{align*}
+\[
+    \boxed{\vec{B}\times 2\vec{A} = 24\,\kk}
+\]
+
+\end{document}
