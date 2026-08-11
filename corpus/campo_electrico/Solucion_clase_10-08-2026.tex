@@ -1,0 +1,179 @@
+\documentclass[12pt,letterpaper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[spanish,es-noshorthands]{babel}
+\usepackage{amsmath,amssymb}
+\usepackage{graphicx}
+\usepackage{xcolor}
+\usepackage{tikz}
+\usetikzlibrary{calc,arrows.meta,decorations.markings}
+\usepackage[top=2.5cm, bottom=4cm, left=2cm, right=2cm, footskip=40pt]{geometry}
+\usepackage{fancyhdr}
+\usepackage{lastpage}
+
+\definecolor{ubbblue}{RGB}{0,51,102}
+
+\pagestyle{fancy}
+\fancyhf{}
+\renewcommand{\headrulewidth}{0pt}
+\renewcommand{\footrulewidth}{0.4pt}
+\fancyfoot[L]{\raisebox{-0.5cm}{\includegraphics[height=1.2cm]{logo ubb.png}}}
+\fancyfoot[C]{%
+    \begin{minipage}[b]{8cm}\centering
+        \footnotesize\textcolor{ubbblue}{\textbf{Dr.\ Arturo Fern\'andez P\'erez}}\\
+        \scriptsize Departamento de F\'isica -- Universidad del B\'io-B\'io\\
+        \scriptsize \textit{Electro\_Asistente\_AI-UBB}\\
+        \tiny P\'agina \thepage\ de \pageref{LastPage}
+    \end{minipage}}
+\fancyfoot[R]{\raisebox{-0.5cm}{\includegraphics[height=1.2cm]{logo dfis.png}}}
+\fancypagestyle{plain}{%
+    \fancyhf{}
+    \renewcommand{\headrulewidth}{0pt}
+    \renewcommand{\footrulewidth}{0.4pt}
+    \fancyfoot[L]{\raisebox{-0.5cm}{\includegraphics[height=1.2cm]{logo ubb.png}}}
+    \fancyfoot[C]{%
+        \begin{minipage}[b]{8cm}\centering
+            \footnotesize\textcolor{ubbblue}{\textbf{Dr.\ Arturo Fern\'andez P\'erez}}\\
+            \scriptsize Departamento de F\'isica -- Universidad del B\'io-B\'io\\
+            \scriptsize \textit{Electro\_Asistente\_AI-UBB}\\
+            \tiny P\'agina \thepage\ de \pageref{LastPage}
+        \end{minipage}}
+    \fancyfoot[R]{\raisebox{-0.5cm}{\includegraphics[height=1.2cm]{logo dfis.png}}}
+}
+
+\begin{document}
+
+%========================================
+% ENCABEZADO INSTITUCIONAL
+%========================================
+\begin{center}
+    \includegraphics[height=2cm]{logo ubb.png}\\[0.3cm]
+    {\large\textcolor{ubbblue}{\textbf{UNIVERSIDAD DEL B\'IO-B\'IO}}}\\[0.1cm]
+    {\normalsize Facultad de Ciencias -- Departamento de F\'isica}
+\end{center}
+
+\vspace{0.3cm}
+\hrule height 1pt
+\vspace{0.5cm}
+
+{\centering\Large\textbf{Problema resuelto en la clase del 10/08}\par}
+{\centering\normalsize\textit{F\'isica II -- Electromagnetismo \quad(Fuerza el\'ectrica -- Ley de Coulomb)}\par}
+
+\vspace{0.5cm}
+{\centering\footnotesize (Constante de Coulomb: $k=9\times10^{9}\ \mathrm{N\,m^2/C^2}$;
+$1\ \text{mC}=10^{-3}$ C)\par}
+
+\vspace{0.5cm}
+
+%========================================================
+% ENUNCIADO
+%========================================================
+\noindent\textbf{Enunciado.} Cuatro cargas id\'enticas $q = 15\ [\text{mC}]$ se ubican en los v\'ertices
+de un rect\'angulo de lados $L = 20\ [\text{cm}]$ y $W = 65\ [\text{cm}]$. Determine la fuerza el\'ectrica
+resultante sobre la carga de la \textbf{esquina superior derecha}.
+
+\medskip
+
+\noindent
+\begin{minipage}[t]{0.44\textwidth}
+\centering
+\vspace{0pt}
+\begin{tikzpicture}[scale=0.95, >=Stealth, line width=0.9pt]
+    \def\Lx{2.6} \def\Wy{2.0}
+    \draw[gray] (0,0)--(\Lx,0)--(\Lx,\Wy)--(0,\Wy)--cycle;
+    % cargas: q1=inf.izq (origen), q2=inf.der, q3=sup.der (objetivo), q4=sup.izq  (antihorario)
+    \shade[ball color=orange!60] (0,0) circle (7pt);
+    \shade[ball color=orange!60] (\Lx,0) circle (7pt);
+    \shade[ball color=orange!60] (0,\Wy) circle (7pt);
+    \shade[ball color=red!55] (\Lx,\Wy) circle (7pt);
+    \node[below left,font=\small] at (0,-0.05){$q_1$};
+    \node[below right,font=\small] at (\Lx,-0.05){$q_2$};
+    \node[red,above,font=\small] at (\Lx,\Wy+0.10){$q_3$};
+    \node[above left,font=\small] at (0,\Wy){$q_4$};
+    % indicador antihorario
+    \node[gray,font=\large] at (\Lx/2,\Wy/2){$\circlearrowleft$};
+    \node[gray,font=\tiny,below] at (\Lx/2,\Wy/2-0.2){antihorario};
+    % cotas
+    \draw[<->,gray] (0,-0.55)--(\Lx,-0.55); \node[below,font=\footnotesize] at (\Lx/2,-0.55){$L=20$ cm};
+    \draw[<->,gray] (-0.55,0)--(-0.55,\Wy); \node[left,font=\footnotesize] at (-0.55,\Wy/2){$W=65$ cm};
+    % ejes
+    \begin{scope}[shift={(\Lx+0.45,0.45)}]
+        \draw[->,blue] (0,0)--(0.5,0) node[right,font=\scriptsize]{$\hat\imath$};
+        \draw[->,blue] (0,0)--(0,0.5) node[above,font=\scriptsize]{$\hat\jmath$};
+    \end{scope}
+    % resultante sobre q3 (casi horizontal), leyenda separada del rotulo q3
+    \draw[->,red,line width=1.4pt] (\Lx,\Wy)--(\Lx+1.15,\Wy+0.20);
+    \node[red,right,font=\small] at (\Lx+1.15,\Wy+0.20){$\vec F_3$};
+\end{tikzpicture}\\[2pt]
+{\scriptsize Cuatro cargas $q$ id\'enticas ($q_3$ = objetivo; figura no a escala).}
+\end{minipage}%
+\hfill
+\begin{minipage}[t]{0.52\textwidth}
+\vspace{0pt}
+\textbf{Numeraci\'on y estrategia.} Las cargas se numeran del 1 al 4 en sentido
+\textbf{antihorario}, partiendo por la carga del origen como $q_1$. As\'i el objetivo (esquina
+superior derecha) es $q_3$.
+
+\smallskip
+Todas las cargas son \emph{id\'enticas y positivas}, luego las tres fuerzas sobre $q_3$ son
+\textbf{repulsivas}. Se usa la forma vectorial de Coulomb:
+\[
+    \vec F_{3j} = k\,q^2\,\frac{\vec r_3-\vec r_j}{|\vec r_3-\vec r_j|^3},
+\]
+con $k\,q^2 = 9\times10^{9}(0{,}015)^2 = 2{,}025\times10^{6}\ [\text{N m}^2]$.
+\end{minipage}
+
+\medskip
+
+\noindent\textbf{Coordenadas de cada carga} (en metros, en funci\'on de los unitarios cartesianos):
+\begin{align*}
+    \vec r_1 &= \vec 0 & &(\text{esquina inf.\ izquierda, origen}),\\
+    \vec r_2 &= L\,\hat\imath = 0{,}20\,\hat\imath & &(\text{esquina inf.\ derecha}),\\
+    \vec r_3 &= L\,\hat\imath + W\,\hat\jmath = 0{,}20\,\hat\imath + 0{,}65\,\hat\jmath & &(\text{esquina sup.\ derecha, objetivo}),\\
+    \vec r_4 &= W\,\hat\jmath = 0{,}65\,\hat\jmath & &(\text{esquina sup.\ izquierda}).
+\end{align*}
+
+\noindent\textbf{Restas de vectores} (posici\'on de $q_3$ respecto a cada fuente):
+\begin{align*}
+    \vec r_3-\vec r_1 &= (0{,}20\,\hat\imath + 0{,}65\,\hat\jmath) - \vec 0 = 0{,}20\,\hat\imath + 0{,}65\,\hat\jmath,
+        & |\vec r_3-\vec r_1| &= \sqrt{0{,}20^2+0{,}65^2} = 0{,}680\ \text{m},\\[2pt]
+    \vec r_3-\vec r_2 &= (0{,}20\,\hat\imath + 0{,}65\,\hat\jmath) - 0{,}20\,\hat\imath = 0{,}65\,\hat\jmath,
+        & |\vec r_3-\vec r_2| &= 0{,}65\ \text{m},\\[2pt]
+    \vec r_3-\vec r_4 &= (0{,}20\,\hat\imath + 0{,}65\,\hat\jmath) - 0{,}65\,\hat\jmath = 0{,}20\,\hat\imath,
+        & |\vec r_3-\vec r_4| &= 0{,}20\ \text{m}.
+\end{align*}
+
+\noindent\textbf{Fuerza de $q_4$} (esquina sup.\ izquierda; $\vec r_3-\vec r_4$ horizontal):
+\[
+    \vec F_{34} = k\,q^2\,\frac{0{,}20\,\hat\imath}{(0{,}20)^3}
+    = \frac{2{,}025\times10^{6}}{(0{,}20)^2}\,\hat\imath = 5{,}06\times10^{7}\,\hat\imath\ [\text{N}]
+\]
+
+\noindent\textbf{Fuerza de $q_2$} (esquina inf.\ derecha; $\vec r_3-\vec r_2$ vertical):
+\[
+    \vec F_{32} = k\,q^2\,\frac{0{,}65\,\hat\jmath}{(0{,}65)^3}
+    = \frac{2{,}025\times10^{6}}{(0{,}65)^2}\,\hat\jmath = 4{,}79\times10^{6}\,\hat\jmath\ [\text{N}]
+\]
+
+\noindent\textbf{Fuerza de $q_1$} (esquina inf.\ izquierda; $\vec r_3-\vec r_1$ diagonal):
+\begin{align*}
+    \vec F_{31} &= k\,q^2\,\frac{0{,}20\,\hat\imath + 0{,}65\,\hat\jmath}{(0{,}680)^3}
+    = \frac{2{,}025\times10^{6}}{(0{,}680)^3}\,(0{,}20\,\hat\imath + 0{,}65\,\hat\jmath)\\[2pt]
+    &= 1{,}29\times10^{6}\,\hat\imath + 4{,}18\times10^{6}\,\hat\jmath\ [\text{N}]
+    \qquad(|\vec F_{31}| = 4{,}38\times10^{6}\ [\text{N}])
+\end{align*}
+
+\noindent\textbf{Resultante} (superposici\'on $\vec F_3 = \vec F_{31}+\vec F_{32}+\vec F_{34}$):
+\begin{align*}
+    F_x &= 5{,}06\times10^{7} + 1{,}29\times10^{6} = 5{,}19\times10^{7}\ [\text{N}],\\[2pt]
+    F_y &= 4{,}79\times10^{6} + 4{,}18\times10^{6} = 8{,}98\times10^{6}\ [\text{N}].
+\end{align*}
+\[
+    \boxed{\vec F_3 = 5{,}19\times10^{7}\,\hat\imath + 8{,}98\times10^{6}\,\hat\jmath\ [\text{N}],
+    \qquad |\vec F_3| = 5{,}27\times10^{7}\ [\text{N}]}
+\]
+
+\noindent La resultante forma un \'angulo
+$\theta = \arctan\!\big(\tfrac{8{,}98\times10^{6}}{5{,}19\times10^{7}}\big) = 9{,}8^\circ$ sobre el eje $x$,
+dominada por la carga vecina $q_4$, que es la m\'as cercana ($L\ll W$).
+
+\end{document}
