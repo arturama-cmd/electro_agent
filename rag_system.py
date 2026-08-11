@@ -11,6 +11,7 @@ from tex_processor import process_all_files_in_category
 
 # Definicion de categorias (temas del curso)
 CATEGORIES = {
+    "vectores": "Vectores",
     "campo_electrico": "Campo Electrico",
     "campo_magnetico": "Campo Magnetico",
     "corriente_directa": "Circuitos en Corriente Directa",
