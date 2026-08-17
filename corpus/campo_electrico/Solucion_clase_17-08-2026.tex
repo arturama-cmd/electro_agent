@@ -1,0 +1,170 @@
+\documentclass[12pt,letterpaper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[spanish,es-noshorthands]{babel}
+\usepackage{amsmath,amssymb}
+\usepackage{graphicx}
+\usepackage{xcolor}
+\usepackage{tikz}
+\usetikzlibrary{calc,arrows.meta,decorations.markings}
+\usepackage[top=2.5cm, bottom=4cm, left=2cm, right=2cm, footskip=40pt]{geometry}
+\usepackage{fancyhdr}
+\usepackage{lastpage}
+
+\definecolor{ubbblue}{RGB}{0,51,102}
+
+\pagestyle{fancy}
+\fancyhf{}
+\renewcommand{\headrulewidth}{0pt}
+\renewcommand{\footrulewidth}{0.4pt}
+\fancyfoot[L]{\raisebox{-0.5cm}{\includegraphics[height=1.2cm]{logo ubb.png}}}
+\fancyfoot[C]{%
+    \begin{minipage}[b]{8cm}\centering
+        \footnotesize\textcolor{ubbblue}{\textbf{Dr.\ Arturo Fern\'andez P\'erez}}\\
+        \scriptsize Departamento de F\'isica -- Universidad del B\'io-B\'io\\
+        \scriptsize \textit{Electro\_Asistente\_AI-UBB}\\
+        \tiny P\'agina \thepage\ de \pageref{LastPage}
+    \end{minipage}}
+\fancyfoot[R]{\raisebox{-0.5cm}{\includegraphics[height=1.2cm]{logo dfis.png}}}
+\fancypagestyle{plain}{%
+    \fancyhf{}
+    \renewcommand{\headrulewidth}{0pt}
+    \renewcommand{\footrulewidth}{0.4pt}
+    \fancyfoot[L]{\raisebox{-0.5cm}{\includegraphics[height=1.2cm]{logo ubb.png}}}
+    \fancyfoot[C]{%
+        \begin{minipage}[b]{8cm}\centering
+            \footnotesize\textcolor{ubbblue}{\textbf{Dr.\ Arturo Fern\'andez P\'erez}}\\
+            \scriptsize Departamento de F\'isica -- Universidad del B\'io-B\'io\\
+            \scriptsize \textit{Electro\_Asistente\_AI-UBB}\\
+            \tiny P\'agina \thepage\ de \pageref{LastPage}
+        \end{minipage}}
+    \fancyfoot[R]{\raisebox{-0.5cm}{\includegraphics[height=1.2cm]{logo dfis.png}}}
+}
+
+\begin{document}
+
+\begin{center}
+    \includegraphics[height=2cm]{logo ubb.png}\\[0.3cm]
+    {\large\textcolor{ubbblue}{\textbf{UNIVERSIDAD DEL B\'IO-B\'IO}}}\\[0.1cm]
+    {\normalsize Facultad de Ciencias -- Departamento de F\'isica}
+\end{center}
+
+\vspace{0.3cm}
+\hrule height 1pt
+\vspace{0.5cm}
+
+{\centering\Large\textbf{Problema Resuelto en la clase del 17/08}\par}
+{\centering\normalsize\textit{F\'isica II -- Electromagnetismo \quad(Campo el\'ectrico de cargas puntuales)}\par}
+
+\vspace{0.5cm}
+{\centering\footnotesize (Constante de Coulomb $k=9\times10^{9}\ \mathrm{N\,m^2/C^2}$;
+carga elemental $e=1{,}6\times10^{-19}$ C; $1\ \mu C=10^{-6}$ C)\par}
+
+\vspace{0.5cm}
+
+%========================================================
+% ENUNCIADO
+%========================================================
+\noindent\textbf{Enunciado.} Cuatro cargas puntuales se ubican en los v\'ertices de un cuadrado de
+lado $a = 4\ [\text{cm}]$: $2q$ (sup.\ izq.), $q$ (sup.\ der.), $3q$ (inf.\ izq.) y $4q$ (inf.\ der.),
+con $q = 5\ [\mu C]$. Determine el \textbf{campo el\'ectrico $\vec E$ en el centro} del cuadrado y la
+\textbf{fuerza} que sentir\'ia all\'i un \textbf{electr\'on} y un \textbf{prot\'on}.
+
+\medskip
+
+\noindent
+\begin{minipage}[t]{0.40\textwidth}
+\centering
+\vspace{0pt}
+\begin{tikzpicture}[scale=1.0, >=Stealth, line width=0.9pt]
+    \def\A{2.6}
+    \draw[gray] (0,0)--(\A,0)--(\A,\A)--(0,\A)--cycle;
+    % cargas (origen en 3q, inf. izq.)
+    \shade[ball color=orange!70] (0,0) circle (7pt);
+    \shade[ball color=orange!70] (\A,0) circle (7pt);
+    \shade[ball color=orange!70] (0,\A) circle (7pt);
+    \shade[ball color=orange!70] (\A,\A) circle (7pt);
+    \node[below left,font=\small] at (0,0){$3q$};
+    \node[below right,font=\small] at (\A,0){$4q$};
+    \node[above left,font=\small] at (0,\A){$2q$};
+    \node[above right,font=\small] at (\A,\A){$q$};
+    % centro y E
+    \filldraw (\A/2,\A/2) circle (1.6pt); \node[right,font=\scriptsize] at (\A/2+0.08,\A/2-0.15){$C$};
+    \draw[->,ubbblue,line width=1.4pt] (\A/2,\A/2)--(\A/2,\A/2+0.95) node[right,font=\small]{$\vec E$};
+    % lados
+    \node[below,font=\footnotesize] at (\A/2,0){$a$};
+    \node[left,font=\footnotesize] at (0,\A/2){$a$};
+    % ejes en el origen (3q)
+    \draw[->,blue,line width=0.7pt] (0,0)--(0.7,0) node[below,font=\scriptsize]{$\hat\imath$};
+    \draw[->,blue,line width=0.7pt] (0,0)--(0,0.7) node[left,font=\scriptsize]{$\hat\jmath$};
+    \node[font=\scriptsize,gray] at (\A/2,-0.5){origen en $3q$};
+\end{tikzpicture}\\[2pt]
+{\scriptsize Cuadrado de lado $a$; origen en $3q$ (figura no a escala).}
+\end{minipage}%
+\hfill
+\begin{minipage}[t]{0.56\textwidth}
+\vspace{0pt}
+\textbf{Vectores de posici\'on} (origen en $3q$; $a=0{,}04$ m):
+\begin{align*}
+    \vec r_{3q} &= \vec 0, & \vec r_{4q} &= a\,\hat\imath = 0{,}04\,\hat\imath,\\
+    \vec r_{2q} &= a\,\hat\jmath = 0{,}04\,\hat\jmath, & \vec r_{q} &= a\,\hat\imath + a\,\hat\jmath.
+\end{align*}
+Centro: $\vec r_C = \tfrac{a}{2}(\hat\imath+\hat\jmath) = 0{,}02\,\hat\imath + 0{,}02\,\hat\jmath$.
+Todas las esquinas est\'an a la misma distancia
+\[
+    r = \frac{a}{\sqrt2} = 0{,}0283\ \text{m},\qquad \frac{k}{r^{3}} = 3{,}98\times10^{14}.
+\]
+\end{minipage}
+
+\medskip
+
+\noindent\textbf{Campo en el centro} (superposici\'on, cargas con signo). Como todas equidistan de $C$:
+\[
+    \vec E_C = k\sum_i \frac{q_i\,(\vec r_C-\vec r_i)}{\lVert\vec r_C-\vec r_i\rVert^{3}}
+             = \frac{k}{r^{3}}\sum_i q_i\,(\vec r_C-\vec r_i).
+\]
+Restas de vectores (todas de norma $r$) y sus productos $q_i(\vec r_C-\vec r_i)$:
+\begin{align*}
+    3q:\ \ \vec r_C-\vec r_{3q} &= 0{,}02\,\hat\imath+0{,}02\,\hat\jmath, & (15\,\mu C)(\ldots) &= (3\,\hat\imath+3\,\hat\jmath)\times10^{-7},\\
+    4q:\ \ \vec r_C-\vec r_{4q} &= -0{,}02\,\hat\imath+0{,}02\,\hat\jmath, & (20\,\mu C)(\ldots) &= (-4\,\hat\imath+4\,\hat\jmath)\times10^{-7},\\
+    2q:\ \ \vec r_C-\vec r_{2q} &= 0{,}02\,\hat\imath-0{,}02\,\hat\jmath, & (10\,\mu C)(\ldots) &= (2\,\hat\imath-2\,\hat\jmath)\times10^{-7},\\
+    q:\ \ \vec r_C-\vec r_{q} &= -0{,}02\,\hat\imath-0{,}02\,\hat\jmath, & (5\,\mu C)(\ldots) &= (-1\,\hat\imath-1\,\hat\jmath)\times10^{-7}.
+\end{align*}
+Sumando (la componente $\hat\imath$ se cancela por simetr\'ia: lados izq.\ $2q{+}3q=5q$ = der.\ $q{+}4q=5q$):
+\[
+    \sum_i q_i(\vec r_C-\vec r_i) = (0)\,\hat\imath + (4\times10^{-7})\,\hat\jmath \quad[\text{C\,m}]
+\]
+\[
+    \vec E_C = (3{,}98\times10^{14})(4\times10^{-7})\,\hat\jmath
+    \quad\Longrightarrow\quad
+    \boxed{\vec E_C = 1{,}59\times10^{8}\,\hat\jmath\ [\text{N/C}]}
+\]
+El campo apunta \textbf{hacia arriba} ($+\hat\jmath$): las cargas inferiores ($3q+4q$) superan a las superiores ($2q+q$).
+
+\medskip
+
+\noindent\textbf{Fuerza sobre un electr\'on} ($q_{e}=-e=-1{,}6\times10^{-19}$ C):
+\[
+    \vec F_{e^-} = q_e\,\vec E_C = (-1{,}6\times10^{-19})(1{,}59\times10^{8})\,\hat\jmath
+    \quad\Longrightarrow\quad
+    \boxed{\vec F_{e^-} = -2{,}55\times10^{-11}\,\hat\jmath\ [\text{N}]}
+\]
+(hacia abajo, opuesta a $\vec E$).
+
+\medskip
+
+\noindent\textbf{Fuerza sobre un prot\'on} ($q_{p}=+e=+1{,}6\times10^{-19}$ C):
+\[
+    \vec F_{p^+} = q_p\,\vec E_C = (+1{,}6\times10^{-19})(1{,}59\times10^{8})\,\hat\jmath
+    \quad\Longrightarrow\quad
+    \boxed{\vec F_{p^+} = +2{,}55\times10^{-11}\,\hat\jmath\ [\text{N}]}
+\]
+(hacia arriba, en el sentido de $\vec E$).
+
+\medskip
+
+\noindent\textbf{Interpretaci\'on.} El campo en el centro es puramente vertical porque la carga total del
+lado izquierdo ($2q+3q=5q$) iguala a la del derecho ($q+4q=5q$), anulando la componente horizontal.
+Electr\'on y prot\'on sienten fuerzas de \emph{igual magnitud} ($2{,}55\times10^{-11}$ N) pero
+\emph{sentidos opuestos}, por sus cargas de signo contrario.
+
+\end{document}
