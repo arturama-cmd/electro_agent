@@ -1,0 +1,320 @@
+\documentclass[12pt,letterpaper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[spanish,es-noshorthands]{babel}
+\usepackage{amsmath,amssymb}
+\usepackage{graphicx}
+\usepackage{xcolor}
+\usepackage{tikz}
+\usetikzlibrary{calc,arrows.meta,decorations.markings,patterns}
+\usepackage{enumerate}
+\usepackage{booktabs}
+\usepackage[top=2.5cm, bottom=4cm, left=2cm, right=2cm, footskip=40pt]{geometry}
+\usepackage{fancyhdr}
+\usepackage{lastpage}
+
+\definecolor{ubbblue}{RGB}{0,51,102}
+\definecolor{cargazul}{RGB}{50,50,220}
+\definecolor{cargarojo}{RGB}{220,50,50}
+\definecolor{cargaverde}{RGB}{30,140,30}
+
+\pagestyle{fancy}
+\fancyhf{}
+\renewcommand{\headrulewidth}{0pt}
+\renewcommand{\footrulewidth}{0.4pt}
+\fancyfoot[L]{\raisebox{-0.5cm}{\includegraphics[height=1.2cm]{logo ubb.png}}}
+\fancyfoot[C]{%
+    \begin{minipage}[b]{8cm}\centering
+        \footnotesize\textcolor{ubbblue}{\textbf{Dr.\ Arturo Fern\'andez P\'erez}}\\
+        \scriptsize Departamento de F\'isica -- Universidad del B\'io-B\'io\\
+        \scriptsize\textit{Electro\_Asistente\_AI-UBB}\\
+        \tiny P\'agina \thepage\ de \pageref{LastPage}
+    \end{minipage}}
+\fancyfoot[R]{\raisebox{-0.5cm}{\includegraphics[height=1.2cm]{logo dfis.png}}}
+\fancypagestyle{plain}{%
+  \fancyhf{}
+  \renewcommand{\headrulewidth}{0pt}
+  \renewcommand{\footrulewidth}{0.4pt}
+  \fancyfoot[L]{\raisebox{-0.5cm}{\includegraphics[height=1.2cm]{logo ubb.png}}}
+  \fancyfoot[C]{%
+    \begin{minipage}[b]{8cm}\centering
+        \footnotesize\textcolor{ubbblue}{\textbf{Dr.\ Arturo Fern\'andez P\'erez}}\\
+        \scriptsize Departamento de F\'isica -- Universidad del B\'io-B\'io\\
+        \scriptsize\textit{Electro\_Asistente\_AI-UBB}\\
+        \tiny P\'agina \thepage\ de \pageref{LastPage}
+    \end{minipage}}
+  \fancyfoot[R]{\raisebox{-0.5cm}{\includegraphics[height=1.2cm]{logo dfis.png}}}
+}
+
+\begin{document}
+
+\begin{center}
+    \includegraphics[height=2cm]{logo ubb.png}\\[0.3cm]
+    {\large\textcolor{ubbblue}{\textbf{UNIVERSIDAD DEL B\'IO-B\'IO}}}\\[0.1cm]
+    {\normalsize Facultad de Ciencias -- Departamento de F\'isica}
+\end{center}
+
+\vspace{0.3cm}\hrule height 1pt\vspace{0.5cm}
+
+{\centering\Large\textbf{Problemas Resueltos de la Gu\'ia 2}\par}
+{\centering\normalsize\textit{Campo el\'ectrico de cargas puntuales}\par}
+
+\vspace{0.4cm}
+{\centering\footnotesize M\'etodo: campo por superposici\'on con cargas con signo,
+$\ \vec E_j = k\,\dfrac{q_j}{\lVert\vec r_P-\vec r_j\rVert^{3}}\,(\vec r_P-\vec r_j)$,
+$\ k=9\times10^{9}\ \mathrm{N\,m^2/C^2}$.\par}
+
+\vspace{0.5cm}
+
+%################################################################
+\section*{\textcolor{ubbblue}{Problema 1.1 (Unidimensional)}}
+%################################################################
+Dos cargas sobre el eje $X$: $q_1=+Q$ en $x=-a$ y $q_2$ (desconocida) en $x=3a$. El campo total
+en el origen tiene magnitud $|\vec E_T|=2kQ/a^2$. Halle los valores posibles de $q_2$.
+
+\begin{center}
+\begin{tikzpicture}[scale=1.0, >=Stealth]
+    \draw[->,gray,thin] (-3.4,0)--(5.6,0) node[right]{$x$};
+    \draw[gray,thin] (-2,0.12)--(-2,-0.12) node[below,font=\scriptsize]{$-a$};
+    \draw[gray,thin] (0,0.12)--(0,-0.12) node[below,font=\scriptsize]{$0$};
+    \draw[gray,thin] (4,0.12)--(4,-0.12) node[below,font=\scriptsize]{$3a$};
+    \fill[cargazul] (-2,0) circle(6pt);
+    \node[cargazul,above=9pt,font=\small\bfseries] at (-2,0){$q_1{=}{+}Q$};
+    \fill[gray!55] (4,0) circle(6pt);
+    \node[gray!70,above=9pt,font=\small\bfseries] at (4,0){$q_2{=}?$};
+    \fill[black] (0,0) circle(3.5pt);
+    \node[above=9pt,font=\small\bfseries] at (0,0){$O$};
+    \draw[->,cargazul,very thick] (0,0.5)--(1.3,0.5) node[right,font=\small]{$\vec E_1$};
+    \draw[->,cargazul!70,thick] (-2,-0.75)--(0,-0.75);
+    \node[cargazul!80,font=\scriptsize,below] at (-1,-0.78){$\vec r_O-\vec r_1=a\,\hat\imath$};
+    \draw[->,gray!75,thick] (4,-1.4)--(0,-1.4);
+    \node[gray,font=\scriptsize,below] at (2,-1.43){$\vec r_O-\vec r_2=-3a\,\hat\imath$};
+\end{tikzpicture}\\[-2pt]
+{\scriptsize Las restas $\vec r_O-\vec r_j$ (flechas inferiores) apuntan desde cada carga al punto $O$.}
+\end{center}
+
+\medskip
+\noindent\textbf{Vectores de posici\'on} (punto de inter\'es: origen, $\vec r_O=\vec 0$):
+\[
+    \vec r_1 = -a\,\hat\imath,\qquad \vec r_2 = 3a\,\hat\imath.
+\]
+\textbf{Restas de vectores:} $\ \vec r_O-\vec r_1 = a\,\hat\imath\ (\lVert\cdot\rVert=a)$,
+$\quad \vec r_O-\vec r_2 = -3a\,\hat\imath\ (\lVert\cdot\rVert=3a)$.
+\begin{align*}
+    \vec E_1 &= k\frac{Q}{a^{3}}(a\,\hat\imath) = \frac{kQ}{a^{2}}\,\hat\imath,\qquad
+    \vec E_2 = k\frac{q_2}{(3a)^{3}}(-3a\,\hat\imath) = -\frac{k q_2}{9a^{2}}\,\hat\imath.
+\end{align*}
+\[
+    \vec E_T = \frac{k}{a^{2}}\Big(Q-\tfrac{q_2}{9}\Big)\hat\imath
+    \ \Rightarrow\ \frac{k}{a^{2}}\Big|Q-\tfrac{q_2}{9}\Big| = \frac{2kQ}{a^{2}}
+    \ \Rightarrow\ \Big|Q-\tfrac{q_2}{9}\Big| = 2Q.
+\]
+\[
+    \text{Caso 1: } Q-\tfrac{q_2}{9}=+2Q \Rightarrow \boxed{q_2=-9Q};\qquad
+    \text{Caso 2: } Q-\tfrac{q_2}{9}=-2Q \Rightarrow \boxed{q_2=+27Q}.
+\]
+
+\clearpage
+%################################################################
+\section*{\textcolor{ubbblue}{Problema 1.2 (Unidimensional)}}
+%################################################################
+$q_1=-2{,}5\ \mu C$ en $x=0$ y $q_2=+6{,}0\ \mu C$ en $x=L=1{,}00$ m. Halle el punto (fuera del
+infinito) donde $\vec E=\vec 0$.
+
+\begin{center}
+\begin{tikzpicture}[scale=1.0, >=Stealth]
+    \draw[->,gray,thin] (-6.6,0)--(5.8,0) node[right]{$x$};
+    \draw[gray,thin] (0,0.12)--(0,-0.12) node[below right,font=\scriptsize]{$0$};
+    \draw[gray,thin] (3,0.12)--(3,-0.12) node[below,font=\scriptsize]{$L$};
+    \fill[cargarojo] (0,0) circle(6pt);
+    \node[cargarojo,above=9pt,font=\small\bfseries] at (0,0){$q_1{=}{-}2{,}5\,\mu$C};
+    \fill[cargazul] (3,0) circle(6pt);
+    \node[cargazul,above=9pt,font=\small\bfseries] at (3,0){$q_2{=}{+}6\,\mu$C};
+    \node[font=\small\bfseries,cargaverde!80] at (-5.9,0.5){A};
+    \node[font=\small\bfseries,gray!70] at (1.5,0.5){B};
+    \node[font=\small\bfseries,gray!70] at (4.6,0.5){C};
+    \fill[cargaverde] (-4,0) circle(5pt);
+    \node[cargaverde,above=9pt,font=\small\bfseries] at (-4,0){P};
+    \draw[->,cargarojo,ultra thick] (-4,0.5)--(-2.9,0.5) node[right,font=\scriptsize]{$\vec E_1$};
+    \draw[->,cargazul,ultra thick] (-4,0.5)--(-5.1,0.5) node[left,font=\scriptsize]{$\vec E_2$};
+    \draw[<->,cargaverde!70] (-4,-0.8)--(0,-0.8) node[midway,below,font=\scriptsize]{$\lVert\vec r_P-\vec r_1\rVert=d$};
+    \draw[<->,gray!60] (-4,-1.5)--(3,-1.5) node[midway,below,font=\scriptsize]{$\lVert\vec r_P-\vec r_2\rVert=d+L$};
+\end{tikzpicture}\\[-2pt]
+{\scriptsize En la Regi\'on A los campos $\vec E_1$ (hacia $q_1$) y $\vec E_2$ (desde $q_2$) son opuestos.}
+\end{center}
+
+\medskip
+\noindent\textbf{Vectores de posici\'on:} $\vec r_1=\vec 0$, $\vec r_2=L\,\hat\imath=1{,}0\,\hat\imath$.
+El punto nulo est\'a del lado de la carga d\'ebil ($q_1$) y fuera del par (Regi\'on A, a la izquierda de
+$q_1$); entre las cargas (Regi\'on B) los campos son paralelos (imposible) y en la Regi\'on C se
+verificar\'a.
+
+\medskip
+\noindent\textbf{Regi\'on A} ($\vec r_P=-d\,\hat\imath$, con $d>0$):
+\[
+    \vec r_P-\vec r_1 = -d\,\hat\imath\ (\lVert\cdot\rVert=d),\qquad
+    \vec r_P-\vec r_2 = -(d+L)\,\hat\imath\ (\lVert\cdot\rVert=d+L).
+\]
+\[
+    \vec E_1 = k\frac{(-2{,}5\times10^{-6})}{d^{3}}(-d\,\hat\imath)=+\frac{k(2{,}5\times10^{-6})}{d^{2}}\hat\imath,\quad
+    \vec E_2 = k\frac{(6{,}0\times10^{-6})}{(d+L)^{3}}\big(-(d+L)\hat\imath\big)=-\frac{k(6{,}0\times10^{-6})}{(d+L)^{2}}\hat\imath.
+\]
+\[
+    \vec E=\vec 0 \Rightarrow \frac{2{,}5}{d^{2}}=\frac{6{,}0}{(d+L)^{2}}
+    \Rightarrow \frac{d+L}{d}=\sqrt{2{,}4}
+    \Rightarrow \boxed{d=\frac{L}{\sqrt{2{,}4}-1}=1{,}821\ \text{m a la izquierda de }q_1}\ \checkmark
+\]
+\textbf{Regi\'on C} ($\vec r_P=(L+d)\hat\imath$): $\ \dfrac{6{,}0}{d^{2}}=\dfrac{2{,}5}{(L+d)^{2}}
+\Rightarrow 3{,}5\,d^{2}+12\,d+6=0$, ra\'ices $d=-0{,}61$ y $-2{,}82$ (ambas $<0$)
+$\Rightarrow$ \textbf{sin soluci\'on}. $\times$
+
+\smallskip
+\noindent Verificaci\'on: $|\vec E_1|=\dfrac{k(2{,}5\times10^{-6})}{(1{,}821)^2}=6787$,
+$\ |\vec E_2|=\dfrac{k(6{,}0\times10^{-6})}{(2{,}821)^2}=6787$ N/C. \checkmark
+
+\clearpage
+%################################################################
+\section*{\textcolor{ubbblue}{Problema 2.1 (Bidimensional)}}
+%################################################################
+Tres cargas negativas: $q_1=-5$, $q_2=-2$, $q_3=-5\ [\mu C]$; $a=8$ cm, $b=6$ cm. Halle $\vec E$ en
+$P=(b,0)$ y la fuerza sobre $q=-1\ \mu C$ en $P$.
+
+\medskip
+\noindent
+\begin{minipage}[t]{0.34\textwidth}
+\centering\vspace{0pt}
+\begin{tikzpicture}[scale=0.95,>=Stealth]
+    \draw[->,gray,thin] (-0.4,0)--(3.4,0) node[right]{$x$};
+    \draw[->,gray,thin] (0,-2.2)--(0,2.2) node[above]{$y$};
+    \fill[cargarojo] (0,1.6) circle(5pt); \node[left,font=\scriptsize] at (-0.15,1.6){$q_1$};
+    \fill[cargarojo] (0,0) circle(5pt); \node[below left,font=\scriptsize] at (-0.1,0){$q_2$};
+    \fill[cargarojo] (0,-1.6) circle(5pt); \node[left,font=\scriptsize] at (-0.15,-1.6){$q_3$};
+    \fill[black] (2.6,0) circle(3pt); \node[above right,font=\scriptsize] at (2.6,0){$P$};
+    \node[gray,font=\tiny,right] at (0.1,1.6){$(0,a)$};
+    \node[gray,font=\tiny,right] at (0.1,-1.6){$(0,-a)$};
+    \node[gray,font=\tiny,below] at (2.6,-0.1){$(b,0)$};
+\end{tikzpicture}
+\end{minipage}%
+\hfill
+\begin{minipage}[t]{0.62\textwidth}
+\vspace{0pt}
+\textbf{Vectores de posici\'on} (origen en $q_2$): $\vec r_1=0{,}08\,\hat\jmath$, $\vec r_2=\vec 0$,
+$\vec r_3=-0{,}08\,\hat\jmath$; $\ \vec r_P=0{,}06\,\hat\imath$.
+\smallskip
+\textbf{Restas:}
+\begin{align*}
+    \vec r_P-\vec r_1 &= 0{,}06\hat\imath-0{,}08\hat\jmath\ (0{,}10),\\
+    \vec r_P-\vec r_2 &= 0{,}06\hat\imath\ (0{,}06),\\
+    \vec r_P-\vec r_3 &= 0{,}06\hat\imath+0{,}08\hat\jmath\ (0{,}10).
+\end{align*}
+\end{minipage}
+
+\begin{align*}
+    \vec E_1 &= k\frac{-5\times10^{-6}}{(0{,}10)^{3}}(0{,}06\hat\imath-0{,}08\hat\jmath) = -2{,}7\times10^{6}\hat\imath+3{,}6\times10^{6}\hat\jmath,\\
+    \vec E_2 &= k\frac{-2\times10^{-6}}{(0{,}06)^{3}}(0{,}06\hat\imath) = -5{,}0\times10^{6}\hat\imath,\\
+    \vec E_3 &= k\frac{-5\times10^{-6}}{(0{,}10)^{3}}(0{,}06\hat\imath+0{,}08\hat\jmath) = -2{,}7\times10^{6}\hat\imath-3{,}6\times10^{6}\hat\jmath.
+\end{align*}
+Las componentes $\hat\jmath$ se cancelan (simetr\'ia de $q_1,q_3$):
+\[
+    \boxed{\vec E_P = -1{,}04\times10^{7}\,\hat\imath\ [\text{N/C}]}\qquad
+    \vec F = q\,\vec E_P = (-1\times10^{-6})(-1{,}04\times10^{7}\hat\imath)
+    \Rightarrow \boxed{\vec F = +10{,}4\,\hat\imath\ [\text{N}]}
+\]
+
+\clearpage
+%################################################################
+\section*{\textcolor{ubbblue}{Problema 2.2 (Bidimensional)}}
+%################################################################
+$q_1=q_2=+5q$, $q_3=+3q$, $q_4=-12q$, con $q=5\ \mu C$, $d=5$ mm. Halle $\vec E$ en $P$ (origen).
+
+\medskip
+\noindent
+\begin{minipage}[t]{0.34\textwidth}
+\centering\vspace{0pt}
+\begin{tikzpicture}[scale=0.9,>=Stealth]
+    \draw[->,gray,thin] (-1.8,0)--(1.8,0) node[right]{$x$};
+    \draw[->,gray,thin] (0,-1.0)--(0,3.4) node[above]{$y$};
+    \fill[black] (0,0) circle(3pt); \node[below right,font=\scriptsize] at (0.05,0){$P$};
+    \fill[cargazul] (-1.4,0) circle(5pt); \node[below,font=\tiny] at (-1.4,-0.1){$q_1$};
+    \fill[cargazul] (1.4,0) circle(5pt); \node[below,font=\tiny] at (1.4,-0.1){$q_2$};
+    \fill[cargazul] (0,1.3) circle(5pt); \node[right,font=\tiny] at (0.1,1.3){$q_3$};
+    \fill[cargarojo] (0,2.6) circle(5pt); \node[right,font=\tiny] at (0.1,2.6){$q_4$};
+    \node[gray,font=\tiny,above] at (-1.4,0.15){$(-d,0)$};
+    \node[gray,font=\tiny,left] at (-0.1,2.6){$(0,2d)$};
+\end{tikzpicture}
+\end{minipage}%
+\hfill
+\begin{minipage}[t]{0.62\textwidth}
+\vspace{0pt}
+\textbf{Posiciones:} $\vec r_1=-d\hat\imath$, $\vec r_2=d\hat\imath$, $\vec r_3=d\hat\jmath$,
+$\vec r_4=2d\hat\jmath$; punto $\vec r_P=\vec 0$.
+\smallskip
+\textbf{Restas} $\vec r_P-\vec r_j$: $\ d\hat\imath\ (d)$, $\ -d\hat\imath\ (d)$, $\ -d\hat\jmath\ (d)$,
+$\ -2d\hat\jmath\ (2d)$.
+\end{minipage}
+
+\begin{align*}
+    \vec E_1 &= k\frac{5q}{d^{3}}(d\hat\imath)=+\frac{5kq}{d^{2}}\hat\imath, &
+    \vec E_2 &= k\frac{5q}{d^{3}}(-d\hat\imath)=-\frac{5kq}{d^{2}}\hat\imath,\\
+    \vec E_3 &= k\frac{3q}{d^{3}}(-d\hat\jmath)=-\frac{3kq}{d^{2}}\hat\jmath, &
+    \vec E_4 &= k\frac{-12q}{(2d)^{3}}(-2d\hat\jmath)=+\frac{3kq}{d^{2}}\hat\jmath.
+\end{align*}
+\[
+    \vec E_P = \frac{kq}{d^{2}}\big[(5-5)\hat\imath + (-3+3)\hat\jmath\big]
+    \quad\Longrightarrow\quad \boxed{\vec E_P = \vec 0}
+\]
+($q_1,q_2$ se cancelan por simetr\'ia; $q_4$ ($-12q$ a doble distancia) aporta
+$\tfrac{12q}{2^2}=3q$, igual y opuesto a $q_3$).
+
+\clearpage
+%################################################################
+\section*{\textcolor{ubbblue}{Problema 4 (Bidimensional)}}
+%################################################################
+$+q$ en $(0,a)$ y $-2q$ en $(0,0)$, con $q=8{,}0$ nC, $a=0{,}10$ m. Punto $P=(b,a)$ con $b=0{,}15$ m.
+(a) Campo en $P$. (b) Fuerza sobre $q_0=-30$ nC en $P$.
+
+\medskip
+\noindent
+\begin{minipage}[t]{0.36\textwidth}
+\centering\vspace{0pt}
+\begin{tikzpicture}[scale=1.0,>=Stealth]
+    \draw[->,gray,thin] (-0.4,0)--(3.6,0) node[right,font=\small]{$x$};
+    \draw[->,gray,thin] (0,-0.4)--(0,2.6) node[above,font=\small]{$y$};
+    \node[gray,below left,font=\scriptsize] at (0,0){$O$};
+    \fill[cargarojo] (0,0) circle(6pt); \node[below left,font=\scriptsize] at (0,0){$-2q$};
+    \fill[cargazul] (0,1.6) circle(6pt); \node[left,font=\scriptsize] at (-0.15,1.6){$+q$};
+    \fill[black] (3.0,1.6) circle(3pt); \node[above right,font=\scriptsize] at (3.0,1.6){$P$};
+    \draw[dashed,gray!60] (0,1.6)--(3.0,1.6);
+    \draw[<->,black!60] (0,2.05)--(3.0,2.05) node[midway,above,font=\tiny]{$b$};
+    \draw[<->,black!60] (-0.35,0)--(-0.35,1.6) node[midway,left,font=\tiny]{$a$};
+\end{tikzpicture}
+\end{minipage}%
+\hfill
+\begin{minipage}[t]{0.60\textwidth}
+\vspace{0pt}
+\textbf{Posiciones} (origen en $-2q$): $\vec r_1=\vec 0$ ($-2q=-16$ nC), $\vec r_2=0{,}10\,\hat\jmath$
+($+q=+8$ nC); $\ \vec r_P=0{,}15\hat\imath+0{,}10\hat\jmath$.
+\smallskip
+\textbf{Restas:}
+\begin{align*}
+    \vec r_P-\vec r_1 &= 0{,}15\hat\imath+0{,}10\hat\jmath\ (0{,}180),\\
+    \vec r_P-\vec r_2 &= 0{,}15\hat\imath\ (0{,}150).
+\end{align*}
+\end{minipage}
+
+\begin{align*}
+    \vec E_1 &= k\frac{-16\times10^{-9}}{(0{,}180)^{3}}(0{,}15\hat\imath+0{,}10\hat\jmath) = -3703{,}7\hat\imath-2469{,}1\hat\jmath\ [\text{N/C}],\\
+    \vec E_2 &= k\frac{+8\times10^{-9}}{(0{,}150)^{3}}(0{,}15\hat\imath) = 3200\,\hat\imath\ [\text{N/C}].
+\end{align*}
+\[
+    \boxed{\vec E_P = -503{,}7\,\hat\imath - 2469{,}1\,\hat\jmath\ [\text{N/C}],\qquad
+    |\vec E_P| = 2519{,}6\ [\text{N/C}]\ (78{,}5^\circ\text{ bajo }-x)}
+\]
+\noindent\textbf{(b)} Fuerza sobre $q_0=-30$ nC en $P$:
+\[
+    \vec F = q_0\,\vec E_P = (-30\times10^{-9})(-503{,}7\hat\imath-2469{,}1\hat\jmath)
+    \quad\Longrightarrow\quad
+    \boxed{\vec F = 15{,}1\,\hat\imath + 74{,}1\,\hat\jmath\ [\mu\text{N}]}
+\]
+(la carga negativa se acelera en sentido opuesto al campo).
+
+\end{document}
