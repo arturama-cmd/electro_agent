@@ -1,0 +1,247 @@
+\documentclass[12pt,letterpaper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[spanish,es-noshorthands]{babel}
+\usepackage{amsmath,amssymb}
+\usepackage{graphicx}
+\usepackage{xcolor}
+\usepackage{tikz}
+\usetikzlibrary{calc,arrows.meta,decorations.markings,patterns}
+\usepackage[top=2.5cm, bottom=4cm, left=2cm, right=2cm, footskip=40pt]{geometry}
+\usepackage{fancyhdr}
+\usepackage{lastpage}
+
+\definecolor{ubbblue}{RGB}{0,51,102}
+
+\pagestyle{fancy}
+\fancyhf{}
+\renewcommand{\headrulewidth}{0pt}
+\renewcommand{\footrulewidth}{0.4pt}
+\fancyfoot[L]{\raisebox{-0.5cm}{\includegraphics[height=1.2cm]{logo ubb.png}}}
+\fancyfoot[C]{%
+    \begin{minipage}[b]{8cm}\centering
+        \footnotesize\textcolor{ubbblue}{\textbf{Dr.\ Arturo Fern\'andez P\'erez}}\\
+        \scriptsize Departamento de F\'isica -- Universidad del B\'io-B\'io\\
+        \scriptsize \textit{Electro\_Asistente\_AI-UBB}\\
+        \tiny P\'agina \thepage\ de \pageref{LastPage}
+    \end{minipage}}
+\fancyfoot[R]{\raisebox{-0.5cm}{\includegraphics[height=1.2cm]{logo dfis.png}}}
+\fancypagestyle{plain}{%
+    \fancyhf{}
+    \renewcommand{\headrulewidth}{0pt}
+    \renewcommand{\footrulewidth}{0.4pt}
+    \fancyfoot[L]{\raisebox{-0.5cm}{\includegraphics[height=1.2cm]{logo ubb.png}}}
+    \fancyfoot[C]{%
+        \begin{minipage}[b]{8cm}\centering
+            \footnotesize\textcolor{ubbblue}{\textbf{Dr.\ Arturo Fern\'andez P\'erez}}\\
+            \scriptsize Departamento de F\'isica -- Universidad del B\'io-B\'io\\
+            \scriptsize \textit{Electro\_Asistente\_AI-UBB}\\
+            \tiny P\'agina \thepage\ de \pageref{LastPage}
+        \end{minipage}}
+    \fancyfoot[R]{\raisebox{-0.5cm}{\includegraphics[height=1.2cm]{logo dfis.png}}}
+}
+
+\begin{document}
+
+\begin{center}
+    \includegraphics[height=2cm]{logo ubb.png}\\[0.3cm]
+    {\large\textcolor{ubbblue}{\textbf{UNIVERSIDAD DEL B\'IO-B\'IO}}}\\[0.1cm]
+    {\normalsize Facultad de Ciencias -- Departamento de F\'isica}
+\end{center}
+
+\vspace{0.3cm}\hrule height 1pt\vspace{0.5cm}
+
+{\centering\Large\textbf{Soluciones Gu\'ia 3}\par}
+{\centering\normalsize\textit{Distribuciones continuas de carga}\par}
+
+\vspace{0.4cm}
+{\centering\footnotesize M\'etodo: la densidad define el elemento de carga
+($\lambda=\frac{dq}{d\ell}$, $\sigma=\frac{dq}{dA}$, $\rho=\frac{dq}{dV}$); luego
+$Q=\displaystyle\int dq$.\par}
+
+\vspace{0.4cm}
+
+\noindent\textbf{Problema 1} (barra $L=1{,}69$ m, $\lambda=4$ mC/m uniforme): directo, $Q=\lambda\,\ell$
+$\Rightarrow$ (a) $\lambda(0{,}70)=\mathbf{2{,}8}$ mC; \ (b) $\lambda(1{,}69)=\mathbf{6{,}76}$ mC.
+
+\vspace{0.2cm}\hrule\vspace{0.4cm}
+
+%========================================================
+% P2
+%========================================================
+\section*{Problema 2: L\'inea con $\lambda(x)=4\sqrt{x}\ [\text{mC/m}]$}
+
+\noindent
+\begin{minipage}[t]{0.34\textwidth}
+\centering\vspace{4pt}
+\begin{tikzpicture}[scale=1.0, >=Stealth]
+    \draw[->,gray] (-0.2,0)--(4.6,0) node[right,font=\small]{$x$};
+    \draw[very thick] (0,0.13)--(4,0.13); \draw[very thick] (0,-0.13)--(4,-0.13);
+    \draw[very thick] (0,-0.13)--(0,0.13); \draw[very thick] (4,-0.13)--(4,0.13);
+    \fill[orange!55] (2.0,-0.13) rectangle (2.25,0.13);
+    \draw[->] (2.12,0.75)--(2.12,0.18);
+    \node[above,font=\scriptsize] at (2.12,0.75){$dq=\lambda\,dx$};
+    \node[below,font=\scriptsize] at (0,-0.16){$0$};
+    \node[below,font=\scriptsize] at (4,-0.16){$100$ m};
+    \node[below,font=\scriptsize] at (2.12,-0.16){$dx$};
+\end{tikzpicture}
+\end{minipage}%
+\hfill
+\begin{minipage}[t]{0.62\textwidth}
+\vspace{0pt}
+$\lambda=\dfrac{dq}{dx}\Rightarrow dq=\lambda\,dx=4\sqrt{x}\,dx$. Integrando de $x=0$ a $x=100$ m:
+\begin{align*}
+    Q &= \int_0^{100} 4\sqrt{x}\,dx = 4\int_0^{100} x^{1/2}\,dx = 4\,\frac{x^{3/2}}{3/2}\Big|_0^{100}\\[2pt]
+      &= \frac{8}{3}\,(100)^{3/2} = \frac{8}{3}(1000)
+\end{align*}
+\[
+    \boxed{Q = 2666{,}67\ [\text{mC}] = 2{,}666\ [\text{C}]}
+\]
+\end{minipage}
+
+\vspace{0.4cm}
+%========================================================
+% P3
+%========================================================
+\section*{Problema 3: Anillo de radio $R=20$ cm, $\lambda=-5\ [\text{nC/m}]$}
+
+\noindent
+\begin{minipage}[t]{0.30\textwidth}
+\centering\vspace{2pt}
+\begin{tikzpicture}[scale=1.0, >=Stealth]
+    \draw[very thick] (0,0) circle (1.25);
+    \draw[gray] (0,0)--(24:1.25); \draw[gray] (0,0)--(52:1.25);
+    \draw[->,orange!80!black,line width=1.3pt] (24:1.25) arc (24:52:1.25);
+    \node[right,font=\scriptsize] at (46:1.55){$ds{=}R\,d\theta$};
+    \node[font=\tiny] at (38:0.55){$d\theta$};
+    \draw[->,gray] (0,0)--(-15:1.25) node[midway,below,font=\scriptsize]{$R$};
+\end{tikzpicture}
+\end{minipage}%
+\hfill
+\begin{minipage}[t]{0.66\textwidth}
+\vspace{0pt}
+$\lambda=\dfrac{dq}{ds}\Rightarrow dq=\lambda\,ds$. En un anillo $ds=R\,d\theta$, luego $dq=\lambda R\,d\theta$.
+
+\smallskip
+\textbf{(a) Arco de $60^\circ=\pi/3$:}
+\[
+    Q = \int_0^{\pi/3}\!\lambda R\,d\theta = \lambda R\,\frac{\pi}{3}
+    = (-5)(0{,}20)\frac{\pi}{3}
+\]
+\[
+    \boxed{Q_a = -1{,}047\ [\text{nC}]}
+\]
+\textbf{(b) Anillo completo ($0\to 2\pi$):}
+\[
+    Q = \lambda R\,(2\pi) = (-5)(0{,}20)(2\pi)
+    \ \Rightarrow\ \boxed{Q_b = -6{,}283\ [\text{nC}]}
+\]
+\end{minipage}
+
+\vspace{0.4cm}
+%========================================================
+% P4
+%========================================================
+\section*{Problema 4: Cuadrado de lado $a=1{,}2$ m, $\sigma=-3{,}5\ [\mu\text{C/m}^2]$}
+
+\noindent
+\begin{minipage}[t]{0.30\textwidth}
+\centering\vspace{2pt}
+\begin{tikzpicture}[scale=1.0, >=Stealth]
+    \draw[->,gray] (-0.2,0)--(2.6,0) node[right,font=\small]{$x$};
+    \draw[->,gray] (0,-0.2)--(0,2.6) node[above,font=\small]{$y$};
+    \draw[thick] (0,0) rectangle (2.0,2.0);
+    \fill[orange!55] (0.9,0.9) rectangle (1.15,1.15);
+    \node[right,font=\scriptsize] at (1.2,1.35){$dA{=}dx\,dy$};
+    \node[below,font=\scriptsize] at (2.0,0){$a$};
+    \node[left,font=\scriptsize] at (0,2.0){$a$};
+\end{tikzpicture}
+\end{minipage}%
+\hfill
+\begin{minipage}[t]{0.66\textwidth}
+\vspace{0pt}
+$\sigma=\dfrac{dq}{dA}\Rightarrow dq=\sigma\,dA=\sigma\,dx\,dy$. Con $0\le x\le a$, $0\le y\le a$:
+\begin{align*}
+    Q &= \int_0^{a}\!\!\int_0^{a}\sigma\,dx\,dy
+       = \sigma\!\int_0^{a}\!dx\int_0^{a}\!dy = \sigma\,a^{2}\\[2pt]
+      &= (-3{,}5)(1{,}2)^{2} = (-3{,}5)(1{,}44)
+\end{align*}
+\[
+    \boxed{Q = -5{,}04\ [\mu\text{C}]}
+\]
+\end{minipage}
+
+\vspace{0.4cm}
+%========================================================
+% P5
+%========================================================
+\section*{Problema 5: Disco de radio $R=45$ cm, $\sigma=4e^{-r/R}\ [\mu\text{C/m}^2]$}
+
+\noindent
+\begin{minipage}[t]{0.30\textwidth}
+\centering\vspace{2pt}
+\begin{tikzpicture}[scale=1.0]
+    \draw[thick] (0,0) circle (1.35);
+    \draw[orange!80!black] (0,0) circle (0.80);
+    \draw[orange!80!black] (0,0) circle (0.95);
+    \draw[->,gray] (0,0)--(35:0.875) node[midway,above,font=\tiny]{$r$};
+    \node[right,font=\scriptsize] at (0:1.4){$R$};
+    \node[font=\scriptsize] at (0,-1.75){$dA=r\,dr\,d\phi$};
+\end{tikzpicture}
+\end{minipage}%
+\hfill
+\begin{minipage}[t]{0.66\textwidth}
+\vspace{0pt}
+$\sigma=\dfrac{dq}{dA}\Rightarrow dq=\sigma\,dA$. En polares $dA=r\,dr\,d\phi$, luego
+$dq=4e^{-r/R}\,r\,dr\,d\phi$:
+\[
+    Q = \int_0^{2\pi}\!\!\int_0^{R} 4e^{-r/R}\,r\,dr\,d\phi
+      = 8\pi\int_0^{R} r\,e^{-r/R}\,dr.
+\]
+Por partes, $\displaystyle\int_0^{R} r\,e^{-r/R}\,dr = R^{2}\Big(1-\tfrac{2}{e}\Big)$, de modo que
+\[
+    Q = 8\pi R^{2}\Big(1-\tfrac{2}{e}\Big) = 8\pi(0{,}45)^{2}(0{,}2642)
+\]
+\[
+    \boxed{Q = 1{,}3448\ [\mu\text{C}]}
+\]
+\end{minipage}
+
+\vspace{0.4cm}
+%========================================================
+% P6
+%========================================================
+\section*{Problema 6: Esfera maciza de radio $R=50$ cm, $\rho=8r^{2}\ [\mu\text{C/m}^3]$}
+
+\noindent
+\begin{minipage}[t]{0.30\textwidth}
+\centering\vspace{2pt}
+\begin{tikzpicture}[scale=1.0]
+    \draw[thick] (0,0) circle (1.3);
+    \draw[gray] (0,0) ellipse (1.3 and 0.42);
+    \draw[->,gray] (0,0)--(38:0.95) node[midway,above,font=\tiny]{$r$};
+    \fill[orange!60] (38:0.9) rectangle ++(0.22,0.2);
+    \node[right,font=\scriptsize] at (0:1.35){$R$};
+    \node[font=\scriptsize] at (0,-1.75){$dV=r^{2}\text{sen}\theta\,d\theta\,d\phi\,dr$};
+\end{tikzpicture}
+\end{minipage}%
+\hfill
+\begin{minipage}[t]{0.66\textwidth}
+\vspace{0pt}
+$\rho=\dfrac{dq}{dV}\Rightarrow dq=\rho\,dV$. En esf\'ericas $dV=r^{2}\text{sen}\theta\,d\theta\,d\phi\,dr$,
+luego $dq=8r^{2}\cdot r^{2}\text{sen}\theta\,d\theta\,d\phi\,dr$:
+\begin{align*}
+    Q &= \int_0^{2\pi}\!\!d\phi\int_0^{\pi}\!\text{sen}\theta\,d\theta\int_0^{R}\!8r^{4}\,dr\\[2pt]
+      &= 8\,(2\pi)(2)\,\frac{R^{5}}{5} = \frac{32\pi}{5}(0{,}5)^{5}
+\end{align*}
+\[
+    \boxed{Q = 0{,}628\ [\mu\text{C}]}
+\]
+\end{minipage}
+
+\vspace{0.5cm}
+\noindent\small\textbf{Nota.} En P5 (disco) y P6 (esfera), como la densidad depende de $r$, es esencial
+usar el elemento de \'area/volumen en coordenadas polares/esf\'ericas ($dA=r\,dr\,d\phi$,
+$dV=r^{2}\text{sen}\theta\,d\theta\,d\phi\,dr$); tomar $dA=dr\,d\phi$ o $dV=dr\,d\theta\,d\phi$ dar\'ia
+un resultado err\'oneo.\normalsize
+
+\end{document}
