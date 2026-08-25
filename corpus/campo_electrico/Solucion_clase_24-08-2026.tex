@@ -1,0 +1,222 @@
+\documentclass[12pt,letterpaper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[spanish,es-noshorthands]{babel}
+\usepackage{amsmath,amssymb}
+\usepackage{graphicx}
+\usepackage{xcolor}
+\usepackage{tikz}
+\usetikzlibrary{calc,arrows.meta}
+\usepackage[top=2.5cm, bottom=4cm, left=2cm, right=2cm, footskip=40pt]{geometry}
+\usepackage{fancyhdr}
+\usepackage{lastpage}
+
+\definecolor{ubbblue}{RGB}{0,51,102}
+\definecolor{cargazul}{RGB}{40,40,210}
+
+% separaci\'on vertical entre secciones numeradas
+\newcommand{\secgap}{\vspace{0.6cm}}
+
+\pagestyle{fancy}
+\fancyhf{}
+\renewcommand{\headrulewidth}{0pt}
+\renewcommand{\footrulewidth}{0.4pt}
+\fancyfoot[L]{\raisebox{-0.5cm}{\includegraphics[height=1.2cm]{logo ubb.png}}}
+\fancyfoot[C]{%
+    \begin{minipage}[b]{8cm}\centering
+        \footnotesize\textcolor{ubbblue}{\textbf{Dr.\ Arturo Fern\'andez P\'erez}}\\
+        \scriptsize Departamento de F\'isica -- Universidad del B\'io-B\'io\\
+        \scriptsize \textit{Electro\_Asistente\_AI-UBB}\\
+        \tiny P\'agina \thepage\ de \pageref{LastPage}
+    \end{minipage}}
+\fancyfoot[R]{\raisebox{-0.5cm}{\includegraphics[height=1.2cm]{logo dfis.png}}}
+\fancypagestyle{plain}{%
+    \fancyhf{}
+    \renewcommand{\headrulewidth}{0pt}
+    \renewcommand{\footrulewidth}{0.4pt}
+    \fancyfoot[L]{\raisebox{-0.5cm}{\includegraphics[height=1.2cm]{logo ubb.png}}}
+    \fancyfoot[C]{%
+        \begin{minipage}[b]{8cm}\centering
+            \footnotesize\textcolor{ubbblue}{\textbf{Dr.\ Arturo Fern\'andez P\'erez}}\\
+            \scriptsize Departamento de F\'isica -- Universidad del B\'io-B\'io\\
+            \scriptsize \textit{Electro\_Asistente\_AI-UBB}\\
+            \tiny P\'agina \thepage\ de \pageref{LastPage}
+        \end{minipage}}
+    \fancyfoot[R]{\raisebox{-0.5cm}{\includegraphics[height=1.2cm]{logo dfis.png}}}
+}
+
+\begin{document}
+
+\begin{center}
+    \includegraphics[height=2cm]{logo ubb.png}\\[0.3cm]
+    {\large\textcolor{ubbblue}{\textbf{UNIVERSIDAD DEL B\'IO-B\'IO}}}\\[0.1cm]
+    {\normalsize Facultad de Ciencias -- Departamento de F\'isica}
+\end{center}
+
+\vspace{0.3cm}\hrule height 1pt\vspace{0.5cm}
+
+{\centering\Large\textbf{Problema resuelto en la clase del 24/08}\par}
+{\centering\normalsize\textit{Campo el\'ectrico en el eje de un anillo cargado \quad(Distribuci\'on continua de carga)}\par}
+
+\vspace{0.5cm}
+
+%========================================================
+% ENUNCIADO
+%========================================================
+\noindent\textbf{Enunciado.} Un anillo de radio $a$ tiene carga total $Q$ distribuida uniformemente.
+Determine el campo el\'ectrico $\vec E$ en un punto $P$ del eje del anillo, a una distancia $z$ de su
+centro. \textbf{Datos:} $Q=15\times10^{-6}$ C, $a=5$ cm $=0{,}05$ m, $z=7$ cm $=0{,}07$ m
+($k=9\times10^{9}\ \mathrm{N\,m^2/C^2}$).
+
+\secgap
+
+\noindent
+\begin{minipage}[t]{0.40\textwidth}
+\centering
+\vspace{0pt}
+\begin{tikzpicture}[scale=1.05, >=Stealth, line width=0.8pt,
+    x={(-0.5cm,-0.34cm)}, y={(1cm,0cm)}, z={(0cm,1cm)}]
+    \def\a{1.5}
+    % anillo (Q>0) en el plano xy
+    \draw[cargazul,line width=1.7pt]
+        plot[domain=0:360,samples=64,variable=\t] ({\a*cos(\t)},{\a*sin(\t)},0);
+    \node[cargazul,font=\small] at ({\a*cos(158)},{\a*sin(158)},0.25){$Q$};
+    % eje z
+    \draw[->,gray] (0,0,0)--(0,0,2.6) node[above,font=\small]{$z$};
+    \fill (0,0,0) circle (1.2pt); \node[font=\scriptsize,below left] at (0,0,0){$O$};
+    % radio a
+    \draw[gray] (0,0,0)--({\a*cos(-22)},{\a*sin(-22)},0);
+    \node[font=\scriptsize] at ({0.55*\a*cos(-22)},{0.55*\a*sin(-22)},-0.16){$a$};
+    % elemento dq y vector r_q
+    \draw[->,black] (0,0,0)--({\a*cos(66)},{\a*sin(66)},0);
+    \node[font=\scriptsize] at ({0.5*\a*cos(66)},{0.5*\a*sin(66)},0.2){$\vec r_q$};
+    \filldraw[cargazul] ({\a*cos(66)},{\a*sin(66)},0) circle (2pt);
+    \node[cargazul,font=\scriptsize] at ({\a*cos(66)+0.15},{\a*sin(66)},0.28){$dq$};
+    % r_p (a P sobre el eje)
+    \draw[->,black] (0,0,0)--(0,0,1.9);
+    \node[font=\scriptsize,left] at (0,-0.05,1.15){$\vec r_p$};
+    \filldraw[black] (0,0,1.9) circle (2pt); \node[right,font=\small] at (0,0.08,1.9){$P$};
+    % (r_p - r_q)
+    \draw[dashed,black] ({\a*cos(66)},{\a*sin(66)},0)--(0,0,1.9);
+    \node[font=\scriptsize] at ({0.62*\a*cos(66)},{0.62*\a*sin(66)},1.15){$\vec r_p{-}\vec r_q$};
+\end{tikzpicture}\\[2pt]
+{\scriptsize Anillo en el plano $XY$; $P$ sobre el eje $Z$.}
+\end{minipage}%
+\hfill
+\begin{minipage}[t]{0.56\textwidth}
+\vspace{0pt}
+\textbf{1. Densidad lineal de carga.} La carga $Q$ se reparte \emph{uniformemente} sobre la
+circunferencia (longitud $2\pi a$), de modo que
+\[
+    \lambda = \frac{dq}{ds} = \frac{Q}{2\pi a}
+    = \frac{15\times10^{-6}}{2\pi(0{,}05)} = 4{,}77\times10^{-5}\ \tfrac{\text{C}}{\text{m}}.
+\]
+\end{minipage}
+
+\secgap
+
+\noindent\textbf{2. Elemento diferencial de arco.}
+
+\noindent
+\begin{minipage}[c]{0.31\textwidth}
+\centering
+\begin{tikzpicture}[scale=0.74, >=Stealth, line width=0.8pt]
+    \fill (0,0) circle (1.3pt); \node[below,font=\scriptsize] at (0,-0.05){$O$};
+    % arco de la circunferencia (contexto)
+    \draw[gray!55,line width=0.8pt] (30:2.5) arc (30:108:2.5);
+    % dos radios que delimitan el elemento (d\phi exagerado)
+    \draw[gray] (0,0)--(58:2.5);
+    \draw[gray] (0,0)--(82:2.5);
+    % elemento de arco ds (resaltado)
+    \draw[cargazul,line width=2.6pt] (58:2.5) arc (58:82:2.5);
+    \node[cargazul,font=\small] at (70:2.95){$ds$};
+    % radio a (a la derecha del radio de 58 grados)
+    \node[font=\small] at (51:1.5){$a$};
+    % angulo diferencial d\phi (en el vertice, bajo la flecha)
+    \draw[->,black] (58:0.92) arc (58:82:0.92);
+    \node[font=\small] at (70:0.6){$d\phi$};
+\end{tikzpicture}
+\end{minipage}%
+\hfill
+\begin{minipage}[c]{0.65\textwidth}
+Un arco que subtiende un \'angulo diferencial $d\phi$ tiene longitud
+\[
+    ds = a\,d\phi \qquad(\text{arco}=\text{radio}\times\text{\'angulo}),
+\]
+por lo que el elemento de carga sobre el anillo es
+\[
+    dq = \lambda\,ds = \lambda\,a\,d\phi.
+\]
+\end{minipage}
+
+\secgap
+
+\noindent\textbf{3. Vectores de posici\'on.} Con el origen en el centro del anillo (plano $XY$) y $P$ sobre
+el eje $Z$, un elemento $dq$ ubicado en el \'angulo $\phi$ y el punto $P$ tienen posiciones
+\[
+    \vec r_q = a\cos\phi\,\hat\imath + a\,\mathrm{sen}\,\phi\,\hat\jmath,
+    \qquad
+    \vec r_p = z\,\hat k.
+\]
+La posici\'on relativa (del elemento al punto $P$) y su m\'odulo son
+\[
+    \vec r_p-\vec r_q = -a\cos\phi\,\hat\imath - a\,\mathrm{sen}\,\phi\,\hat\jmath + z\,\hat k,
+    \qquad
+    \lVert\vec r_p-\vec r_q\rVert = \sqrt{a^2\cos^2\phi + a^2\,\mathrm{sen}^2\phi + z^2}
+    = \sqrt{a^2+z^2}.
+\]
+\noindent\textit{Observaci\'on clave:} el m\'odulo $\sqrt{a^2+z^2}$ \textbf{no depende de $\phi$}: todos los
+elementos del anillo est\'an a la misma distancia de $P$.
+
+\secgap
+
+\noindent\textbf{4. Campo por integraci\'on.} Con la ley de Coulomb vectorial,
+$d\vec E = k\,\dfrac{dq}{\lVert\vec r_p-\vec r_q\rVert^{3}}(\vec r_p-\vec r_q)$:
+\[
+    \vec E = k\int \frac{\lambda\,a\,d\phi}{(a^2+z^2)^{3/2}}
+             \big(-a\cos\phi\,\hat\imath - a\,\mathrm{sen}\,\phi\,\hat\jmath + z\,\hat k\big).
+\]
+Como $(a^2+z^2)^{3/2}$ es constante, se integra $\phi$ de $0$ a $2\pi$ componente a componente:
+\begin{align*}
+    E_x &\propto \int_0^{2\pi}\!\cos\phi\,d\phi = 0, \qquad
+    E_y \propto \int_0^{2\pi}\!\mathrm{sen}\,\phi\,d\phi = 0,\\[2pt]
+    E_z &= \frac{k\,\lambda\,a\,z}{(a^2+z^2)^{3/2}}\int_0^{2\pi}\!d\phi
+         = \frac{k\,\lambda\,a\,(2\pi)\,z}{(a^2+z^2)^{3/2}}.
+\end{align*}
+Y como $\lambda\,(2\pi a)=Q$ (carga total), queda la expresi\'on compacta:
+\[
+    \boxed{\ \vec E = k\,\frac{Q\,z}{(a^2+z^2)^{3/2}}\,\hat k\ }
+\]
+
+\secgap
+
+\noindent\textbf{5. Valor num\'erico.} Con $a^2+z^2 = 0{,}05^2+0{,}07^2 = 7{,}4\times10^{-3}$ m$^2$, luego
+$(a^2+z^2)^{3/2}=6{,}37\times10^{-4}$ m$^3$:
+\[
+    \vec E = \frac{(9\times10^{9})(15\times10^{-6})(0{,}07)}{6{,}37\times10^{-4}}\,\hat k
+    \quad\Longrightarrow\quad
+    \boxed{\vec E = 1{,}48\times10^{7}\,\hat k\ [\text{N/C}]}
+\]
+
+\secgap
+
+\noindent\textbf{6. Interpretaci\'on f\'isica.}
+\begin{itemize}\itemsep8pt
+    \item \textbf{Misma distancia por simetr\'ia.} El anillo es sim\'etrico respecto al eje $Z$: cada
+    elemento $dq$ dista de $P$ exactamente $\sqrt{a^2+z^2}$, sin importar su posici\'on angular $\phi$.
+    Por eso el denominador sale de la integral.
+    \item \textbf{Cancelaci\'on de las componentes en el plano $XY$.} A cada elemento en $\phi$ le
+    corresponde otro diametralmente opuesto en $\phi+\pi$, cuyas componentes horizontales
+    ($-a\cos\phi$, $-a\,\mathrm{sen}\,\phi$) son iguales y de signo contrario. Al integrar,
+    $\int_0^{2\pi}\cos\phi\,d\phi=\int_0^{2\pi}\mathrm{sen}\,\phi\,d\phi=0$: las componentes $\hat\imath$ y
+    $\hat\jmath$ se \emph{cancelan exactamente} y \textbf{solo sobrevive la componente $\hat k$} (axial).
+    \item \textbf{Aplicaci\'on.} Esta geometr\'ia permite \emph{orientar el campo en una sola direcci\'on}
+    (el eje del anillo). Adem\'as, si se hace \emph{oscilar el signo} de la carga,
+    $Q(t)=Q_0\cos(\omega t)$, el campo axial oscila con la misma frecuencia,
+    \[
+        \vec E(t) = k\,\frac{Q_0\cos(\omega t)\,z}{(a^2+z^2)^{3/2}}\,\hat k,
+    \]
+    invirtiendo su sentido peri\'odicamente: un campo dirigido y controlable en frecuencia, \'util para
+    orientar o hacer oscilar cargas a lo largo del eje.
+\end{itemize}
+
+\end{document}
