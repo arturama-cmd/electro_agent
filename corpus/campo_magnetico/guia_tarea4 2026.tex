@@ -1,0 +1,186 @@
+% Sections won't have numbers
+% Make the page area as large as possible
+% Set the first level numbering to arabic and the second level
+% to alphabetic. The remaining two levels are arabic
+%Change to \pagestyle{empty} to suppress numbers on following pages
+%\pagestyle{empty}
+% Do not reset outermost enumerate counter
+
+
+\documentclass[onecolumn]{article}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\usepackage{amsmath}
+\usepackage{sw20exm2}
+\usepackage[compat2]{geometry}
+
+\setcounter{MaxMatrixCols}{10}
+%TCIDATA{OutputFilter=LATEX.DLL}
+%TCIDATA{Version=5.50.0.2953}
+%TCIDATA{<META NAME="SaveForMode" CONTENT="1">}
+%TCIDATA{BibliographyScheme=Manual}
+%TCIDATA{Created=Sunday, August 26, 2012 12:26:36}
+%TCIDATA{LastRevised=Wednesday, July 01, 2026 14:53:34}
+%TCIDATA{<META NAME="ViewSettings" CONTENT="0">}
+%TCIDATA{<META NAME="GraphicsSave" CONTENT="32">}
+%TCIDATA{<META NAME="DocumentShell" CONTENT="Exams and Syllabi\SW\SW Exam #1 - 8.5x14 Page">}
+%TCIDATA{CSTFile=Exam.cst}
+
+\setlength{\topmargin}{-0.75in}
+\setlength{\textheight}{12.25in}
+\setlength{\oddsidemargin}{0.0in}
+\setlength{\evensidemargin}{0.0in}
+\setlength{\textwidth}{6.5in}
+\def\labelenumi{\arabic{enumi}.}
+\def\theenumi{\arabic{enumi}}
+\def\labelenumii{(\alph{enumii})}
+\def\theenumii{\alph{enumii}}
+\def\p@enumii{\theenumi.}
+\def\labelenumiii{\arabic{enumiii}.}
+\def\theenumiii{\arabic{enumiii}}
+\def\p@enumiii{(\theenumi)(\theenumii)}
+\def\labelenumiv{\arabic{enumiv}.}
+\def\theenumiv{\arabic{enumiv}}
+\def\p@enumiv{\p@enumiii.\theenumiii}
+\pagestyle{plain}
+\setcounter{secnumdepth}{0}
+\newtheorem{theorem}{Theorem}
+\newtheorem{acknowledgement}[theorem]{Acknowledgement}
+\newtheorem{algorithm}[theorem]{Algorithm}
+\newtheorem{axiom}[theorem]{Axiom}
+\newtheorem{case}[theorem]{Case}
+\newtheorem{claim}[theorem]{Claim}
+\newtheorem{conclusion}[theorem]{Conclusion}
+\newtheorem{condition}[theorem]{Condition}
+\newtheorem{conjecture}[theorem]{Conjecture}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{criterion}[theorem]{Criterion}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{example}[theorem]{Example}
+\newtheorem{exercise}[theorem]{Exercise}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{notation}[theorem]{Notation}
+\newtheorem{problem}[theorem]{Problem}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{remark}[theorem]{Remark}
+\newtheorem{solution}[theorem]{Solution}
+\newtheorem{summary}[theorem]{Summary}
+\newenvironment{proof}[1][Proof]{\noindent\textbf{#1.} }{\ \rule{0.5em}{0.5em}}
+\input{tcilatex}
+\begin{document}
+
+
+\begin{center}
+\begin{equation*}
+\FRAME{itbpF}{1.0525in}{0.7515in}{0in}{}{}{Figure}{\special{language
+"Scientific Word";type "GRAPHIC";maintain-aspect-ratio TRUE;display
+"USEDEF";valid_file "T";width 1.0525in;height 0.7515in;depth
+0in;original-width 2.3168in;original-height 1.6466in;cropleft "0";croptop
+"1";cropright "1";cropbottom "0";tempfilename
+'TCTQIQ04.bmp';tempfile-properties "XPR";}}
+\end{equation*}%
+\textbf{F\'{\i}sica II (2026-1)}
+
+\textbf{Tarea 4}\emph{: Ley de Biot-Savart, Ley de Ampere y Ley de
+Faraday-Lenz}
+
+\textit{Profesor: Arturo Fern\'{a}ndez P\'{e}rez}
+
+\textbf{Plazo de Entrega: Martes 07 de julio a las 20:00 hrs.}
+\end{center}
+
+\begin{enumerate}
+\item Tres conductores rectos y muy extensos, conducen corrientes $I_{1}=2$
+[A], $I_{2}=5$ [A] e $I_{3}=3$ [A], como muestra la Fig. 1. Considerando que 
+$a=5$ [cm], $b=2$ [cm] y $c=7$ [cm] marcan las distancias al punto P y
+utilizando el sistema de referencia indicado, determine:
+
+\begin{enumerate}
+\item El campo magn\'{e}tico total $\vec{B}$ en el punto P.
+
+\item La fuerza magn\'{e}tica $\vec{F}_{m}$ ejercida sobre una secci\'{o}n
+de $2$ [m] de longitud del lazo de corriente $I_{2}$, ejercida por la
+corriente $I_{1}$.%
+\begin{equation*}
+\FRAME{itbpFU}{2.6662in}{2.6308in}{0in}{\Qcb{Figura 1}}{}{Figure}{\special%
+{language "Scientific Word";type "GRAPHIC";maintain-aspect-ratio
+TRUE;display "USEDEF";valid_file "T";width 2.6662in;height 2.6308in;depth
+0in;original-width 8.3169in;original-height 8.2071in;cropleft "0";croptop
+"1";cropright "1";cropbottom "0";tempfilename
+'THI77900.bmp';tempfile-properties "XPR";}}
+\end{equation*}
+\end{enumerate}
+
+\item Considere tres corrientes el\'{e}ctricas entrando o saliendo del plano
+de la pantalla, como indica la Fig. 2. Si \'{e}stas se ubican en los v\'{e}%
+rtices de un tri\'{a}ngulo rect\'{a}ngulo, determine el campo magn\'{e}tico
+total $\vec{B}\,$en el centro de la hipotenusa, si $I_{1}=0,35$ [A], $%
+I_{2}=2I_{1}$ e $I_{3}=3I_{1}$ (Indicaci\'{o}n: Utilize la ley de Ampere y
+el vector unitario polar $\pm \phi $ para indicar la direcci\'{o}n del campo
+magn\'{e}tico)%
+\begin{equation*}
+\FRAME{itbpFU}{2.3774in}{1.9052in}{0in}{\Qcb{Figura 2}}{}{Figure}{\special%
+{language "Scientific Word";type "GRAPHIC";maintain-aspect-ratio
+TRUE;display "USEDEF";valid_file "T";width 2.3774in;height 1.9052in;depth
+0in;original-width 7.8784in;original-height 6.3045in;cropleft "0";croptop
+"1";cropright "1";cropbottom "0";tempfilename
+'THI7RK02.bmp';tempfile-properties "XPR";}}
+\end{equation*}%
+\pagebreak 
+
+\item Los lazos de corriente de la Fig. 3 conducen ambos una corriente $I=1,5
+$ [A] y sus arcos circulares subtienden un \'{a}ngulo de 30$%
+%TCIMACRO{\U{b0}}%
+%BeginExpansion
+{{}^\circ}%
+%EndExpansion
+$, como muestra la Fig. 3. Si $a=5$ [cm], $b=3$ [cm]\thinspace\ y
+considerando los sentidos de circulaci\'{o}n de la corriente indicados,
+determine el campo magn\'{e}tico $\vec{B}$ en el punto $O.$ (Indicaci\'{o}n:
+Utilize la forma escalar de la ley de Biot-Savart y la regla de la mano
+derecha)%
+\begin{equation*}
+\FRAME{itbpFU}{2.6991in}{1.6172in}{0in}{\Qcb{Figura 3}}{}{Figure}{\special%
+{language "Scientific Word";type "GRAPHIC";maintain-aspect-ratio
+TRUE;display "USEDEF";valid_file "T";width 2.6991in;height 1.6172in;depth
+0in;original-width 6.5726in;original-height 3.9271in;cropleft "0";croptop
+"1";cropright "1";cropbottom "0";tempfilename
+'THI8LU03.bmp';tempfile-properties "XPR";}}
+\end{equation*}
+
+\item Una espira rect\'{a}ngular de \'{a}rea $A=50$ [cm$^{2}$] gira con una
+velocidad angular $\omega =720$ [$rpm$] en una zona donde hay un campo magn%
+\'{e}tico uniforme de magnitud $B=$ $0.5$ $[T]$, como muestra la Fig. 4.
+Determine la fem inducida $\varepsilon $ en la espira.%
+\begin{equation*}
+\FRAME{itbpFU}{1.8178in}{1.9415in}{0in}{\Qcb{Figura 4}}{}{Figure}{\special%
+{language "Scientific Word";type "GRAPHIC";maintain-aspect-ratio
+TRUE;display "USEDEF";valid_file "T";width 1.8178in;height 1.9415in;depth
+0in;original-width 5.6464in;original-height 6.0364in;cropleft "0";croptop
+"1";cropright "1";cropbottom "0";tempfilename
+'THI95804.bmp';tempfile-properties "XPR";}}
+\end{equation*}
+
+\item Una espira de $N=20$ vueltas, radio $R=8$ [cm] y resistencia el\'{e}%
+ctrica de 20 [$\Omega $] se ubica en el centro de un solenoide muy largo, el
+cu\'{a}l tiene $n=200$ [vueltas/metro], radio $r=5$ [cm] y es conc\'{e}%
+ntrico a la espira, como se ve en la Fig. 5. Si por el solenoide circula una
+corriente $I(t)=\frac{5}{\sqrt{t}}$ [A], determine,
+
+\begin{enumerate}
+\item El flujo magn\'{e}tico $\phi _{B}$ a trav\'{e}s de la espira
+
+\item La magnitud de la fem $\varepsilon $ y la corriente inducida $i(t)$ en
+la espira \textquestiondown La corriente inducida $i(t)$ circula en la misma
+direcci\'{o}n que la corriente del solenoide $I(t)$? Justifique.%
+\begin{equation*}
+\FRAME{itbpFU}{1.3041in}{1.6942in}{0in}{\Qcb{Figura 5}}{}{Figure}{\special%
+{language "Scientific Word";type "GRAPHIC";maintain-aspect-ratio
+TRUE;display "USEDEF";valid_file "T";width 1.3041in;height 1.6942in;depth
+0in;original-width 2.2295in;original-height 2.9066in;cropleft "0";croptop
+"1";cropright "1";cropbottom "0";tempfilename
+'THI7EE01.wmf';tempfile-properties "XPR";}}
+\end{equation*}
+\end{enumerate}
+\end{enumerate}
+
+\end{document}

@@ -1,0 +1,165 @@
+\documentclass[12pt,letterpaper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[spanish,es-noshorthands]{babel}
+\usepackage{amsmath,amssymb}
+\usepackage{graphicx}
+\usepackage{xcolor}
+\usepackage{tikz}
+\usetikzlibrary{calc,arrows.meta,decorations.markings}
+\usepackage[top=2.5cm, bottom=4cm, left=2cm, right=2cm, footskip=40pt]{geometry}
+\usepackage{fancyhdr}
+\usepackage{lastpage}
+
+\definecolor{ubbblue}{RGB}{0,51,102}
+
+\pagestyle{fancy}
+\fancyhf{}
+\renewcommand{\headrulewidth}{0pt}
+\renewcommand{\footrulewidth}{0.4pt}
+\fancyfoot[L]{\raisebox{-0.5cm}{\includegraphics[height=1.2cm]{logo ubb.png}}}
+\fancyfoot[C]{%
+    \begin{minipage}[b]{8cm}\centering
+        \footnotesize\textcolor{ubbblue}{\textbf{Dr.\ Arturo Fern\'andez P\'erez}}\\
+        \scriptsize Departamento de F\'isica -- Universidad del B\'io-B\'io\\
+        \scriptsize \textit{Electro\_Asistente\_AI-UBB}\\
+        \tiny P\'agina \thepage\ de \pageref{LastPage}
+    \end{minipage}}
+\fancyfoot[R]{\raisebox{-0.5cm}{\includegraphics[height=1.2cm]{logo dfis.png}}}
+\fancypagestyle{plain}{%
+    \fancyhf{}
+    \renewcommand{\headrulewidth}{0pt}
+    \renewcommand{\footrulewidth}{0.4pt}
+    \fancyfoot[L]{\raisebox{-0.5cm}{\includegraphics[height=1.2cm]{logo ubb.png}}}
+    \fancyfoot[C]{%
+        \begin{minipage}[b]{8cm}\centering
+            \footnotesize\textcolor{ubbblue}{\textbf{Dr.\ Arturo Fern\'andez P\'erez}}\\
+            \scriptsize Departamento de F\'isica -- Universidad del B\'io-B\'io\\
+            \scriptsize \textit{Electro\_Asistente\_AI-UBB}\\
+            \tiny P\'agina \thepage\ de \pageref{LastPage}
+        \end{minipage}}
+    \fancyfoot[R]{\raisebox{-0.5cm}{\includegraphics[height=1.2cm]{logo dfis.png}}}
+}
+
+\begin{document}
+
+%========================================
+% ENCABEZADO INSTITUCIONAL
+%========================================
+\begin{center}
+    \includegraphics[height=2cm]{logo ubb.png}\\[0.3cm]
+    {\large\textcolor{ubbblue}{\textbf{UNIVERSIDAD DEL B\'IO-B\'IO}}}\\[0.1cm]
+    {\normalsize Facultad de Ciencias -- Departamento de F\'isica}
+\end{center}
+
+\vspace{0.3cm}
+\hrule height 1pt
+\vspace{0.5cm}
+
+{\centering\Large\textbf{Problema resuelto en la clase del 12/08}\par}
+{\centering\normalsize\textit{F\'isica II -- Electromagnetismo \quad(Fuerza el\'ectrica -- Ley de Coulomb)}\par}
+
+\vspace{0.5cm}
+{\centering\footnotesize (Constante de Coulomb: $k=9\times10^{9}\ \mathrm{N\,m^2/C^2}$;
+$1\ \mu C=10^{-6}$ C)\par}
+
+\vspace{0.5cm}
+
+%========================================================
+% ENUNCIADO
+%========================================================
+\noindent\textbf{Enunciado.} Tres cargas puntuales $q_1=-5\ \mu C$, $q_2=-4\ \mu C$ y $q_3=3\ \mu C$
+se ubican seg\'un la Fig.\ 1 (coordenadas en cm). Determine la fuerza el\'ectrica \textbf{resultante
+sobre $q_2$}.
+
+\medskip
+
+\noindent
+\begin{minipage}[t]{0.42\textwidth}
+\centering
+\vspace{0pt}
+\begin{tikzpicture}[scale=0.16, >=Stealth, line width=0.7pt]
+    \draw[->,gray] (-14,0)--(14,0) node[right,black,font=\small]{$x$};
+    \draw[->,gray] (0,-12)--(0,10) node[above,black,font=\small]{$y$};
+    \node[gray,font=\scriptsize,below right] at (13.5,0){[cm]};
+    % q1 (12,-1)
+    \filldraw[orange!80!black] (12,-1) circle (8pt);
+    \node[below,font=\scriptsize] at (12,-1.8){$q_1(-)$};
+    % q3 (-11,-10)
+    \filldraw[orange!80!black] (-11,-10) circle (8pt);
+    \node[below,font=\scriptsize] at (-11,-10.8){$q_3(+)$};
+    % q2 (-9,8) objetivo
+    \filldraw[red] (-9,8) circle (8pt);
+    \node[above right,font=\scriptsize] at (-9,8){$q_2(-)$};
+    % construccion 40 grados
+    \draw[dashed,gray] (0,0)--(-9,8);
+    \draw[dashed,gray] (-9,8)--(-9,0);
+    \node[gray,font=\scriptsize] at (-4.5,4.8){12 cm};
+    \node[gray,font=\tiny,below] at (-4.5,0){$12\cos40^\circ$};
+    \node[gray,font=\tiny,left,rotate=90] at (-9.4,4){$12\,\mathrm{sen}\,40^\circ$};
+    \draw (-2.2,0) arc (180:138:2.2); \node[font=\tiny] at (-3.4,1.1){$40^\circ$};
+    % resultante F2 sobre q2 (direccion (-3.48,-2))
+    \draw[->,red,line width=1.3pt] (-9,8)--($(-9,8)+(-5.2,-3.0)$);
+    \node[red,font=\scriptsize,below left] at ($(-9,8)+(-5.2,-3.0)$){$\vec F_2$};
+    % ejes unitarios
+    \begin{scope}[shift={(7,-8)}]
+        \draw[->,blue] (0,0)--(3,0) node[right,font=\scriptsize]{$\hat\imath$};
+        \draw[->,blue] (0,0)--(0,3) node[above,font=\scriptsize]{$\hat\jmath$};
+    \end{scope}
+\end{tikzpicture}\\[2pt]
+{\scriptsize Figura 1 ($q_2$ = objetivo; figura no a escala).}
+\end{minipage}%
+\hfill
+\begin{minipage}[t]{0.54\textwidth}
+\vspace{0pt}
+\textbf{Vectores de posici\'on} (en metros; $q_2$ a $12$ cm y $40^\circ$ en el 2\textsuperscript{o} cuadrante):
+\begin{align*}
+    \vec r_1 &= 0{,}12\,\hat\imath - 0{,}01\,\hat\jmath,\\
+    \vec r_2 &= -0{,}12\cos40^\circ\,\hat\imath + 0{,}12\,\mathrm{sen}\,40^\circ\,\hat\jmath
+             \approx -0{,}09\,\hat\imath + 0{,}08\,\hat\jmath,\\
+    \vec r_3 &= -0{,}11\,\hat\imath - 0{,}10\,\hat\jmath.
+\end{align*}
+Por superposici\'on, $\vec F_2 = \vec F_{21} + \vec F_{23}$, con
+\[
+    \vec F_{2j} = k\,\frac{q_2\,q_j}{\lVert\vec r_2-\vec r_j\rVert^3}\,(\vec r_2-\vec r_j).
+\]
+\end{minipage}
+
+\medskip
+
+\noindent\textbf{Restas de vectores:}
+\begin{align*}
+    \vec r_2-\vec r_1 &= (-0{,}09\,\hat\imath + 0{,}08\,\hat\jmath) - (0{,}12\,\hat\imath - 0{,}01\,\hat\jmath)
+        = -0{,}21\,\hat\imath + 0{,}09\,\hat\jmath, & \lVert\vec r_2-\vec r_1\rVert &= \sqrt{0{,}21^2+0{,}09^2} \approx 0{,}23\ \text{m},\\[2pt]
+    \vec r_2-\vec r_3 &= (-0{,}09\,\hat\imath + 0{,}08\,\hat\jmath) - (-0{,}11\,\hat\imath - 0{,}10\,\hat\jmath)
+        = 0{,}02\,\hat\imath + 0{,}18\,\hat\jmath, & \lVert\vec r_2-\vec r_3\rVert &= \sqrt{0{,}02^2+0{,}18^2} \approx 0{,}18\ \text{m}.
+\end{align*}
+
+\noindent\textbf{Fuerza de $q_1$ sobre $q_2$} ($k\,q_2q_1 = 9\times10^9(-4\times10^{-6})(-5\times10^{-6}) = 0{,}18$):
+\[
+    \vec F_{21} = \frac{0{,}18}{(0{,}23)^3}\,(-0{,}21\,\hat\imath + 0{,}09\,\hat\jmath)
+    = -3{,}11\,\hat\imath + 1{,}33\,\hat\jmath\ [\text{N}]
+\]
+
+\noindent\textbf{Fuerza de $q_3$ sobre $q_2$} ($k\,q_2q_3 = 9\times10^9(-4\times10^{-6})(3\times10^{-6}) = -0{,}108$):
+\[
+    \vec F_{23} = \frac{-0{,}108}{(0{,}18)^3}\,(0{,}02\,\hat\imath + 0{,}18\,\hat\jmath)
+    = -0{,}37\,\hat\imath - 3{,}33\,\hat\jmath\ [\text{N}]
+\]
+
+\noindent\textbf{Fuerza resultante} (superposici\'on):
+\begin{align*}
+    F_x &= -3{,}11 - 0{,}37 = -3{,}48\ [\text{N}],\\[2pt]
+    F_y &= \phantom{-}1{,}33 - 3{,}33 = -2{,}00\ [\text{N}].
+\end{align*}
+\[
+    \boxed{\vec F_2 = -3{,}48\,\hat\imath - 2{,}00\,\hat\jmath\ [\text{N}],
+    \qquad |\vec F_2| = \sqrt{3{,}48^2+2{,}00^2} = 4{,}02\ [\text{N}]}
+\]
+
+\noindent La resultante apunta al \textbf{tercer cuadrante} (abajo-izquierda), formando
+$\arctan\!\big(\tfrac{2{,}00}{3{,}48}\big)=29{,}9^\circ$ por debajo del eje $-x$. Coherente con la
+f\'isica: $\vec F_{21}$ es \textbf{repulsiva} ($q_1,q_2$ ambas negativas, empuja a $q_2$ alej\'andolo de
+$q_1$: arriba-izquierda) y $\vec F_{23}$ es \textbf{atractiva} ($q_3$ positiva atrae a $q_2$: hacia
+abajo, en direcci\'on a $q_3$).
+
+\end{document}
