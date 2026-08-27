@@ -110,6 +110,7 @@ sobre una carga $q_0 = 5$ [mC] colocada en $P$.
 {\footnotesize Semiarco ($\lambda_1$) en el 2\textsuperscript{o} cuadrante y l\'inea ($\lambda_2$) sobre el eje $X$; el campo se eval\'ua en $P$.}
 \end{center}
 
+\vspace{-1cm}
 \subsection*{Datos}
 \[
     K = 9\times10^{9}\ \tfrac{\text{N}\,\text{m}^2}{\text{C}^2},\quad
@@ -130,18 +131,45 @@ con $\vec{r}_P = \vec{0}$ (el punto campo es el origen) y $\vec{r}_q$ la posici\
 %--------------------------------------------------------
 \subsection*{Distribuci\'on 1: semiarco ($\lambda_1$)}
 
-\noindent\textbf{Paso 1 — geometr\'ia.} Un elemento del arco est\'a en
+\noindent
+\begin{minipage}[c]{0.32\textwidth}
+\centering
+\begin{tikzpicture}[scale=0.72, >=Stealth, line width=0.8pt]
+    \fill (0,0) circle (1.3pt); \node[below,font=\scriptsize] at (0,-0.05){$P$};
+    % arco de la circunferencia (contexto)
+    \draw[gray!55,line width=0.8pt] (104:2.4) arc (104:156:2.4);
+    % dos radios que delimitan el elemento (d\phi exagerado)
+    \draw[gray] (0,0)--(122:2.4);
+    \draw[gray] (0,0)--(142:2.4);
+    % elemento de arco d\ell (resaltado)
+    \draw[blue!70!black,line width=2.6pt] (122:2.4) arc (122:142:2.4);
+    \node[blue!70!black,font=\small] at (132:2.85){$d\ell$};
+    % radio R
+    \node[font=\small] at (113:1.35){$R$};
+    % angulo diferencial d\phi
+    \draw[->,black] (122:0.9) arc (122:142:0.9);
+    \node[font=\small] at (132:0.6){$d\phi$};
+\end{tikzpicture}
+\end{minipage}%
+\hfill
+\begin{minipage}[c]{0.64\textwidth}
+\textbf{Paso 1 — geometr\'ia.} Un elemento del arco se ubica en
 \[
-    \vec{r}_q = R\cos\phi\,\ii + R\sin\phi\,\jj
-    \;\Rightarrow\;
-    \vec{r}_P - \vec{r}_q = -R\cos\phi\,\ii - R\sin\phi\,\jj,\qquad
-    \lVert \vec{r}_P - \vec{r}_q\rVert = R.
+    \vec{r}_q = R\cos\phi\,\ii + R\sin\phi\,\jj,
 \]
+\[
+    \vec{r}_P - \vec{r}_q = -R\cos\phi\,\ii - R\sin\phi\,\jj,
+\]
+con $\lVert \vec{r}_P - \vec{r}_q\rVert = R$.
 
-\noindent\textbf{Paso 2 — elemento de carga.} Con $d\ell = R\,d\phi$:
+\smallskip
+\textbf{Paso 2 — elemento de carga.} Un arco que subtiende un \'angulo diferencial $d\phi$ tiene
+longitud $d\ell = R\,d\phi$ (arco $=$ radio $\times$ \'angulo). Con la densidad lineal
+$\lambda_1 = dq/d\ell$,
 \[
     dq = \lambda_1\,d\ell = \lambda_1 R\,d\phi.
 \]
+\end{minipage}
 
 \noindent\textbf{Paso 3 — campo diferencial.}
 \[
@@ -177,10 +205,34 @@ Con $\sin150^\circ = 0{,}50$, $\sin110^\circ \approx 0{,}94$, $\cos150^\circ \ap
     \lVert \vec{r}_P - \vec{r}_q\rVert = \sqrt{(-x)^2} = x.
 \]
 
-\noindent\textbf{Paso 2 — elemento de carga.} Con $d\ell = dx$:
+\noindent\textbf{Paso 2 — elemento de carga.}
+
+\noindent
+\begin{minipage}[c]{0.42\textwidth}
+\centering
+\begin{tikzpicture}[scale=0.9, >=Stealth, line width=0.8pt]
+    \fill (0,0) circle (1.3pt); \node[below,font=\scriptsize] at (0,-0.10){$P$};
+    \draw[->] (-0.4,0)--(4.4,0) node[right,font=\small]{$x$};
+    % linea de carga (verde) de R a 3R
+    \draw[green!45!black,line width=1.8pt] (0.9,0)--(3.6,0);
+    % elemento dx resaltado
+    \draw[blue!70!black,line width=2.8pt] (1.95,0)--(2.4,0);
+    % delimitadores del elemento
+    \draw[gray] (1.95,0.12)--(1.95,-0.12); \draw[gray] (2.4,0.12)--(2.4,-0.12);
+    \draw[<->,black] (1.95,0.34)--(2.4,0.34); \node[font=\small] at (2.17,0.58){$dx$};
+    \node[blue!70!black,font=\small] at (2.17,-0.42){$dq$};
+    \node[gray,font=\scriptsize,below] at (0.9,-0.10){$R$};
+    \node[gray,font=\scriptsize,below] at (3.6,-0.10){$3R$};
+\end{tikzpicture}
+\end{minipage}%
+\hfill
+\begin{minipage}[c]{0.54\textwidth}
+Sobre el eje $X$, el elemento de longitud es simplemente $d\ell = dx$. Con la densidad lineal
+$\lambda_2 = dq/d\ell$, el elemento de carga es
 \[
     dq = \lambda_2\,d\ell = \lambda_2\,dx.
 \]
+\end{minipage}
 
 \noindent\textbf{Paso 3 — campo diferencial.}
 \[
@@ -227,5 +279,47 @@ $\vec{F} = q_0\,\vec{E}$:
 \[
     \boxed{\vec{F} = 0{,}8376\,\ii - 0{,}2862\,\jj\ [\text{N}]}
 \]
+
+\subsection*{Representaci\'on de los campos y la fuerza en $P$}
+
+\begin{center}
+\begin{tikzpicture}[scale=1.0, >=Stealth, line width=0.9pt]
+    \def\Rr{1.8}
+    % ejes
+    \draw[->] (-2.6,0)--(6.0,0) node[right]{$x$};
+    \draw[->] (0,-2.9)--(0,3.0) node[above]{$y$};
+    \fill (0,0) circle(2.4pt); \node[above right,font=\small] at (0.06,0.08){$P$};
+    % semiarco NARANJO
+    \draw[orange!85!black,line width=1.5pt] (110:\Rr) arc (110:150:\Rr);
+    \node[orange!85!black,font=\small] at (128:2.3){$\lambda_1$};
+    \draw[dashed,gray] (0,0)--(110:\Rr);
+    \draw[dashed,gray] (0,0)--(150:\Rr);
+    \node[gray,font=\scriptsize] at (130:1.0){$R$};
+    % linea VERDE
+    \draw[green!45!black,line width=1.8pt] (\Rr,0)--(3*\Rr,0);
+    \node[green!45!black,font=\small] at (4.5,0.34){$\lambda_2$};
+    \draw[gray] (\Rr,0.12)--(\Rr,-0.12);   \node[gray,font=\scriptsize,below] at (\Rr,-0.12){$R$};
+    \draw[gray] (3*\Rr,0.12)--(3*\Rr,-0.12); \node[gray,font=\scriptsize,below] at (3*\Rr,-0.12){$3R$};
+    % --- campos desde P ---
+    % E2 (verde, +x)
+    \draw[->,green!50!black,line width=1.5pt] (0,0)--(1.5,0);
+    \node[green!50!black,font=\small] at (1.32,0.36){$\vec{E}_2$};
+    % E1 (naranjo, abajo-derecha)
+    \draw[->,orange!85!black,line width=1.5pt] (0,0)--(0.594,-0.716);
+    \node[orange!85!black,font=\small] at (0.40,-1.00){$\vec{E}_1$};
+    % E resultante (rojo)
+    \draw[->,red,line width=1.7pt] (0,0)--(2.094,-0.716);
+    \node[red,font=\small] at (2.38,-0.84){$\vec{E}$};
+    % paralelogramo guia
+    \draw[dashed,gray!55] (1.5,0)--(2.094,-0.716);
+    \draw[dashed,gray!55] (0.594,-0.716)--(2.094,-0.716);
+    % fuerza F (violeta), desplazada del origen y paralela a E
+    \draw[->,violet,line width=1.7pt] (2.05,-1.75)--(3.55,-2.263);
+    \node[violet,font=\small] at (3.10,-2.02){$\vec{F}$};
+\end{tikzpicture}\\[2pt]
+{\footnotesize Campos en $P$: $\vec{E}_1$ (semiarco, naranjo) y $\vec{E}_2$ (l\'inea, verde); su
+resultante $\vec{E}$ (rojo). La fuerza $\vec{F}=q_0\vec{E}$ (violeta, dibujada desplazada) es paralela a
+$\vec{E}$ por ser $q_0>0$.}
+\end{center}
 
 \end{document}
