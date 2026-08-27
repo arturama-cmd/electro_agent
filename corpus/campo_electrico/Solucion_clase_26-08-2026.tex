@@ -1,0 +1,231 @@
+\documentclass[12pt,letterpaper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[spanish,es-noshorthands]{babel}
+\usepackage{amsmath,amssymb}
+\usepackage{graphicx}
+\usepackage{xcolor}
+\usepackage{tikz}
+\usetikzlibrary{calc,arrows.meta,decorations.markings}
+\usepackage[top=2.5cm, bottom=4cm, left=2cm, right=2cm, footskip=40pt]{geometry}
+\usepackage{fancyhdr}
+\usepackage{lastpage}
+
+\definecolor{ubbblue}{RGB}{0,51,102}
+
+\pagestyle{fancy}
+\fancyhf{}
+\renewcommand{\headrulewidth}{0pt}
+\renewcommand{\footrulewidth}{0.4pt}
+\fancyfoot[L]{\raisebox{-0.5cm}{\includegraphics[height=1.2cm]{logo ubb.png}}}
+\fancyfoot[C]{%
+    \begin{minipage}[b]{8cm}\centering
+        \footnotesize\textcolor{ubbblue}{\textbf{Dr.\ Arturo Fern\'andez P\'erez}}\\
+        \scriptsize Departamento de F\'isica -- Universidad del B\'io-B\'io\\
+        \scriptsize \textit{Electro\_Asistente\_AI-UBB}\\
+        \tiny P\'agina \thepage\ de \pageref{LastPage}
+    \end{minipage}}
+\fancyfoot[R]{\raisebox{-0.5cm}{\includegraphics[height=1.2cm]{logo dfis.png}}}
+\fancypagestyle{plain}{%
+    \fancyhf{}
+    \renewcommand{\headrulewidth}{0pt}
+    \renewcommand{\footrulewidth}{0.4pt}
+    \fancyfoot[L]{\raisebox{-0.5cm}{\includegraphics[height=1.2cm]{logo ubb.png}}}
+    \fancyfoot[C]{%
+        \begin{minipage}[b]{8cm}\centering
+            \footnotesize\textcolor{ubbblue}{\textbf{Dr.\ Arturo Fern\'andez P\'erez}}\\
+            \scriptsize Departamento de F\'isica -- Universidad del B\'io-B\'io\\
+            \scriptsize \textit{Electro\_Asistente\_AI-UBB}\\
+            \tiny P\'agina \thepage\ de \pageref{LastPage}
+        \end{minipage}}
+    \fancyfoot[R]{\raisebox{-0.5cm}{\includegraphics[height=1.2cm]{logo dfis.png}}}
+}
+
+\newcommand{\ii}{\hat{\imath}}
+\newcommand{\jj}{\hat{\jmath}}
+
+\begin{document}
+
+%========================================
+% ENCABEZADO INSTITUCIONAL
+%========================================
+\begin{center}
+    \includegraphics[height=2cm]{logo ubb.png}\\[0.3cm]
+    {\large\textcolor{ubbblue}{\textbf{UNIVERSIDAD DEL B\'IO-B\'IO}}}\\[0.1cm]
+    {\normalsize Facultad de Ciencias -- Departamento de F\'isica}
+\end{center}
+
+\vspace{0.3cm}
+\hrule height 1pt
+\vspace{0.5cm}
+
+{\centering\Large\textbf{Problema resuelto en la clase del 26/08/2026}\par}
+{\centering\normalsize\textit{Distribuciones continuas de carga: campo el\'ectrico y fuerza en el origen}\par}
+
+\vspace{0.6cm}
+
+%========================================================
+% PROBLEMA
+%========================================================
+\section*{Problema 1}
+
+\noindent Se tienen dos distribuciones continuas de carga (ver figura):
+\begin{itemize}\setlength\itemsep{2pt}
+    \item Un \textbf{semiarco} de circunferencia de radio $R$, ubicado en el segundo cuadrante,
+          con densidad lineal $\lambda_1 = +3\ [\text{nC/m}]$, que abarca $110^\circ \le \phi \le 150^\circ$.
+    \item Una \textbf{l\'inea} recta sobre el eje $X$, con densidad lineal $\lambda_2 = -5\ [\text{nC/m}]$,
+          desde $x = R$ hasta $x = 3R$.
+\end{itemize}
+Con $R = 0{,}25$ [m], determine el campo el\'ectrico $\vec{E}$ en el punto $P$ (origen), y la fuerza
+sobre una carga $q_0 = 5$ [mC] colocada en $P$.
+
+\medskip
+
+\begin{center}
+\begin{tikzpicture}[scale=1.0, >=Stealth, line width=0.9pt]
+    \def\Rr{1.8}
+    % ejes
+    \draw[->] (-2.6,0)--(6.0,0) node[right]{$x$};
+    \draw[->] (0,-1.5)--(0,3.1) node[above]{$y$};
+    % punto P en el origen
+    \fill (0,0) circle(2.4pt); \node[below right,font=\small] at (0.08,-0.05){$P$};
+    % semiarco (110 a 150 grados) con densidad +
+    \draw[blue!70!black,line width=1.5pt] (110:\Rr) arc (110:150:\Rr);
+    \foreach \a in {112,119,...,150}{\node[red!80!black,font=\scriptsize] at (\a:\Rr){$+$};}
+    \node[blue!70!black,font=\small] at (128:2.35){$\lambda_1$};
+    % radios a los extremos y etiqueta R
+    \draw[dashed,gray] (0,0)--(110:\Rr);
+    \draw[dashed,gray] (0,0)--(150:\Rr);
+    \node[gray,font=\footnotesize] at (132:1.05){$R$};
+    % angulo phi (desde +x hasta radio a 130 grados)
+    \draw[->] (1.0,0) arc (0:130:1.0);
+    \node[font=\footnotesize] at (58:1.25){$\phi$};
+    % linea sobre +x, de R a 3R, densidad -
+    \draw[green!45!black,line width=1.8pt] (\Rr,0)--(3*\Rr,0);
+    \foreach \x in {2.1,2.55,...,5.2}{\node[green!45!black,font=\scriptsize] at (\x,0.18){$-$};}
+    \node[green!45!black,font=\small] at (3.6,-0.4){$\lambda_2$};
+    % marcas R y 3R
+    \draw[gray] (\Rr,0.12)--(\Rr,-0.12);   \node[gray,font=\footnotesize,below] at (\Rr,-0.12){$R$};
+    \draw[gray] (3*\Rr,0.12)--(3*\Rr,-0.12); \node[gray,font=\footnotesize,below] at (3*\Rr,-0.12){$3R$};
+\end{tikzpicture}\\[2pt]
+{\footnotesize Semiarco ($\lambda_1$) en el 2\textsuperscript{o} cuadrante y l\'inea ($\lambda_2$) sobre el eje $X$; el campo se eval\'ua en $P$.}
+\end{center}
+
+\subsection*{Datos}
+\[
+    K = 9\times10^{9}\ \tfrac{\text{N}\,\text{m}^2}{\text{C}^2},\quad
+    R = 0{,}25\ [\text{m}],\quad
+    \lambda_1 = 3\times10^{-9}\ \tfrac{\text{C}}{\text{m}},\quad
+    \lambda_2 = -5\times10^{-9}\ \tfrac{\text{C}}{\text{m}},\quad
+    q_0 = 5\times10^{-3}\ [\text{C}].
+\]
+
+\medskip
+\noindent Para toda distribuci\'on continua, el campo en $P$ es
+\[
+    \vec{E} = \int d\vec{E}, \qquad
+    d\vec{E} = K\,\frac{dq\,(\vec{r}_P - \vec{r}_q)}{\lVert \vec{r}_P - \vec{r}_q\rVert^{3}},
+\]
+con $\vec{r}_P = \vec{0}$ (el punto campo es el origen) y $\vec{r}_q$ la posici\'on del elemento de carga.
+
+%--------------------------------------------------------
+\subsection*{Distribuci\'on 1: semiarco ($\lambda_1$)}
+
+\noindent\textbf{Paso 1 — geometr\'ia.} Un elemento del arco est\'a en
+\[
+    \vec{r}_q = R\cos\phi\,\ii + R\sin\phi\,\jj
+    \;\Rightarrow\;
+    \vec{r}_P - \vec{r}_q = -R\cos\phi\,\ii - R\sin\phi\,\jj,\qquad
+    \lVert \vec{r}_P - \vec{r}_q\rVert = R.
+\]
+
+\noindent\textbf{Paso 2 — elemento de carga.} Con $d\ell = R\,d\phi$:
+\[
+    dq = \lambda_1\,d\ell = \lambda_1 R\,d\phi.
+\]
+
+\noindent\textbf{Paso 3 — campo diferencial.}
+\[
+    d\vec{E}_1 = K\,\frac{(\lambda_1 R\,d\phi)\,(-R\cos\phi\,\ii - R\sin\phi\,\jj)}{R^{3}}
+    = -\frac{K\lambda_1}{R}\,\big(\cos\phi\,\ii + \sin\phi\,\jj\big)\,d\phi.
+\]
+
+\noindent\textbf{Paso 4 — integrar entre $110^\circ$ y $150^\circ$.}
+\begin{align*}
+    \vec{E}_1 &= -\frac{K\lambda_1}{R}\int_{110^\circ}^{150^\circ}\big(\cos\phi\,\ii + \sin\phi\,\jj\big)\,d\phi
+    = -\frac{K\lambda_1}{R}\Big[\,\sin\phi\,\ii - \cos\phi\,\jj\,\Big]_{110^\circ}^{150^\circ}\\
+    &= -\frac{K\lambda_1}{R}\Big[(\sin150^\circ - \sin110^\circ)\,\ii - (\cos150^\circ - \cos110^\circ)\,\jj\Big].
+\end{align*}
+Con $\sin150^\circ = 0{,}50$, $\sin110^\circ \approx 0{,}94$, $\cos150^\circ \approx -0{,}87$, $\cos110^\circ \approx -0{,}34$:
+\[
+    \vec{E}_1 = -\frac{K\lambda_1}{R}\big[(0{,}50-0{,}94)\,\ii - (-0{,}87+0{,}34)\,\jj\big]
+    = -\frac{K\lambda_1}{R}\big(-0{,}44\,\ii + 0{,}53\,\jj\big).
+\]
+
+\noindent\textbf{Paso 5 — evaluar.} Con $\dfrac{K\lambda_1}{R} = \dfrac{(9\times10^{9})(3\times10^{-9})}{0{,}25} = 108$:
+\[
+    \boxed{\vec{E}_1 = 108\,\big(0{,}44\,\ii - 0{,}53\,\jj\big) = 47{,}52\,\ii - 57{,}24\,\jj\ \left[\tfrac{\text{N}}{\text{C}}\right]}
+\]
+
+%--------------------------------------------------------
+\subsection*{Distribuci\'on 2: l\'inea sobre el eje $X$ ($\lambda_2$)}
+
+\noindent\textbf{Paso 1 — geometr\'ia.} Un elemento de la l\'inea est\'a en
+\[
+    \vec{r}_q = x\,\ii
+    \;\Rightarrow\;
+    \vec{r}_P - \vec{r}_q = -x\,\ii,\qquad
+    \lVert \vec{r}_P - \vec{r}_q\rVert = \sqrt{(-x)^2} = x.
+\]
+
+\noindent\textbf{Paso 2 — elemento de carga.} Con $d\ell = dx$:
+\[
+    dq = \lambda_2\,d\ell = \lambda_2\,dx.
+\]
+
+\noindent\textbf{Paso 3 — campo diferencial.}
+\[
+    d\vec{E}_2 = K\,\frac{(\lambda_2\,dx)\,(-x\,\ii)}{x^{3}}
+    = -K\lambda_2\,\frac{dx}{x^{2}}\,\ii.
+\]
+
+\noindent\textbf{Paso 4 — integrar entre $R$ y $3R$.} Usando $\displaystyle\int x^{-2}\,dx = -\frac{1}{x}$:
+\[
+    \vec{E}_2 = -K\lambda_2\int_{R}^{3R}\frac{dx}{x^{2}}\,\ii
+    = -K\lambda_2\left[-\frac{1}{x}\right]_{R}^{3R}\ii
+    = K\lambda_2\left(\frac{1}{3R} - \frac{1}{R}\right)\ii.
+\]
+
+\noindent\textbf{Paso 5 — evaluar.} Con $R = 0{,}25$ (as\'i $3R = 0{,}75$):
+\[
+    \vec{E}_2 = (9\times10^{9})(-5\times10^{-9})\left(\frac{1}{0{,}75} - \frac{1}{0{,}25}\right)\ii
+    = (-45)(-2{,}667)\,\ii.
+\]
+\[
+    \boxed{\vec{E}_2 = 120\,\ii\ \left[\tfrac{\text{N}}{\text{C}}\right]}
+\]
+El signo es coherente: al ser $\lambda_2<0$, el campo en $P$ apunta \emph{hacia} la l\'inea (sentido $+\ii$).
+
+%--------------------------------------------------------
+\subsection*{Campo el\'ectrico total en $P$}
+
+Por superposici\'on, $\vec{E} = \vec{E}_1 + \vec{E}_2$:
+\[
+    \vec{E} = (47{,}52 + 120)\,\ii - 57{,}24\,\jj.
+\]
+\[
+    \boxed{\vec{E} = 167{,}52\,\ii - 57{,}24\,\jj\ \left[\tfrac{\text{N}}{\text{C}}\right]}
+\]
+
+%--------------------------------------------------------
+\subsection*{Fuerza sobre una carga $q_0$ en el origen}
+
+Si en $P$ se coloca una carga $q_0 = 5\ [\text{mC}] = 5\times10^{-3}$ [C], la fuerza el\'ectrica es
+$\vec{F} = q_0\,\vec{E}$:
+\[
+    \vec{F} = (5\times10^{-3})\,(167{,}52\,\ii - 57{,}24\,\jj).
+\]
+\[
+    \boxed{\vec{F} = 0{,}8376\,\ii - 0{,}2862\,\jj\ [\text{N}]}
+\]
+
+\end{document}
