@@ -78,14 +78,14 @@
 Con $R = 0{,}25$ [m], determine el campo el\'ectrico $\vec{E}$ en el punto $P$ (origen), y la fuerza
 sobre una carga $q_0 = 5$ [mC] colocada en $P$.
 
-\medskip
+\vspace{0.1cm}
 
 \begin{center}
-\begin{tikzpicture}[scale=1.0, >=Stealth, line width=0.9pt]
+\begin{tikzpicture}[scale=0.82, >=Stealth, line width=0.9pt]
     \def\Rr{1.8}
     % ejes
     \draw[->] (-2.6,0)--(6.0,0) node[right]{$x$};
-    \draw[->] (0,-1.5)--(0,3.1) node[above]{$y$};
+    \draw[->] (0,-1.0)--(0,2.9) node[above]{$y$};
     % punto P en el origen
     \fill (0,0) circle(2.4pt); \node[below right,font=\small] at (0.08,-0.05){$P$};
     % semiarco (110 a 150 grados) con densidad +
@@ -110,7 +110,7 @@ sobre una carga $q_0 = 5$ [mC] colocada en $P$.
 {\footnotesize Semiarco ($\lambda_1$) en el 2\textsuperscript{o} cuadrante y l\'inea ($\lambda_2$) sobre el eje $X$; el campo se eval\'ua en $P$.}
 \end{center}
 
-\vspace{-1cm}
+\vspace{-0.5cm}
 \subsection*{Datos}
 \[
     K = 9\times10^{9}\ \tfrac{\text{N}\,\text{m}^2}{\text{C}^2},\quad
@@ -144,11 +144,11 @@ con $\vec{r}_P = \vec{0}$ (el punto campo es el origen) y $\vec{r}_q$ la posici\
     % elemento de arco d\ell (resaltado)
     \draw[blue!70!black,line width=2.6pt] (122:2.4) arc (122:142:2.4);
     \node[blue!70!black,font=\small] at (132:2.85){$d\ell$};
-    % radio R
-    \node[font=\small] at (113:1.35){$R$};
-    % angulo diferencial d\phi
-    \draw[->,black] (122:0.9) arc (122:142:0.9);
-    \node[font=\small] at (132:0.6){$d\phi$};
+    % radio R (junto al radio superior, fuera de la cuna)
+    \node[font=\small] at (147:1.5){$R$};
+    % angulo diferencial d\phi (arco en el vertice; etiqueta fuera de la cuna por abajo)
+    \draw[->,black] (122:0.75) arc (122:142:0.75);
+    \node[font=\small] at (110:1.05){$d\phi$};
 \end{tikzpicture}
 \end{minipage}%
 \hfill
@@ -170,6 +170,12 @@ $\lambda_1 = dq/d\ell$,
     dq = \lambda_1\,d\ell = \lambda_1 R\,d\phi.
 \]
 \end{minipage}
+
+\smallskip
+\noindent\textit{Nota (forma can\'onica).} Como el \'angulo $\phi$ se mide respecto al eje $+x$, el
+vector posici\'on de un punto del arco circular \emph{siempre} se escribe en la forma can\'onica
+\textbf{coseno en la componente $x$ y seno en la componente $y$}:
+$\ \vec{r}_q = R\cos\phi\,\ii + R\sin\phi\,\jj$.
 
 \noindent\textbf{Paso 3 — campo diferencial.}
 \[
@@ -315,7 +321,7 @@ $\vec{F} = q_0\,\vec{E}$:
     \draw[dashed,gray!55] (0.594,-0.716)--(2.094,-0.716);
     % fuerza F (violeta), desplazada del origen y paralela a E
     \draw[->,violet,line width=1.7pt] (2.05,-1.75)--(3.55,-2.263);
-    \node[violet,font=\small] at (3.10,-2.02){$\vec{F}$};
+    \node[violet,font=\small] at (3.78,-2.30){$\vec{F}$};
 \end{tikzpicture}\\[2pt]
 {\footnotesize Campos en $P$: $\vec{E}_1$ (semiarco, naranjo) y $\vec{E}_2$ (l\'inea, verde); su
 resultante $\vec{E}$ (rojo). La fuerza $\vec{F}=q_0\vec{E}$ (violeta, dibujada desplazada) es paralela a
