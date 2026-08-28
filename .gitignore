@@ -45,6 +45,7 @@ chroma_db/
 # OS
 .DS_Store
 Thumbs.db
+desktop.ini
 
 # Logs
 *.log
