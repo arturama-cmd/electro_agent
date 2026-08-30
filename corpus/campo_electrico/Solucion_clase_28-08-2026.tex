@@ -1,0 +1,203 @@
+\documentclass[12pt,letterpaper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[spanish,es-noshorthands]{babel}
+\usepackage{amsmath,amssymb}
+\usepackage{graphicx}
+\usepackage{xcolor}
+\usepackage{tikz}
+\usetikzlibrary{calc,arrows.meta}
+\usepackage[top=2.5cm, bottom=4cm, left=2cm, right=2cm, footskip=40pt]{geometry}
+\usepackage{fancyhdr}
+\usepackage{lastpage}
+
+\definecolor{ubbblue}{RGB}{0,51,102}
+\definecolor{cargazul}{RGB}{40,40,210}
+
+% separaci\'on vertical entre secciones numeradas
+\newcommand{\secgap}{\vspace{0.6cm}}
+
+\newcommand{\ii}{\hat{\imath}}
+\newcommand{\jj}{\hat{\jmath}}
+\newcommand{\kk}{\hat{k}}
+
+\pagestyle{fancy}
+\fancyhf{}
+\renewcommand{\headrulewidth}{0pt}
+\renewcommand{\footrulewidth}{0.4pt}
+\fancyfoot[L]{\raisebox{-0.5cm}{\includegraphics[height=1.2cm]{logo ubb.png}}}
+\fancyfoot[C]{%
+    \begin{minipage}[b]{8cm}\centering
+        \footnotesize\textcolor{ubbblue}{\textbf{Dr.\ Arturo Fern\'andez P\'erez}}\\
+        \scriptsize Departamento de F\'isica -- Universidad del B\'io-B\'io\\
+        \scriptsize \textit{Electro\_Asistente\_AI-UBB}\\
+        \tiny P\'agina \thepage\ de \pageref{LastPage}
+    \end{minipage}}
+\fancyfoot[R]{\raisebox{-0.5cm}{\includegraphics[height=1.2cm]{logo dfis.png}}}
+\fancypagestyle{plain}{%
+    \fancyhf{}
+    \renewcommand{\headrulewidth}{0pt}
+    \renewcommand{\footrulewidth}{0.4pt}
+    \fancyfoot[L]{\raisebox{-0.5cm}{\includegraphics[height=1.2cm]{logo ubb.png}}}
+    \fancyfoot[C]{%
+        \begin{minipage}[b]{8cm}\centering
+            \footnotesize\textcolor{ubbblue}{\textbf{Dr.\ Arturo Fern\'andez P\'erez}}\\
+            \scriptsize Departamento de F\'isica -- Universidad del B\'io-B\'io\\
+            \scriptsize \textit{Electro\_Asistente\_AI-UBB}\\
+            \tiny P\'agina \thepage\ de \pageref{LastPage}
+        \end{minipage}}
+    \fancyfoot[R]{\raisebox{-0.5cm}{\includegraphics[height=1.2cm]{logo dfis.png}}}
+}
+
+\begin{document}
+
+\begin{center}
+    \includegraphics[height=2cm]{logo ubb.png}\\[0.3cm]
+    {\large\textcolor{ubbblue}{\textbf{UNIVERSIDAD DEL B\'IO-B\'IO}}}\\[0.1cm]
+    {\normalsize Facultad de Ciencias -- Departamento de F\'isica}
+\end{center}
+
+\vspace{0.3cm}\hrule height 1pt\vspace{0.5cm}
+
+{\centering\Large\textbf{Problema resuelto en la clase del 28/08}\par}
+{\centering\normalsize\textit{Fuerza y campo el\'ectrico de un sistema de cargas puntuales}\par}
+
+\vspace{0.5cm}
+
+%========================================================
+% ENUNCIADO
+%========================================================
+\noindent\textbf{Enunciado.} Tres cargas puntuales $q_1=+9$ [nC], $q_2=-5$ [nC] y $q_3=-4$ [nC] se
+ubican en un sistema de referencia con coordenadas (en cent\'imetros)
+\[
+    q_1:(3,\,-5,\,0),\qquad q_2:(6,\,10,\,-4),\qquad q_3:(0,\,0,\,5).
+\]
+Determine: \textbf{(a)} la fuerza el\'ectrica total sobre la carga $q_3$; \textbf{(b)} el campo
+el\'ectrico total en el punto $P(-5,\,-6,\,-2)$ [cm]. Exprese los resultados con \textbf{3 decimales}.
+
+\secgap
+
+\noindent
+\begin{minipage}[t]{0.40\textwidth}
+\centering
+\vspace{0pt}
+\begin{tikzpicture}[scale=1.0, >=Stealth, line width=0.8pt,
+    x={(-0.12cm,-0.082cm)}, y={(0.24cm,0cm)}, z={(0cm,0.24cm)}]
+    % ejes
+    \draw[->,gray] (0,0,0)--(9,0,0) node[below,black,font=\scriptsize]{$x$ [cm]};
+    \draw[->,gray] (0,0,0)--(0,12.5,0) node[right,black,font=\scriptsize]{$y$ [cm]};
+    \draw[->,gray] (0,0,0)--(0,0,6.6) node[above,black,font=\scriptsize]{$z$ [cm]};
+    \fill (0,0,0) circle(1.1pt); \node[font=\scriptsize,below left] at (0,0,0){$O$};
+    % cargas y punto P
+    \filldraw[red!80!black]  (3,-5,0)   circle(2.3pt);
+        \node[red!70!black,font=\scriptsize]  at (3,-5,1.1){$q_1(+)$};
+    \filldraw[cargazul]      (6,10,-4)  circle(2.3pt);
+        \node[cargazul,font=\scriptsize]      at (6,10.6,-4){$q_2(-)$};
+    \filldraw[cargazul]      (0,0,5)    circle(2.3pt);
+        \node[cargazul,font=\scriptsize]      at (0.6,0,5.8){$q_3(-)$};
+    \filldraw[orange!85!black] (-5,-6,-2) circle(2.3pt);
+        \node[orange!80!black,font=\scriptsize] at (-5,-6,-3.1){$P$};
+\end{tikzpicture}\\[2pt]
+{\scriptsize Cargas $q_1,q_2,q_3$ y punto de evaluaci\'on $P$ (coordenadas en cm).}
+\end{minipage}%
+\hfill
+\begin{minipage}[t]{0.56\textwidth}
+\vspace{0pt}
+\textbf{Ley de Coulomb (forma vectorial).} La fuerza que la carga $q_i$ ejerce sobre $q_j$ y el campo
+de $q_i$ en un punto de posici\'on $\vec r$ son
+\[
+    \vec F_{ji} = K\,\frac{q_j q_i}{\lVert \vec r_j-\vec r_i\rVert^{3}}\,(\vec r_j-\vec r_i),
+\]
+\[
+    \vec E_i(\vec r) = K\,\frac{q_i}{\lVert \vec r-\vec r_i\rVert^{3}}\,(\vec r-\vec r_i),
+\]
+con $K=9\times10^{9}\ \tfrac{\text{N}\,\text{m}^2}{\text{C}^2}$. Conviene pasar las posiciones a metros:
+\[
+    \vec r_1 = 0{,}03\,\ii - 0{,}05\,\jj,
+\]
+\[
+    \vec r_2 = 0{,}06\,\ii + 0{,}10\,\jj - 0{,}04\,\kk,
+\]
+\[
+    \vec r_3 = 0{,}05\,\kk \quad[\text{m}].
+\]
+\end{minipage}
+
+\secgap
+
+%========================================================
+% PARTE (a)
+%========================================================
+\noindent\textbf{(a) Fuerza el\'ectrica total sobre $q_3$.}
+
+Por superposici\'on, $\vec F_3 = \vec F_{31} + \vec F_{32}$. Las posiciones relativas (de cada fuente
+a $q_3$) y sus m\'odulos son
+\[
+    \vec r_3-\vec r_1 = -0{,}03\,\ii + 0{,}05\,\jj + 0{,}05\,\kk,\qquad
+    \lVert \vec r_3-\vec r_1\rVert = \sqrt{0{,}03^2+0{,}05^2+0{,}05^2} = 0{,}077,
+\]
+\[
+    \vec r_3-\vec r_2 = -0{,}06\,\ii - 0{,}10\,\jj + 0{,}09\,\kk,\qquad
+    \lVert \vec r_3-\vec r_2\rVert = \sqrt{0{,}06^2+0{,}10^2+0{,}09^2} = 0{,}147.
+\]
+
+\noindent\textbf{Fuerza de $q_1$ sobre $q_3$:}
+\begin{align*}
+    \vec F_{31} &= K\frac{q_3 q_1}{\lVert \vec r_3-\vec r_1\rVert^{3}}(\vec r_3-\vec r_1)
+    = \frac{(9\times10^{9})(-4\times10^{-9})(9\times10^{-9})}{(0{,}077)^{3}}
+      (-0{,}03\,\ii + 0{,}05\,\jj + 0{,}05\,\kk)\\
+    &= 2{,}120\times10^{-5}\,\ii - 3{,}550\times10^{-5}\,\jj - 3{,}550\times10^{-5}\,\kk\ [\text{N}].
+\end{align*}
+
+\noindent\textbf{Fuerza de $q_2$ sobre $q_3$:}
+\begin{align*}
+    \vec F_{32} &= K\frac{q_3 q_2}{\lVert \vec r_3-\vec r_2\rVert^{3}}(\vec r_3-\vec r_2)
+    = \frac{(9\times10^{9})(-4\times10^{-9})(-5\times10^{-9})}{(0{,}147)^{3}}
+      (-0{,}06\,\ii - 0{,}10\,\jj + 0{,}09\,\kk)\\
+    &= -3{,}390\times10^{-6}\,\ii - 5{,}670\times10^{-6}\,\jj + 5{,}100\times10^{-6}\,\kk\ [\text{N}].
+\end{align*}
+
+\noindent\textbf{Fuerza total} (suma componente a componente):
+\[
+    \boxed{\vec F_3 = 1{,}781\times10^{-5}\,\ii - 4{,}117\times10^{-5}\,\jj - 3{,}040\times10^{-5}\,\kk\ [\text{N}]}
+\]
+
+\secgap
+
+%========================================================
+% PARTE (b)
+%========================================================
+\noindent\textbf{(b) Campo el\'ectrico total en $P(-5,-6,-2)$ cm.}
+
+Por superposici\'on, $\vec E = \vec E_1 + \vec E_2 + \vec E_3$, con $\vec r_P = -0{,}05\,\ii - 0{,}06\,\jj
+- 0{,}02\,\kk$ [m]. Las posiciones relativas (de cada carga al punto $P$) y sus m\'odulos:
+\[
+    \vec r_P-\vec r_1 = -0{,}08\,\ii - 0{,}01\,\jj - 0{,}02\,\kk,\qquad
+    \lVert \vec r_P-\vec r_1\rVert = \sqrt{0{,}08^2+0{,}01^2+0{,}02^2} = 0{,}083,
+\]
+\[
+    \vec r_P-\vec r_2 = -0{,}11\,\ii - 0{,}16\,\jj + 0{,}02\,\kk,\qquad
+    \lVert \vec r_P-\vec r_2\rVert = \sqrt{0{,}11^2+0{,}16^2+0{,}02^2} = 0{,}195,
+\]
+\[
+    \vec r_P-\vec r_3 = -0{,}05\,\ii - 0{,}06\,\jj - 0{,}07\,\kk,\qquad
+    \lVert \vec r_P-\vec r_3\rVert = \sqrt{0{,}05^2+0{,}06^2+0{,}07^2} = 0{,}105.
+\]
+
+\noindent\textbf{Campo de cada carga en $P$:}
+\begin{align*}
+    \vec E_1 &= \frac{(9\times10^{9})(9\times10^{-9})}{(0{,}083)^{3}}(-0{,}08\,\ii - 0{,}01\,\jj - 0{,}02\,\kk)
+    = -11332{,}9\,\ii - 1416{,}6\,\jj - 2833{,}2\,\kk,\\
+    \vec E_2 &= \frac{(9\times10^{9})(-5\times10^{-9})}{(0{,}195)^{3}}(-0{,}11\,\ii - 0{,}16\,\jj + 0{,}02\,\kk)
+    = 667{,}6\,\ii + 971{,}0\,\jj - 121{,}4\,\kk,\\
+    \vec E_3 &= \frac{(9\times10^{9})(-4\times10^{-9})}{(0{,}105)^{3}}(-0{,}05\,\ii - 0{,}06\,\jj - 0{,}07\,\kk)
+    = 1554{,}9\,\ii + 1865{,}9\,\jj + 2176{,}9\,\kk,
+\end{align*}
+todos en [N/C].
+
+\noindent\textbf{Campo total} (superposici\'on):
+\[
+    \boxed{\vec E = -9110{,}4\,\ii + 1420{,}3\,\jj - 777{,}7\,\kk\ \left[\tfrac{\text{N}}{\text{C}}\right]}
+\]
+cuya magnitud es $\lVert\vec E\rVert = \sqrt{9110{,}4^2 + 1420{,}3^2 + 777{,}7^2} \approx 9{,}253\times10^{3}$ [N/C].
+
+\end{document}
