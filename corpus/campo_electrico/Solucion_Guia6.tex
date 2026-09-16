@@ -1,0 +1,329 @@
+\documentclass[12pt,letterpaper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[spanish,es-noshorthands]{babel}
+\usepackage{amsmath,amssymb}
+\usepackage{graphicx}
+\usepackage{xcolor}
+\usepackage{tikz}
+\usetikzlibrary{3d,calc,arrows.meta,decorations.markings,patterns}
+\usepackage[top=2.5cm, bottom=2.7cm, left=2cm, right=2cm, footskip=40pt]{geometry}
+\usepackage{fancyhdr}
+\usepackage{lastpage}
+
+\definecolor{ubbblue}{RGB}{0,51,102}
+\definecolor{cargazul}{RGB}{40,40,210}
+\definecolor{cargarojo}{RGB}{210,40,40}
+
+\newcommand{\secgap}{\vspace{0.55cm}}
+\newcommand{\problema}[1]{\noindent{\large\textcolor{ubbblue}{\textbf{#1}}}\par\smallskip}
+
+\pagestyle{fancy}
+\fancyhf{}
+\renewcommand{\headrulewidth}{0pt}
+\renewcommand{\footrulewidth}{0.4pt}
+\fancyfoot[L]{\raisebox{-0.5\height}{\includegraphics[height=1.1cm]{logo ubb.png}}}
+\fancyfoot[C]{%
+    \begin{minipage}[c]{8cm}\centering
+        \footnotesize\textcolor{ubbblue}{\textbf{Dr.\ Arturo Fern\'andez P\'erez}}\\
+        \scriptsize Departamento de F\'isica -- Universidad del B\'io-B\'io\\
+        \scriptsize \textit{Electro\_Asistente\_AI-UBB}\\
+        \tiny P\'agina \thepage\ de \pageref{LastPage}
+    \end{minipage}}
+\fancyfoot[R]{\raisebox{-0.5\height}{\includegraphics[height=1.1cm]{logo dfis.png}}}
+\fancypagestyle{plain}{%
+    \fancyhf{}
+    \renewcommand{\headrulewidth}{0pt}
+    \renewcommand{\footrulewidth}{0.4pt}
+    \fancyfoot[L]{\raisebox{-0.5\height}{\includegraphics[height=1.1cm]{logo ubb.png}}}
+    \fancyfoot[C]{%
+        \begin{minipage}[c]{8cm}\centering
+            \footnotesize\textcolor{ubbblue}{\textbf{Dr.\ Arturo Fern\'andez P\'erez}}\\
+            \scriptsize Departamento de F\'isica -- Universidad del B\'io-B\'io\\
+            \scriptsize \textit{Electro\_Asistente\_AI-UBB}\\
+            \tiny P\'agina \thepage\ de \pageref{LastPage}
+        \end{minipage}}
+    \fancyfoot[R]{\raisebox{-0.5\height}{\includegraphics[height=1.1cm]{logo dfis.png}}}
+}
+
+\begin{document}
+
+\begin{center}
+    \includegraphics[height=2cm]{logo ubb.png}\\[0.3cm]
+    {\large\textcolor{ubbblue}{\textbf{UNIVERSIDAD DEL B\'IO-B\'IO}}}\\[0.1cm]
+    {\normalsize Facultad de Ciencias -- Departamento de F\'isica}
+\end{center}
+
+\vspace{0.3cm}\hrule height 1pt\vspace{0.5cm}
+
+{\centering\Large\textbf{Problemas Resueltos de la Gu\'ia 6}\par}
+{\centering\normalsize\textit{F\'isica II -- Electromagnetismo \quad(Potencial y energ\'ia el\'ectrica)}\par}
+
+\vspace{0.2cm}
+{\centering\footnotesize $k=\dfrac{1}{4\pi\varepsilon_0}=9\times10^{9}\ \mathrm{N\,m^2/C^2}$\par}
+
+\vspace{0.5cm}
+
+%=====================================================================
+% PROBLEMA 1
+%=====================================================================
+\problema{Problema 1. Energ\'ia potencial y trabajo}
+
+\noindent Una carga se mueve del punto $a$ al punto $b$. Se conoce su energ\'ia potencial en $a$,
+$U_a=5{,}4\times10^{-8}$ J, y el trabajo realizado por la fuerza el\'ectrica al ir de $a$ a $b$,
+$W_{a\to b}=-1{,}9\times10^{-8}$ J. Determine $U_b$.
+
+\smallskip
+\noindent El trabajo de la fuerza el\'ectrica es igual a la \emph{disminuci\'on} de energ\'ia potencial:
+\[
+    W_{a\to b}=U_a-U_b\quad\Longrightarrow\quad U_b=U_a-W_{a\to b}.
+\]
+\[
+    U_b=5{,}4\times10^{-8}-(-1{,}9\times10^{-8})
+    \quad\Longrightarrow\quad
+    \boxed{\ U_b=7{,}3\times10^{-8}\ \text{J}\ }
+\]
+Como $W_{a\to b}<0$, la energ\'ia potencial \emph{aumenta} ($U_b>U_a$): la fuerza el\'ectrica se opuso al
+desplazamiento.
+
+\secgap
+
+%=====================================================================
+% PROBLEMA 3
+%=====================================================================
+\problema{Problema 3. Trabajo, diferencia de potencial y campo uniforme}
+
+\noindent Al mover una carga $q=4{,}2\times10^{-9}$ C de $a$ a $b$ (separaci\'on $d_{ab}=0{,}06$ m,
+campo uniforme paralelo al desplazamiento) la fuerza el\'ectrica realiza un trabajo
+$W_{a\to b}=\Delta U=1{,}5\times10^{-6}$ J.
+
+\medskip
+\begin{center}
+\begin{tikzpicture}[scale=1.0, >=Stealth, line width=0.8pt]
+    % campo uniforme (flechas) apuntando a la izquierda
+    \foreach \yy in {-0.5,0,0.5}{\draw[->,ubbblue] (5.4,\yy)--(4.4,\yy);}
+    \node[ubbblue,font=\small] at (5.7,0){$\vec E$};
+    % puntos a y b
+    \filldraw[black] (4,0) circle (2.4pt); \node[below,font=\small] at (4,-0.2){$b$};
+    \filldraw[black] (0.6,0) circle (2.4pt); \node[below,font=\small] at (0.6,-0.2){$a$};
+    % desplazamiento a->b
+    \draw[->,gray] (0.6,0.55)--(4,0.55) node[midway,above,font=\scriptsize]{$q$ se mueve $a\to b$};
+    % cota d
+    \draw[<->,gray] (0.6,-0.7)--(4,-0.7) node[midway,below,font=\scriptsize]{$d_{ab}=0{,}06$ m};
+\end{tikzpicture}
+\end{center}
+
+\secgap
+
+\noindent\textbf{(a)} El trabajo coincide con la variaci\'on de energ\'ia:
+$\ \boxed{W_{a\to b}=\Delta U=1{,}5\times10^{-6}\ \text{J}}$.
+
+\smallskip
+\noindent\textbf{(b)} Diferencia de potencial entre $a$ y $b$, con $W_{a\to b}=q\,(V_a-V_b)$:
+\[
+    V_a-V_b=\frac{W_{a\to b}}{q}=\frac{1{,}5\times10^{-6}}{4{,}2\times10^{-9}}
+    \quad\Longrightarrow\quad
+    \boxed{\ V_a-V_b=357{,}1\ \text{V}\ }
+\]
+
+\smallskip
+\noindent\textbf{(c)} Para un campo uniforme paralelo al desplazamiento, $V_a-V_b=E\,d_{ab}$:
+\[
+    E=\frac{V_a-V_b}{d_{ab}}=\frac{357{,}1}{0{,}06}
+    \quad\Longrightarrow\quad
+    \boxed{\ E=5{,}95\times10^{3}\ \tfrac{\text{N}}{\text{C}}\ }
+\]
+
+\secgap
+
+%=====================================================================
+% PROBLEMA 4
+%=====================================================================
+\problema{Problema 4. Energ\'ia de tres cargas colineales y equipartici\'on}
+
+\noindent Tres cargas iguales $q=2\ \mu$C, de masas $m_1=0{,}02$ kg, $m_2=0{,}085$ kg y $m_3=0{,}02$ kg,
+alineadas y separadas una distancia $d=0{,}08$ m entre vecinas.
+
+\medskip
+\begin{center}
+\begin{tikzpicture}[scale=1.0, >=Stealth, line width=0.8pt]
+    \foreach \xx/\nm/\ms in {0/m_1/{0{,}02}, 3/m_2/{0{,}085}, 6/m_3/{0{,}02}}{
+        \filldraw[cargazul] (\xx,0) circle (3.2pt);
+        \node[cargazul,font=\small,above] at (\xx,0.2){$\nm$};
+        \node[font=\scriptsize,below] at (\xx,-0.2){$\ms$ kg};
+    }
+    \draw[<->,gray] (0,-0.9)--(3,-0.9) node[midway,below,font=\scriptsize]{$d$};
+    \draw[<->,gray] (3,-0.9)--(6,-0.9) node[midway,below,font=\scriptsize]{$d$};
+    \node[font=\scriptsize] at (7.1,0){$q=2\,\mu$C};
+\end{tikzpicture}
+\end{center}
+
+\secgap
+
+\noindent\textbf{Energ\'ia potencial del sistema.} Sumando las tres parejas ($d_{13}=2d$):
+\[
+    U=k\!\left[\frac{q_1q_2}{d}+\frac{q_2q_3}{d}+\frac{q_1q_3}{2d}\right]
+    =\frac{kq^{2}}{d}\left[1+1+\tfrac12\right]
+    =\frac{(9\times10^{9})(2\times10^{-6})^{2}}{0{,}08}\,(2{,}5)
+    =\boxed{1{,}125\ \text{J}}
+\]
+
+\smallskip
+\noindent\textbf{Rapideces al liberar el sistema.} Al soltarse, las cargas se alejan hasta el infinito
+($U\to0$); por conservaci\'on, toda la energ\'ia potencial se convierte en cin\'etica:
+$K_f=U=1{,}125$ J. Por el \emph{principio de equipartici\'on} la energ\'ia se reparte en partes iguales
+entre las tres part\'iculas, de modo que cada una recibe
+\[
+    K_i=\frac{U}{3}=\frac{1{,}125}{3}=0{,}375\ \text{J}\qquad(i=1,2,3).
+\]
+Con $\tfrac12 m_i v_i^{2}=K_i$:
+\begin{align*}
+    v_1=v_3&=\sqrt{\frac{2\,(0{,}375)}{0{,}02}}=\boxed{6{,}12\ \tfrac{\text{m}}{\text{s}}},\\[2pt]
+    v_2&=\sqrt{\frac{2\,(0{,}375)}{0{,}085}}=\boxed{2{,}97\ \tfrac{\text{m}}{\text{s}}}.
+\end{align*}
+La carga central ($m_2$ mayor) alcanza menor rapidez, como espera la equipartici\'on de energ\'ia.
+
+\secgap
+
+%=====================================================================
+% PROBLEMA 7
+%=====================================================================
+\problema{Problema 7. Energ\'ia de un sistema y potencial en varios puntos}
+
+\noindent Tres cargas en el plano (coordenadas en metros): $q_1=2\,\mu$C en $(0,0)$, $q_2=-6\,\mu$C en
+$(0,3)$ y $q_3=3\,\mu$C en $(4,0)$ (tri\'angulo $3$-$4$-$5$).
+
+\medskip
+\noindent
+\begin{minipage}[c]{0.36\textwidth}
+\centering
+\begin{tikzpicture}[scale=0.72, >=Stealth, line width=0.8pt]
+    \draw[->,gray] (-0.7,0)--(5,0) node[right,font=\scriptsize]{$x$};
+    \draw[->,gray] (0,-0.7)--(0,4) node[above,font=\scriptsize]{$y$};
+    \filldraw[cargazul] (0,0) circle (3.4pt); \node[cargazul,below left,font=\scriptsize] at (0,0){$q_1$};
+    \filldraw[cargarojo] (0,3) circle (3.4pt); \node[cargarojo,left,font=\scriptsize] at (0,3){$q_2$};
+    \filldraw[cargazul] (4,0) circle (3.4pt); \node[cargazul,below,font=\scriptsize] at (4,-0.1){$q_3$};
+    % triangulo
+    \draw[gray!60] (0,0)--(0,3)--(4,0)--cycle;
+    % puntos de evaluacion a=(2,1), b=(4,2)
+    \filldraw[black] (2,1) circle (2.4pt); \node[font=\scriptsize,above right] at (2,1){$a$};
+    \filldraw[black] (4,2) circle (2.4pt); \node[font=\scriptsize,right] at (4.1,2){$b$};
+\end{tikzpicture}\\[2pt]
+{\scriptsize Figura P7 (distancias en m).}
+\end{minipage}%
+\hfill
+\begin{minipage}[c]{0.60\textwidth}
+\textbf{Energ\'ia del sistema} ($d_{12}=3$, $d_{13}=4$, $d_{23}=5$):
+\[
+    U=k\!\left[\frac{q_1q_2}{3}+\frac{q_1q_3}{4}+\frac{q_2q_3}{5}\right]
+    =\boxed{-0{,}0549\ \text{J}}
+\]
+El signo negativo indica un sistema \emph{ligado} (predomina la atracci\'on de $q_2<0$).
+\end{minipage}
+
+\secgap
+
+\noindent\textbf{Potencial en $a=(2,1)$.} Distancias: a $q_1$, $\sqrt5$; a $q_2$, $\sqrt8$; a $q_3$, $\sqrt5$.
+\[
+    V_a=k\!\left[\frac{2\times10^{-6}}{\sqrt5}+\frac{-6\times10^{-6}}{\sqrt8}+\frac{3\times10^{-6}}{\sqrt5}\right]
+    \quad\Longrightarrow\quad
+    \boxed{\ V_a=1032{,}7\ \text{V}\ }
+\]
+
+\smallskip
+\noindent\textbf{Potencial en $b=(4,2)$.} Distancias: a $q_1$, $\sqrt{20}$; a $q_2$, $\sqrt{17}$; a $q_3$, $2$.
+\[
+    V_b=k\!\left[\frac{2\times10^{-6}}{\sqrt{20}}+\frac{-6\times10^{-6}}{\sqrt{17}}+\frac{3\times10^{-6}}{2}\right]
+    \quad\Longrightarrow\quad
+    \boxed{\ V_b=4428\ \text{V}\ }
+\]
+(El potencial es una suma \emph{escalar}: no requiere descomposici\'on vectorial.)
+
+\secgap
+
+%=====================================================================
+% PROBLEMA 10
+%=====================================================================
+\problema{Problema 10. Potencial en el eje de un anillo con dos arcos}
+
+\noindent Un anillo de radio $R=0{,}12$ m se divide en dos arcos: $Q_1=8\times10^{-9}$ C sobre el arco
+$\tfrac{3\pi}{2}\le\theta\le2\pi$ (un cuarto) y $Q_2=-48\times10^{-9}$ C sobre el arco
+$0\le\theta\le\tfrac{3\pi}{2}$ (tres cuartos). Determine el potencial en el eje.
+
+\medskip
+\noindent
+\begin{minipage}[c]{0.34\textwidth}
+\centering
+\begin{tikzpicture}[scale=1.0, >=Stealth, line width=0.8pt,
+    x={(-0.5cm,-0.34cm)}, y={(1cm,0cm)}, z={(0cm,1cm)}]
+    \def\R{1.6}
+    % arco Q2 (tres cuartos, negativo -> rojo): theta 0 a 270
+    \draw[cargarojo,line width=2.2pt]
+        plot[domain=0:270,samples=60,variable=\t] ({\R*cos(\t)},{\R*sin(\t)},0);
+    % arco Q1 (un cuarto, positivo -> azul): theta 270 a 360
+    \draw[cargazul,line width=2.2pt]
+        plot[domain=270:360,samples=30,variable=\t] ({\R*cos(\t)},{\R*sin(\t)},0);
+    \node[cargarojo,font=\scriptsize] at ({\R*cos(120)},{\R*sin(120)},0.3){$Q_2$};
+    \node[cargazul,font=\scriptsize] at ({\R*cos(315)},{\R*sin(315)},-0.35){$Q_1$};
+    % eje z y punto P
+    \draw[->,gray] (0,0,-0.3)--(0,0,2.4) node[above,font=\scriptsize]{eje};
+    \fill (0,0,0) circle (1.2pt); \node[font=\tiny,below left] at (0,0,0){$O$};
+    \draw[->,gray] (0,0,0)--({\R*cos(35)},{\R*sin(35)},0);
+    \node[font=\tiny] at ({0.55*\R*cos(35)},{0.55*\R*sin(35)},0.16){$R$};
+    \filldraw[black] (0,0,1.7) circle (1.6pt); \node[right,font=\scriptsize] at (0,0.05,1.7){$P$};
+    \draw[dashed,gray] ({\R*cos(35)},{\R*sin(35)},0)--(0,0,1.7);
+    \node[font=\tiny,left] at (0,-0.05,0.95){$D$};
+\end{tikzpicture}\\[2pt]
+{\scriptsize Figura P10. Distancia elemento--$P$: $\sqrt{D^2+R^2}$.}
+\end{minipage}%
+\hfill
+\begin{minipage}[c]{0.62\textwidth}
+Todo elemento $dq$ del anillo est\'a a la misma distancia $\sqrt{D^{2}+R^{2}}$ del punto $P$ del eje,
+por lo que ($dV=k\,dq/\sqrt{D^2+R^2}$):
+\[
+    V=\frac{k}{\sqrt{D^{2}+R^{2}}}\int dq
+    =\frac{k\,(Q_1+Q_2)}{\sqrt{D^{2}+R^{2}}}.
+\]
+Con densidades $\lambda_1=\dfrac{Q_1}{R\,(\pi/2)}=4{,}24\times10^{-8}$ C/m y
+$\lambda_2=\dfrac{Q_2}{R\,(3\pi/2)}=-8{,}49\times10^{-8}$ C/m, se recupera el mismo resultado al integrar
+$\lambda R\,d\theta$ sobre cada arco.
+\end{minipage}
+
+\secgap
+
+\noindent Con $Q_1+Q_2=8-48=-40$ nC:
+
+\smallskip
+\noindent\textbf{En el centro} ($D=0$):
+\[
+    V=\frac{k\,(Q_1+Q_2)}{R}=\frac{(9\times10^{9})(-40\times10^{-9})}{0{,}12}
+    \quad\Longrightarrow\quad
+    \boxed{\ V=-3000\ \text{V}\ }
+\]
+
+\smallskip
+\noindent\textbf{En el eje}, a $D=0{,}08$ m:
+\[
+    V=\frac{(9\times10^{9})(-40\times10^{-9})}{\sqrt{0{,}12^{2}+0{,}08^{2}}}
+    \quad\Longrightarrow\quad
+    \boxed{\ V=-2496\ \text{V}\ }
+\]
+
+\secgap
+
+%=====================================================================
+% RELACIONES UTILIZADAS
+%=====================================================================
+\begin{center}
+\renewcommand{\arraystretch}{1.6}
+\begin{tabular}{|l|c|}
+\hline
+\textbf{Concepto} & \textbf{Relaci\'on} \\ \hline
+Trabajo y energ\'ia potencial & $W_{a\to b}=U_a-U_b=q\,(V_a-V_b)$ \\ \hline
+Energ\'ia de un par de cargas & $U=\dfrac{k\,q_i q_j}{r_{ij}}$ \\ \hline
+Potencial de una carga puntual & $V=\dfrac{k\,q}{r}$ \\ \hline
+Campo uniforme & $V_a-V_b=E\,d$ \\ \hline
+Conservaci\'on de energ\'ia & $K_i+U_i=K_f+U_f$ \\ \hline
+\end{tabular}
+\end{center}
+
+\end{document}
