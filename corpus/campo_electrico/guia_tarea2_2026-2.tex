@@ -1,0 +1,199 @@
+% Sections won't have numbers
+% Make the page area as large as possible
+% Set the first level numbering to arabic and the second level
+% to alphabetic. The remaining two levels are arabic
+%Change to \pagestyle{empty} to suppress numbers on following pages
+%\pagestyle{empty}
+% Do not reset outermost enumerate counter
+
+
+\documentclass[onecolumn]{article}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\usepackage{amsmath}
+\usepackage{sw20exm2}
+\usepackage[compat2]{geometry}
+
+\setcounter{MaxMatrixCols}{10}
+%TCIDATA{OutputFilter=LATEX.DLL}
+%TCIDATA{Version=5.50.0.2953}
+%TCIDATA{<META NAME="SaveForMode" CONTENT="1">}
+%TCIDATA{BibliographyScheme=Manual}
+%TCIDATA{Created=Sunday, August 26, 2012 12:26:36}
+%TCIDATA{LastRevised=Monday, September 14, 2026 16:43:40}
+%TCIDATA{<META NAME="ViewSettings" CONTENT="0">}
+%TCIDATA{<META NAME="GraphicsSave" CONTENT="32">}
+%TCIDATA{<META NAME="DocumentShell" CONTENT="Exams and Syllabi\SW\SW Exam #1 - 8.5x14 Page">}
+%TCIDATA{CSTFile=Exam.cst}
+
+\setlength{\topmargin}{-0.75in}
+\setlength{\textheight}{12.25in}
+\setlength{\oddsidemargin}{0.0in}
+\setlength{\evensidemargin}{0.0in}
+\setlength{\textwidth}{6.5in}
+\def\labelenumi{\arabic{enumi}.}
+\def\theenumi{\arabic{enumi}}
+\def\labelenumii{(\alph{enumii})}
+\def\theenumii{\alph{enumii}}
+\def\p@enumii{\theenumi.}
+\def\labelenumiii{\arabic{enumiii}.}
+\def\theenumiii{\arabic{enumiii}}
+\def\p@enumiii{(\theenumi)(\theenumii)}
+\def\labelenumiv{\arabic{enumiv}.}
+\def\theenumiv{\arabic{enumiv}}
+\def\p@enumiv{\p@enumiii.\theenumiii}
+\pagestyle{plain}
+\setcounter{secnumdepth}{0}
+\newtheorem{theorem}{Theorem}
+\newtheorem{acknowledgement}[theorem]{Acknowledgement}
+\newtheorem{algorithm}[theorem]{Algorithm}
+\newtheorem{axiom}[theorem]{Axiom}
+\newtheorem{case}[theorem]{Case}
+\newtheorem{claim}[theorem]{Claim}
+\newtheorem{conclusion}[theorem]{Conclusion}
+\newtheorem{condition}[theorem]{Condition}
+\newtheorem{conjecture}[theorem]{Conjecture}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{criterion}[theorem]{Criterion}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{example}[theorem]{Example}
+\newtheorem{exercise}[theorem]{Exercise}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{notation}[theorem]{Notation}
+\newtheorem{problem}[theorem]{Problem}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{remark}[theorem]{Remark}
+\newtheorem{solution}[theorem]{Solution}
+\newtheorem{summary}[theorem]{Summary}
+\newenvironment{proof}[1][Proof]{\noindent\textbf{#1.} }{\ \rule{0.5em}{0.5em}}
+\input{tcilatex}
+\begin{document}
+
+
+\begin{center}
+\begin{equation*}
+\FRAME{itbpF}{1.0525in}{0.7515in}{0in}{}{}{Figure}{\special{language
+"Scientific Word";type "GRAPHIC";maintain-aspect-ratio TRUE;display
+"USEDEF";valid_file "T";width 1.0525in;height 0.7515in;depth
+0in;original-width 2.3168in;original-height 1.6466in;cropleft "0";croptop
+"1";cropright "1";cropbottom "0";tempfilename
+'TKA6AM00.bmp';tempfile-properties "XPR";}}
+\end{equation*}%
+\textbf{F\'{\i}sica II (2026-2)}
+
+\textbf{Tarea 2}\emph{: Ley de Gauss y Potencial El\'{e}ctrico}
+
+\textit{Profesor: Arturo Fern\'{a}ndez P\'{e}rez}
+
+\textbf{Plazo de Entrega: Mi\'{e}rcoles 23 de septiembre a las 21:00 hrs.}
+\end{center}
+
+\begin{enumerate}
+\item Una esfera macisa de material aislante con radio $a=5$ [cm] tiene una
+carga  $q_{1}=-6$ [nC] distribu\'{\i}da uniformemente en su volumen. Est\'{a}
+rodeada de un cascar\'{o}n esf\'{e}rico conductor de radio interior $b=8$
+[cm]\thinspace\ y radio exterior $c=9$ [cm], que tiene una carga $q_{2}=3$
+[nC], como muestra la Fig. 1.
+
+\begin{enumerate}
+\item Determine la densidad volum\'{e}trica de carga $\rho $ de la esfera
+aislante.
+
+\item Utilizando la Ley de Gauss, determine la magnitud del campo el\'{e}%
+ctrico $E$ en las regiones $r<a,$ $a<r<b\,,$ $b<r<c$ y $r>c.$
+
+\item Determine las densidades de carga superficiales $\sigma _{int\text{ }}$%
+y $\sigma _{ext}$ que distribuyen en las caras interior y exterior del cascar%
+\'{o}n esf\'{e}rico conductor, respectivamente.%
+\begin{equation*}
+\FRAME{itbpFU}{2.751in}{2.6792in}{0in}{\Qcb{Figura 1}}{}{Figure}{\special%
+{language "Scientific Word";type "GRAPHIC";maintain-aspect-ratio
+TRUE;display "USEDEF";valid_file "T";width 2.751in;height 2.6792in;depth
+0in;original-width 8.3411in;original-height 8.1215in;cropleft "0";croptop
+"1";cropright "1";cropbottom "0";tempfilename
+'TLCXI900.bmp';tempfile-properties "XPR";}}
+\end{equation*}%
+\pagebreak 
+\end{enumerate}
+
+\item Un cilindro conductor de radio $a=4$ [mm] y densidad de carga lineal $%
+\lambda _{1}=14$ [$\mu C/m$]est\'{a} rodeado de otro cascar\'{o}n cil\'{\i}%
+ndrico conductor, de radio $b=9$ [mm] y espesor desprecible, con una
+densidad de carga $\lambda _{2}=-20$ [$\mu C/m$]. Si ambos cilindros tiene
+una longitud $L=1,2$ [m]
+
+\begin{enumerate}
+\item Determine la carga total en c/u de ellos.
+
+\item Usando la ley de Gauss, determine la magnitud del campo el\'{e}ctrico
+en las regiones $r<a\,,a<r<b$ , $r>b$%
+\begin{equation*}
+\FRAME{itbpFU}{2.0375in}{2.1776in}{0in}{\Qcb{Figura 2}}{}{Figure}{\special%
+{language "Scientific Word";type "GRAPHIC";maintain-aspect-ratio
+TRUE;display "USEDEF";valid_file "T";width 2.0375in;height 2.1776in;depth
+0in;original-width 8.585in;original-height 9.1834in;cropleft "0";croptop
+"1";cropright "1";cropbottom "0";tempfilename
+'TLCZ2P01.bmp';tempfile-properties "XPR";}}
+\end{equation*}
+\end{enumerate}
+
+\item Un sistema de cuatro cargas puntuales se ubican en un sistema de
+referencia cartesiano, cuyas posiciones c/r al origen se muestran en la Fig.
+3. Sus cargas son $q_{1}=-4Q$, $q_{2}=2Q$, $q_{3}=-3Q$, $q_{4}=4Q$.\
+Considerando que $Q=12,0$ [$n$C] y que $d=7,0$ [cm],
+
+\begin{enumerate}
+\item Determine la energ\'{\i}a potencial el\'{e}ctrica $U$ del sistema de
+cargas.
+
+\item Determine el potencial el\'{e}ctrico total $V$ en el punto $P$, de
+coordenadas $\vec{r}_{P}=-0,1\hat{\imath}-0,2\hat{\jmath}$ [m] 
+\begin{equation*}
+\FRAME{itbpF}{2.188in}{2.0505in}{0in}{}{}{Figure}{\special{language
+"Scientific Word";type "GRAPHIC";maintain-aspect-ratio TRUE;display
+"USEDEF";valid_file "T";width 2.188in;height 2.0505in;depth
+0in;original-width 9.2198in;original-height 8.6343in;cropleft "0";croptop
+"1";cropright "1";cropbottom "0";tempfilename
+'TLDCM202.bmp';tempfile-properties "XPR";}}
+\end{equation*}%
+\pagebreak 
+\end{enumerate}
+
+\item Un anillo cargado de radio $R=20$ [cm] tiene una carga total $Q=12$ [$%
+\mu C]$ distribu\'{\i}da uniformemente sobre \'{e}l. Determine el potencial
+el\'{e}ctrico en un punto sobre el eje del anillo, ubicado a una distancia $%
+z=15\,[cm]$ del centro del mismo, como muestra la Fig. 4. 
+\begin{equation*}
+\FRAME{itbpFU}{1.7841in}{2.2044in}{0in}{\Qcb{Figura 4}}{}{Figure}{\special%
+{language "Scientific Word";type "GRAPHIC";maintain-aspect-ratio
+TRUE;display "USEDEF";valid_file "T";width 1.7841in;height 2.2044in;depth
+0in;original-width 5.9637in;original-height 7.3786in;cropleft "0";croptop
+"1";cropright "1";cropbottom "0";tempfilename
+'TLDD1A03.bmp';tempfile-properties "XPR";}}
+\end{equation*}
+
+\item Dos cables con igual densidad lineal de carga uniforme $\lambda _{0}$
+se ubican como muestra la Fig. 5. Si el cable recto tiene una carga total $%
+Q_{1}=12$ [nC] y $R=10$ [cm]
+
+\begin{enumerate}
+\item Determine el valor de la densidad lineal $\lambda _{0}.$
+
+\item Determine la carga total $Q_{2}$ del alambre curvo.
+
+\item Determine el potencial el\'{e}ctrico $V_{1}\,$inducido por el cable
+recto en el origen.
+
+\item Determine el potencial el\'{e}ctrico $V_{2}$ inducido por el alambre
+curvo en el origen. 
+\begin{equation*}
+\FRAME{itbpF}{2.8548in}{2.4457in}{0in}{}{}{Figure}{\special{language
+"Scientific Word";type "GRAPHIC";maintain-aspect-ratio TRUE;display
+"USEDEF";valid_file "T";width 2.8548in;height 2.4457in;depth
+0in;original-width 6.1834in;original-height 5.2926in;cropleft "0";croptop
+"1";cropright "1";cropbottom "0";tempfilename
+'TLDD8I04.bmp';tempfile-properties "XPR";}}
+\end{equation*}
+\end{enumerate}
+\end{enumerate}
+
+\end{document}

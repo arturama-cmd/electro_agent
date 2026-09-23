@@ -1,0 +1,337 @@
+\documentclass[12pt,letterpaper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[spanish,es-noshorthands]{babel}
+\usepackage{amsmath,amssymb}
+\usepackage{graphicx}
+\usepackage{xcolor}
+\usepackage{tikz}
+\usetikzlibrary{3d,calc,arrows.meta,decorations.markings,patterns}
+\usepackage[top=2.5cm, bottom=2.7cm, left=2cm, right=2cm, footskip=40pt]{geometry}
+\usepackage{fancyhdr}
+\usepackage{lastpage}
+
+\definecolor{ubbblue}{RGB}{0,51,102}
+\definecolor{cargazul}{RGB}{40,40,210}
+\definecolor{cargarojo}{RGB}{210,40,40}
+
+\newcommand{\secgap}{\vspace{0.5cm}}
+\newcommand{\problema}[1]{\noindent{\large\textcolor{ubbblue}{\textbf{#1}}}\par\smallskip}
+
+\pagestyle{fancy}
+\fancyhf{}
+\renewcommand{\headrulewidth}{0pt}
+\renewcommand{\footrulewidth}{0.4pt}
+\fancyfoot[L]{\raisebox{-0.5\height}{\includegraphics[height=1.1cm]{logo ubb.png}}}
+\fancyfoot[C]{%
+    \begin{minipage}[c]{8cm}\centering
+        \footnotesize\textcolor{ubbblue}{\textbf{Dr.\ Arturo Fern\'andez P\'erez}}\\
+        \scriptsize Departamento de F\'isica -- Universidad del B\'io-B\'io\\
+        \scriptsize \textit{Electro\_Asistente\_AI-UBB}\\
+        \tiny P\'agina \thepage\ de \pageref{LastPage}
+    \end{minipage}}
+\fancyfoot[R]{\raisebox{-0.5\height}{\includegraphics[height=1.1cm]{logo dfis.png}}}
+\fancypagestyle{plain}{%
+    \fancyhf{}
+    \renewcommand{\headrulewidth}{0pt}
+    \renewcommand{\footrulewidth}{0.4pt}
+    \fancyfoot[L]{\raisebox{-0.5\height}{\includegraphics[height=1.1cm]{logo ubb.png}}}
+    \fancyfoot[C]{%
+        \begin{minipage}[c]{8cm}\centering
+            \footnotesize\textcolor{ubbblue}{\textbf{Dr.\ Arturo Fern\'andez P\'erez}}\\
+            \scriptsize Departamento de F\'isica -- Universidad del B\'io-B\'io\\
+            \scriptsize \textit{Electro\_Asistente\_AI-UBB}\\
+            \tiny P\'agina \thepage\ de \pageref{LastPage}
+        \end{minipage}}
+    \fancyfoot[R]{\raisebox{-0.5\height}{\includegraphics[height=1.1cm]{logo dfis.png}}}
+}
+
+\begin{document}
+
+\begin{center}
+    \includegraphics[height=2cm]{logo ubb.png}\\[0.3cm]
+    {\large\textcolor{ubbblue}{\textbf{UNIVERSIDAD DEL B\'IO-B\'IO}}}\\[0.1cm]
+    {\normalsize Facultad de Ciencias -- Departamento de F\'isica}
+\end{center}
+
+\vspace{0.3cm}\hrule height 1pt\vspace{0.5cm}
+
+{\centering\Large\textbf{Pauta Tarea 2 \quad(2026-2)}\par}
+{\centering\normalsize\textit{F\'isica II -- Electromagnetismo \quad(Ley de Gauss y Potencial El\'ectrico)}\par}
+
+\vspace{0.2cm}
+{\centering\footnotesize $k=\dfrac{1}{4\pi\varepsilon_0}=9\times10^{9}\ \mathrm{N\,m^2/C^2}$,\quad
+$\varepsilon_0=8{,}85\times10^{-12}\ \mathrm{C^2/(N\,m^2)}$\par}
+
+\vspace{0.5cm}
+
+%=====================================================================
+% PROBLEMA 1
+%=====================================================================
+\problema{Problema 1. Esfera aislante rodeada de un cascar\'on conductor}
+
+\noindent Esfera aislante de radio $a=5$ cm con $q_1=-6$ nC (uniforme en su volumen), rodeada de un
+cascar\'on conductor de radios $b=8$ cm y $c=9$ cm, con carga $q_2=3$ nC.
+
+\medskip
+\noindent
+\begin{minipage}[c]{0.32\textwidth}
+\centering
+\begin{tikzpicture}[scale=0.9, >=Stealth, line width=0.8pt]
+    % cascaron conductor b..c
+    \fill[gray!30, even odd rule] (0,0) circle (2.3) (0,0) circle (2.0);
+    \draw[gray!60] (0,0) circle (2.3);
+    \draw[gray!60] (0,0) circle (2.0);
+    % esfera aislante a
+    \fill[cargazul!20] (0,0) circle (0.9);
+    \draw[cargazul] (0,0) circle (0.9);
+    \node[cargazul,font=\scriptsize] at (0,0.35){$\rho$};
+    % centro y radios
+    \fill (0,0) circle (1.2pt); \node[font=\tiny,below left] at (0,0){$O$};
+    \draw[->] (0,0)--(35:0.9) node[midway,above,font=\tiny]{$a$};
+    \draw[->] (0,0)--(105:2.0) node[midway,left,font=\tiny]{$b$};
+    \draw[->] (0,0)--(-60:2.3) node[midway,below,font=\tiny]{$c$};
+    % superficie gaussiana ejemplo
+    \draw[dashed,cargarojo] (0,0) circle (1.45);
+\end{tikzpicture}\\[2pt]
+{\scriptsize Fig.\ 1. Superficie de Gauss en rojo.}
+\end{minipage}%
+\hfill
+\begin{minipage}[c]{0.63\textwidth}
+\textbf{(a) Densidad volum\'etrica.}
+\[
+    \rho=\frac{q_1}{\tfrac{4}{3}\pi a^{3}}=\frac{-6\times10^{-9}}{\tfrac{4}{3}\pi(0{,}05)^{3}}
+    =\boxed{-1{,}15\times10^{-5}\ \tfrac{\text{C}}{\text{m}^3}}
+\]
+Por simetr\'ia esf\'erica, con $\oint\vec E\cdot d\vec S=E\,(4\pi r^{2})=\dfrac{Q_{enc}}{\varepsilon_0}$,
+el campo es radial y su magnitud depende s\'olo de la carga encerrada.
+\end{minipage}
+
+\secgap
+
+\noindent\textbf{(b) Campo el\'ectrico por regiones} (radial; hacia el centro pues la carga neta es negativa):
+\begin{align*}
+    r<a:&\quad Q_{enc}=q_1\frac{r^{3}}{a^{3}}
+    \ \Rightarrow\ \boxed{E=\frac{k\,|q_1|}{a^{3}}\,r=4{,}32\times10^{5}\,r\ \tfrac{\text{N}}{\text{C}}}\\[2pt]
+    a<r<b:&\quad Q_{enc}=q_1
+    \ \Rightarrow\ \boxed{E=\frac{k\,|q_1|}{r^{2}}=\frac{54}{r^{2}}\ \tfrac{\text{N}}{\text{C}}}\\[2pt]
+    b<r<c:&\quad \text{(interior del conductor)}\ \Rightarrow\ \boxed{E=0}\\[2pt]
+    r>c:&\quad Q_{enc}=q_1+q_2=-3\ \text{nC}
+    \ \Rightarrow\ \boxed{E=\frac{k\,|q_1+q_2|}{r^{2}}=\frac{27}{r^{2}}\ \tfrac{\text{N}}{\text{C}}}
+\end{align*}
+
+\smallskip
+\noindent\textbf{(c) Densidades superficiales del cascar\'on.} Como $E=0$ dentro del conductor, la cara
+interna induce $-q_1=+6$ nC y la externa queda con $q_2-(-q_1)=q_1+q_2=-3$ nC:
+\[
+    \sigma_{int}=\frac{-q_1}{4\pi b^{2}}=\boxed{+7{,}46\times10^{-8}\ \tfrac{\text{C}}{\text{m}^2}},\qquad
+    \sigma_{ext}=\frac{q_1+q_2}{4\pi c^{2}}=\boxed{-2{,}95\times10^{-8}\ \tfrac{\text{C}}{\text{m}^2}}.
+\]
+
+\secgap
+
+%=====================================================================
+% PROBLEMA 2
+%=====================================================================
+\problema{Problema 2. Cilindro conductor rodeado de un cascar\'on cil\'indrico}
+
+\noindent Cilindro conductor de radio $a=4$ mm con $\lambda_1=14\ \mu$C/m, rodeado de un cascar\'on
+cil\'indrico conductor de radio $b=9$ mm (espesor despreciable) con $\lambda_2=-20\ \mu$C/m. Longitud
+$L=1{,}2$ m.
+
+\medskip
+\noindent
+\begin{minipage}[c]{0.30\textwidth}
+\centering
+\begin{tikzpicture}[scale=0.95, >=Stealth, line width=0.8pt]
+    \draw[dashed,cargarojo] (0,0) circle (1.35);
+    \draw[cargazul,line width=1.4pt] (0,0) circle (1.9);
+    \fill[cargazul!25] (0,0) circle (0.8);
+    \draw[cargazul] (0,0) circle (0.8);
+    \fill (0,0) circle (1.2pt); \node[font=\tiny,below left] at (0,0){$O$};
+    \draw[->] (0,0)--(40:0.8) node[midway,above,font=\tiny]{$a$};
+    \draw[->] (0,0)--(-65:1.9) node[midway,below,font=\tiny]{$b$};
+    \node[cargazul,font=\tiny] at (0,0.35){$\lambda_1$};
+    \node[cargazul,font=\tiny] at (150:1.6){$\lambda_2$};
+\end{tikzpicture}\\[2pt]
+{\scriptsize Fig.\ 2. Corte transversal.}
+\end{minipage}%
+\hfill
+\begin{minipage}[c]{0.65\textwidth}
+\textbf{(a) Cargas totales.}
+\[
+    Q_1=\lambda_1 L=(14\,\mu\text{C/m})(1{,}2\,\text{m})=\boxed{16{,}8\ \mu\text{C}},
+\]
+\[
+    Q_2=\lambda_2 L=(-20\,\mu\text{C/m})(1{,}2\,\text{m})=\boxed{-24\ \mu\text{C}}.
+\]
+Con simetr\'ia cil\'indrica y un cilindro de Gauss de radio $r$ y largo $\ell$:
+$E\,(2\pi r\ell)=Q_{enc}/\varepsilon_0$.
+\end{minipage}
+
+\secgap
+
+\noindent\textbf{(b) Campo el\'ectrico por regiones} (radial al eje):
+\begin{align*}
+    r<a:&\quad \text{(interior del conductor)}\ \Rightarrow\ \boxed{E=0}\\[2pt]
+    a<r<b:&\quad Q_{enc}=\lambda_1\ell
+    \ \Rightarrow\ \boxed{E=\frac{\lambda_1}{2\pi\varepsilon_0 r}=\frac{2k\lambda_1}{r}=\frac{2{,}52\times10^{5}}{r}\ \tfrac{\text{N}}{\text{C}}}\ (\text{hacia afuera})\\[2pt]
+    r>b:&\quad Q_{enc}=(\lambda_1+\lambda_2)\ell
+    \ \Rightarrow\ \boxed{E=\frac{2k|\lambda_1+\lambda_2|}{r}=\frac{1{,}08\times10^{5}}{r}\ \tfrac{\text{N}}{\text{C}}}\ (\text{hacia adentro})
+\end{align*}
+
+\secgap
+
+%=====================================================================
+% PROBLEMA 3
+%=====================================================================
+\problema{Problema 3. Energ\'ia y potencial de cuatro cargas}
+
+\noindent $q_1=-4Q$ en $(-d,3d)$, $q_2=2Q$ en $(4d,d)$, $q_3=-3Q$ en $(0,-5d)$, $q_4=4Q$ en $(-2d,0)$,
+con $Q=12$ nC y $d=7$ cm.
+
+\medskip
+\noindent
+\begin{minipage}[c]{0.34\textwidth}
+\centering
+\begin{tikzpicture}[scale=0.34, >=Stealth, line width=0.7pt]
+    \draw[->,gray] (-3.2,0)--(5,0) node[right,font=\scriptsize]{$x$};
+    \draw[->,gray] (0,-5.6)--(0,4) node[above,font=\scriptsize]{$y$};
+    \filldraw[cargarojo] (-1,3) circle (7pt); \node[cargarojo,left,font=\scriptsize] at (-1.4,3){$q_1$};
+    \filldraw[cargazul] (4,1) circle (7pt);   \node[cargazul,right,font=\scriptsize] at (4.4,1){$q_2$};
+    \filldraw[cargarojo] (0,-5) circle (7pt);  \node[cargarojo,right,font=\scriptsize] at (0.4,-5){$q_3$};
+    \filldraw[cargazul] (-2,0) circle (7pt);  \node[cargazul,above left,font=\scriptsize] at (-2,0.2){$q_4$};
+    \filldraw[black] (-1.43,-2.86) circle (5pt); \node[font=\scriptsize,right] at (-1.2,-2.86){$P$};
+\end{tikzpicture}\\[2pt]
+{\scriptsize Fig.\ 3 (unidades de $d$).}
+\end{minipage}%
+\hfill
+\begin{minipage}[c]{0.62\textwidth}
+\textbf{(a) Energ\'ia del sistema.} Suma de las 6 parejas, $U=k\displaystyle\sum_{i<j}\frac{q_iq_j}{r_{ij}}$.
+Con $q_i=n_iQ$ ($n=-4,2,-3,4$) y $r_{ij}=m_{ij}\,d$:
+\[
+    U=\frac{kQ^{2}}{d}\sum_{i<j}\frac{n_i n_j}{m_{ij}}
+    =\boxed{-1{,}26\times10^{-4}\ \text{J}}
+\]
+(las distancias son $r_{12}{=}\sqrt{29}\,d$, $r_{13}{=}\sqrt{65}\,d$, $r_{14}{=}\sqrt{10}\,d$,
+$r_{23}{=}\sqrt{52}\,d$, $r_{24}{=}\sqrt{37}\,d$, $r_{34}{=}\sqrt{29}\,d$).
+\end{minipage}
+
+\secgap
+
+\noindent\textbf{(b) Potencial en $P=(-0{,}1,\,-0{,}2)$ m.} Suma escalar $V=k\displaystyle\sum_i\frac{q_i}{|\vec r_P-\vec r_i|}$,
+con distancias $0{,}411$; $0{,}466$; $0{,}180$; $0{,}204$ m:
+\[
+    V=k\!\left[\frac{-48}{0{,}411}+\frac{24}{0{,}466}+\frac{-36}{0{,}180}+\frac{48}{0{,}204}\right]\!\times10^{-9}
+    =\boxed{-266{,}7\ \text{V}}
+\]
+
+\secgap
+
+%=====================================================================
+% PROBLEMA 4
+%=====================================================================
+\problema{Problema 4. Potencial en el eje de un anillo}
+
+\noindent Anillo de radio $R=20$ cm con $Q=12\ \mu$C uniforme; punto en el eje a $z=15$ cm del centro.
+
+\medskip
+\noindent
+\begin{minipage}[c]{0.30\textwidth}
+\centering
+\begin{tikzpicture}[scale=1.0, >=Stealth, line width=0.8pt,
+    x={(-0.5cm,-0.34cm)}, y={(1cm,0cm)}, z={(0cm,1cm)}]
+    \def\R{1.5}
+    \draw[cargazul,line width=1.7pt]
+        plot[domain=0:360,samples=60,variable=\t] ({\R*cos(\t)},{\R*sin(\t)},0);
+    \draw[->,gray] (0,0,-0.3)--(0,0,2.5) node[above,font=\scriptsize]{eje};
+    \fill (0,0,0) circle (1.1pt); \node[font=\tiny,below left] at (0,0,0){$O$};
+    \draw[->,gray] (0,0,0)--({\R*cos(35)},{\R*sin(35)},0);
+    \node[font=\tiny] at ({0.55*\R*cos(35)},{0.55*\R*sin(35)},0.15){$R$};
+    \filldraw[black] (0,0,1.9) circle (1.6pt); \node[right,font=\scriptsize] at (0,0.05,1.9){$P$};
+    \node[font=\tiny,left] at (0,-0.05,1.05){$z$};
+    \draw[dashed,gray] ({\R*cos(35)},{\R*sin(35)},0)--(0,0,1.9);
+    \node[font=\tiny] at ({0.55*\R*cos(35)},{0.55*\R*sin(35)},1.15){$r$};
+\end{tikzpicture}\\[2pt]
+{\scriptsize Fig.\ 4. $r=\sqrt{z^2+R^2}$.}
+\end{minipage}%
+\hfill
+\begin{minipage}[c]{0.65\textwidth}
+Todo elemento $dq$ del anillo dista lo mismo del punto $P$: $\sqrt{z^{2}+R^{2}}$. Por lo tanto
+\[
+    V=\frac{k}{\sqrt{z^{2}+R^{2}}}\int dq=\frac{k\,Q}{\sqrt{z^{2}+R^{2}}}
+    =\frac{(9\times10^{9})(12\times10^{-6})}{\sqrt{0{,}15^{2}+0{,}20^{2}}}.
+\]
+Con $\sqrt{0{,}0225+0{,}04}=0{,}25$ m:
+\[
+    \boxed{\ V=4{,}32\times10^{5}\ \text{V}\ }
+\]
+\end{minipage}
+
+\secgap
+
+%=====================================================================
+% PROBLEMA 5
+%=====================================================================
+\problema{Problema 5. Cable recto y alambre curvo (mismo $\lambda_0$)}
+
+\noindent Ambos cables tienen la misma densidad $\lambda_0$. El cable \textbf{recto} (sobre $+x$, de largo
+$R$, desde $x=R/2$ hasta $x=3R/2$) tiene $Q_1=12$ nC. El \textbf{arco} de radio $R$ va desde
+$+60^\circ$ hasta $+270^\circ$ (subtiende $\tfrac{7\pi}{6}$; su extremo superior est\'a a $\tfrac{\pi}{6}$
+del eje $+y$). $R=10$ cm.
+
+\medskip
+\noindent
+\begin{minipage}[c]{0.34\textwidth}
+\centering
+\begin{tikzpicture}[scale=1.0, >=Stealth, line width=0.8pt]
+    \draw[->,gray] (-2.6,0)--(2.9,0) node[right,font=\scriptsize]{$x$};
+    \draw[->,gray] (0,-2.4)--(0,2.4) node[above,font=\scriptsize]{$y$};
+    % arco de 60 a 270 grados (7pi/6)
+    \draw[cargarojo,line width=2.4pt]
+        plot[domain=60:270,samples=60,variable=\t] ({1.9*cos(\t)},{1.9*sin(\t)});
+    % cable recto de R/2 a 3R/2 sobre +x  (R=1.9 -> 0.95 a 2.85)
+    \draw[cargarojo,line width=2.4pt] (0.95,0)--(2.85,0);
+    % P en origen
+    \filldraw[black] (0,0) circle (2.2pt); \node[font=\scriptsize,below left] at (0,0){$P$};
+    % angulo pi/6 desde +y al extremo superior del arco
+    \draw[dashed,gray] (0,0)--(60:1.9);
+    \draw[->,gray] (90:0.7) arc (90:60:0.7);
+    \node[font=\tiny] at (75:1.05){$\tfrac{\pi}{6}$};
+    % R del arco
+    \node[cargarojo,font=\tiny] at (150:2.15){$\lambda_0$};
+    \draw[->,gray] (0,0)--(215:1.9); \node[font=\tiny] at (215:1.1){$R$};
+    % largo R del recto
+    \draw[<->,gray] (0.95,-0.5)--(2.85,-0.5) node[midway,below,font=\tiny]{$R$};
+\end{tikzpicture}\\[2pt]
+{\scriptsize Fig.\ 5. $dq=\lambda_0\,d\ell$.}
+\end{minipage}%
+\hfill
+\begin{minipage}[c]{0.62\textwidth}
+\textbf{(a) Densidad lineal.} El recto tiene largo $R$:
+\[
+    \lambda_0=\frac{Q_1}{R}=\frac{12\times10^{-9}}{0{,}10}=\boxed{1{,}2\times10^{-7}\ \tfrac{\text{C}}{\text{m}}}
+\]
+\textbf{(b) Carga del arco.} Largo del arco $=R\cdot\tfrac{7\pi}{6}$:
+\[
+    Q_2=\lambda_0\,R\,\frac{7\pi}{6}=\boxed{44{,}0\ \text{nC}}
+\]
+\end{minipage}
+
+\secgap
+
+\noindent\textbf{(c) Potencial del cable recto en el origen.} Cada elemento $dq=\lambda_0\,dx$ dista $x$ de $O$:
+\[
+    V_1=k\lambda_0\!\int_{R/2}^{3R/2}\frac{dx}{x}=k\lambda_0\ln\!\left(\frac{3R/2}{R/2}\right)=k\lambda_0\ln 3
+    \quad\Longrightarrow\quad
+    \boxed{\ V_1=1186{,}5\ \text{V}\ }
+\]
+
+\smallskip
+\noindent\textbf{(d) Potencial del arco en el origen.} Todo el arco est\'a a distancia $R$ de $O$, luego
+\[
+    V_2=\frac{k}{R}\int dq=\frac{k\,Q_2}{R}
+    \quad\Longrightarrow\quad
+    \boxed{\ V_2=3958{,}4\ \text{V}\ }
+\]
+
+\end{document}
