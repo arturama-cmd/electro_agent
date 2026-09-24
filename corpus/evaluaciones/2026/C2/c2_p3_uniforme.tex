@@ -1,0 +1,922 @@
+\documentclass[12pt]{article}
+
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[spanish]{babel}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{tikz}
+\usepackage{xcolor}
+\usepackage{geometry}
+\usepackage{enumitem}
+
+% ------------------------------------------------
+% MÁRGENES
+% ------------------------------------------------
+\geometry{
+    a4paper,
+    left=1.5cm,
+    right=1.5cm,
+    top=1.3cm,
+    bottom=1.5cm
+}
+
+% Sin sangría al comenzar párrafos
+\setlength{\parindent}{0pt}
+
+% Elimina encabezado y número de página
+\pagestyle{empty}
+
+\begin{document}
+
+\noindent
+\textbf{1. \textcolor{red}{(20 pts)}} 
+En el plano $xy$ se tiene un arco de circunferencia de radio $R$, 
+centrado en el origen $O$ y densidad lineal de carga uniforme $\lambda_0$. A partir del punto del arco que interscta con el eje x, se encuentra una barra recta de longitud $2R$, cuya densidad lineal de carga es uniforme e igual a $\lambda_1$.
+
+\vspace{0.25cm}
+
+\noindent
+\begin{minipage}[t]{0.58\textwidth}
+\vspace{0pt}
+
+\textbf{Determine:}
+
+\vspace{0.25cm}
+
+\begin{enumerate}[
+    label=\alph*),
+    leftmargin=0.55cm,
+    labelsep=0.15cm,
+    itemsep=0.55cm,
+    topsep=0pt
+]
+
+    \item El potencial eléctrico total en el origen $O$ debido a 
+    ambas distribuciones de carga. \textcolor{red}{\textbf{(12 pts)}}
+
+    \item El valor de $\lambda_0$, en función de $\lambda_1$, para 
+    que el potencial eléctrico total en el origen sea nulo. \textcolor{red}{\textbf{(3 pts)}}
+
+    \item Utilizando el valor de $\lambda_0$ obtenido en el apartado 
+    anterior, determine la carga eléctrica total producida por ambas distribuciones. \textcolor{red}{\textbf{(5 pts)}}
+
+\end{enumerate}
+
+\end{minipage}
+\hfill
+%
+\begin{minipage}[t]{0.40\textwidth}
+\vspace{-0.35cm}
+\centering
+
+\begin{tikzpicture}[scale=1.15]
+
+    % Radio gráfico
+    \def\R{1.45}
+
+    % ------------------------------------------------
+    % EJES
+    % ------------------------------------------------
+    \draw[->,thick]
+        (-0.45,0) -- (5.05,0)
+        node[right] {$x$};
+
+    \draw[->,thick]
+        (0,-1.95) -- (0,2.15)
+        node[above] {$y$};
+
+    % Origen
+    \fill (0,0) circle (1.2pt);
+    \node[below left] at (0,0) {$O$};
+
+    % ------------------------------------------------
+    % ARCO
+    % ------------------------------------------------
+    \draw[line width=1.6pt]
+        (0,-\R)
+        arc[
+            start angle=-90,
+            end angle=45,
+            radius=\R
+        ];
+
+    % Radio a 45 grados
+    \draw[densely dashed]
+        (0,0) -- (45:\R);
+
+    % Ángulo de 45 grados
+    \draw
+        (0.42,0)
+        arc[
+            start angle=0,
+            end angle=45,
+            radius=0.42
+        ];
+
+    \node at (0.68,0.23)
+        {$45^\circ$};
+
+    % Densidad del arco
+    \node[left]
+        at (1.0,-0.92)
+        {$\lambda_0$};
+
+    % ------------------------------------------------
+    % BARRA
+    % ------------------------------------------------
+    \draw[line width=2.5pt]
+        (\R,0) -- ({3*\R},0);
+
+    % Extremos de la barra
+    \draw
+        (\R,0.11) -- (\R,-0.11);
+
+    \draw
+        ({3*\R},0.11) -- ({3*\R},-0.11);
+
+    % Densidad de la barra
+    \node[above]
+        at ({2.05*\R},0.32)
+        {$\lambda_1$};
+
+    % ------------------------------------------------
+    % RADIO R
+    % ------------------------------------------------
+    \node[left]
+        at (0,-1.42)
+        {$R$};
+
+    % ------------------------------------------------
+    % LONGITUD 2R
+    % ------------------------------------------------
+    \draw[<->]
+        (\R,-0.48) -- ({3*\R},-0.48);
+
+    \node[
+        fill=white,
+        inner sep=1pt
+    ]
+        at ({2*\R},-0.48)
+        {$2R$};
+
+\end{tikzpicture}
+
+\end{minipage}
+
+
+
+
+
+\newpage
+
+
+
+
+
+\noindent
+\textbf{2. \textcolor{red}{(20 pts)}} 
+En el plano $xy$ se tiene un arco de circunferencia de radio $R$, centrado en el origen $O$, el cual posee una densidad lineal de carga uniforme $\lambda_1$. A partir del punto del arco ubicado sobre el eje $x$ negativo se extiende una barra recta de longitud $2R$, con densidad lineal 
+de carga uniforme $\lambda_0$. 
+
+\vspace{0.25cm}
+
+\noindent
+\begin{minipage}[t]{0.58\textwidth}
+\vspace{0pt}
+
+\textbf{Determine:}
+
+\vspace{0.25cm}
+
+\begin{enumerate}[
+    label=\alph*),
+    leftmargin=0.55cm,
+    labelsep=0.15cm,
+    itemsep=0.55cm,
+    topsep=0pt
+]
+
+    \item El potencial eléctrico total en el origen $O$ debido a 
+    ambas distribuciones de carga. 
+    \textcolor{red}{\textbf{(12 pts)}}
+
+    \item El valor de $\lambda_0$, en función de $\lambda_1$, para 
+    que el potencial eléctrico total en el origen sea nulo. 
+    \textcolor{red}{\textbf{(3 pts)}}
+
+    \item Utilizando el valor de $\lambda_0$ obtenido en el apartado 
+    anterior, determine la carga eléctrica total producida por ambas distribuciones. 
+    \textcolor{red}{\textbf{(5 pts)}}
+
+\end{enumerate}
+
+\end{minipage}
+\hfill
+%
+\begin{minipage}[t]{0.40\textwidth}
+\vspace{-0.45cm}
+\centering
+
+\begin{tikzpicture}[scale=1.12]
+
+    % Radio gráfico
+    \def\R{1.45}
+
+    % ------------------------------------------------
+    % EJES
+    % ------------------------------------------------
+    \draw[->,thick]
+        (-5.15,0) -- (1.45,0)
+        node[right] {$x$};
+
+    \draw[->,thick]
+        (0,-2.05) -- (0,2.15)
+        node[above] {$y$};
+
+    % Origen
+    \fill (0,0) circle (1.2pt);
+    \node[below right] at (0,0) {$O$};
+
+    % ------------------------------------------------
+    % ARCO
+    % theta = 3pi/4 hasta 5pi/4
+    % ------------------------------------------------
+    \draw[line width=1.6pt]
+        (135:\R)
+        arc[
+            start angle=135,
+            end angle=225,
+            radius=\R
+        ];
+
+    % Radios a los extremos del arco
+    \draw[densely dashed]
+        (0,0) -- (135:\R);
+
+    \draw[densely dashed]
+        (0,0) -- (225:\R);
+
+    % ------------------------------------------------
+    % ÁNGULOS DE 45 GRADOS
+    % ------------------------------------------------
+
+
+
+    \node at (-0.58,0.25)
+        {$45^\circ$};
+
+  
+    \node at (-0.58,-0.25)
+        {$45^\circ$};
+
+    % ------------------------------------------------
+    % DENSIDAD DEL ARCO
+    % ------------------------------------------------
+    \node[left]
+        at (-0.65,1.25)
+        {$\lambda_1$};
+
+    % Radio R
+    \node[right]
+        at (-0.78,-0.95)
+        {$R$};
+
+    % ------------------------------------------------
+    % BARRA
+    % Desde x=-3R hasta x=-R
+    % ------------------------------------------------
+    \draw[line width=2.5pt]
+        ({-3*\R},0) -- (-\R,0);
+
+    % Extremos de la barra
+    \draw
+        (-\R,0.11) -- (-\R,-0.11);
+
+    \draw
+        ({-3*\R},0.11) -- ({-3*\R},-0.11);
+
+    % Densidad de la barra
+    \node[above]
+        at ({-2*\R},0.20)
+        {$\lambda_0$};
+
+    % ------------------------------------------------
+    % LONGITUD 2R
+    % ------------------------------------------------
+    \draw[<->]
+        ({-3*\R},-0.48) -- (-\R,-0.48);
+
+    \node[
+        fill=white,
+        inner sep=1pt
+    ]
+        at ({-2*\R},-0.48)
+        {$2R$};
+
+\end{tikzpicture}
+
+\end{minipage}
+
+
+
+
+
+
+\newpage
+
+
+\section*{Pauta V1}
+
+Considerando
+
+\[
+V=k\int\frac{dq}{r}
+\]
+
+\subsection*{a) \hfill \textcolor{red}{\textbf{(12 pts)}}}
+
+El potencial en el origen está dado por
+
+\[
+V_O=V_A+V_B
+\qquad
+\textcolor{red}{\textbf{1 pt}}
+\]
+
+Para cada caso es necesario encontrar $dq$, $r$ y los límites de integración.
+
+\vspace{0.3cm}
+
+\textbf{Arco de circunferencia}
+
+\[
+dq_A=\lambda_0R\,d\theta
+\qquad
+\textcolor{red}{\textbf{1 pt}}
+\]
+
+\[
+r_{AO}=R
+\qquad
+\textcolor{red}{\textbf{1 pt}}
+\]
+
+\[
+\frac{3\pi}{2}
+\longrightarrow
+2\pi+\frac{\pi}{4}
+=
+\frac{9\pi}{4}
+\qquad
+\textcolor{red}{\textbf{1 pt}}
+\]
+
+\vspace{0.3cm}
+
+\textbf{Barra}
+
+\[
+dq_B
+=
+\lambda_1\,dx
+\qquad
+\textcolor{red}{\textbf{1 pt}}
+\]
+
+\[
+r_{BO}=x
+\qquad
+\textcolor{red}{\textbf{1 pt}}
+\]
+
+\[
+R\longrightarrow3R
+\qquad
+\textcolor{red}{\textbf{1 pt}}
+\]
+
+\vspace{0.4cm}
+
+\textbf{Reemplazando}
+
+Para el arco,
+
+\[
+V_A
+=
+\int_{\frac{3\pi}{2}}^{\frac{9\pi}{4}}
+k\frac{dq_A}{r_{AO}}
+=
+\int_{\frac{3\pi}{2}}^{\frac{9\pi}{4}}
+k\frac{\lambda_0R}{R}\,d\theta
+\qquad
+\textcolor{red}{\textbf{1 pt}}
+\]
+
+\[
+V_A
+=
+k\lambda_0
+\int_{\frac{3\pi}{2}}^{\frac{9\pi}{4}}
+d\theta
+=
+k\lambda_0
+\left(
+\frac{9\pi}{4}-\frac{3\pi}{2}
+\right)
+\]
+
+\[
+\boxed{
+V_A
+=
+k\lambda_0\frac{3\pi}{4}
+}
+\qquad
+\textcolor{red}{\textbf{1 pt}}
+\]
+
+Para la barra,
+
+\[
+V_B
+=
+\int_R^{3R}
+k\frac{\lambda_1}{x}\,dx
+=
+k\lambda_1
+\int_R^{3R}\frac{dx}{x}
+\qquad
+\textcolor{red}{\textbf{1 pt}}
+\]
+
+\[
+V_B
+=
+k\lambda_1
+\left[
+\ln x
+\right]_R^{3R}
+=
+k\lambda_1
+\ln\left(\frac{3R}{R}\right)
+\]
+
+\[
+\boxed{
+V_B=k\lambda_1\ln3
+}
+\qquad
+\textcolor{red}{\textbf{1 pt}}
+\]
+
+Por lo tanto,
+
+\[
+\boxed{
+V_O
+=
+k\left(
+\frac{3\pi}{4}\lambda_0+\lambda_1\ln3
+\right)
+}
+\qquad
+\textcolor{red}{\textbf{1 pt}}
+\]
+
+% ============================================================
+
+\subsection*{b) \hfill \textcolor{red}{\textbf{(3 pts)}}}
+
+Considerando la condición $V_O=0$,
+
+\[
+V_O
+=
+k\left(
+\frac{3\pi}{4}\lambda_0+\lambda_1\ln3
+\right)
+=
+0
+\qquad
+\textcolor{red}{\textbf{1 pt}}
+\]
+
+\[
+\frac{3\pi}{4}\lambda_0+\lambda_1\ln3=0
+\qquad
+\textcolor{red}{\textbf{1 pt}}
+\]
+
+Por lo tanto,
+
+\[
+\boxed{
+\lambda_0
+=
+-\frac{4\ln3}{3\pi}\lambda_1
+}
+\qquad
+\textcolor{red}{\textbf{1 pt}}
+\]
+
+% ============================================================
+
+\subsection*{c) \hfill \textcolor{red}{\textbf{(5 pts)}}}
+
+La carga total está dada por
+
+\[
+q_{\text{tot}}
+=
+q_A+q_B
+\qquad
+\textcolor{red}{\textbf{1 pt}}
+\]
+
+Para el arco,
+
+\[
+q_A
+=
+\lambda_0R
+\int_{\frac{3\pi}{2}}^{\frac{9\pi}{4}}d\theta
+=
+\lambda_0R\frac{3\pi}{4}
+\qquad
+\textcolor{red}{\textbf{1 pt}}
+\]
+
+Utilizando
+
+\[
+\lambda_0
+=
+-\frac{4\ln3}{3\pi}\lambda_1,
+\]
+
+se obtiene
+
+\[
+q_A
+=
+\left(
+-\frac{4\ln3}{3\pi}\lambda_1
+\right)
+R\frac{3\pi}{4}
+\]
+
+\[
+\boxed{
+q_A=-\lambda_1R\ln3
+}
+\qquad
+\textcolor{red}{\textbf{1 pt}}
+\]
+
+Para la barra,
+
+\[
+q_B
+=
+\lambda_1
+\int_R^{3R}dx
+=
+\lambda_1(3R-R)
+\]
+
+\[
+\boxed{
+q_B=2\lambda_1R
+}
+\qquad
+\textcolor{red}{\textbf{1 pt}}
+\]
+
+Finalmente,
+
+\[
+q_{\text{tot}}
+=
+-\lambda_1R\ln3+2\lambda_1R
+\]
+
+\[
+\boxed{
+q_{\text{tot}}
+=
+\lambda_1R(2-\ln3)
+}
+\qquad
+\textcolor{red}{\textbf{1 pt}}
+\]
+
+\newpage
+
+% ============================================================
+% PAUTA V2
+% ============================================================
+
+\section*{Pauta V2}
+
+Considerando
+
+\[
+V=k\int\frac{dq}{r}
+\]
+
+\subsection*{a) \hfill \textcolor{red}{\textbf{(12 pts)}}}
+
+El potencial en el origen está dado por
+
+\[
+V_O=V_A+V_B
+\qquad
+\textcolor{red}{\textbf{1 pt}}
+\]
+
+Para cada caso es necesario encontrar $dq$, $r$ y los límites de integración.
+
+\vspace{0.3cm}
+
+\textbf{Arco de circunferencia}
+
+\[
+dq_A
+=
+\lambda_1R\,d\theta
+\qquad
+\textcolor{red}{\textbf{1 pt}}
+\]
+
+\[
+r_{AO}=R
+\qquad
+\textcolor{red}{\textbf{1 pt}}
+\]
+
+\[
+\frac{3\pi}{4}
+\longrightarrow
+\frac{5\pi}{4}
+\qquad
+\textcolor{red}{\textbf{1 pt}}
+\]
+
+\vspace{0.3cm}
+
+\textbf{Barra}
+
+Aunque la barra se encuentra sobre el eje $x$ negativo, $x$ representa
+la distancia entre el origen y cada elemento de carga, por lo que se
+considera positiva.
+
+\[
+dq_B=\lambda_0\,dx
+\qquad
+\textcolor{red}{\textbf{1 pt}}
+\]
+
+\[
+r_{BO}=x
+\qquad
+\textcolor{red}{\textbf{1 pt}}
+\]
+
+\[
+R\longrightarrow3R
+\qquad
+\textcolor{red}{\textbf{1 pt}}
+\]
+
+\vspace{0.4cm}
+
+\textbf{Reemplazando}
+
+Para el arco,
+
+\[
+V_A
+=
+\int_{\frac{3\pi}{4}}^{\frac{5\pi}{4}}
+k\frac{\lambda_1R}{R}\,d\theta
+\qquad
+\textcolor{red}{\textbf{1 pt}}
+\]
+
+\[
+V_A
+=
+k\lambda_1
+\int_{\frac{3\pi}{4}}^{\frac{5\pi}{4}}d\theta
+=
+k\lambda_1
+\left(
+\frac{5\pi}{4}-\frac{3\pi}{4}
+\right)
+\]
+
+\[
+\boxed{
+V_A=\frac{\pi}{2}k\lambda_1
+}
+\qquad
+\textcolor{red}{\textbf{1 pt}}
+\]
+
+Para la barra,
+
+\[
+V_B
+=
+\int_R^{3R}
+k\frac{\lambda_0}{x}\,dx
+=
+k\lambda_0
+\int_R^{3R}\frac{dx}{x}
+\qquad
+\textcolor{red}{\textbf{1 pt}}
+\]
+
+\[
+V_B
+=
+k\lambda_0
+\left[
+\ln x
+\right]_R^{3R}
+=
+k\lambda_0
+\ln\left(\frac{3R}{R}\right)
+\]
+
+\[
+\boxed{
+V_B=k\lambda_0\ln3
+}
+\qquad
+\textcolor{red}{\textbf{1 pt}}
+\]
+
+Por lo tanto,
+
+\[
+\boxed{
+V_O
+=
+k\left(
+\frac{\pi}{2}\lambda_1+\lambda_0\ln3
+\right)
+}
+\qquad
+\textcolor{red}{\textbf{1 pt}}
+\]
+
+% ============================================================
+
+\subsection*{b) \hfill \textcolor{red}{\textbf{(3 pts)}}}
+
+Considerando la condición $V_O=0$,
+
+\[
+V_O
+=
+k\left(
+\frac{\pi}{2}\lambda_1+\lambda_0\ln3
+\right)
+=
+0
+\qquad
+\textcolor{red}{\textbf{1 pt}}
+\]
+
+\[
+\frac{\pi}{2}\lambda_1+\lambda_0\ln3=0
+\qquad
+\textcolor{red}{\textbf{1 pt}}
+\]
+
+Por lo tanto,
+
+\[
+\boxed{
+\lambda_0
+=
+-\frac{\pi}{2\ln3}\lambda_1
+}
+\qquad
+\textcolor{red}{\textbf{1 pt}}
+\]
+
+% ============================================================
+
+\subsection*{c) \hfill \textcolor{red}{\textbf{(5 pts)}}}
+
+La carga total está dada por
+
+\[
+q_{\text{tot}}
+=
+q_A+q_B
+\qquad
+\textcolor{red}{\textbf{1 pt}}
+\]
+
+Para el arco,
+
+\[
+q_A
+=
+\lambda_1R
+\int_{\frac{3\pi}{4}}^{\frac{5\pi}{4}}d\theta
+=
+\lambda_1R\frac{\pi}{2}
+\]
+
+\[
+\boxed{
+q_A=\frac{\pi}{2}\lambda_1R
+}
+\qquad
+\textcolor{red}{\textbf{1 pt}}
+\]
+
+Para la barra,
+
+\[
+q_B
+=
+\lambda_0
+\int_R^{3R}dx
+=
+\lambda_0(3R-R)
+\]
+
+\[
+\boxed{
+q_B=2\lambda_0R
+}
+\qquad
+\textcolor{red}{\textbf{1 pt}}
+\]
+
+Utilizando
+
+\[
+\lambda_0
+=
+-\frac{\pi}{2\ln3}\lambda_1,
+\]
+
+se obtiene
+
+\[
+\boxed{
+q_B
+=
+-\frac{\pi}{\ln3}\lambda_1R
+}
+\qquad
+\textcolor{red}{\textbf{1 pt}}
+\]
+
+Finalmente,
+
+\[
+q_{\text{tot}}
+=
+\frac{\pi}{2}\lambda_1R
+-
+\frac{\pi}{\ln3}\lambda_1R
+\]
+
+\[
+\boxed{
+q_{\text{tot}}
+=
+\pi\lambda_1R
+\left(
+\frac{1}{2}-\frac{1}{\ln3}
+\right)
+}
+\qquad
+\textcolor{red}{\textbf{1 pt}}
+\]
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+\end{document}

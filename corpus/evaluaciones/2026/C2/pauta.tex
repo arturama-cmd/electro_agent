@@ -1,0 +1,632 @@
+\documentclass[12pt]{article}
+
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[spanish]{babel}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{xcolor}
+\usepackage{geometry}
+
+\geometry{
+    a4paper,
+    left=1.5cm,
+    right=1.5cm,
+    top=1.3cm,
+    bottom=1.5cm
+}
+
+\setlength{\parindent}{0pt}
+\pagestyle{empty}
+
+\begin{document}
+
+% ============================================================
+% PAUTA PROBLEMA 1
+% ============================================================
+
+\section*{Pauta Problema 1}
+
+Considerando
+
+\[
+V=k\int\frac{dq}{r}
+\]
+
+\subsection*{a) \hfill \textcolor{red}{\textbf{(12 pts)}}}
+
+El potencial en el origen está dado por
+
+\[
+V_O=V_A+V_B
+\qquad
+\textcolor{red}{\textbf{1 pt}}
+\]
+
+Para cada caso es necesario encontrar $dq$, $r$ y los límites de integración.
+
+\vspace{0.3cm}
+
+\textbf{Arco de circunferencia}
+
+\[
+dq_A=\lambda_0R\,d\theta
+\qquad
+\textcolor{red}{\textbf{1 pt}}
+\]
+
+\[
+r_{AO}=R
+\qquad
+\textcolor{red}{\textbf{1 pt}}
+\]
+
+\[
+\frac{3\pi}{2}
+\longrightarrow
+2\pi+\frac{\pi}{4}
+=
+\frac{9\pi}{4}
+\qquad
+\textcolor{red}{\textbf{1 pt}}
+\]
+
+\vspace{0.3cm}
+
+\textbf{Barra}
+
+\[
+dq_B
+=
+\lambda(x)\,dx
+=
+\lambda_1\frac{x}{R}\,dx
+\qquad
+\textcolor{red}{\textbf{1 pt}}
+\]
+
+\[
+r_{BO}=x
+\qquad
+\textcolor{red}{\textbf{1 pt}}
+\]
+
+\[
+R\longrightarrow3R
+\qquad
+\textcolor{red}{\textbf{1 pt}}
+\]
+
+\vspace{0.4cm}
+
+\textbf{Reemplazando}
+
+Para el arco,
+
+\[
+V_A
+=
+\int_{\frac{3\pi}{2}}^{\frac{9\pi}{4}}
+k\frac{dq_A}{r_{AO}}
+=
+\int_{\frac{3\pi}{2}}^{\frac{9\pi}{4}}
+k\frac{\lambda_0R}{R}\,d\theta
+\qquad
+\textcolor{red}{\textbf{1 pt}}
+\]
+
+\[
+V_A
+=
+k\lambda_0
+\int_{\frac{3\pi}{2}}^{\frac{9\pi}{4}}
+d\theta
+=
+k\lambda_0
+\left(
+\frac{9\pi}{4}-\frac{3\pi}{2}
+\right)
+\]
+
+\[
+\boxed{
+V_A
+=
+k\lambda_0\frac{3\pi}{4}
+}
+\qquad
+\textcolor{red}{\textbf{1 pt}}
+\]
+
+Para la barra,
+
+\[
+V_B
+=
+\int_R^{3R}
+k\frac{\lambda_1\dfrac{x}{R}}{x}\,dx
+=
+\frac{k\lambda_1}{R}
+\int_R^{3R}dx
+\qquad
+\textcolor{red}{\textbf{1 pt}}
+\]
+
+\[
+V_B
+=
+\frac{k\lambda_1}{R}(3R-R)
+\]
+
+\[
+\boxed{
+V_B=2k\lambda_1
+}
+\qquad
+\textcolor{red}{\textbf{1 pt}}
+\]
+
+Por lo tanto,
+
+\[
+\boxed{
+V_O
+=
+k\lambda_0\frac{3\pi}{4}
++
+2k\lambda_1
+}
+\qquad
+\textcolor{red}{\textbf{1 pt}}
+\]
+
+% ============================================================
+
+\subsection*{b) \hfill \textcolor{red}{\textbf{(3 pts)}}}
+
+Considerando la condición $V_O=0$,
+
+\[
+V_O
+=
+k\left(
+\frac{3\pi}{4}\lambda_0+2\lambda_1
+\right)
+=
+0
+\qquad
+\textcolor{red}{\textbf{1 pt}}
+\]
+
+\[
+\frac{3\pi}{4}\lambda_0+2\lambda_1=0
+\qquad
+\textcolor{red}{\textbf{1 pt}}
+\]
+
+Por lo tanto,
+
+\[
+\boxed{
+\lambda_0
+=
+-\frac{8}{3\pi}\lambda_1
+}
+\qquad
+\textcolor{red}{\textbf{1 pt}}
+\]
+
+% ============================================================
+
+\subsection*{c) \hfill \textcolor{red}{\textbf{(5 pts)}}}
+
+La carga total está dada por
+
+\[
+q_{\text{tot}}
+=
+q_A+q_B
+\qquad
+\textcolor{red}{\textbf{1 pt}}
+\]
+
+Para el arco,
+
+\[
+q_A
+=
+\lambda_0R
+\int_{\frac{3\pi}{2}}^{\frac{9\pi}{4}}d\theta
+=
+\lambda_0R\frac{3\pi}{4}
+\qquad
+\textcolor{red}{\textbf{1 pt}}
+\]
+
+Utilizando
+
+\[
+\lambda_0
+=
+-\frac{8}{3\pi}\lambda_1,
+\]
+
+se obtiene
+
+\[
+q_A
+=
+\left(
+-\frac{8}{3\pi}\lambda_1
+\right)
+R\frac{3\pi}{4}
+\]
+
+\[
+\boxed{
+q_A=-2\lambda_1R
+}
+\qquad
+\textcolor{red}{\textbf{1 pt}}
+\]
+
+Para la barra,
+
+\[
+q_B
+=
+\frac{\lambda_1}{R}
+\int_R^{3R}x\,dx
+=
+\frac{\lambda_1}{R}
+\left[
+\frac{x^2}{2}
+\right]_R^{3R}
+\]
+
+\[
+q_B
+=
+\frac{\lambda_1}{R}
+\left(
+\frac{9R^2-R^2}{2}
+\right)
+\]
+
+\[
+\boxed{
+q_B=4\lambda_1R
+}
+\qquad
+\textcolor{red}{\textbf{1 pt}}
+\]
+
+Finalmente,
+
+\[
+q_{\text{tot}}
+=
+-2\lambda_1R+4\lambda_1R
+\]
+
+\[
+\boxed{
+q_{\text{tot}}
+=
+2\lambda_1R
+}
+\qquad
+\textcolor{red}{\textbf{1 pt}}
+\]
+
+\newpage
+
+% ============================================================
+% PAUTA PROBLEMA 2
+% ============================================================
+
+\section*{Pauta Problema 2}
+
+Considerando
+
+\[
+V=k\int\frac{dq}{r}
+\]
+
+\subsection*{a) \hfill \textcolor{red}{\textbf{(12 pts)}}}
+
+El potencial en el origen está dado por
+
+\[
+V_O=V_A+V_B
+\qquad
+\textcolor{red}{\textbf{1 pt}}
+\]
+
+Para cada caso es necesario encontrar $dq$, $r$ y los límites de integración.
+
+\vspace{0.3cm}
+
+\textbf{Arco de circunferencia}
+
+\[
+dq_A
+=
+\lambda(\theta)R\,d\theta
+=
+\lambda_1\cos\theta\,R\,d\theta
+\qquad
+\textcolor{red}{\textbf{1 pt}}
+\]
+
+\[
+r_{AO}=R
+\qquad
+\textcolor{red}{\textbf{1 pt}}
+\]
+
+\[
+\frac{3\pi}{4}
+\longrightarrow
+\frac{5\pi}{4}
+\qquad
+\textcolor{red}{\textbf{1 pt}}
+\]
+
+\vspace{0.3cm}
+
+\textbf{Barra}
+
+Aunque la barra se encuentra sobre el eje $x$ negativo, $x$ representa
+la distancia entre el origen y cada elemento de carga, por lo que se
+considera positiva.
+
+\[
+dq_B=\lambda_0\,dx
+\qquad
+\textcolor{red}{\textbf{1 pt}}
+\]
+
+\[
+r_{BO}=x
+\qquad
+\textcolor{red}{\textbf{1 pt}}
+\]
+
+\[
+R\longrightarrow3R
+\qquad
+\textcolor{red}{\textbf{1 pt}}
+\]
+
+\vspace{0.4cm}
+
+\textbf{Reemplazando}
+
+Para el arco,
+
+\[
+V_A
+=
+\int_{\frac{3\pi}{4}}^{\frac{5\pi}{4}}
+k\frac{\lambda_1\cos\theta\,R}{R}\,d\theta
+\qquad
+\textcolor{red}{\textbf{1 pt}}
+\]
+
+\[
+V_A
+=
+k\lambda_1
+\left[
+\sin\theta
+\right]_{\frac{3\pi}{4}}^{\frac{5\pi}{4}}
+\]
+
+\[
+V_A
+=
+k\lambda_1
+\left(
+-\frac{\sqrt{2}}{2}
+-
+\frac{\sqrt{2}}{2}
+\right)
+\]
+
+\[
+\boxed{
+V_A=-\sqrt{2}\,k\lambda_1
+}
+\qquad
+\textcolor{red}{\textbf{1 pt}}
+\]
+
+Para la barra,
+
+\[
+V_B
+=
+\int_R^{3R}
+k\frac{\lambda_0}{x}\,dx
+=
+k\lambda_0
+\int_R^{3R}\frac{dx}{x}
+\qquad
+\textcolor{red}{\textbf{1 pt}}
+\]
+
+\[
+V_B
+=
+k\lambda_0
+\left[
+\ln x
+\right]_R^{3R}
+=
+k\lambda_0
+\ln\left(\frac{3R}{R}\right)
+\]
+
+\[
+\boxed{
+V_B=k\lambda_0\ln3
+}
+\qquad
+\textcolor{red}{\textbf{1 pt}}
+\]
+
+Por lo tanto,
+
+\[
+\boxed{
+V_O
+=
+k\left(
+\lambda_0\ln3-\sqrt{2}\lambda_1
+\right)
+}
+\qquad
+\textcolor{red}{\textbf{1 pt}}
+\]
+
+% ============================================================
+
+\subsection*{b) \hfill \textcolor{red}{\textbf{(3 pts)}}}
+
+Considerando la condición $V_O=0$,
+
+\[
+V_O
+=
+k\left(
+\lambda_0\ln3-\sqrt{2}\lambda_1
+\right)
+=
+0
+\qquad
+\textcolor{red}{\textbf{1 pt}}
+\]
+
+\[
+\lambda_0\ln3-\sqrt{2}\lambda_1=0
+\qquad
+\textcolor{red}{\textbf{1 pt}}
+\]
+
+Por lo tanto,
+
+\[
+\boxed{
+\lambda_0
+=
+\frac{\sqrt{2}}{\ln3}\lambda_1
+}
+\qquad
+\textcolor{red}{\textbf{1 pt}}
+\]
+
+% ============================================================
+
+\subsection*{c) \hfill \textcolor{red}{\textbf{(5 pts)}}}
+
+La carga total está dada por
+
+\[
+q_{\text{tot}}
+=
+q_A+q_B
+\qquad
+\textcolor{red}{\textbf{1 pt}}
+\]
+
+Para el arco,
+
+\[
+q_A
+=
+\lambda_1R
+\int_{\frac{3\pi}{4}}^{\frac{5\pi}{4}}
+\cos\theta\,d\theta
+\]
+
+\[
+q_A
+=
+\lambda_1R
+\left[
+\sin\theta
+\right]_{\frac{3\pi}{4}}^{\frac{5\pi}{4}}
+\]
+
+\[
+\boxed{
+q_A=-\sqrt{2}\lambda_1R
+}
+\qquad
+\textcolor{red}{\textbf{1 pt}}
+\]
+
+Para la barra,
+
+\[
+q_B
+=
+\lambda_0
+\int_R^{3R}dx
+=
+\lambda_0(3R-R)
+\]
+
+\[
+\boxed{
+q_B=2\lambda_0R
+}
+\qquad
+\textcolor{red}{\textbf{1 pt}}
+\]
+
+Utilizando
+
+\[
+\lambda_0
+=
+\frac{\sqrt{2}}{\ln3}\lambda_1,
+\]
+
+se obtiene
+
+\[
+\boxed{
+q_B
+=
+\frac{2\sqrt{2}}{\ln3}\lambda_1R
+}
+\qquad
+\textcolor{red}{\textbf{1 pt}}
+\]
+
+Finalmente,
+
+\[
+q_{\text{tot}}
+=
+-\sqrt{2}\lambda_1R
++
+\frac{2\sqrt{2}}{\ln3}\lambda_1R
+\]
+
+\[
+\boxed{
+q_{\text{tot}}
+=
+\sqrt{2}\lambda_1R
+\left(
+\frac{2}{\ln3}-1
+\right)
+}
+\qquad
+\textcolor{red}{\textbf{1 pt}}
+\]
+
+\end{document}
