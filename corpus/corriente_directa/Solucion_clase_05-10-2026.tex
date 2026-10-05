@@ -1,0 +1,344 @@
+\documentclass[12pt,letterpaper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[spanish,es-noshorthands]{babel}
+\usepackage{amsmath,amssymb}
+\usepackage{graphicx}
+\usepackage{xcolor}
+\usepackage{tikz}
+\usetikzlibrary{calc,arrows.meta,patterns}
+\usepackage{enumerate}
+\usepackage[top=2.5cm, bottom=2.7cm, left=2cm, right=2cm, footskip=40pt]{geometry}
+\usepackage{fancyhdr}
+\usepackage{lastpage}
+
+\definecolor{ubbblue}{RGB}{0,51,102}
+\definecolor{diel1}{RGB}{180,210,255}
+\definecolor{diel2}{RGB}{180,255,200}
+\definecolor{capcol}{RGB}{0,0,170}
+\definecolor{newcol}{RGB}{170,0,0}
+
+% separaci\'on vertical entre secciones
+\newcommand{\secgap}{\vspace{0.6cm}}
+
+\pagestyle{fancy}
+\fancyhf{}
+\renewcommand{\headrulewidth}{0pt}
+\renewcommand{\footrulewidth}{0.4pt}
+\fancyfoot[L]{\raisebox{-0.5\height}{\includegraphics[height=1.1cm]{logo ubb.png}}}
+\fancyfoot[C]{%
+    \begin{minipage}[c]{8cm}\centering
+        \footnotesize\textcolor{ubbblue}{\textbf{Dr.\ Arturo Fern\'andez P\'erez}}\\
+        \scriptsize Departamento de F\'isica -- Universidad del B\'io-B\'io\\
+        \scriptsize \textit{Electro\_Asistente\_AI-UBB}\\
+        \tiny P\'agina \thepage\ de \pageref{LastPage}
+    \end{minipage}}
+\fancyfoot[R]{\raisebox{-0.5\height}{\includegraphics[height=1.1cm]{logo dfis.png}}}
+\fancypagestyle{plain}{%
+    \fancyhf{}
+    \renewcommand{\headrulewidth}{0pt}
+    \renewcommand{\footrulewidth}{0.4pt}
+    \fancyfoot[L]{\raisebox{-0.5\height}{\includegraphics[height=1.1cm]{logo ubb.png}}}
+    \fancyfoot[C]{%
+        \begin{minipage}[c]{8cm}\centering
+            \footnotesize\textcolor{ubbblue}{\textbf{Dr.\ Arturo Fern\'andez P\'erez}}\\
+            \scriptsize Departamento de F\'isica -- Universidad del B\'io-B\'io\\
+            \scriptsize \textit{Electro\_Asistente\_AI-UBB}\\
+            \tiny P\'agina \thepage\ de \pageref{LastPage}
+        \end{minipage}}
+    \fancyfoot[R]{\raisebox{-0.5\height}{\includegraphics[height=1.1cm]{logo dfis.png}}}
+}
+
+\begin{document}
+
+%========================================================
+% ENCABEZADO INSTITUCIONAL
+%========================================================
+\begin{center}
+    \includegraphics[height=2cm]{logo ubb.png}\\[0.3cm]
+    {\large\textcolor{ubbblue}{\textbf{UNIVERSIDAD DEL B\'IO-B\'IO}}}\\[0.1cm]
+    {\normalsize Facultad de Ciencias -- Departamento de F\'isica}
+\end{center}
+
+\vspace{0.3cm}\hrule height 1pt\vspace{0.5cm}
+
+{\centering\Large\textbf{Problemas resueltos en la clase del 05/10}\par}
+{\centering\normalsize\textit{Circuitos de Condensadores -- Capacitancia y Diel\'ectricos}\par}
+
+\vspace{0.6cm}
+
+%========================================================
+% PROBLEMA 1
+%========================================================
+\section*{Problema 1 -- $C_1$ con dos diel\'ectricos en serie, en paralelo con $C_2$}
+
+\noindent\textbf{Enunciado:}
+Un condensador de placas paralelas $C_1$ tiene \'area $A = 30\ [\text{cm}^2]$ y est\'a relleno con
+\textbf{dos l\'aminas diel\'ectricas en serie}, cada una de espesor $d = 1{,}00\ [\text{mm}]$, con
+constantes $\kappa_1 = 2$ y $\kappa_2 = 6$. \'Este se conecta en \textbf{paralelo} con
+$C_2 = 15\ [\text{pF}]$ a una fuente $V = 24\ [\text{V}]$. Determine:
+
+\begin{enumerate}[(a)]
+    \item La capacitancia equivalente del circuito.
+    \item La energ\'ia almacenada en cada condensador.
+\end{enumerate}
+
+\medskip
+\noindent\textbf{Datos:}
+\[
+    A = 30\ [\text{cm}^2] = 3{,}0\times10^{-3}\ [\text{m}^2],\quad
+    d = 1{,}00\ [\text{mm}]\ (\text{cada capa}),\quad
+    \kappa_1 = 2,\quad \kappa_2 = 6,
+\]
+\[
+    C_2 = 15\ [\text{pF}],\quad V = 24\ [\text{V}],\quad
+    \varepsilon_0 = 8{,}854\times10^{-12}\ [\text{F/m}]
+\]
+
+\begin{center}
+\begin{tikzpicture}[scale=1.1]
+    % Fuente V (izquierda)
+    \draw[thick] (0,3.5) -- (0,0);
+    \draw[very thick] (-0.28,1.90) -- (0.28,1.90);
+    \draw[very thick] (-0.18,1.60) -- (0.18,1.60);
+    \node[left, font=\small] at (-0.35,1.75) {$V$};
+    % Rieles
+    \draw[thick] (0,3.5) -- (7.0,3.5);
+    \draw[thick] (0,0)   -- (7.0,0);
+    \draw[thick] (7.0,3.5) -- (7.0,0);
+    % C1: dos dieléctricos apilados
+    \draw[thick] (2.2,3.5) -- (2.2,2.55);
+    \draw[very thick] (1.5,2.55) -- (2.9,2.55);
+    \fill[diel1] (1.5,2.55) rectangle (2.9,1.95);
+    \draw (1.5,2.55) rectangle (2.9,1.95);
+    \node[font=\small] at (2.2,2.25) {$\kappa_1 = 2$};
+    \draw[dashed, gray] (1.5,1.95) -- (2.9,1.95);
+    \fill[diel2] (1.5,1.95) rectangle (2.9,1.35);
+    \draw (1.5,1.95) rectangle (2.9,1.35);
+    \node[font=\small] at (2.2,1.65) {$\kappa_2 = 6$};
+    \draw[very thick] (1.5,1.35) -- (2.9,1.35);
+    \draw[thick] (2.2,1.35) -- (2.2,0);
+    % Cotas d por capa
+    \draw[<->, gray, thin] (3.1,2.55) -- (3.1,1.95) node[midway,right,font=\scriptsize]{$d$};
+    \draw[<->, gray, thin] (3.1,1.95) -- (3.1,1.35) node[midway,right,font=\scriptsize]{$d$};
+    \node[above, font=\small] at (2.2,3.55) {$C_1$};
+    % C2: simple
+    \draw[thick] (5.5,3.5) -- (5.5,2.15);
+    \draw[very thick] (5.0,2.15) -- (6.0,2.15);
+    \draw[very thick] (5.0,1.75) -- (6.0,1.75);
+    \node[above, font=\small] at (5.5,3.55) {$C_2$};
+    \draw[thick] (5.5,1.75) -- (5.5,0);
+\end{tikzpicture}\\[2pt]
+{\footnotesize Fig.\ 1. $C_1$ con dos capas diel\'ectricas en serie, en paralelo con $C_2$.}
+\end{center}
+
+\medskip
+\noindent\textbf{Parte (a) -- Capacitancia equivalente.}
+
+Las dos l\'aminas diel\'ectricas dentro de $C_1$ (misma \'area $A$, mismo espesor $d$, distinta
+$\kappa$) se comportan como dos condensadores en \textbf{serie}:
+\begin{align*}
+    C_{\kappa_1} &= \kappa_1\,\varepsilon_0\,\frac{A}{d}
+                  = 2\times 8{,}854\times10^{-12}\times\frac{3{,}0\times10^{-3}}{1{,}00\times10^{-3}}
+                  = 53{,}12\ [\text{pF}]\\[4pt]
+    C_{\kappa_2} &= \kappa_2\,\varepsilon_0\,\frac{A}{d}
+                  = 6\times 8{,}854\times10^{-12}\times 3{,}0
+                  = 159{,}37\ [\text{pF}]
+\end{align*}
+
+$C_{\kappa_1}$ y $C_{\kappa_2}$ en serie forman $C_1$:
+\begin{align*}
+    \frac{1}{C_1} &= \frac{1}{C_{\kappa_1}} + \frac{1}{C_{\kappa_2}}
+                   = \frac{1}{53{,}12} + \frac{1}{159{,}37}\ [\text{pF}^{-1}]\\[4pt]
+    C_1           &= \varepsilon_0\,\frac{A}{d}\cdot\frac{\kappa_1\kappa_2}{\kappa_1+\kappa_2}
+                   = 8{,}854\times10^{-12}\times 3{,}0\times\frac{12}{8}
+                   = 39{,}84\ [\text{pF}]
+\end{align*}
+
+$C_1$ y $C_2$ en \textbf{paralelo}:
+\[
+    \boxed{C_{eq} = C_1 + C_2 = 39{,}84 + 15{,}0 = 54{,}84\ [\text{pF}]}
+\]
+
+\medskip
+\noindent\textbf{Parte (b) -- Energ\'ia almacenada en cada condensador.}
+
+Como $C_1 \parallel C_2$, ambos quedan sometidos al voltaje de la fuente:
+$V_1 = V_2 = V = 24{,}0\ [\text{V}]$. La energ\'ia de cada uno es $U = \tfrac12\,C\,V^2$:
+\begin{align*}
+    U_1 &= \tfrac12\,C_1\,V^2
+         = \tfrac12\times 39{,}84\times10^{-12}\times(24{,}0)^2
+         = \tfrac12\times 39{,}84\times10^{-12}\times 576
+\end{align*}
+\[
+    \boxed{U_1 = 1{,}147\times10^{-8}\ [\text{J}] = 11{,}47\ [\text{nJ}]}
+\]
+\begin{align*}
+    U_2 &= \tfrac12\,C_2\,V^2
+         = \tfrac12\times 15{,}0\times10^{-12}\times 576
+\end{align*}
+\[
+    \boxed{U_2 = 4{,}32\times10^{-9}\ [\text{J}] = 4{,}32\ [\text{nJ}]}
+\]
+
+\noindent\textbf{Interpretaci\'on f\'isica:} aunque $C_1$ y $C_2$ comparten el mismo voltaje, $C_1$
+almacena $\approx 2{,}7$ veces m\'as energ\'ia que $C_2$, pues a igual $V$ se cumple $U\propto C$
+($C_1/C_2 = 39{,}84/15{,}0 \approx 2{,}66$). Dentro de $C_1$, las dos capas en serie producen una
+capacitancia efectiva gobernada por el diel\'ectrico de \emph{menor} $\kappa$ (la capa
+$\kappa_1=2$), de forma an\'aloga a resistencias en serie donde domina la mayor resistencia.
+
+\newpage
+
+%========================================================
+% PROBLEMA 2
+%========================================================
+\section*{Problema 2 -- Circuito mixto de siete condensadores}
+
+\noindent\textbf{Enunciado:}
+En el circuito de la Fig.\ 2 se conectan 7 condensadores a una fuente $V = 12{,}0\ [\text{V}]$.
+Las capacitancias son $C_1 = C_3 = C_6 = 5{,}0\ [\mu\text{F}]$, $C_2 = 8{,}0\ [\mu\text{F}]$,
+$C_4 = 12{,}0\ [\mu\text{F}]$, $C_5 = 6{,}0\ [\mu\text{F}]$ y $C_7 = 20{,}0\ [\mu\text{F}]$.
+Determine:
+
+\begin{enumerate}[(a)]
+    \item La capacitancia equivalente del circuito.
+    \item La carga almacenada en cada condensador.
+\end{enumerate}
+
+\begin{center}
+\begin{tikzpicture}[scale=1.0, line width=1pt]
+% NODOS:  a=(0,5) c=(9,5) b=(4,5) d=(4,2.5) e=(9,2.5) f=(0,0) g=(9,0)
+% ---------- RIEL SUPERIOR: a -- C1 -- b -- C2 -- c ----------
+\draw (0,5)--(1.85,5);
+\draw (2.15,5)--(4,5);
+\draw (4,5)--(6.35,5);
+\draw (6.65,5)--(9,5);
+\draw[capcol,line width=1.4pt] (1.85,4.65)--(1.85,5.35);
+\draw[capcol,line width=1.4pt] (2.15,4.65)--(2.15,5.35);
+\node[above] at (2.0,5.45) {$C_1$};
+\draw[capcol,line width=1.4pt] (6.35,4.65)--(6.35,5.35);
+\draw[capcol,line width=1.4pt] (6.65,4.65)--(6.65,5.35);
+\node[above] at (6.5,5.45) {$C_2$};
+% ---------- BORDE DERECHO: c -- e -- C5 -- g ----------
+\draw (9,5)--(9,2.5);
+\draw (9,2.5)--(9,1.4);
+\draw (9,1.1)--(9,0);
+\draw[capcol,line width=1.4pt] (8.65,1.4)--(9.35,1.4);
+\draw[capcol,line width=1.4pt] (8.65,1.1)--(9.35,1.1);
+\node[right] at (9.45,1.25) {$C_5$};
+% ---------- RAMA VERTICAL CENTRAL: b -- C7 -- d ----------
+\draw (4,5)--(4,3.9);
+\draw (4,3.6)--(4,2.5);
+\draw[capcol,line width=1.6pt] (3.65,3.9)--(4.35,3.9);
+\draw[capcol,line width=1.6pt] (3.65,3.6)--(4.35,3.6);
+\node[right] at (4.45,3.75) {$C_7$};
+% ---------- CABLE HORIZONTAL CENTRAL: d -- e ----------
+\draw (4,2.5)--(9,2.5);
+% ---------- C4 (rama central): d -- C4 -- g ----------
+\draw (4,2.5)--(4,1.4);
+\draw (4,1.1)--(4,0);
+\draw[capcol,line width=1.4pt] (3.65,1.4)--(4.35,1.4);
+\draw[capcol,line width=1.4pt] (3.65,1.1)--(4.35,1.1);
+\node[right] at (4.45,1.25) {$C_4$};
+% ---------- C3 (condensador diagonal): b -- C3 -- e ----------
+\draw (4,5)--(6.339,3.830);
+\draw (6.661,3.670)--(9,2.5);
+\draw[capcol,line width=1.4pt] (6.138,3.428)--(6.540,4.232);
+\draw[capcol,line width=1.4pt] (6.460,3.268)--(6.862,4.072);
+\node at (7.05,3.95) {$C_3$};
+% ---------- RIEL INFERIOR: f -- C6 -- g ----------
+\draw (0,0)--(1.85,0);
+\draw (2.15,0)--(9,0);
+\draw[capcol,line width=1.4pt] (1.85,-0.35)--(1.85,0.35);
+\draw[capcol,line width=1.4pt] (2.15,-0.35)--(2.15,0.35);
+\node[below] at (2.0,-0.45) {$C_6$};
+% ---------- BORDE IZQUIERDO con FUENTE V ----------
+\draw (0,5)--(0,2.95);
+\draw (0,2.55)--(0,0);
+\draw[line width=1.8pt] (-0.40,2.95)--(0.40,2.95);
+\draw[line width=3.4pt] (-0.20,2.55)--(0.20,2.55);
+\node[left] at (-0.5,2.75) {$V$};
+\node[font=\footnotesize] at (0.62,2.95) {$+$};
+\node[font=\footnotesize] at (0.62,2.55) {$-$};
+% ---------- NODOS ----------
+\fill (4,5) circle (2.6pt);    \node[above left] at (4,5) {\small$b$};
+\fill (4,2.5) circle (2.6pt);  \node[below left] at (4,2.5) {\small$d$};
+\fill (9,2.5) circle (2.6pt);  \node[above right] at (9,2.5) {\small$e$};
+\node[above left] at (0,5) {\small$a$};
+\node[above right] at (9,5) {\small$c$};
+\node[below left] at (0,0) {\small$f$};
+\node[below right] at (9,0) {\small$g$};
+\end{tikzpicture}\\[2pt]
+{\footnotesize Fig.\ 2. Siete condensadores entre la fuente $V$ ($a$--$f$); $C_7$ en la rama $b$--$d$.}
+\end{center}
+
+\medskip
+\noindent\textbf{Parte (a) -- Capacitancia equivalente.}
+
+El condensador $C_7$ en la rama $b$--$d$ separa el nodo $b$ del \textbf{nodo central}
+$M=\{c,d,e\}$ (los puntos $c$, $d$ y $e$ quedan unidos por los cables $c$--$e$ y $d$--$e$). Entonces:
+\begin{itemize}
+    \item Entre $b$ y $M$: $C_2$, $C_3$ y $C_7$ en \textbf{paralelo}.
+    \item Entre $M$ y $g$: $C_4$ y $C_5$ en \textbf{paralelo}.
+    \item $C_1$ ($a$--$b$), el grupo $b$--$M$, el grupo $M$--$g$ y $C_6$ ($f$--$g$) quedan en
+          \textbf{serie} con la fuente.
+\end{itemize}
+
+\[
+    C_{bM} = C_2 + C_3 + C_7 = 8{,}0 + 5{,}0 + 20{,}0 = 33{,}0\ [\mu\text{F}]
+\]
+\[
+    C_{Mg} = C_4 + C_5 = 12{,}0 + 6{,}0 = 18{,}0\ [\mu\text{F}]
+\]
+
+Reducci\'on de los cuatro bloques en serie:
+\begin{align*}
+    \frac{1}{C_{eq}} &= \frac{1}{C_1} + \frac{1}{C_{bM}} + \frac{1}{C_{Mg}} + \frac{1}{C_6}\\[4pt]
+                     &= \frac{1}{5{,}0} + \frac{1}{33{,}0} + \frac{1}{18{,}0} + \frac{1}{5{,}0}
+                      = \frac{481}{990}\ [\mu\text{F}^{-1}]
+\end{align*}
+\[
+    \boxed{C_{eq} = \frac{990}{481} = 2{,}058\ [\mu\text{F}]}
+\]
+
+\medskip
+\noindent\textbf{Parte (b) -- Carga en cada condensador.}
+
+Los cuatro bloques en serie ($C_1$, $C_{bM}$, $C_{Mg}$, $C_6$) comparten la \textbf{misma carga},
+igual a la carga total entregada por la fuente:
+\[
+    Q = C_{eq}\,V = 2{,}058\times10^{-6}\times 12{,}0 = 24{,}70\ [\mu\text{C}]
+\]
+
+\noindent\emph{Condensadores simples en serie:} $C_1$ y $C_6$ llevan toda la carga $Q$:
+\[
+    \boxed{q_1 = q_6 = Q = 24{,}70\ [\mu\text{C}]}
+\]
+
+\noindent\emph{Grupo $b$--$M$} ($C_2\parallel C_3\parallel C_7$): mismo voltaje
+$V_{bM} = Q/C_{bM} = 24{,}70/33{,}0 = 0{,}7484\ [\text{V}]$:
+\begin{align*}
+    q_2 &= C_2\,V_{bM} = 8{,}0\times 0{,}7484 = 5{,}99\ [\mu\text{C}]\\
+    q_3 &= C_3\,V_{bM} = 5{,}0\times 0{,}7484 = 3{,}74\ [\mu\text{C}]\\
+    q_7 &= C_7\,V_{bM} = 20{,}0\times 0{,}7484 = 14{,}97\ [\mu\text{C}]
+\end{align*}
+
+\noindent\emph{Grupo $M$--$g$} ($C_4\parallel C_5$): mismo voltaje
+$V_{Mg} = Q/C_{Mg} = 24{,}70/18{,}0 = 1{,}372\ [\text{V}]$:
+\begin{align*}
+    q_4 &= C_4\,V_{Mg} = 12{,}0\times 1{,}372 = 16{,}47\ [\mu\text{C}]\\
+    q_5 &= C_5\,V_{Mg} = 6{,}0\times 1{,}372 = 8{,}23\ [\mu\text{C}]
+\end{align*}
+
+\medskip
+\noindent\textbf{Verificaci\'on:}
+\[
+    q_2+q_3+q_7 = 5{,}99+3{,}74+14{,}97 = 24{,}70\ [\mu\text{C}] = Q\ \checkmark
+    \qquad
+    q_4+q_5 = 16{,}47+8{,}23 = 24{,}70\ [\mu\text{C}] = Q\ \checkmark
+\]
+Voltajes en serie (con $V_1 = V_6 = Q/C_1 = 24{,}70/5{,}0 = 4{,}94\ [\text{V}]$):
+\[
+    V_1 + V_{bM} + V_{Mg} + V_6 = 4{,}94 + 0{,}748 + 1{,}372 + 4{,}94 = 12{,}0\ [\text{V}] = V\ \checkmark
+\]
+
+\end{document}

@@ -1,0 +1,345 @@
+\documentclass[12pt,letterpaper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[spanish,es-noshorthands]{babel}
+\usepackage{amsmath,amssymb}
+\usepackage{graphicx}
+\usepackage{xcolor}
+\usepackage{tikz}
+\usetikzlibrary{calc,arrows.meta,patterns}
+\usepackage{enumerate}
+\usepackage[top=2.5cm, bottom=2.7cm, left=2cm, right=2cm, footskip=40pt]{geometry}
+\usepackage{fancyhdr}
+\usepackage{lastpage}
+
+\definecolor{ubbblue}{RGB}{0,51,102}
+\definecolor{capcol}{RGB}{0,0,170}
+\definecolor{plexcol}{RGB}{245,210,155}
+\definecolor{platepos}{RGB}{200,60,60}
+\definecolor{plateneg}{RGB}{60,90,200}
+
+% separaci\'on vertical entre secciones
+\newcommand{\secgap}{\vspace{0.6cm}}
+
+\pagestyle{fancy}
+\fancyhf{}
+\renewcommand{\headrulewidth}{0pt}
+\renewcommand{\footrulewidth}{0.4pt}
+\fancyfoot[L]{\raisebox{-0.5\height}{\includegraphics[height=1.1cm]{logo ubb.png}}}
+\fancyfoot[C]{%
+    \begin{minipage}[c]{8cm}\centering
+        \footnotesize\textcolor{ubbblue}{\textbf{Dr.\ Arturo Fern\'andez P\'erez}}\\
+        \scriptsize Departamento de F\'isica -- Universidad del B\'io-B\'io\\
+        \scriptsize \textit{Electro\_Asistente\_AI-UBB}\\
+        \tiny P\'agina \thepage\ de \pageref{LastPage}
+    \end{minipage}}
+\fancyfoot[R]{\raisebox{-0.5\height}{\includegraphics[height=1.1cm]{logo dfis.png}}}
+\fancypagestyle{plain}{%
+    \fancyhf{}
+    \renewcommand{\headrulewidth}{0pt}
+    \renewcommand{\footrulewidth}{0.4pt}
+    \fancyfoot[L]{\raisebox{-0.5\height}{\includegraphics[height=1.1cm]{logo ubb.png}}}
+    \fancyfoot[C]{%
+        \begin{minipage}[c]{8cm}\centering
+            \footnotesize\textcolor{ubbblue}{\textbf{Dr.\ Arturo Fern\'andez P\'erez}}\\
+            \scriptsize Departamento de F\'isica -- Universidad del B\'io-B\'io\\
+            \scriptsize \textit{Electro\_Asistente\_AI-UBB}\\
+            \tiny P\'agina \thepage\ de \pageref{LastPage}
+        \end{minipage}}
+    \fancyfoot[R]{\raisebox{-0.5\height}{\includegraphics[height=1.1cm]{logo dfis.png}}}
+}
+
+\begin{document}
+
+%========================================================
+% ENCABEZADO INSTITUCIONAL
+%========================================================
+\begin{center}
+    \includegraphics[height=2cm]{logo ubb.png}\\[0.3cm]
+    {\large\textcolor{ubbblue}{\textbf{UNIVERSIDAD DEL B\'IO-B\'IO}}}\\[0.1cm]
+    {\normalsize Facultad de Ciencias -- Departamento de F\'isica}
+\end{center}
+
+\vspace{0.3cm}\hrule height 1pt\vspace{0.5cm}
+
+{\centering\Large\textbf{Problemas resueltos en la clase del 02/10}\par}
+{\centering\normalsize\textit{Gu\'ia 7 -- Capacitancia y Diel\'ectricos \quad(Problemas 1, 8 y 10)}\par}
+
+\vspace{0.6cm}
+
+%========================================================
+% PROBLEMA 1  (Guia 7, N.1)
+%========================================================
+\section*{Problema 1 -- Placas circulares: aire y tefl\'on}
+
+\noindent\textbf{Enunciado:}
+Un capacitor de placas paralelas tiene placas circulares de $r = 8{,}22\ [\text{cm}]$ de radio y
+$d = 1{,}31\ [\text{cm}]$ de separaci\'on. \textbf{(a)} \textquestiondown{}Cu\'al es su capacitancia con aire entre
+las placas? \textbf{(b)} \textquestiondown{}Y con tefl\'on ($\kappa = 2{,}1$) entre ellas? \textbf{(c)} \textquestiondown{}Qu\'e
+carga aparece en los electrodos, en ambos casos, si se aplica una diferencia de potencial de
+$V = 116\ [\text{V}]$?
+
+\medskip
+\noindent\textbf{Datos:}
+\[
+    r = 8{,}22\ [\text{cm}] = 0{,}0822\ [\text{m}],\quad
+    d = 1{,}31\ [\text{cm}] = 0{,}0131\ [\text{m}],\quad
+    \kappa = 2{,}1,\quad V = 116\ [\text{V}]
+\]
+
+\begin{center}
+\begin{tikzpicture}[scale=1.0]
+    % region dielectrica
+    \fill[black!7] (0,0) rectangle (4,1.2);
+    \draw[dashed,gray] (2,0)--(2,1.2);
+    \node[font=\small] at (2,0.6) {aire \ \textbar\ \ tefl\'on ($\kappa=2{,}1$)};
+    % placas
+    \draw[very thick] (0,1.2)--(4,1.2);
+    \draw[very thick] (0,0)--(4,0);
+    % cotas
+    \draw[<->,gray,thin] (4.3,0)--(4.3,1.2) node[midway,right,font=\small]{$d$};
+    \draw[<->,gray,thin] (0,1.55)--(4,1.55) node[midway,above,font=\small]{$2r$};
+    % bateria V
+    \draw[thick] (0,1.2)--(-1,1.2)--(-1,0.78);
+    \draw[very thick] (-1.25,0.78)--(-0.75,0.78);
+    \draw[very thick] (-1.12,0.56)--(-0.88,0.56);
+    \draw[thick] (-1,0.42)--(-1,0)--(0,0);
+    \node[left,font=\small] at (-1.3,0.67) {$V$};
+\end{tikzpicture}\\[2pt]
+{\footnotesize Fig.\ 1. Capacitor de placas circulares (radio $r$, separaci\'on $d$).}
+\end{center}
+
+\medskip
+\noindent\textbf{Soluci\'on.}
+El \'area de cada placa circular es
+\[
+    A = \pi r^2 = \pi (0{,}0822)^2 = 2{,}123\times10^{-2}\ [\text{m}^2].
+\]
+
+\noindent\textbf{(a) Con aire} ($\kappa_{\text{aire}}\approx 1$):
+\[
+    \boxed{C_0 = \varepsilon_0\,\frac{A}{d}
+        = 8{,}854\times10^{-12}\times\frac{2{,}123\times10^{-2}}{1{,}31\times10^{-2}}
+        = 14{,}35\ [\text{pF}]}
+\]
+
+\noindent\textbf{(b) Con tefl\'on} ($\kappa = 2{,}1$):
+\[
+    \boxed{C_1 = \kappa\,C_0 = 2{,}1\times 14{,}35 = 30{,}13\ [\text{pF}]}
+\]
+
+\noindent\textbf{(c) Carga en los electrodos} ($q = C\,V$, con $V = 116\ [\text{V}]$):
+\begin{align*}
+    q_0 &= C_0\,V = 14{,}35\times10^{-12}\times 116 = 1{,}66\times10^{-9}\ [\text{C}] = 1{,}66\ [\text{nC}]\\[2pt]
+    q_1 &= C_1\,V = 30{,}13\times10^{-12}\times 116 = 3{,}50\times10^{-9}\ [\text{C}] = 3{,}50\ [\text{nC}]
+\end{align*}
+\[
+    \boxed{q_0 = 1{,}66\ [\text{nC}],\qquad q_1 = 3{,}50\ [\text{nC}]}
+\]
+
+\noindent El tefl\'on multiplica tanto la capacitancia como la carga almacenada por el factor
+$\kappa = 2{,}1$ (a igual voltaje).
+
+\newpage
+
+%========================================================
+% PROBLEMA 8  (Guia 7, N.8)
+%========================================================
+\section*{Problema 8 -- Mitad Plexiglas, mitad aire (placas cuadradas)}
+
+\noindent\textbf{Enunciado:}
+Se construye un capacitor (Fig.\ 2) con dos placas cuadradas de $L = 12{,}0\ [\text{cm}]$ de lado,
+separadas una distancia $d = 4{,}5\ [\text{mm}]$. La mitad del espacio se rellena con
+\textit{Plexiglas} ($\kappa = 3{,}4$) y la otra mitad con aire. Una bater\'ia de $V = 18\ [\text{V}]$
+se conecta al condensador. \textbf{(a)} \textquestiondown{}Cu\'al es la capacitancia del dispositivo?
+\textbf{(b)} \textquestiondown{}Cu\'anta energ\'ia almacena? \textbf{(c)} Si se remueve el \textit{Plexiglas}
+(con la bater\'ia conectada), \textquestiondown{}cu\'anta energ\'ia almacena?
+
+\medskip
+\noindent\textbf{Datos:}
+\[
+    L = 12{,}0\ [\text{cm}] = 0{,}12\ [\text{m}],\quad d = 4{,}5\ [\text{mm}] = 4{,}5\times10^{-3}\ [\text{m}],\quad
+    \kappa = 3{,}4,\quad V = 18\ [\text{V}]
+\]
+
+\begin{center}
+\begin{tikzpicture}[scale=1.0]
+    % regiones
+    \fill[plexcol] (0,0) rectangle (2.5,1.3);
+    \fill[black!4]  (2.5,0) rectangle (5,1.3);
+    \draw[dashed,gray] (2.5,0)--(2.5,1.3);
+    \node[font=\small] at (1.25,0.75) {Plexiglas};
+    \node[font=\scriptsize] at (1.25,0.42) {$\kappa=3{,}4$};
+    \node[font=\small] at (3.75,0.65) {Aire};
+    % placa superior (+)
+    \draw[very thick,platepos] (0,1.3)--(5,1.3);
+    \foreach \x in {0.35,1.05,...,4.75} \node[platepos,font=\scriptsize] at (\x,1.52) {$+$};
+    % placa inferior (-)
+    \draw[very thick,plateneg] (0,0)--(5,0);
+    \foreach \x in {0.35,1.05,...,4.75} \node[plateneg,font=\scriptsize] at (\x,-0.24) {$-$};
+    % cotas
+    \draw[<->,gray,thin] (5.3,0)--(5.3,1.3) node[midway,right,font=\small]{$d$};
+    \draw[<->,gray,thin] (0,2.0)--(5,2.0) node[midway,above,font=\small]{$L$};
+    % bateria V
+    \draw[thick] (0,1.3)--(-1,1.3)--(-1,0.86);
+    \draw[very thick] (-1.25,0.86)--(-0.75,0.86);
+    \draw[very thick] (-1.12,0.62)--(-0.88,0.62);
+    \draw[thick] (-1,0.46)--(-1,0)--(0,0);
+    \node[left,font=\small] at (-1.3,0.74) {$V$};
+\end{tikzpicture}\\[2pt]
+{\footnotesize Fig.\ 2. La frontera Plexiglas--aire es \emph{perpendicular} a las placas.}
+\end{center}
+
+\medskip
+\noindent\textbf{Soluci\'on.}
+Como la frontera entre el diel\'ectrico y el aire es \textbf{perpendicular} a las placas, cada
+mitad ocupa un \'area $A/2$ con la separaci\'on completa $d$: son dos condensadores en
+\textbf{paralelo}. Con $A = L^2 = 0{,}0144\ [\text{m}^2]$:
+\begin{align*}
+    C_{\text{aire}} &= \varepsilon_0\,\frac{A/2}{d}
+        = 8{,}854\times10^{-12}\times\frac{0{,}0072}{4{,}5\times10^{-3}} = 14{,}17\ [\text{pF}]\\[2pt]
+    C_{\text{plex}} &= \kappa\,\varepsilon_0\,\frac{A/2}{d}
+        = 3{,}4\times 14{,}17 = 48{,}17\ [\text{pF}]
+\end{align*}
+
+\noindent\textbf{(a) Capacitancia equivalente:}
+\[
+    \boxed{C = C_{\text{aire}} + C_{\text{plex}} = 14{,}17 + 48{,}17 = 62{,}33\ [\text{pF}]}
+\]
+
+\noindent\textbf{(b) Energ\'ia almacenada} ($U = \tfrac12 C V^2$):
+\[
+    \boxed{U = \tfrac12\times 62{,}33\times10^{-12}\times(18)^2 = 1{,}010\times10^{-8}\ [\text{J}] = 10{,}10\ [\text{nJ}]}
+\]
+
+\noindent\textbf{(c) Sin Plexiglas} (todo aire; con la bater\'ia conectada $V = 18\ [\text{V}]$ es
+constante):
+\[
+    C' = \varepsilon_0\,\frac{A}{d} = 8{,}854\times10^{-12}\times\frac{0{,}0144}{4{,}5\times10^{-3}}
+       = 28{,}33\ [\text{pF}]
+\]
+\[
+    \boxed{U' = \tfrac12\,C' V^2 = \tfrac12\times 28{,}33\times10^{-12}\times 324 = 4{,}59\times10^{-9}\ [\text{J}] = 4{,}59\ [\text{nJ}]}
+\]
+
+\noindent Al retirar el diel\'ectrico con la bater\'ia conectada, $C$ disminuye y, como $U=\tfrac12 CV^2$
+a voltaje fijo, la energ\'ia tambi\'en \emph{disminuye} (la bater\'ia recupera parte de la carga).
+
+\newpage
+
+%========================================================
+% PROBLEMA 10  (Guia 7, N.10)
+%========================================================
+\section*{Problema 10 -- Red mixta de cinco condensadores}
+
+\noindent\textbf{Enunciado:}
+Para el circuito de la Fig.\ 3, $C_1 = C_5 = 5{,}85\ [\mu\text{F}]$ y
+$C_2 = C_3 = C_4 = 6{,}70\ [\mu\text{F}]$. Si $V_{ab} = 20{,}0\ [\text{V}]$, determine la capacitancia
+equivalente y la carga que se acumula en cada condensador.
+
+\begin{center}
+\begin{tikzpicture}[scale=1.0, line width=1pt]
+    % --- FILA SUPERIOR: a -- C1 -- M1 -- C3 -- Rtop ---
+    \draw (0,2.2)--(1.45,2.2);
+    \draw (1.75,2.2)--(3.2,2.2);
+    \draw (3.2,2.2)--(4.65,2.2);
+    \draw (4.95,2.2)--(6.4,2.2);
+    \draw[capcol,line width=1.4pt] (1.45,1.9)--(1.45,2.5);
+    \draw[capcol,line width=1.4pt] (1.75,1.9)--(1.75,2.5);
+    \node[above] at (1.6,2.6) {$C_1$};
+    \draw[capcol,line width=1.4pt] (4.65,1.9)--(4.65,2.5);
+    \draw[capcol,line width=1.4pt] (4.95,1.9)--(4.95,2.5);
+    \node[above] at (4.8,2.6) {$C_3$};
+    % --- FILA INFERIOR: b -- C5 -- M2 -- C4 -- Rbot ---
+    \draw (0,0)--(1.45,0);
+    \draw (1.75,0)--(3.2,0);
+    \draw (3.2,0)--(4.65,0);
+    \draw (4.95,0)--(6.4,0);
+    \draw[capcol,line width=1.4pt] (1.45,-0.3)--(1.45,0.3);
+    \draw[capcol,line width=1.4pt] (1.75,-0.3)--(1.75,0.3);
+    \node[below] at (1.6,-0.4) {$C_5$};
+    \draw[capcol,line width=1.4pt] (4.65,-0.3)--(4.65,0.3);
+    \draw[capcol,line width=1.4pt] (4.95,-0.3)--(4.95,0.3);
+    \node[below] at (4.8,-0.4) {$C_4$};
+    % --- RAMA CENTRAL VERTICAL: M1 -- C2 -- M2 ---
+    \draw (3.2,2.2)--(3.2,1.25);
+    \draw (3.2,0.95)--(3.2,0);
+    \draw[capcol,line width=1.6pt] (2.9,1.25)--(3.5,1.25);
+    \draw[capcol,line width=1.6pt] (2.9,0.95)--(3.5,0.95);
+    \node[right] at (3.6,1.1) {$C_2$};
+    % --- BORDE DERECHO: Rtop -- Rbot ---
+    \draw (6.4,2.2)--(6.4,0);
+    % --- NODOS y TERMINALES ---
+    \fill (3.2,2.2) circle (2.3pt); \node[above left,font=\scriptsize] at (3.2,2.2) {$M_1$};
+    \fill (3.2,0)   circle (2.3pt); \node[below left,font=\scriptsize] at (3.2,0) {$M_2$};
+    \fill (6.4,2.2) circle (2.3pt);
+    \fill (6.4,0)   circle (2.3pt); \node[right,font=\scriptsize] at (6.4,1.1) {$R$};
+    \fill (0,2.2) circle (2.3pt); \node[left] at (-0.1,2.2) {$a$};
+    \fill (0,0)   circle (2.3pt); \node[left] at (-0.1,0) {$b$};
+\end{tikzpicture}\\[2pt]
+{\footnotesize Fig.\ 3. Red de cinco condensadores; se aplica $V_{ab} = 20{,}0$ V entre $a$ y $b$.}
+\end{center}
+
+\medskip
+\noindent\textbf{Topolog\'ia.}
+Recorriendo el circuito: $a$--$C_1$--$M_1$, \ $M_1$--$C_3$--$R$, \ $R$--$C_4$--$M_2$, \
+$M_2$--$C_5$--$b$, \ y $C_2$ conecta $M_1$ con $M_2$. Entre $M_1$ y $M_2$ hay dos caminos:
+el directo por $C_2$, y el que pasa por $R$ ($C_3$ y $C_4$ en \textbf{serie}). Por lo tanto,
+entre $M_1$ y $M_2$: \ $C_2 \parallel (C_3\ \text{serie}\ C_4)$, y ese grupo queda en
+\textbf{serie} con $C_1$ y $C_5$.
+
+\medskip
+\noindent\textbf{Parte (a) -- Capacitancia equivalente.}
+
+$C_3$ y $C_4$ en serie:
+\[
+    C_{34} = \frac{C_3\,C_4}{C_3 + C_4} = \frac{6{,}70\times 6{,}70}{6{,}70+6{,}70} = 3{,}35\ [\mu\text{F}]
+\]
+Grupo central ($C_2 \parallel C_{34}$):
+\[
+    C_{M} = C_2 + C_{34} = 6{,}70 + 3{,}35 = 10{,}05\ [\mu\text{F}]
+\]
+$C_1$, $C_M$ y $C_5$ en serie:
+\begin{align*}
+    \frac{1}{C_{eq}} &= \frac{1}{C_1} + \frac{1}{C_M} + \frac{1}{C_5}
+                      = \frac{1}{5{,}85} + \frac{1}{10{,}05} + \frac{1}{5{,}85}\ [\mu\text{F}^{-1}]\\[4pt]
+                     &= 0{,}4414\ [\mu\text{F}^{-1}]
+\end{align*}
+\[
+    \boxed{C_{eq} = 2{,}266\ [\mu\text{F}]}
+\]
+
+\medskip
+\noindent\textbf{Parte (b) -- Carga en cada condensador.}
+
+Como $C_1$, el grupo central y $C_5$ est\'an en \textbf{serie}, los tres llevan la misma carga,
+igual a la total:
+\[
+    Q = C_{eq}\,V_{ab} = 2{,}266\times10^{-6}\times 20{,}0 = 45{,}31\ [\mu\text{C}]
+\]
+
+\noindent\emph{Condensadores exteriores} $C_1$ y $C_5$ (en serie, llevan toda la carga):
+\[
+    \boxed{q_1 = q_5 = Q = 45{,}31\ [\mu\text{C}]}
+\]
+
+\noindent\emph{Grupo central:} el voltaje sobre $M_1$--$M_2$ es
+$V_M = Q/C_M = 45{,}31/10{,}05 = 4{,}509\ [\text{V}]$. Como $C_2 \parallel (C_3\,\text{ser}\,C_4)$,
+ese voltaje lo comparten la rama de $C_2$ y la rama $C_3$--$C_4$:
+\begin{align*}
+    q_2 &= C_2\,V_M = 6{,}70\times 4{,}509 = 30{,}21\ [\mu\text{C}]\\[2pt]
+    q_3 = q_4 &= C_{34}\,V_M = 3{,}35\times 4{,}509 = 15{,}10\ [\mu\text{C}]
+\end{align*}
+\[
+    \boxed{q_2 = 30{,}21\ [\mu\text{C}],\qquad q_3 = q_4 = 15{,}10\ [\mu\text{C}]}
+\]
+
+\noindent\textbf{Verificaci\'on:}
+\[
+    q_2 + q_3 = 30{,}21 + 15{,}10 = 45{,}31\ [\mu\text{C}] = Q\ \checkmark
+\]
+Voltajes en serie, con $V_1 = V_5 = Q/C_1 = 45{,}31/5{,}85 = 7{,}75\ [\text{V}]$:
+\[
+    V_1 + V_M + V_5 = 7{,}75 + 4{,}51 + 7{,}75 = 20{,}0\ [\text{V}] = V_{ab}\ \checkmark
+\]
+
+\end{document}
