@@ -1,0 +1,347 @@
+\documentclass[10pt,letterpaper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[spanish,es-noshorthands]{babel}
+\usepackage{amsmath,amssymb}
+\usepackage{graphicx}
+\usepackage[american]{circuitikz}
+\usepackage[letterpaper, top=1in, bottom=1in, left=1in, right=1in]{geometry}
+
+% componentes algo mas compactos que el valor por defecto
+\ctikzset{bipoles/length=1.15cm}
+% signo + junto a la placa larga (borne positivo) de cada fuente
+\newcommand{\bplus}[1]{\node[font=\footnotesize, inner sep=0pt] at (#1) {$+$};}
+% respuesta: "R: valor [unidad]" sin cortes de linea
+\newcommand{\resp}[1]{\mbox{\textbf{R:}~#1}}
+
+\renewcommand{\labelenumi}{\arabic{enumi}.}
+\setlength{\parindent}{0pt}
+\pagestyle{plain}
+
+\begin{document}
+
+\begin{center}
+    \includegraphics[height=2.2cm]{logo ubb.png}\\[6pt]
+    \textbf{Electromagnetismo}\\[2pt]
+    \emph{Gu\'ia N$^{\circ}$8 - Circuitos el\'ectricos en corriente continua}\\[2pt]
+    \textit{Profesor: Arturo Fern\'andez P\'erez}
+\end{center}
+
+\medskip
+En todos los circuitos las fuentes de fem son ideales (sin resistencia interna) y el signo $+$
+se\~nala su borne positivo (placa larga del s\'imbolo). Los valores de las resistencias y de las
+fem se indican en cada figura.
+
+\begin{enumerate}
+\setlength{\itemsep}{12pt}
+
+%==================================================================
+\item \begin{minipage}[t]{\linewidth}
+Para el circuito de la Fig.~1, use las leyes de Kirchhoff para determinar la corriente $I$ que
+circula por $R_5$, con el sentido de referencia indicado por la flecha (un resultado negativo
+indica que la corriente circula en sentido contrario). \resp{$I = 2$~[A]}
+\begin{center}
+\begin{circuitikz}[every node/.style={font=\small}]
+  % rama izquierda: eps1 (+ arriba) y R5 (flecha I hacia arriba)
+  \draw (0,3.5) to[battery1, l_={$\varepsilon_1 = 20\,\text{V}$}] (0,1.9);
+  \draw (0,0) to[R, l={$R_5 = 3\,\Omega$}, f>_={$I$}] (0,1.9);
+  \bplus{0.32,2.95}
+  % rama superior
+  \draw (0,3.5) to[R, l=$R_1$, a=$4\,\Omega$] (3.5,3.5)
+                to[R, l=$R_2$, a=$6\,\Omega$] (7,3.5);
+  % rama central y derecha
+  \draw (3.5,0) to[R, l=$R_3$, a=$12\,\Omega$] (3.5,3.5);
+  \draw (7,0) to[R, l=$R_4$, a=$2\,\Omega$] (7,3.5);
+  % rama inferior: R6 y eps2 (+ a la izquierda)
+  \draw (0,0) -- (3.5,0) to[R, l=$R_6$, a=$12\,\Omega$] (5.4,0)
+                to[battery1, l_={$\varepsilon_2 = 24\,\text{V}$}] (7,0);
+  \bplus{5.95,0.32}
+  \node[circ] at (3.5,3.5) {}; \node[circ] at (3.5,0) {};
+\end{circuitikz}\\[2pt]
+Figura 1
+\end{center}
+\end{minipage}
+
+%==================================================================
+\item \begin{minipage}[t]{\linewidth}
+En la red de la Fig.~2, calcule la diferencia de potencial $V_P - V_Q$ entre los puntos $P$ y $Q$.
+\resp{$V_P - V_Q = 8$~[V]}
+\begin{center}
+\begin{circuitikz}[every node/.style={font=\small}]
+  % izquierda: eps2 (+ abajo, hacia P)
+  \draw (0,0) to[battery1, l={$\varepsilon_2 = 14\,\text{V}$}] (0,3.5);
+  \bplus{0.32,1.5}
+  % superior: R1, Q, R2 y eps1 (+ a la izquierda)
+  \draw (0,3.5) to[R, l=$R_1$, a=$2\,\Omega$] (3.5,3.5)
+                to[R, l=$R_2$, a=$6\,\Omega$] (5.4,3.5)
+                to[battery1, l={$\varepsilon_1 = 20\,\text{V}$}] (7,3.5);
+  \bplus{5.95,3.18}
+  % central y derecha
+  \draw (3.5,0) to[R, l=$R_3$, a=$12\,\Omega$] (3.5,3.5);
+  \draw (7,0) to[R, l=$R_4$, a=$5\,\Omega$] (7,3.5);
+  % inferior
+  \draw (0,0) -- (3.5,0) to[R, l=$R_5$, a=$1\,\Omega$] (7,0);
+  \node[circ] at (3.5,0) {};
+  \node[ocirc] at (3.5,3.5) {}; \node[above] at (3.5,3.6) {$Q$};
+  \node[ocirc] at (0,0) {};     \node[below left] at (0,0) {$P$};
+\end{circuitikz}\\[2pt]
+Figura 2
+\end{center}
+\end{minipage}
+
+%==================================================================
+\item \begin{minipage}[t]{\linewidth}
+Determine la potencia disipada en la resistencia $R_1$ del circuito de la Fig.~3.
+\resp{$P_1 = 1$~[W]}
+\begin{center}
+\begin{circuitikz}[every node/.style={font=\small}]
+  % superior: eps1 (+ a la izquierda), R1 y cable hasta la esquina
+  \draw (0,3.5) to[battery1, l={$\varepsilon_1 = 3\,\text{V}$}] (1.6,3.5)
+                to[R, l=$R_1$, a=$4\,\Omega$] (3.5,3.5) -- (7,3.5);
+  \bplus{0.55,3.18}
+  % izquierda, central y derecha (R5 abajo, R2 arriba)
+  \draw (0,0) to[R, l=$R_3$, a=$8\,\Omega$] (0,3.5);
+  \draw (3.5,0) to[R, l=$R_4$, a=$12\,\Omega$] (3.5,3.5);
+  \draw (7,0) to[R, l=$R_5$, a=$1\,\Omega$] (7,1.75)
+              to[R, l=$R_2$, a=$3\,\Omega$] (7,3.5);
+  % inferior: eps2 (+ a la derecha) y R6
+  \draw (0,0) -- (3.5,0);
+  \draw (5.2,0) to[battery1, l={$\varepsilon_2 = 12\,\text{V}$}] (3.5,0);
+  \bplus{4.6,0.32}
+  \draw (5.2,0) to[R, l=$R_6$, a=$8\,\Omega$] (7,0);
+  \node[circ] at (3.5,3.5) {}; \node[circ] at (3.5,0) {};
+\end{circuitikz}\\[2pt]
+Figura 3
+\end{center}
+\end{minipage}
+
+%==================================================================
+\item \begin{minipage}[t]{\linewidth}
+Para el circuito de la Fig.~4, aplique las leyes de Kirchhoff para obtener la corriente $I$ que
+circula por $R_4$ en el sentido indicado por la flecha. \resp{$I = 2$~[A]}
+\begin{center}
+\begin{circuitikz}[every node/.style={font=\small}]
+  % superior y derecha
+  \draw (0,3.5) to[R, l=$R_1$, a=$5\,\Omega$] (3.5,3.5)
+                to[R, l=$R_2$, a=$4\,\Omega$] (7,3.5) -- (7,0);
+  % izquierda: eps1 (+ abajo) y R3
+  \draw (0,0) -- (0,0.3) to[battery1, l={$\varepsilon_1 = 4\,\text{V}$}] (0,1.9)
+              to[R, l=$R_3$, a=$2\,\Omega$] (0,3.5);
+  \bplus{0.32,0.85}
+  % central: R4 con flecha I hacia arriba
+  \draw (3.5,0) to[R, l={$R_4 = 3\,\Omega$}, f>_={$I$}] (3.5,3.5);
+  % inferior: eps2 (+ a la derecha), R5 y R6
+  \draw (1.7,0) to[battery1, l={$\varepsilon_2 = 24\,\text{V}$}] (0,0);
+  \bplus{1.1,0.32}
+  \draw (1.7,0) to[R, l=$R_5$, a=$1\,\Omega$] (3.5,0)
+                to[R, l=$R_6$, a=$4\,\Omega$] (7,0);
+  \node[circ] at (3.5,3.5) {}; \node[circ] at (3.5,0) {};
+\end{circuitikz}\\[2pt]
+Figura 4
+\end{center}
+\end{minipage}
+
+%==================================================================
+\item \begin{minipage}[t]{\linewidth}
+En el circuito de la Fig.~5, calcule la potencia que entrega la fuente $\varepsilon_1$ e indique si
+\'esta entrega o absorbe energ\'ia. \resp{$P_{\varepsilon_1} = 12$~[W]} (entrega energ\'ia al circuito)
+\begin{center}
+\begin{circuitikz}[every node/.style={font=\small}]
+  % superior
+  \draw (0,3.5) to[R, l=$R_1$, a=$8\,\Omega$] (3.5,3.5)
+                to[R, l=$R_2$, a=$4\,\Omega$] (7,3.5);
+  % izquierda: eps1 (+ arriba)
+  \draw (0,3.5) to[battery1, l_={$\varepsilon_1 = 12\,\text{V}$}] (0,0);
+  \bplus{0.32,2.0}
+  % central: eps2 (+ abajo) y R3
+  \draw (3.5,0) to[battery1, l={$\varepsilon_2 = 5\,\text{V}$}] (3.5,1.6)
+                to[R, l=$R_3$, a=$12\,\Omega$] (3.5,3.5);
+  \bplus{3.82,0.55}
+  % derecha e inferior
+  \draw (7,0) to[R, l=$R_4$, a=$10\,\Omega$] (7,3.5);
+  \draw (0,0) -- (3.5,0) to[R, l=$R_5$, a=$2\,\Omega$] (7,0);
+  \node[circ] at (3.5,3.5) {}; \node[circ] at (3.5,0) {};
+\end{circuitikz}\\[2pt]
+Figura 5
+\end{center}
+\end{minipage}
+
+%==================================================================
+\item \begin{minipage}[t]{\linewidth}
+Para la red de la Fig.~6, determine la diferencia de potencial $V_P - V_Q$ entre los puntos $P$ y $Q$.
+\resp{$V_P - V_Q = 3$~[V]}
+\begin{center}
+\begin{circuitikz}[every node/.style={font=\small}]
+  % superior e izquierda
+  \draw (0,3.5) -- (3.5,3.5) to[R, l=$R_1$, a=$5\,\Omega$] (7,3.5);
+  \draw (0,0) to[R, l=$R_3$, a=$2\,\Omega$] (0,3.5);
+  % central: eps1 (+ arriba)
+  \draw (3.5,3.5) to[battery1, l_={$\varepsilon_1 = 2\,\text{V}$}] (3.5,0);
+  \bplus{3.82,2.0}
+  % derecha: R4 abajo, R2 arriba
+  \draw (7,0) to[R, l=$R_4$, a=$6\,\Omega$] (7,1.75)
+              to[R, l=$R_2$, a=$10\,\Omega$] (7,3.5);
+  % inferior: R5 y eps2 (+ a la izquierda)
+  \draw (0,0) -- (3.5,0) to[R, l=$R_5$, a=$1\,\Omega$] (5.4,0)
+                to[battery1, l_={$\varepsilon_2 = 20\,\text{V}$}] (7,0);
+  \bplus{5.95,0.32}
+  \node[circ] at (3.5,3.5) {}; \node[circ] at (3.5,0) {};
+  \node[ocirc] at (0,0) {};   \node[below left] at (0,0) {$P$};
+  \node[ocirc] at (7,3.5) {}; \node[above right] at (7,3.5) {$Q$};
+\end{circuitikz}\\[2pt]
+Figura 6
+\end{center}
+\end{minipage}
+
+%==================================================================
+\item \begin{minipage}[t]{\linewidth}
+Calcule la potencia total disipada en el conjunto de todas las resistencias del circuito de la
+Fig.~7. \resp{$P_{\text{tot}} = 38$~[W]}
+\begin{center}
+\begin{circuitikz}[every node/.style={font=\small}]
+  % superior y derecha
+  \draw (0,3.5) to[R, l=$R_1$, a=$2\,\Omega$] (3,3.5)
+                to[R, l=$R_2$, a=$10\,\Omega$] (6,3.5) -- (8.5,3.5) -- (8.5,0);
+  % izquierda: eps1 (+ abajo)
+  \draw (0,0) to[battery1, l={$\varepsilon_1 = 20\,\text{V}$}] (0,3.5);
+  \bplus{0.32,1.5}
+  % central
+  \draw (6,0) to[R, l=$R_3$, a=$2\,\Omega$] (6,3.5);
+  % inferior: R4, R5 y eps2 (+ a la izquierda)
+  \draw (0,0) to[R, l=$R_4$, a=$6\,\Omega$] (3,0)
+              to[R, l=$R_5$, a=$6\,\Omega$] (6,0)
+              to[battery1, l_={$\varepsilon_2 = 8\,\text{V}$}] (8.5,0);
+  \bplus{7.0,0.32}
+  \node[circ] at (6,3.5) {}; \node[circ] at (6,0) {};
+\end{circuitikz}\\[2pt]
+Figura 7
+\end{center}
+\end{minipage}
+
+%==================================================================
+\item \begin{minipage}[t]{\linewidth}
+En el circuito de la Fig.~8, use las leyes de Kirchhoff para determinar la corriente $I$ en $R_7$
+(sentido de referencia indicado por la flecha) e interprete su signo.
+\resp{$I = -1$~[A]}: la corriente circula en sentido contrario a la flecha.
+\begin{center}
+\begin{circuitikz}[every node/.style={font=\small}]
+  % superior: eps1 (+ a la izquierda) y R1
+  \draw (0,5) to[battery1, l={$\varepsilon_1 = 15\,\text{V}$}] (3.5,5)
+              to[R, l=$R_1$, a=$3\,\Omega$] (7,5);
+  \bplus{1.5,4.68}
+  % izquierda: R4 y R2; abajo eps3 (+ arriba)
+  \draw (0,1.7) to[R, l=$R_4$, a=$3\,\Omega$] (0,3.35)
+                to[R, l=$R_2$, a=$3\,\Omega$] (0,5);
+  \draw (0,1.7) to[battery1, l_={$\varepsilon_3 = 9\,\text{V}$}] (0,0);
+  \bplus{0.32,1.1}
+  % central: eps2 (+ arriba) y R5
+  \draw (3.5,5) to[battery1, l_={$\varepsilon_2 = 10\,\text{V}$}] (3.5,3.5) -- (3.5,1.7);
+  \bplus{3.82,4.5}
+  \draw (3.5,0) to[R, l=$R_5$, a=$1\,\Omega$] (3.5,1.7);
+  % derecha: R3
+  \draw (7,0) -- (7,3.3) to[R, l=$R_3$, a=$3\,\Omega$] (7,5);
+  % inferior: R6 y R7 (flecha I hacia la derecha)
+  \draw (0,0) to[R, l=$R_6$, a=$8\,\Omega$] (3.5,0)
+              to[R, l={$R_7 = 2\,\Omega$}, f>_={$I$}] (7,0);
+  \node[circ] at (3.5,5) {}; \node[circ] at (3.5,0) {};
+\end{circuitikz}\\[2pt]
+Figura 8
+\end{center}
+\end{minipage}
+
+%==================================================================
+\item \begin{minipage}[t]{\linewidth}
+Para la red de la Fig.~9, determine la diferencia de potencial $V_P - V_Q$ entre los puntos $P$ y $Q$.
+\resp{$V_P - V_Q = -14$~[V]}
+\begin{center}
+\begin{circuitikz}[every node/.style={font=\small}]
+  % superior: R1 hasta Q
+  \draw (0,6.4) -- (3.5,6.4) to[R, l=$R_1$, a=$1\,\Omega$] (7,6.4);
+  % izquierda superior: eps1 (+ abajo) y R2
+  \draw (0,3.2) to[battery1, l={$\varepsilon_1 = 4\,\text{V}$}] (0,4.8)
+                to[R, l=$R_2$, a=$5\,\Omega$] (0,6.4);
+  \bplus{0.32,3.75}
+  % rama central: R4, R5 y bajada hasta P
+  \draw (0,3.2) to[R, l=$R_4$, a=$2\,\Omega$] (1.8,3.2)
+                to[R, l=$R_5$, a=$2\,\Omega$] (3.6,3.2) -- (3.6,0);
+  % izquierda inferior: R7 abajo, R6 arriba
+  \draw (0,0) to[R, l=$R_7$, a=$5\,\Omega$] (0,1.6)
+              to[R, l=$R_6$, a=$6\,\Omega$] (0,3.2);
+  % inferior: R8 hasta P y cable hasta la esquina
+  \draw (0,0) to[R, l=$R_8$, a=$1\,\Omega$] (3.6,0) -- (7,0);
+  % derecha: R3 arriba y eps2 (+ arriba) abajo
+  \draw (7,3.2) to[R, l=$R_3$, a=$3\,\Omega$] (7,6.4);
+  \draw (7,3.2) to[battery1, l_={$\varepsilon_2 = 20\,\text{V}$}] (7,0);
+  \bplus{7.32,1.85}
+  \node[circ] at (0,3.2) {};
+  \node[ocirc] at (3.6,0) {}; \node[below] at (3.6,-0.08) {$P$};
+  \node[ocirc] at (7,6.4) {}; \node[above right] at (7,6.4) {$Q$};
+\end{circuitikz}\\[2pt]
+Figura 9
+\end{center}
+\end{minipage}
+
+%==================================================================
+\item \begin{minipage}[t]{\linewidth}
+Calcule la potencia total disipada en el conjunto de todas las resistencias del circuito de la
+Fig.~10. \resp{$P_{\text{tot}} = 43$~[W]}
+\begin{center}
+\begin{circuitikz}[every node/.style={font=\small}]
+  % superior: R1, R2 y R3
+  \draw (0,6.2) to[R, l=$R_1$, a=$2\,\Omega$] (2,6.2)
+                to[R, l=$R_2$, a=$5\,\Omega$] (4,6.2)
+                to[R, l=$R_3$, a=$8\,\Omega$] (6.5,6.2);
+  % izquierda superior: R6 abajo, R4 arriba
+  \draw (0,3.1) to[R, l=$R_6$, a=$3\,\Omega$] (0,4.65)
+                to[R, l=$R_4$, a=$4\,\Omega$] (0,6.2);
+  % izquierda inferior: R7 y eps3 (+ arriba)
+  \draw (0,1.55) to[R, l=$R_7$, a=$12\,\Omega$] (0,3.1);
+  \draw (0,1.55) to[battery1, l_={$\varepsilon_3 = 2\,\text{V}$}] (0,0);
+  \bplus{0.32,1.0}
+  % rama interior: eps1 (+ abajo)
+  \draw (0,3.1) -- (3.5,3.1);
+  \draw (3.5,0) to[battery1, l={$\varepsilon_1 = 18\,\text{V}$}] (3.5,3.1);
+  \bplus{3.82,1.3}
+  % derecha: R5 arriba y eps2 (+ arriba) abajo
+  \draw (6.5,3.1) to[R, l=$R_5$, a=$10\,\Omega$] (6.5,6.2);
+  \draw (6.5,3.1) to[battery1, l_={$\varepsilon_2 = 6\,\text{V}$}] (6.5,0);
+  \bplus{6.82,1.8}
+  % inferior
+  \draw (0,0) to[R, l=$R_8$, a=$4\,\Omega$] (3.5,0) -- (6.5,0);
+  \node[circ] at (0,3.1) {}; \node[circ] at (3.5,0) {};
+\end{circuitikz}\\[2pt]
+Figura 10
+\end{center}
+\end{minipage}
+
+%==================================================================
+\item \begin{minipage}[t]{\linewidth}
+En el circuito de la Fig.~11, determine la potencia disipada en la resistencia $R_4$.
+\resp{$P_4 = 18$~[W]}
+\begin{center}
+\begin{circuitikz}[every node/.style={font=\small}]
+  % lazo exterior superior y bajada derecha hasta el nodo
+  \draw (0,6) -- (6.5,6) -- (6.5,3);
+  % izquierda: eps1 (+ abajo) arriba y eps2 (+ arriba) abajo
+  \draw (0,3) to[battery1, l={$\varepsilon_1 = 24\,\text{V}$}] (0,6);
+  \bplus{0.32,4.25}
+  \draw (0,3) to[battery1, l_={$\varepsilon_2 = 12\,\text{V}$}] (0,0);
+  \bplus{0.32,1.75}
+  % derecha: eps3 (+ arriba)
+  \draw (6.5,3) to[battery1, l_={$\varepsilon_3 = 4\,\text{V}$}] (6.5,0);
+  \bplus{6.82,1.75}
+  % rama interior: R1, R2 y R3
+  \draw (2.8,3) to[R, l=$R_1$, a=$2\,\Omega$] (4.65,3)
+                to[R, l=$R_2$, a=$2\,\Omega$] (6.5,3);
+  \draw (2.8,0) to[R, l=$R_3$, a=$8\,\Omega$] (2.8,3);
+  % inferior
+  \draw (0,0) to[R, l=$R_4$, a=$2\,\Omega$] (2.8,0)
+              to[R, l=$R_5$, a=$4\,\Omega$] (6.5,0);
+  \node[circ] at (6.5,3) {}; \node[circ] at (2.8,0) {};
+\end{circuitikz}\\[2pt]
+Figura 11
+\end{center}
+\end{minipage}
+
+\end{enumerate}
+
+\end{document}
