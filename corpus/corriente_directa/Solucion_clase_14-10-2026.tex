@@ -1,0 +1,532 @@
+\documentclass[12pt,letterpaper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[spanish,es-noshorthands]{babel}
+\usepackage{amsmath,amssymb}
+\usepackage{graphicx}
+\usepackage{xcolor}
+\usepackage{tikz}
+\usepackage[american]{circuitikz}
+\usetikzlibrary{calc,arrows.meta,decorations.markings}
+\usepackage[top=2.5cm, bottom=2.7cm, left=2cm, right=2cm, footskip=40pt]{geometry}
+\usepackage{fancyhdr}
+\usepackage{lastpage}
+
+\definecolor{ubbblue}{RGB}{0,51,102}
+
+% ===== CIRCUITIKZ (mismo estilo que la Guia 8) =====
+\ctikzset{bipoles/length=1.15cm}
+% signo + junto a la placa larga (borne positivo) de cada fuente
+\newcommand{\bplus}[1]{\node[font=\footnotesize, inner sep=0pt] at (#1) {$+$};}
+% malla recorrida en sentido horario: \mallah{x,y}{etiqueta}
+\newcommand{\mallah}[2]{%
+  \draw[blue, dashed, very thick, postaction={decorate},
+        decoration={markings, mark=at position 1 with {\arrow[blue,scale=1.2]{>}}}]
+    (#1)+(90:0.5) arc[start angle=90, end angle=-180, radius=0.5];
+  \node[blue] at (#1) {#2};}
+
+% ===== PIE DE PAGINA (formato institucional) =====
+\pagestyle{fancy}
+\fancyhf{}
+\renewcommand{\headrulewidth}{0pt}
+\renewcommand{\footrulewidth}{0.4pt}
+\fancyfoot[L]{\raisebox{-0.5\height}{\includegraphics[height=1.1cm]{logo ubb.png}}}
+\fancyfoot[C]{%
+    \begin{minipage}[c]{8cm}\centering
+        \footnotesize\textcolor{ubbblue}{\textbf{Dr.\ Arturo Fern\'andez P\'erez}}\\
+        \scriptsize Departamento de F\'isica -- Universidad del B\'io-B\'io\\
+        \scriptsize \textit{Electro\_Asistente\_AI-UBB}\\
+        \tiny P\'agina \thepage\ de \pageref{LastPage}
+    \end{minipage}}
+\fancyfoot[R]{\raisebox{-0.5\height}{\includegraphics[height=1.1cm]{logo dfis.png}}}
+\fancypagestyle{plain}{%
+    \fancyhf{}
+    \renewcommand{\headrulewidth}{0pt}
+    \renewcommand{\footrulewidth}{0.4pt}
+    \fancyfoot[L]{\raisebox{-0.5\height}{\includegraphics[height=1.1cm]{logo ubb.png}}}
+    \fancyfoot[C]{%
+        \begin{minipage}[c]{8cm}\centering
+            \footnotesize\textcolor{ubbblue}{\textbf{Dr.\ Arturo Fern\'andez P\'erez}}\\
+            \scriptsize Departamento de F\'isica -- Universidad del B\'io-B\'io\\
+            \scriptsize \textit{Electro\_Asistente\_AI-UBB}\\
+            \tiny P\'agina \thepage\ de \pageref{LastPage}
+        \end{minipage}}
+    \fancyfoot[R]{\raisebox{-0.5\height}{\includegraphics[height=1.1cm]{logo dfis.png}}}
+}
+
+\begin{document}
+
+%========================================================
+% ENCABEZADO INSTITUCIONAL
+%========================================================
+\begin{center}
+    \includegraphics[height=2cm]{logo ubb.png}\\[0.3cm]
+    {\large\textcolor{ubbblue}{\textbf{UNIVERSIDAD DEL B\'IO-B\'IO}}}\\[0.1cm]
+    {\normalsize Facultad de Ciencias -- Departamento de F\'isica}
+\end{center}
+
+\vspace{0.3cm}\hrule height 1pt\vspace{0.5cm}
+
+{\centering\Large\textbf{Problemas Resueltos en la clase del 14/10}\par}
+{\centering\normalsize\textit{Gu\'ia 8 -- Circuitos el\'ectricos en corriente continua \quad(Problemas 5, 9 y 11)}\par}
+
+\vspace{0.5cm}
+
+\noindent En todos los problemas las fuentes son ideales (sin resistencia interna) y el signo $+$
+se\~nala su borne positivo (placa larga del s\'imbolo). En las figuras, las corrientes de rama se
+dibujan en rojo y las mallas, recorridas en sentido horario, en azul.
+
+\medskip
+\noindent\textit{Convenci\'on para KVL:} al recorrer una resistencia en el sentido de su corriente
+el potencial \emph{baja} ($-IR$) y al recorrerla en contra \emph{sube} ($+IR$); al atravesar una
+fuente desde $-$ hacia $+$ el potencial \emph{sube} ($+\varepsilon$) y desde $+$ hacia $-$
+\emph{baja} ($-\varepsilon$).
+
+%========================================================
+% PROBLEMA 5
+%========================================================
+\section*{Problema 5 -- Potencia de una fuente}
+
+\subsection*{Enunciado}
+
+En el circuito de la figura, $\varepsilon_1 = 12\ [\text{V}]$, $\varepsilon_2 = 5\ [\text{V}]$,
+$R_1 = 8\ [\Omega]$, $R_2 = 4\ [\Omega]$, $R_3 = 12\ [\Omega]$, $R_4 = 10\ [\Omega]$ y
+$R_5 = 2\ [\Omega]$. Calcule la potencia de la fuente $\varepsilon_1$ e indique si entrega o
+absorbe energ\'ia.
+
+\begin{center}
+\begin{circuitikz}[every node/.style={font=\small}]
+  % rama superior
+  \draw (0,3.5) to[R, l=$R_1$, a=$8\,\Omega$] (3.5,3.5)
+                to[R, l=$R_2$, a=$4\,\Omega$] (7,3.5);
+  % izquierda: eps1 (+ arriba)
+  \draw (0,3.5) to[battery1, l_={$\varepsilon_1 = 12\,\text{V}$}] (0,0);
+  \bplus{0.32,2.0}
+  % central: eps2 (+ abajo) y R3
+  \draw (3.5,0) to[battery1, l={$\varepsilon_2 = 5\,\text{V}$}] (3.5,1.6)
+                to[R, l=$R_3$, a=$12\,\Omega$] (3.5,3.5);
+  \bplus{3.82,0.55}
+  % derecha e inferior
+  \draw (7,0) to[R, l=$R_4$, a=$10\,\Omega$] (7,3.5);
+  \draw (0,0) -- (3.5,0) to[R, l=$R_5$, a=$2\,\Omega$] (7,0);
+  % nodos
+  \node[circ] at (3.5,3.5) {}; \node[above right] at (3.5,3.55) {$A$};
+  \node[circ] at (3.5,0) {};   \node[below right] at (3.5,-0.05) {$B$};
+  % corrientes de rama
+  \draw[->,red,line width=1.1pt] (0.42,0.35)--(0.42,1.15)
+      node[midway,right,red,font=\small]{$I_1$};
+  \draw[->,red,line width=1.1pt] (3.88,1.85)--(3.88,1.15)
+      node[midway,right,red,font=\small]{$I_2$};
+  \draw[->,red,line width=1.1pt] (5.95,3.88)--(6.75,3.88)
+      node[midway,above,red,font=\small]{$I_3$};
+  % mallas
+  \mallah{1.75,1.75}{$M_1$}
+  \mallah{5.25,1.75}{$M_2$}
+\end{circuitikz}\\[2pt]
+{\footnotesize Fig.\ 1. Circuito del Problema 5 con sus corrientes de rama y mallas.}
+\end{center}
+
+\subsection*{An\'alisis del circuito}
+
+Hay \textbf{dos nodos}, $A$ (uni\'on superior) y $B$ (uni\'on inferior), unidos por
+\textbf{tres ramas}:
+\begin{itemize}\setlength\itemsep{1pt}
+    \item \textbf{Rama izquierda:} $\varepsilon_1$ y $R_1$ en serie. Corriente $I_1$, que sube por
+          $\varepsilon_1$ y llega a $A$ por $R_1$. Es la corriente de la fuente pedida.
+    \item \textbf{Rama central:} $R_3$ y $\varepsilon_2$ en serie. Corriente $I_2$, de $A$ hacia $B$.
+    \item \textbf{Rama derecha:} $R_2$, $R_4$ y $R_5$ en serie. Corriente $I_3$, de $A$ hacia $B$.
+\end{itemize}
+La fuente $\varepsilon_1$ tiene su borne $+$ hacia arriba y $\varepsilon_2$ hacia abajo (hacia
+$B$). Con 3 inc\'ognitas se plantean \textbf{1 ecuaci\'on de nodo} y \textbf{2 de mallas}.
+
+\subsection*{Ecuaciones de Kirchhoff}
+
+\textbf{KCL --- Nodo $A$:} $I_1$ llega a $A$ y se reparte en $I_2$ e $I_3$:
+\[
+    \boxed{I_1 = I_2 + I_3} \tag{N}
+\]
+
+\textbf{KVL --- Malla $M_1$}, recorrida
+$B\to\varepsilon_1\to R_1\to A\to R_3\to\varepsilon_2\to B$. Al bajar por $\varepsilon_2$ se va de
+$-$ a $+$, por lo que el potencial sube ($+\varepsilon_2$):
+\begin{align*}
+    \varepsilon_1 - I_1R_1 - I_2R_3 + \varepsilon_2 &= 0\\[2pt]
+    I_1\,R_1 + I_2\,R_3 &= \varepsilon_1 + \varepsilon_2
+\end{align*}
+\[
+    \boxed{8\,I_1 + 12\,I_2 = 17} \tag{M1}
+\]
+
+\textbf{KVL --- Malla $M_2$}, recorrida $A\to R_2\to R_4\to R_5\to B\to\varepsilon_2\to R_3\to A$.
+Al subir por $\varepsilon_2$ se va de $+$ a $-$ ($-\varepsilon_2$) y al subir por $R_3$ se avanza
+contra $I_2$ ($+I_2R_3$):
+\begin{align*}
+    -I_3R_2 - I_3R_4 - I_3R_5 - \varepsilon_2 + I_2R_3 &= 0\\[2pt]
+    I_2\,R_3 - I_3\,(R_2+R_4+R_5) &= \varepsilon_2
+\end{align*}
+\[
+    \boxed{12\,I_2 - 16\,I_3 = 5} \tag{M2}
+\]
+
+\subsection*{Resoluci\'on del sistema}
+
+Reemplazando \textbf{(N)} en \textbf{(M1)}:
+\[
+    8\,(I_2 + I_3) + 12\,I_2 = 17 \;\;\Rightarrow\;\; 20\,I_2 + 8\,I_3 = 17
+\]
+Multiplicando esta ecuaci\'on por 2 y sum\'andola con \textbf{(M2)} se elimina $I_3$:
+\begin{align*}
+    (40\,I_2 + 16\,I_3) + (12\,I_2 - 16\,I_3) &= 34 + 5\\[2pt]
+    52\,I_2 = 39 \;\;\Rightarrow\;\; I_2 &= 0{,}75\ [\text{A}]
+\end{align*}
+Luego $I_3 = \dfrac{17 - 20\,(0{,}75)}{8} = 0{,}25\ [\text{A}]$ \ e \
+$I_1 = I_2 + I_3 = 1{,}0\ [\text{A}]$.
+
+\subsection*{Potencia de la fuente $\varepsilon_1$}
+
+La corriente $I_1 = 1{,}0\ [\text{A}]$ atraviesa $\varepsilon_1$ desde su borne $-$ hacia su borne
+$+$: la fuente \textbf{entrega} energ\'ia al circuito.
+\[
+    \boxed{P_{\varepsilon_1} = \varepsilon_1\, I_1 = (12)(1{,}0) = 12\ [\text{W}]\quad\text{(entrega)}}
+\]
+
+\subsection*{Verificaci\'on}
+
+\textbf{$V_A - V_B$ por las tres ramas:}
+\begin{align*}
+    \text{izquierda:}\quad V_A - V_B &= \varepsilon_1 - I_1R_1 = 12 - (1{,}0)(8) = 4{,}0\ [\text{V}]\\[2pt]
+    \text{central:}\quad   V_A - V_B &= I_2R_3 - \varepsilon_2 = (0{,}75)(12) - 5 = 4{,}0\ [\text{V}]\ \checkmark\\[2pt]
+    \text{derecha:}\quad   V_A - V_B &= I_3\,(R_2+R_4+R_5) = (0{,}25)(16) = 4{,}0\ [\text{V}]\ \checkmark
+\end{align*}
+
+\textbf{Balance de potencia.} $I_2$ tambi\'en atraviesa $\varepsilon_2$ de $-$ a $+$, de modo que
+ambas fuentes entregan energ\'ia:
+\begin{align*}
+    P_{\text{entregada}} &= \varepsilon_1 I_1 + \varepsilon_2 I_2 = 12 + (5)(0{,}75) = 15{,}75\ [\text{W}]\\[2pt]
+    P_{\text{disipada}}  &= I_1^2R_1 + I_2^2R_3 + I_3^2\,(R_2+R_4+R_5)
+                          = 8 + 6{,}75 + 1{,}0 = 15{,}75\ [\text{W}]\ \checkmark
+\end{align*}
+
+\subsection*{Resumen de resultados}
+
+\begin{center}
+\renewcommand{\arraystretch}{1.2}
+\begin{tabular}{|c|c|l|}
+\hline
+\textbf{Variable} & \textbf{Valor} & \textbf{Observaci\'on} \\
+\hline
+$I_1$ (rama $\varepsilon_1$, $R_1$) & $1{,}0\ [\text{A}]$  & Sube por $\varepsilon_1$ y llega a $A$ \\
+$I_2$ (rama $R_3$, $\varepsilon_2$) & $0{,}75\ [\text{A}]$ & De $A$ hacia $B$ \\
+$I_3$ (rama $R_2$, $R_4$, $R_5$)    & $0{,}25\ [\text{A}]$ & De $A$ hacia $B$ \\
+\hline
+$V_A - V_B$         & $4{,}0\ [\text{V}]$ & $V_A > V_B$ \\
+$P_{\varepsilon_1}$ & $12\ [\text{W}]$    & La fuente entrega energ\'ia \\
+\hline
+\end{tabular}
+\end{center}
+
+\newpage
+
+%========================================================
+% PROBLEMA 9
+%========================================================
+\section*{Problema 9 -- Diferencia de potencial $V_P - V_Q$}
+
+\subsection*{Enunciado}
+
+En la red de la figura, $\varepsilon_1 = 4\ [\text{V}]$, $\varepsilon_2 = 20\ [\text{V}]$,
+$R_1 = 1\ [\Omega]$, $R_2 = 5\ [\Omega]$, $R_3 = 3\ [\Omega]$, $R_4 = R_5 = 2\ [\Omega]$,
+$R_6 = 6\ [\Omega]$, $R_7 = 5\ [\Omega]$ y $R_8 = 1\ [\Omega]$. Determine la diferencia de
+potencial $V_P - V_Q$ entre los puntos $P$ y $Q$.
+
+\begin{center}
+\begin{circuitikz}[every node/.style={font=\small}]
+  % superior: TL -- R1 -- Q
+  \draw (0,6.4) -- (3.5,6.4) to[R, l=$R_1$, a=$1\,\Omega$] (7,6.4);
+  % izquierda superior: eps1 (+ abajo, hacia N) y R2
+  \draw (0,3.2) to[battery1, l={$\varepsilon_1 = 4\,\text{V}$}] (0,4.8)
+                to[R, l=$R_2$, a=$5\,\Omega$] (0,6.4);
+  \bplus{0.32,3.75}
+  % rama central: R4, R5 y bajada hasta P
+  \draw (0,3.2) to[R, l=$R_4$, a=$2\,\Omega$] (1.8,3.2)
+                to[R, l=$R_5$, a=$2\,\Omega$] (3.6,3.2) -- (3.6,0);
+  % izquierda inferior: R7 abajo, R6 arriba
+  \draw (0,0) to[R, l=$R_7$, a=$5\,\Omega$] (0,1.6)
+              to[R, l=$R_6$, a=$6\,\Omega$] (0,3.2);
+  % inferior: R8 hasta P y cable hasta la esquina
+  \draw (0,0) to[R, l=$R_8$, a=$1\,\Omega$] (3.6,0) -- (7,0);
+  % derecha: R3 arriba y eps2 (+ arriba) abajo
+  \draw (7,3.2) to[R, l=$R_3$, a=$3\,\Omega$] (7,6.4);
+  \draw (7,3.2) to[battery1, l_={$\varepsilon_2 = 20\,\text{V}$}] (7,0);
+  \bplus{7.32,1.85}
+  % nodos y puntos
+  \node[circ] at (0,3.2) {}; \node[left] at (-0.08,3.2) {$N$};
+  \node[ocirc] at (3.6,0) {}; \node[below] at (3.6,-0.08) {$P$};
+  \node[ocirc] at (7,6.4) {}; \node[above right] at (7,6.4) {$Q$};
+  % corrientes de rama
+  \draw[->,red,line width=1.1pt] (2.6,6.75)--(1.8,6.75)
+      node[midway,above,red,font=\small]{$I_1$};
+  \draw[->,red,line width=1.1pt] (3.95,2.2)--(3.95,1.4)
+      node[midway,right,red,font=\small]{$I_2$};
+  \draw[->,red,line width=1.1pt] (2.65,0.35)--(3.35,0.35)
+      node[midway,above,red,font=\small]{$I_3$};
+  % mallas
+  \mallah{3.6,4.8}{$M_1$}
+  \mallah{1.8,1.6}{$M_2$}
+\end{circuitikz}\\[2pt]
+{\footnotesize Fig.\ 2. Circuito del Problema 9 con sus corrientes de rama y mallas.}
+\end{center}
+
+\subsection*{An\'alisis del circuito}
+
+Los nodos son $N$ (uni\'on de la izquierda) y $P$ (uni\'on inferior); $Q$ es solo una esquina.
+Entre $N$ y $P$ hay \textbf{tres ramas}:
+\begin{itemize}\setlength\itemsep{1pt}
+    \item \textbf{Rama superior:} $\varepsilon_2$, $R_3$, $R_1$, $R_2$ y $\varepsilon_1$ en serie
+          (pasa por $Q$). Corriente $I_1$: sube por $\varepsilon_2$ y $R_3$, recorre $R_1$ hacia la
+          izquierda y baja por $R_2$ y $\varepsilon_1$ hasta $N$.
+    \item \textbf{Rama central:} $R_4$ y $R_5$ en serie. Corriente $I_2$, de $N$ hacia $P$.
+    \item \textbf{Rama inferior:} $R_6$, $R_7$ y $R_8$ en serie. Corriente $I_3$, de $N$ hacia $P$.
+\end{itemize}
+La fuente $\varepsilon_1$ tiene su borne $+$ hacia abajo (hacia $N$) y $\varepsilon_2$ hacia arriba.
+Como $Q$ est\'a en la rama superior, para obtener $V_P - V_Q$ basta conocer $I_1$.
+
+\subsection*{Ecuaciones de Kirchhoff}
+
+\textbf{KCL --- Nodo $N$:} $I_1$ llega a $N$ y se reparte en $I_2$ e $I_3$:
+\[
+    \boxed{I_1 = I_2 + I_3} \tag{N}
+\]
+
+\textbf{KVL --- Malla $M_1$} (rama superior + rama central), recorrida
+$N\to\varepsilon_1\to R_2\to R_1\to Q\to R_3\to\varepsilon_2\to P\to R_5\to R_4\to N$. Al subir por
+$\varepsilon_1$ y al bajar por $\varepsilon_2$ se va de $+$ a $-$ ($-\varepsilon$); en $R_2$, $R_1$,
+$R_3$, $R_5$ y $R_4$ se avanza contra la corriente ($+IR$):
+\begin{align*}
+    -\varepsilon_1 + I_1R_2 + I_1R_1 + I_1R_3 - \varepsilon_2 + I_2R_5 + I_2R_4 &= 0\\[2pt]
+    I_1\,(R_1+R_2+R_3) + I_2\,(R_4+R_5) &= \varepsilon_1 + \varepsilon_2
+\end{align*}
+\[
+    \boxed{9\,I_1 + 4\,I_2 = 24} \tag{M1}
+\]
+
+\textbf{KVL --- Malla $M_2$} (rama central + rama inferior), recorrida
+$N\to R_4\to R_5\to P\to R_8\to R_7\to R_6\to N$. En $R_4$ y $R_5$ se avanza con $I_2$ ($-IR$) y en
+$R_8$, $R_7$ y $R_6$ contra $I_3$ ($+IR$):
+\begin{align*}
+    -I_2R_4 - I_2R_5 + I_3R_8 + I_3R_7 + I_3R_6 &= 0\\[2pt]
+    I_3\,(R_6+R_7+R_8) &= I_2\,(R_4+R_5)
+\end{align*}
+\[
+    \boxed{12\,I_3 = 4\,I_2 \;\;\Rightarrow\;\; I_2 = 3\,I_3} \tag{M2}
+\]
+
+\subsection*{Resoluci\'on del sistema}
+
+Con \textbf{(M2)} en \textbf{(N)}: $I_1 = 3\,I_3 + I_3 = 4\,I_3$. Reemplazando en \textbf{(M1)}:
+\begin{align*}
+    9\,(4\,I_3) + 4\,(3\,I_3) &= 24\\[2pt]
+    48\,I_3 = 24 \;\;\Rightarrow\;\; I_3 &= 0{,}5\ [\text{A}]
+\end{align*}
+Luego $I_2 = 3\,(0{,}5) = 1{,}5\ [\text{A}]$ \ e \ $I_1 = 4\,(0{,}5) = 2{,}0\ [\text{A}]$.
+
+\subsection*{Diferencia de potencial $V_P - V_Q$}
+
+Se recorre el lado derecho desde $P$ hasta $Q$: al subir por $\varepsilon_2$ se va de $-$ a $+$
+($+\varepsilon_2$) y al subir por $R_3$ se avanza con $I_1$ ($-I_1R_3$):
+\[
+    V_Q = V_P + \varepsilon_2 - I_1R_3 = V_P + 20 - (2{,}0)(3) = V_P + 14
+\]
+\[
+    \boxed{V_P - V_Q = -14\ [\text{V}]}
+\]
+El signo negativo indica que $Q$ est\'a a \textbf{mayor} potencial que $P$.
+
+\subsection*{Verificaci\'on}
+
+\textbf{Por el otro camino} ($Q\to R_1\to R_2\to\varepsilon_1\to N\to R_4\to R_5\to P$), avanzando
+con las corrientes en las resistencias y atravesando $\varepsilon_1$ de $-$ a $+$:
+\begin{align*}
+    V_P - V_Q &= -I_1R_1 - I_1R_2 + \varepsilon_1 - I_2\,(R_4+R_5)\\[2pt]
+              &= -2 - 10 + 4 - 6 = -14\ [\text{V}]\ \checkmark
+\end{align*}
+
+\textbf{Entre $N$ y $P$}, las ramas central e inferior deben dar la misma diferencia de potencial:
+$V_N - V_P = I_2\,(R_4+R_5) = (1{,}5)(4) = 6{,}0\ [\text{V}]$ y
+$V_N - V_P = I_3\,(R_6+R_7+R_8) = (0{,}5)(12) = 6{,}0\ [\text{V}]$ \checkmark
+
+\medskip
+\textbf{Balance de potencia.} $I_1$ atraviesa ambas fuentes de $-$ a $+$, de modo que las dos
+entregan energ\'ia:
+\begin{align*}
+    P_{\text{entregada}} &= (\varepsilon_1 + \varepsilon_2)\,I_1 = (24)(2{,}0) = 48\ [\text{W}]\\[2pt]
+    P_{\text{disipada}}  &= I_1^2\,(R_1+R_2+R_3) + I_2^2\,(R_4+R_5) + I_3^2\,(R_6+R_7+R_8)\\
+                         &= 36 + 9 + 3 = 48\ [\text{W}]\ \checkmark
+\end{align*}
+
+\subsection*{Resumen de resultados}
+
+\begin{center}
+\renewcommand{\arraystretch}{1.2}
+\begin{tabular}{|c|c|l|}
+\hline
+\textbf{Variable} & \textbf{Valor} & \textbf{Observaci\'on} \\
+\hline
+$I_1$ (rama superior)                 & $2{,}0\ [\text{A}]$ & Sube por $\varepsilon_2$ y llega a $N$ \\
+$I_2$ (rama $R_4$, $R_5$)             & $1{,}5\ [\text{A}]$ & De $N$ hacia $P$ \\
+$I_3$ (rama $R_6$, $R_7$, $R_8$)      & $0{,}5\ [\text{A}]$ & De $N$ hacia $P$ \\
+\hline
+$V_P - V_Q$ & $-14\ [\text{V}]$ & $Q$ a mayor potencial que $P$ \\
+\hline
+\end{tabular}
+\end{center}
+
+\newpage
+
+%========================================================
+% PROBLEMA 11
+%========================================================
+\section*{Problema 11 -- Potencia disipada en $R_4$}
+
+\subsection*{Enunciado}
+
+En el circuito de la figura, $\varepsilon_1 = 24\ [\text{V}]$, $\varepsilon_2 = 12\ [\text{V}]$,
+$\varepsilon_3 = 4\ [\text{V}]$, $R_1 = R_2 = 2\ [\Omega]$, $R_3 = 8\ [\Omega]$,
+$R_4 = 2\ [\Omega]$ y $R_5 = 4\ [\Omega]$. Determine la potencia disipada en la resistencia $R_4$.
+
+\begin{center}
+\begin{circuitikz}[every node/.style={font=\small}]
+  % lazo exterior superior y bajada derecha hasta el nodo A
+  \draw (0,6) -- (6.5,6) -- (6.5,3);
+  % izquierda: eps1 (+ abajo) arriba y eps2 (+ arriba) abajo
+  \draw (0,3) to[battery1, l={$\varepsilon_1 = 24\,\text{V}$}] (0,6);
+  \bplus{0.32,4.25}
+  \draw (0,3) to[battery1, l_={$\varepsilon_2 = 12\,\text{V}$}] (0,0);
+  \bplus{0.32,1.75}
+  % derecha: eps3 (+ arriba)
+  \draw (6.5,3) to[battery1, l={$\varepsilon_3 = 4\,\text{V}$}] (6.5,0);
+  \bplus{6.18,1.75}
+  % rama interior: R1, R2 y R3
+  \draw (2.8,3) to[R, l=$R_1$, a=$2\,\Omega$] (4.65,3)
+                to[R, l=$R_2$, a=$2\,\Omega$] (6.5,3);
+  \draw (2.8,0) to[R, l=$R_3$, a=$8\,\Omega$] (2.8,3);
+  % inferior
+  \draw (0,0) to[R, l=$R_4$, a=$2\,\Omega$] (2.8,0)
+              to[R, l=$R_5$, a=$4\,\Omega$] (6.5,0);
+  % nodos
+  \node[circ] at (6.5,3) {}; \node[right] at (6.58,3.18) {$A$};
+  \node[circ] at (2.8,0) {}; \node[below] at (2.8,-0.08) {$B$};
+  % corrientes de rama
+  \draw[->,red,line width=1.1pt] (3.7,6.35)--(2.9,6.35)
+      node[midway,above,red,font=\small]{$I_1$};
+  \draw[->,red,line width=1.1pt] (3.15,0.15)--(3.15,0.85)
+      node[midway,right,red,font=\small]{$I_2$};
+  \draw[->,red,line width=1.1pt] (5.55,0.35)--(6.25,0.35)
+      node[midway,above,red,font=\small]{$I_3$};
+  % mallas
+  \mallah{3.25,4.5}{$M_1$}
+  \mallah{4.65,1.5}{$M_2$}
+\end{circuitikz}\\[2pt]
+{\footnotesize Fig.\ 3. Circuito del Problema 11 con sus corrientes de rama y mallas.}
+\end{center}
+
+\subsection*{An\'alisis del circuito}
+
+Los nodos son $A$ (uni\'on de la derecha) y $B$ (uni\'on inferior). Entre ellos hay
+\textbf{tres ramas}:
+\begin{itemize}\setlength\itemsep{1pt}
+    \item \textbf{Rama exterior:} $\varepsilon_1$, $\varepsilon_2$ y $R_4$ en serie. Corriente
+          $I_1$, que sale de $A$ por el borde superior, baja por las dos fuentes y llega a $B$ por
+          $R_4$. Es la corriente que se necesita para la potencia en $R_4$.
+    \item \textbf{Rama interior:} $R_3$, $R_1$ y $R_2$ en serie. Corriente $I_2$, que sube por
+          $R_3$ desde $B$ y llega a $A$.
+    \item \textbf{Rama derecha:} $R_5$ y $\varepsilon_3$ en serie. Corriente $I_3$, que va de $B$
+          por $R_5$ y sube por $\varepsilon_3$ hasta $A$.
+\end{itemize}
+Polaridades: $\varepsilon_1$ tiene su borne $+$ hacia abajo, $\varepsilon_2$ y $\varepsilon_3$
+hacia arriba. Las dos fuentes de la izquierda est\'an \emph{enfrentadas}.
+
+\subsection*{Ecuaciones de Kirchhoff}
+
+\textbf{KCL --- Nodo $A$:} $I_2$ e $I_3$ llegan a $A$ y salen como $I_1$:
+\[
+    \boxed{I_1 = I_2 + I_3} \tag{N}
+\]
+
+\textbf{KVL --- Malla $M_1$} (rama exterior + rama interior), recorrida desde la esquina superior
+izquierda: borde superior $\to A\to R_2\to R_1\to R_3\to B\to R_4\to\varepsilon_2\to\varepsilon_1$.
+En $R_2$, $R_1$, $R_3$ y $R_4$ se avanza contra la corriente ($+IR$); al subir por $\varepsilon_2$
+se va de $-$ a $+$ ($+\varepsilon_2$) y al subir por $\varepsilon_1$ de $+$ a $-$ ($-\varepsilon_1$):
+\begin{align*}
+    I_2R_2 + I_2R_1 + I_2R_3 + I_1R_4 + \varepsilon_2 - \varepsilon_1 &= 0\\[2pt]
+    I_1\,R_4 + I_2\,(R_1+R_2+R_3) &= \varepsilon_1 - \varepsilon_2
+\end{align*}
+\[
+    \boxed{2\,I_1 + 12\,I_2 = 12} \tag{M1}
+\]
+
+\textbf{KVL --- Malla $M_2$} (rama interior + rama derecha), recorrida
+$R_1\to R_2\to A\to\varepsilon_3\to R_5\to B\to R_3$. En $R_1$, $R_2$ y $R_3$ se avanza con $I_2$
+($-IR$); al bajar por $\varepsilon_3$ se va de $+$ a $-$ ($-\varepsilon_3$) y en $R_5$ se avanza
+contra $I_3$ ($+I_3R_5$):
+\begin{align*}
+    -I_2R_1 - I_2R_2 - \varepsilon_3 + I_3R_5 - I_2R_3 &= 0\\[2pt]
+    I_3\,R_5 - I_2\,(R_1+R_2+R_3) &= \varepsilon_3
+\end{align*}
+\[
+    \boxed{4\,I_3 - 12\,I_2 = 4 \;\;\Rightarrow\;\; I_3 = 1 + 3\,I_2} \tag{M2}
+\]
+
+\subsection*{Resoluci\'on del sistema}
+
+Con \textbf{(M2)} en \textbf{(N)}: $I_1 = I_2 + 1 + 3\,I_2 = 1 + 4\,I_2$. Reemplazando en
+\textbf{(M1)}:
+\begin{align*}
+    2\,(1 + 4\,I_2) + 12\,I_2 &= 12\\[2pt]
+    2 + 20\,I_2 = 12 \;\;\Rightarrow\;\; I_2 &= 0{,}5\ [\text{A}]
+\end{align*}
+Luego $I_3 = 1 + 3\,(0{,}5) = 2{,}5\ [\text{A}]$ \ e \ $I_1 = 1 + 4\,(0{,}5) = 3{,}0\ [\text{A}]$.
+
+\subsection*{Potencia disipada en $R_4$}
+
+Por $R_4$ circula $I_1$:
+\[
+    \boxed{P_4 = I_1^2\,R_4 = (3{,}0)^2(2) = 18\ [\text{W}]}
+\]
+
+\subsection*{Verificaci\'on}
+
+\textbf{$V_A - V_B$ por las tres ramas:}
+\begin{align*}
+    \text{interior:}\quad V_A - V_B &= -I_2\,(R_1+R_2+R_3) = -(0{,}5)(12) = -6{,}0\ [\text{V}]\\[2pt]
+    \text{derecha:}\quad  V_A - V_B &= \varepsilon_3 - I_3R_5 = 4 - (2{,}5)(4) = -6{,}0\ [\text{V}]\ \checkmark\\[2pt]
+    \text{exterior:}\quad V_A - V_B &= -\varepsilon_1 + \varepsilon_2 + I_1R_4 = -24 + 12 + 6 = -6{,}0\ [\text{V}]\ \checkmark
+\end{align*}
+
+\textbf{Balance de potencia.} $I_1$ atraviesa $\varepsilon_1$ de $-$ a $+$ (entrega) pero
+atraviesa $\varepsilon_2$ de $+$ a $-$: esta fuente \textbf{absorbe} energ\'ia (se carga).
+$I_3$ atraviesa $\varepsilon_3$ de $-$ a $+$ (entrega):
+\begin{align*}
+    P_{\text{entregada (neta)}} &= \varepsilon_1 I_1 - \varepsilon_2 I_1 + \varepsilon_3 I_3
+                                 = 72 - 36 + 10 = 46\ [\text{W}]\\[2pt]
+    P_{\text{disipada}} &= I_1^2R_4 + I_2^2\,(R_1+R_2+R_3) + I_3^2R_5 = 18 + 3 + 25 = 46\ [\text{W}]\ \checkmark
+\end{align*}
+
+\subsection*{Resumen de resultados}
+
+\begin{center}
+\renewcommand{\arraystretch}{1.2}
+\begin{tabular}{|c|c|l|}
+\hline
+\textbf{Variable} & \textbf{Valor} & \textbf{Observaci\'on} \\
+\hline
+$I_1$ (rama $\varepsilon_1$, $\varepsilon_2$, $R_4$) & $3{,}0\ [\text{A}]$ & De $A$ hacia $B$ por el borde \\
+$I_2$ (rama $R_3$, $R_1$, $R_2$)                     & $0{,}5\ [\text{A}]$ & De $B$ hacia $A$ \\
+$I_3$ (rama $R_5$, $\varepsilon_3$)                  & $2{,}5\ [\text{A}]$ & De $B$ hacia $A$ \\
+\hline
+$V_A - V_B$ & $-6{,}0\ [\text{V}]$ & $V_B > V_A$ \\
+$P_4$       & $18\ [\text{W}]$     & Potencia disipada en $R_4$ \\
+\hline
+\end{tabular}
+\end{center}
+
+\end{document}
