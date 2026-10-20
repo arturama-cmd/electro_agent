@@ -1,0 +1,308 @@
+\documentclass[12pt,letterpaper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[spanish,es-noshorthands]{babel}
+\usepackage{amsmath,amssymb}
+\usepackage{graphicx}
+\usepackage{xcolor}
+\usepackage{tikz}
+\usetikzlibrary{calc,arrows.meta,decorations.markings}
+\usepackage[top=2.5cm, bottom=2.7cm, left=2cm, right=2cm, footskip=40pt]{geometry}
+\usepackage{fancyhdr}
+\usepackage{lastpage}
+
+\definecolor{ubbblue}{RGB}{0,51,102}
+
+\pagestyle{fancy}
+\fancyhf{}
+\renewcommand{\headrulewidth}{0pt}
+\renewcommand{\footrulewidth}{0.4pt}
+\fancyfoot[L]{\raisebox{-0.5\height}{\includegraphics[height=1.1cm]{logo ubb.png}}}
+\fancyfoot[C]{%
+    \begin{minipage}[c]{8cm}\centering
+        \footnotesize\textcolor{ubbblue}{\textbf{Dr.\ Arturo Fern\'andez P\'erez}}\\
+        \scriptsize Departamento de F\'isica -- Universidad del B\'io-B\'io\\
+        \scriptsize \textit{Electro\_Asistente\_AI-UBB}\\
+        \tiny P\'agina \thepage\ de \pageref{LastPage}
+    \end{minipage}}
+\fancyfoot[R]{\raisebox{-0.5\height}{\includegraphics[height=1.1cm]{logo dfis.png}}}
+\fancypagestyle{plain}{%
+    \fancyhf{}
+    \renewcommand{\headrulewidth}{0pt}
+    \renewcommand{\footrulewidth}{0.4pt}
+    \fancyfoot[L]{\raisebox{-0.5\height}{\includegraphics[height=1.1cm]{logo ubb.png}}}
+    \fancyfoot[C]{%
+        \begin{minipage}[c]{8cm}\centering
+            \footnotesize\textcolor{ubbblue}{\textbf{Dr.\ Arturo Fern\'andez P\'erez}}\\
+            \scriptsize Departamento de F\'isica -- Universidad del B\'io-B\'io\\
+            \scriptsize \textit{Electro\_Asistente\_AI-UBB}\\
+            \tiny P\'agina \thepage\ de \pageref{LastPage}
+        \end{minipage}}
+    \fancyfoot[R]{\raisebox{-0.5\height}{\includegraphics[height=1.1cm]{logo dfis.png}}}
+}
+
+\begin{document}
+
+%========================================
+% ENCABEZADO INSTITUCIONAL
+%========================================
+\begin{center}
+    \includegraphics[height=2cm]{logo ubb.png}\\[0.3cm]
+    {\large\textcolor{ubbblue}{\textbf{UNIVERSIDAD DEL B\'IO-B\'IO}}}\\[0.1cm]
+    {\normalsize Facultad de Ciencias -- Departamento de F\'isica}
+\end{center}
+
+\vspace{0.3cm}
+\hrule height 1pt
+\vspace{0.5cm}
+
+{\centering\Large\textbf{Soluci\'on Gu\'ia 8: Fuerza Magn\'etica sobre cargas y corrientes}\par}
+{\centering\normalsize\textit{Problemas 2, 3, 4 y 13}\par}
+
+\vspace{0.5cm}
+
+\begin{center}
+\fbox{\begin{minipage}{0.86\textwidth}\centering
+\textbf{Productos vectoriales de los vectores unitarios}\\[4pt]
+$\hat{\imath}\times\hat{\jmath} = \hat{k},\qquad \hat{\jmath}\times\hat{k} = \hat{\imath},\qquad \hat{k}\times\hat{\imath} = \hat{\jmath}$\\[3pt]
+$\hat{\jmath}\times\hat{\imath} = -\hat{k},\qquad \hat{k}\times\hat{\jmath} = -\hat{\imath},\qquad \hat{\imath}\times\hat{k} = -\hat{\jmath}$\\[3pt]
+$\hat{\imath}\times\hat{\imath} = \hat{\jmath}\times\hat{\jmath} = \hat{k}\times\hat{k} = \vec{0}$
+\end{minipage}}
+\end{center}
+
+\noindent\textit{Constantes:} $q_p = |q_e| = 1{,}6\times10^{-19}\ [\text{C}]$,
+$m_p = 1{,}67\times10^{-27}\ [\text{kg}]$.
+
+%========================================================
+% PROBLEMA 2
+%========================================================
+\section*{Problema 2: Campo magn\'etico a partir de la aceleraci\'on de un prot\'on}
+
+\noindent Un prot\'on se mueve perpendicular a un campo magn\'etico uniforme con una rapidez de
+$1\times10^{7}\ [\text{m/s}]$ y experimenta una aceleraci\'on de $2\times10^{13}\ [\text{m/s}^2]$
+en la direcci\'on $+x$ cuando su velocidad est\'a en la direcci\'on $+z$. Determine la magnitud y
+direcci\'on del campo magn\'etico.
+
+\medskip
+\noindent
+\begin{minipage}[t]{0.36\textwidth}
+\centering\vspace{0pt}
+\begin{tikzpicture}[scale=1.05, >=Stealth, line width=0.8pt]
+    \draw[->] (0,0) -- (2.1,0) node[right]{$y$};
+    \draw[->] (0,0) -- (0,2.1) node[above]{$z$};
+    \draw[->] (0,0) -- (-1.35,-1.05) node[below left]{$x$};
+    \draw[->,red,line width=1.6pt] (0,0) -- (0,1.45) node[midway,right]{$\vec{v}$};
+    \draw[->,blue!70!black,line width=1.6pt] (0,0) -- (-0.95,-0.74)
+        node[pos=0.9,right=3pt]{$\vec{F},\ \vec{a}$};
+    \draw[->,green!50!black,line width=1.6pt] (0,0) -- (-1.5,0) node[above]{$\vec{B}$};
+    \fill (0,0) circle (2pt);
+\end{tikzpicture}\\[2pt]
+{\footnotesize $\vec{v}\parallel\hat{k}$, $\ \vec{F}\parallel\hat{\imath}$, $\ \vec{B}\parallel-\hat{\jmath}$}
+\end{minipage}%
+\hfill
+\begin{minipage}[t]{0.60\textwidth}
+\vspace{2pt}
+\textbf{Fuerza} (segunda ley de Newton):
+\[
+    \vec{F} = m_p\,\vec{a} = (1{,}67\times10^{-27})(2\times10^{13})\,\hat{\imath}
+            = 3{,}34\times10^{-14}\,\hat{\imath}\ [\text{N}]
+\]
+\textbf{Campo:} como $\vec{v}\perp\vec{B}$ y $\vec{v}=v\,\hat{k}$, el campo no tiene componente en
+$\hat{k}$: \ $\vec{B} = B_x\,\hat{\imath} + B_y\,\hat{\jmath}$.
+\end{minipage}
+
+\medskip
+\noindent\textbf{Fuerza magn\'etica} $\vec{F} = q\,\vec{v}\times\vec{B}$, producto por producto:
+\begin{align*}
+    \vec{v}\times\vec{B} &= v\,\hat{k}\times\left(B_x\,\hat{\imath} + B_y\,\hat{\jmath}\right)
+                          = v B_x\,(\hat{k}\times\hat{\imath}) + v B_y\,(\hat{k}\times\hat{\jmath})\\[2pt]
+                         &= v B_x\,\hat{\jmath} - v B_y\,\hat{\imath}
+\end{align*}
+\[
+    \vec{F} = -q\,v\,B_y\,\hat{\imath} + q\,v\,B_x\,\hat{\jmath}
+\]
+\textbf{Igualando componentes} con $\vec{F} = 3{,}34\times10^{-14}\,\hat{\imath}$:
+\begin{align*}
+    \hat{\jmath}:&\quad q\,v\,B_x = 0 \;\;\Rightarrow\;\; B_x = 0\\[2pt]
+    \hat{\imath}:&\quad -q\,v\,B_y = m_p\,a \;\;\Rightarrow\;\;
+        B_y = -\frac{m_p\,a}{q\,v} = -\frac{3{,}34\times10^{-14}}{(1{,}6\times10^{-19})(1\times10^{7})}
+        = -2{,}09\times10^{-2}\ [\text{T}]
+\end{align*}
+\[
+    \boxed{\vec{B} = -2{,}09\times10^{-2}\,\hat{\jmath}\ [\text{T}] \;\approx\; -0{,}02\,\hat{\jmath}\ [\text{T}]}
+\]
+El campo tiene magnitud $|\vec{B}| \approx 0{,}02\ [\text{T}]$ y apunta en la direcci\'on $-y$.
+
+\vspace{0.6cm}
+
+%========================================================
+% PROBLEMA 3
+%========================================================
+\section*{Problema 3: Fuerza de Lorentz sobre una part\'icula alfa}
+
+\noindent Una part\'icula alfa de carga $q = 3{,}2\times10^{-19}\ [\text{C}]$ se mueve con una
+velocidad $\vec{v} = 70\,\hat{\imath} - 40\,\hat{\jmath} + 100\,\hat{k}\ [\text{m/s}]$ dentro de una
+regi\'on con un campo magn\'etico uniforme $\vec{B} = 3\,\hat{\imath} + 20\,\hat{\jmath} - 5\,\hat{k}\
+[\text{T}]$ y un campo el\'ectrico uniforme
+$\vec{E} = 40\,\hat{\imath} + 95\,\hat{\jmath} + 23\,\hat{k}\ [\text{V/m}]$. Determine la fuerza de
+Lorentz sobre la part\'icula alfa.
+
+\medskip
+\noindent\textbf{Fuerza de Lorentz:}
+\[
+    \vec{F} = q\left(\vec{E} + \vec{v}\times\vec{B}\right)
+\]
+
+\noindent\textbf{Producto vectorial $\vec{v}\times\vec{B}$}, t\'ermino a t\'ermino:
+\begin{align*}
+    \vec{v}\times\vec{B} &= \left(70\,\hat{\imath} - 40\,\hat{\jmath} + 100\,\hat{k}\right)\times
+                            \left(3\,\hat{\imath} + 20\,\hat{\jmath} - 5\,\hat{k}\right)\\[4pt]
+    &= (70)(3)(\hat{\imath}\times\hat{\imath}) + (70)(20)(\hat{\imath}\times\hat{\jmath})
+       + (70)(-5)(\hat{\imath}\times\hat{k})\\
+    &\quad + (-40)(3)(\hat{\jmath}\times\hat{\imath}) + (-40)(20)(\hat{\jmath}\times\hat{\jmath})
+       + (-40)(-5)(\hat{\jmath}\times\hat{k})\\
+    &\quad + (100)(3)(\hat{k}\times\hat{\imath}) + (100)(20)(\hat{k}\times\hat{\jmath})
+       + (100)(-5)(\hat{k}\times\hat{k})\\[4pt]
+    &= 0 + 1400\,\hat{k} + 350\,\hat{\jmath} + 120\,\hat{k} + 0 + 200\,\hat{\imath}
+       + 300\,\hat{\jmath} - 2000\,\hat{\imath} + 0\\[4pt]
+    &= -1800\,\hat{\imath} + 650\,\hat{\jmath} + 1520\,\hat{k}\ [\text{V/m}]
+\end{align*}
+(Las unidades $(\text{m/s})(\text{T})$ equivalen a $\text{V/m}$, las mismas de $\vec{E}$.)
+
+\medskip
+\noindent\textbf{Suma con el campo el\'ectrico:}
+\begin{align*}
+    \vec{E} + \vec{v}\times\vec{B} &= (40 - 1800)\,\hat{\imath} + (95 + 650)\,\hat{\jmath}
+                                      + (23 + 1520)\,\hat{k}\\[2pt]
+                                   &= -1760\,\hat{\imath} + 745\,\hat{\jmath} + 1543\,\hat{k}\ [\text{V/m}]
+\end{align*}
+
+\noindent\textbf{Fuerza de Lorentz:}
+\[
+    \vec{F} = (3{,}2\times10^{-19})\left(-1760\,\hat{\imath} + 745\,\hat{\jmath} + 1543\,\hat{k}\right)
+\]
+\[
+    \boxed{\vec{F} = -5{,}632\times10^{-16}\,\hat{\imath} + 2{,}384\times10^{-16}\,\hat{\jmath}
+                     + 4{,}938\times10^{-16}\,\hat{k}\ [\text{N}]}
+\]
+con magnitud
+$|\vec{F}| = (3{,}2\times10^{-19})\sqrt{1760^2 + 745^2 + 1543^2} = 7{,}86\times10^{-16}\ [\text{N}]$.
+
+\vspace{0.6cm}
+
+%========================================================
+% PROBLEMA 4
+%========================================================
+\section*{Problema 4: Rapidez de un electr\'on en un campo magn\'etico}
+
+\noindent Un electr\'on experimenta una fuerza magn\'etica de magnitud $4{,}6\times10^{-15}\ [\text{N}]$
+cuando se desplaza formando un \'angulo de $60^\circ$ con un campo magn\'etico de magnitud
+$3{,}5\times10^{-3}\ [\text{T}]$. Determine la rapidez del electr\'on.
+
+\medskip
+\noindent\textbf{Magnitud de la fuerza magn\'etica.} De $\vec{F} = q\,\vec{v}\times\vec{B}$ y
+$|\vec{v}\times\vec{B}| = v\,B\sin\theta$:
+\[
+    F = |q|\,v\,B\sin\theta
+\]
+(el signo negativo de la carga del electr\'on s\'olo invierte la \emph{direcci\'on} de $\vec{F}$,
+no su magnitud).
+
+\medskip
+\noindent\textbf{Rapidez:}
+\begin{align*}
+    v = \frac{F}{|q|\,B\sin\theta}
+      &= \frac{4{,}6\times10^{-15}}{(1{,}6\times10^{-19})(3{,}5\times10^{-3})\sin60^\circ}\\[4pt]
+      &= \frac{4{,}6\times10^{-15}}{4{,}85\times10^{-22}}
+\end{align*}
+\[
+    \boxed{v = 9{,}48\times10^{6}\ [\text{m/s}]}
+\]
+
+\newpage
+
+%========================================================
+% PROBLEMA 13
+%========================================================
+\section*{Problema 13: Momento magn\'etico y torque sobre un solenoide}
+
+\noindent Un solenoide de $N = 50$ vueltas y radio $R = 5{,}0\ [\text{cm}]$ se sit\'ua en una
+regi\'on de campo magn\'etico uniforme de magnitud $B = 0{,}6\ [\text{T}]$, como muestra la figura.
+Si por el solenoide circula una corriente $I = 2{,}0\ [\text{A}]$, determine la magnitud del momento
+magn\'etico $\mu$, la magnitud del torque $\tau$ ejercido sobre \'el y su sentido de rotaci\'on.
+
+\begin{center}
+\begin{tikzpicture}[scale=1.0, >=Stealth, line width=0.8pt]
+    % lineas de campo (apuntan hacia la izquierda)
+    \foreach \y in {-0.8,0.5,1.8,3.1,4.4}
+        \draw[->,cyan!70!blue,line width=0.9pt] (8.2,\y) -- (-1.8,\y);
+    \node[cyan!50!blue!80!black] at (-1.4,4.85) {$\vec{B}$};
+    % solenoide inclinado 40 grados, centrado en el pivote (3.0,1.8)
+    \begin{scope}[shift={(3.0,1.8)}, rotate=40]
+        \fill[gray!25] (-2.0,-0.55) rectangle (2.0,0.55);
+        \draw[gray!60] (-2.0,-0.55) rectangle (2.0,0.55);
+        \foreach \s in {-1.50,-1.32,...,1.55}
+            \draw[orange!85!black, line width=1.9pt] (\s,-0.66) -- (\s,0.66);
+        % corriente en las espiras frontales (hacia -y' del eje rotado)
+        \foreach \s in {-1.20,-0.55}
+            \draw[->,violet,line width=1.6pt] (\s,0.45) -- (\s,-0.45);
+        % eje del solenoide
+        \draw[dashed,gray] (-2.9,0) -- (3.6,0);
+        % momento magnetico
+        \draw[->,red,line width=2pt] (0,0) -- (3.2,0);
+    \end{scope}
+    \node[red] at (4.85,3.85) {$\vec{\mu}$};
+    % pivote
+    \fill (3.0,1.8) circle (2pt);
+    % angulo de 40 grados entre el eje y la linea de campo
+    \draw[dashed,blue,line width=1pt] ({3.0+2.6},1.8) arc[start angle=0, end angle=40, radius=2.6];
+    \node[blue] at ({3.0+3.05*cos(20)},{1.8+3.05*sin(20)}) {$40^\circ$};
+    % sentido de giro (antihorario): la punta de mu gira hacia arriba
+    \draw[->,green!50!black,line width=1.5pt]
+        ({3.0+3.6*cos(48)},{1.8+3.6*sin(48)}) arc[start angle=48, end angle=78, radius=3.6];
+    \node[green!40!black] at ({3.0+4.0*cos(66)},{1.8+4.0*sin(66)}) {$\vec{\tau}$};
+    % ejes de referencia
+    \begin{scope}[shift={(8.8,-0.6)}]
+        \draw[->] (0,0) -- (0.8,0) node[right]{$\hat{\imath}$};
+        \draw[->] (0,0) -- (0,0.8) node[above]{$\hat{\jmath}$};
+        \draw (0,0) circle (0.12); \fill (0,0) circle (0.04);
+        \node[below left] at (0,0) {$\hat{k}$};
+    \end{scope}
+\end{tikzpicture}\\[2pt]
+{\footnotesize Las flechas violeta indican la corriente en las espiras frontales; $\hat{k}$ sale de la p\'agina.}
+\end{center}
+
+\noindent\textbf{Momento magn\'etico} ($N$ espiras de \'area $A = \pi R^2$):
+\begin{align*}
+    \mu = N\,I\,A = N\,I\,\pi R^2 &= (50)(2{,}0)\,\pi\,(0{,}050)^2\\[2pt]
+                                   &= 0{,}785\ [\text{A}\,\text{m}^2]
+\end{align*}
+\[
+    \boxed{\mu \approx 0{,}79\ [\text{A}\,\text{m}^2]}
+\]
+
+\noindent\textbf{Direcci\'on de $\vec{\mu}$} (regla de la mano derecha): en las espiras frontales la
+corriente baja hacia la derecha; con los dedos en el sentido de la corriente, el pulgar apunta a lo
+largo del eje hacia arriba y a la derecha, a $40^\circ$ de la horizontal:
+\[
+    \vec{\mu} = \mu\left(\cos40^\circ\,\hat{\imath} + \sin40^\circ\,\hat{\jmath}\right),
+    \qquad
+    \vec{B} = -B\,\hat{\imath} = -0{,}6\,\hat{\imath}\ [\text{T}]
+\]
+
+\noindent\textbf{Torque} $\vec{\tau} = \vec{\mu}\times\vec{B}$:
+\begin{align*}
+    \vec{\tau} &= \mu B\left[\cos40^\circ\,(\hat{\imath}\times(-\hat{\imath}))
+                  + \sin40^\circ\,(\hat{\jmath}\times(-\hat{\imath}))\right]\\[2pt]
+               &= \mu B\left[0 + \sin40^\circ\,\hat{k}\right]
+                = (0{,}785)(0{,}6)\sin40^\circ\,\hat{k}
+\end{align*}
+\[
+    \boxed{\vec{\tau} = 0{,}30\,\hat{k}\ [\text{N}\,\text{m}],\qquad \tau = 0{,}30\ [\text{N}\,\text{m}]}
+\]
+
+\noindent\textbf{Sentido de rotaci\'on.} El torque apunta en $+\hat{k}$ (saliendo de la p\'agina):
+el solenoide gira en \textbf{sentido antihorario}, tendiendo a alinear $\vec{\mu}$ con $\vec{B}$.
+Si la corriente circulara en sentido contrario, $\vec{\mu}$ apuntar\'ia hacia abajo y a la izquierda,
+$\vec{\tau}$ apuntar\'ia en $-\hat{k}$ y el giro ser\'ia horario; la magnitud del torque no cambia.
+
+\end{document}
