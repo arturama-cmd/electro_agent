@@ -1,0 +1,435 @@
+\documentclass[12pt,letterpaper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[spanish,es-noshorthands]{babel}
+\usepackage{amsmath,amssymb}
+\usepackage{graphicx}
+\usepackage{xcolor}
+\usepackage{tikz}
+\usepackage[american]{circuitikz}
+\usepackage{enumerate}
+\usepackage{array}
+\usepackage[top=2.5cm, bottom=2.7cm, left=2cm, right=2cm, footskip=40pt]{geometry}
+\usepackage{fancyhdr}
+\usepackage{lastpage}
+
+\definecolor{ubbblue}{RGB}{0,51,102}
+
+% signo + junto a la placa larga (borne positivo) de la fuente
+\newcommand{\bplus}[1]{\node[font=\footnotesize, inner sep=0pt] at (#1) {$+$};}
+
+% ===== PIE DE PAGINA (formato institucional) =====
+\pagestyle{fancy}
+\fancyhf{}
+\renewcommand{\headrulewidth}{0pt}
+\renewcommand{\footrulewidth}{0.4pt}
+\fancyfoot[L]{\raisebox{-0.5\height}{\includegraphics[height=1.1cm]{logo ubb.png}}}
+\fancyfoot[C]{%
+    \begin{minipage}[c]{8cm}\centering
+        \footnotesize\textcolor{ubbblue}{\textbf{Dr.\ Arturo Fern\'andez P\'erez}}\\
+        \scriptsize Departamento de F\'isica -- Universidad del B\'io-B\'io\\
+        \scriptsize \textit{Electro\_Asistente\_AI-UBB}\\
+        \tiny P\'agina \thepage\ de \pageref{LastPage}
+    \end{minipage}}
+\fancyfoot[R]{\raisebox{-0.5\height}{\includegraphics[height=1.1cm]{logo dfis.png}}}
+\fancypagestyle{plain}{%
+    \fancyhf{}
+    \renewcommand{\headrulewidth}{0pt}
+    \renewcommand{\footrulewidth}{0.4pt}
+    \fancyfoot[L]{\raisebox{-0.5\height}{\includegraphics[height=1.1cm]{logo ubb.png}}}
+    \fancyfoot[C]{%
+        \begin{minipage}[c]{8cm}\centering
+            \footnotesize\textcolor{ubbblue}{\textbf{Dr.\ Arturo Fern\'andez P\'erez}}\\
+            \scriptsize Departamento de F\'isica -- Universidad del B\'io-B\'io\\
+            \scriptsize \textit{Electro\_Asistente\_AI-UBB}\\
+            \tiny P\'agina \thepage\ de \pageref{LastPage}
+        \end{minipage}}
+    \fancyfoot[R]{\raisebox{-0.5\height}{\includegraphics[height=1.1cm]{logo dfis.png}}}
+}
+
+\begin{document}
+
+%========================================================
+% ENCABEZADO INSTITUCIONAL
+%========================================================
+\begin{center}
+    \includegraphics[height=2cm]{logo ubb.png}\\[0.3cm]
+    {\large\textcolor{ubbblue}{\textbf{UNIVERSIDAD DEL B\'IO-B\'IO}}}\\[0.1cm]
+    {\normalsize Facultad de Ciencias -- Departamento de F\'isica}
+\end{center}
+
+\vspace{0.3cm}\hrule height 1pt\vspace{0.5cm}
+
+{\centering\Large\textbf{Circuitos mixtos de condensadores}\par}
+{\centering\normalsize\textit{Problemas resueltos -- Capacitancia equivalente, cargas y energ\'ia almacenada}\par}
+
+\vspace{0.6cm}
+
+%========================================================
+% PROBLEMA 1  (microfaradios, 2 mallas)
+%========================================================
+\section*{Problema 1 -- Circuito mixto de seis condensadores}
+
+\subsection*{Enunciado}
+
+En el circuito de la Fig.\ 1, una fuente $V = 24{,}0\ [\text{V}]$ alimenta seis condensadores
+con capacitancias $C_1 = 12{,}0\ [\mu\text{F}]$, $C_2 = 6{,}0\ [\mu\text{F}]$,
+$C_3 = 4{,}5\ [\mu\text{F}]$, $C_4 = 3{,}0\ [\mu\text{F}]$, $C_5 = 6{,}0\ [\mu\text{F}]$ y
+$C_6 = 4{,}0\ [\mu\text{F}]$. Determine:
+
+\begin{enumerate}[(a)]
+    \item La capacitancia equivalente del circuito.
+    \item La carga y la diferencia de potencial de cada condensador.
+\end{enumerate}
+
+\begin{center}
+\begin{circuitikz}[every node/.style={font=\small}]
+  % fuente (+ arriba) entre a y f
+  \draw (0,4) to[battery1, l_=$V$] (0,0);
+  \bplus{0.32,2.25}
+  % riel superior: a -- C1 -- b -- C2 -- c
+  \draw (0,4) to[C, l=$C_1$] (4,4) to[C, l=$C_2$] (8,4);
+  % rama central b -- C3 -- d  y  lado derecho c -- C4 -- e
+  \draw (4,4) to[C, l=$C_3$] (4,0);
+  \draw (8,4) to[C, l=$C_4$] (8,0);
+  % riel inferior: f -- C6 -- d -- C5 -- e
+  \draw (0,0) to[C, l_=$C_6$] (4,0) to[C, l_=$C_5$] (8,0);
+  % nodos
+  \node[circ] at (4,4) {}; \node[circ] at (4,0) {};
+  \node[above left]  at (0,4) {$a$};
+  \node[above right] at (4,4) {$b$};
+  \node[above right] at (8,4) {$c$};
+  \node[below left]  at (0,0) {$f$};
+  \node[below right] at (4,0) {$d$};
+  \node[below right] at (8,0) {$e$};
+\end{circuitikz}\\[2pt]
+{\footnotesize Fig.\ 1. Circuito mixto de seis condensadores (dos mallas).}
+\end{center}
+
+\subsection*{Datos}
+
+\[
+    C_1 = 12{,}0\ [\mu\text{F}],\quad C_2 = 6{,}0\ [\mu\text{F}],\quad C_3 = 4{,}5\ [\mu\text{F}],\quad
+    C_4 = 3{,}0\ [\mu\text{F}],\quad C_5 = 6{,}0\ [\mu\text{F}],
+\]
+\[
+    C_6 = 4{,}0\ [\mu\text{F}],\qquad V = 24{,}0\ [\text{V}]
+\]
+
+\subsection*{An\'alisis del circuito}
+
+Los puntos $b$ y $d$ son \textbf{nodos}: en cada uno se unen tres conductores. En cambio, $c$ y
+$e$ son simples \textbf{esquinas}, donde s\'olo se conectan dos condensadores. Por lo tanto:
+\begin{itemize}\setlength\itemsep{1pt}
+    \item $C_2$, $C_4$ y $C_5$ forman un \'unico camino en \textbf{serie} entre $b$ y $d$
+          ($b\to c\to e\to d$).
+    \item Ese camino y $C_3$ conectan los mismos nodos $b$ y $d$: est\'an en \textbf{paralelo}.
+    \item $C_1$ ($a$--$b$), el grupo $b$--$d$ y $C_6$ ($d$--$f$) quedan en \textbf{serie} con la
+          fuente.
+\end{itemize}
+\[
+    C_{eq}:\qquad C_1 \;-\; \underbrace{\bigl[\,C_3 \parallel (C_2 - C_4 - C_5)\,\bigr]}_{\text{entre } b \text{ y } d} \;-\; C_6
+    \qquad(\text{``}-\text{''}:\ \text{serie})
+\]
+
+\subsection*{Parte (a) -- Capacitancia equivalente}
+
+\textbf{Paso 1.} $C_2$, $C_4$ y $C_5$ en serie forman $C_a$:
+\begin{align*}
+    \frac{1}{C_a} &= \frac{1}{C_2} + \frac{1}{C_4} + \frac{1}{C_5}
+                   = \frac{1}{6{,}0} + \frac{1}{3{,}0} + \frac{1}{6{,}0}\ [\mu\text{F}^{-1}]\\[4pt]
+                  &= \frac{4}{6}\ [\mu\text{F}^{-1}]
+                  \;\;\Rightarrow\;\; C_a = 1{,}5\ [\mu\text{F}]
+\end{align*}
+
+\textbf{Paso 2.} $C_3$ y $C_a$ en paralelo forman el grupo $C_A$ (entre $b$ y $d$):
+\[
+    C_A = C_3 + C_a = 4{,}5 + 1{,}5 = 6{,}0\ [\mu\text{F}]
+\]
+
+\textbf{Paso 3.} $C_1$, $C_A$ y $C_6$ en serie:
+\begin{align*}
+    \frac{1}{C_{eq}} &= \frac{1}{C_1} + \frac{1}{C_A} + \frac{1}{C_6}
+                      = \frac{1}{12{,}0} + \frac{1}{6{,}0} + \frac{1}{4{,}0}\ [\mu\text{F}^{-1}]\\[4pt]
+                     &= \frac{1 + 2 + 3}{12} = \frac{1}{2}\ [\mu\text{F}^{-1}]
+\end{align*}
+\[
+    \boxed{C_{eq} = 2{,}0\ [\mu\text{F}]}
+\]
+
+\begin{center}
+\begin{circuitikz}[every node/.style={font=\small}]
+  \draw (0,2.4) to[battery1, l_=$V$] (0,0);
+  \bplus{0.32,1.45}
+  \draw (0,2.4) to[C, l=$C_1$] (3,2.4) to[C, l=$C_A$] (6,2.4) -- (6,0)
+        to[C, l=$C_6$] (0,0);
+\end{circuitikz}\\[2pt]
+{\footnotesize Circuito equivalente en serie: $C_1$, $C_A = C_3 \parallel C_a$ y $C_6$.}
+\end{center}
+
+\subsection*{Parte (b) -- Carga y diferencia de potencial de cada condensador}
+
+\textbf{Carga total.} Los tres bloques en serie ($C_1$, $C_A$, $C_6$) llevan la misma carga, igual a
+la que entrega la fuente:
+\[
+    Q = C_{eq}\,V = (2{,}0\ \mu\text{F})(24{,}0\ \text{V}) = 48\ [\mu\text{C}]
+\]
+
+\textbf{Condensadores en serie con la fuente:}
+\[
+    \boxed{q_1 = q_6 = Q = 48\ [\mu\text{C}]}
+\]
+\[
+    V_1 = \frac{q_1}{C_1} = \frac{48}{12{,}0} = 4{,}0\ [\text{V}],\qquad
+    V_6 = \frac{q_6}{C_6} = \frac{48}{4{,}0} = 12{,}0\ [\text{V}],\qquad
+    V_{bd} = \frac{Q}{C_A} = \frac{48}{6{,}0} = 8{,}0\ [\text{V}]
+\]
+\noindent\textit{Verificaci\'on (serie):} $V_1 + V_{bd} + V_6 = 4{,}0 + 8{,}0 + 12{,}0 = 24{,}0\ [\text{V}] = V$ \checkmark
+
+\medskip
+\textbf{Grupo $b$--$d$.} $C_3$ y el camino $C_a$ est\'an sometidos a $V_{bd} = 8{,}0\ [\text{V}]$:
+\[
+    \boxed{q_3 = C_3\,V_{bd} = (4{,}5)(8{,}0) = 36\ [\mu\text{C}]}\qquad (V_3 = V_{bd} = 8{,}0\ [\text{V}])
+\]
+\[
+    q_a = C_a\,V_{bd} = (1{,}5)(8{,}0) = 12\ [\mu\text{C}]
+\]
+Como $C_2$, $C_4$ y $C_5$ est\'an en serie, los tres llevan la carga $q_a$:
+\[
+    \boxed{q_2 = q_4 = q_5 = 12\ [\mu\text{C}]}
+\]
+\[
+    V_2 = \frac{q_2}{C_2} = \frac{12}{6{,}0} = 2{,}0\ [\text{V}],\qquad
+    V_4 = \frac{q_4}{C_4} = \frac{12}{3{,}0} = 4{,}0\ [\text{V}],\qquad
+    V_5 = \frac{q_5}{C_5} = \frac{12}{6{,}0} = 2{,}0\ [\text{V}]
+\]
+
+\noindent\textbf{Verificaci\'on:}
+\begin{itemize}\setlength\itemsep{1pt}
+    \item Ramas en paralelo: $q_3 + q_a = 36 + 12 = 48\ [\mu\text{C}] = Q$ \checkmark
+    \item Camino en serie: $V_2 + V_4 + V_5 = 2{,}0 + 4{,}0 + 2{,}0 = 8{,}0\ [\text{V}] = V_{bd}$ \checkmark
+\end{itemize}
+
+\subsection*{Resumen de resultados}
+
+\begin{center}
+\renewcommand{\arraystretch}{1.2}
+\begin{tabular}{|c|c|c|c|}
+\hline
+\textbf{Condensador} & \textbf{$C$ [$\mu$F]} & \textbf{Carga $q$ [$\mu$C]} & \textbf{Voltaje $V$ [V]} \\
+\hline
+$C_1$ & 12{,}0 & 48 & 4{,}0 \\
+$C_2$ & 6{,}0  & 12 & 2{,}0 \\
+$C_3$ & 4{,}5  & 36 & 8{,}0 \\
+$C_4$ & 3{,}0  & 12 & 4{,}0 \\
+$C_5$ & 6{,}0  & 12 & 2{,}0 \\
+$C_6$ & 4{,}0  & 48 & 12{,}0 \\
+\hline
+$C_{eq}$ & 2{,}0 & $Q = 48$ & $V = 24{,}0$ \\
+\hline
+\end{tabular}
+\end{center}
+
+\newpage
+
+%========================================================
+% PROBLEMA 2  (picofaradios, 3 mallas)
+%========================================================
+\section*{Problema 2 -- Circuito mixto de siete condensadores}
+
+\subsection*{Enunciado}
+
+En el circuito de la Fig.\ 2, una fuente $V = 18{,}0\ [\text{V}]$ alimenta siete condensadores
+con capacitancias $C_1 = 45\ [\text{pF}]$, $C_2 = 30\ [\text{pF}]$, $C_3 = 40\ [\text{pF}]$,
+$C_4 = 60\ [\text{pF}]$, $C_5 = 60\ [\text{pF}]$, $C_6 = 40\ [\text{pF}]$ y
+$C_7 = 120\ [\text{pF}]$. Determine:
+
+\begin{enumerate}[(a)]
+    \item La capacitancia equivalente del circuito.
+    \item La carga almacenada en cada condensador.
+    \item La energ\'ia almacenada en cada condensador y la energ\'ia total del circuito.
+\end{enumerate}
+
+\begin{center}
+\begin{circuitikz}[every node/.style={font=\small}]
+  % fuente (+ arriba) entre a y f
+  \draw (0,5) to[battery1, l_=$V$] (0,0);
+  \bplus{0.32,2.75}
+  % riel superior: a -- C1 -- b -- C2 -- c
+  \draw (0,5) to[C, l=$C_1$] (4,5) to[C, l=$C_2$] (8,5);
+  % ramas superiores: b -- C3 -- d  y  c -- C4 -- e
+  \draw (4,5) to[C, l=$C_3$] (4,2.5);
+  \draw (8,5) to[C, l=$C_4$] (8,2.5);
+  % cable central d -- e
+  \draw (4,2.5) -- (8,2.5);
+  % ramas inferiores: d -- C5 -- h  y  e -- C6 -- g
+  \draw (4,2.5) to[C, l=$C_5$] (4,0);
+  \draw (8,2.5) to[C, l=$C_6$] (8,0);
+  % riel inferior: f -- h -- C7 -- g
+  \draw (0,0) -- (4,0) to[C, l_=$C_7$] (8,0);
+  % nodos
+  \node[circ] at (4,5) {}; \node[circ] at (4,2.5) {};
+  \node[circ] at (8,2.5) {}; \node[circ] at (4,0) {};
+  \node[above left]  at (0,5)   {$a$};
+  \node[above right] at (4,5)   {$b$};
+  \node[above right] at (8,5)   {$c$};
+  \node[below left]  at (4,2.5) {$d$};
+  \node[right]       at (8.1,2.5) {$e$};
+  \node[below left]  at (0,0)   {$f$};
+  \node[below]       at (4,-0.05) {$h$};
+  \node[below right] at (8,0)   {$g$};
+\end{circuitikz}\\[2pt]
+{\footnotesize Fig.\ 2. Circuito mixto de siete condensadores (tres mallas).}
+\end{center}
+
+\subsection*{Datos}
+
+\[
+    C_1 = 45\ [\text{pF}],\quad C_2 = 30\ [\text{pF}],\quad C_3 = 40\ [\text{pF}],\quad
+    C_4 = 60\ [\text{pF}],
+\]
+\[
+    C_5 = 60\ [\text{pF}],\quad C_6 = 40\ [\text{pF}],\quad C_7 = 120\ [\text{pF}],\qquad
+    V = 18{,}0\ [\text{V}]
+\]
+
+\subsection*{An\'alisis del circuito}
+
+El \textbf{cable} que une $d$ con $e$ hace que ambos puntos est\'en al mismo potencial: forman un
+\'unico nodo $M = \{d,\,e\}$. Adem\'as, $c$ y $g$ son esquinas (s\'olo unen dos condensadores) y
+$h$ est\'a unido por cable con $f$. Por lo tanto:
+\begin{itemize}\setlength\itemsep{1pt}
+    \item \textbf{Entre $b$ y $M$} hay dos caminos: $C_3$ directo ($b\to d$) y $C_2$ en serie con
+          $C_4$ ($b\to c\to e$). Es decir, $C_3 \parallel (C_2 - C_4)$.
+    \item \textbf{Entre $M$ y $h$} hay dos caminos: $C_5$ directo ($d\to h$) y $C_6$ en serie con
+          $C_7$ ($e\to g\to h$). Es decir, $C_5 \parallel (C_6 - C_7)$.
+    \item $C_1$ ($a$--$b$), el grupo $b$--$M$ y el grupo $M$--$h$ quedan en \textbf{serie} con la
+          fuente.
+\end{itemize}
+\[
+    C_{eq}:\qquad C_1 \;-\; \underbrace{\bigl[\,C_3 \parallel (C_2 - C_4)\,\bigr]}_{\text{entre } b \text{ y } M}
+    \;-\; \underbrace{\bigl[\,C_5 \parallel (C_6 - C_7)\,\bigr]}_{\text{entre } M \text{ y } h}
+\]
+
+\subsection*{Parte (a) -- Capacitancia equivalente}
+
+\textbf{Paso 1.} Pares en serie:
+\begin{align*}
+    C_a &= \frac{C_2\,C_4}{C_2 + C_4} = \frac{(30)(60)}{30 + 60} = 20\ [\text{pF}]
+          \qquad(C_2 - C_4)\\[4pt]
+    C_b &= \frac{C_6\,C_7}{C_6 + C_7} = \frac{(40)(120)}{40 + 120} = 30\ [\text{pF}]
+          \qquad(C_6 - C_7)
+\end{align*}
+
+\textbf{Paso 2.} Grupos en paralelo:
+\begin{align*}
+    C_A &= C_3 + C_a = 40 + 20 = 60\ [\text{pF}] \qquad(\text{entre } b \text{ y } M)\\[2pt]
+    C_B &= C_5 + C_b = 60 + 30 = 90\ [\text{pF}] \qquad(\text{entre } M \text{ y } h)
+\end{align*}
+
+\textbf{Paso 3.} $C_1$, $C_A$ y $C_B$ en serie:
+\begin{align*}
+    \frac{1}{C_{eq}} &= \frac{1}{C_1} + \frac{1}{C_A} + \frac{1}{C_B}
+                      = \frac{1}{45} + \frac{1}{60} + \frac{1}{90}\ [\text{pF}^{-1}]\\[4pt]
+                     &= \frac{4 + 3 + 2}{180} = \frac{1}{20}\ [\text{pF}^{-1}]
+\end{align*}
+\[
+    \boxed{C_{eq} = 20\ [\text{pF}]}
+\]
+
+\begin{center}
+\begin{circuitikz}[every node/.style={font=\small}]
+  \draw (0,2.4) to[battery1, l_=$V$] (0,0);
+  \bplus{0.32,1.45}
+  \draw (0,2.4) to[C, l=$C_1$] (3,2.4) to[C, l=$C_A$] (6,2.4)
+        to[C, l=$C_B$] (6,0) -- (0,0);
+\end{circuitikz}\\[2pt]
+{\footnotesize Circuito equivalente en serie: $C_1$, $C_A = C_3 \parallel C_a$ y $C_B = C_5 \parallel C_b$.}
+\end{center}
+
+\subsection*{Parte (b) -- Carga en cada condensador}
+
+\textbf{Carga total} (com\'un a $C_1$, $C_A$ y $C_B$, que est\'an en serie):
+\[
+    Q = C_{eq}\,V = (20\ \text{pF})(18{,}0\ \text{V}) = 360\ [\text{pC}]
+    \qquad\Rightarrow\qquad \boxed{q_1 = Q = 360\ [\text{pC}]}
+\]
+\[
+    V_1 = \frac{Q}{C_1} = \frac{360}{45} = 8{,}0\ [\text{V}],\qquad
+    V_{bM} = \frac{Q}{C_A} = \frac{360}{60} = 6{,}0\ [\text{V}],\qquad
+    V_{Mh} = \frac{Q}{C_B} = \frac{360}{90} = 4{,}0\ [\text{V}]
+\]
+\noindent\textit{Verificaci\'on (serie):} $V_1 + V_{bM} + V_{Mh} = 8{,}0 + 6{,}0 + 4{,}0 = 18{,}0\ [\text{V}] = V$ \checkmark
+
+\medskip
+\textbf{Grupo $b$--$M$} (voltaje $V_{bM} = 6{,}0\ [\text{V}]$):
+\[
+    \boxed{q_3 = C_3\,V_{bM} = (40)(6{,}0) = 240\ [\text{pC}]}
+    \qquad
+    \boxed{q_2 = q_4 = C_a\,V_{bM} = (20)(6{,}0) = 120\ [\text{pC}]}
+\]
+con $V_2 = q_2/C_2 = 4{,}0\ [\text{V}]$ y $V_4 = q_4/C_4 = 2{,}0\ [\text{V}]$.
+
+\medskip
+\textbf{Grupo $M$--$h$} (voltaje $V_{Mh} = 4{,}0\ [\text{V}]$):
+\[
+    \boxed{q_5 = C_5\,V_{Mh} = (60)(4{,}0) = 240\ [\text{pC}]}
+    \qquad
+    \boxed{q_6 = q_7 = C_b\,V_{Mh} = (30)(4{,}0) = 120\ [\text{pC}]}
+\]
+con $V_6 = q_6/C_6 = 3{,}0\ [\text{V}]$ y $V_7 = q_7/C_7 = 1{,}0\ [\text{V}]$.
+
+\medskip
+\noindent\textbf{Verificaci\'on:}
+\begin{itemize}\setlength\itemsep{1pt}
+    \item Grupo $b$--$M$: $q_3 + q_a = 240 + 120 = 360\ [\text{pC}] = Q$ \ y \
+          $V_2 + V_4 = 4{,}0 + 2{,}0 = 6{,}0\ [\text{V}] = V_{bM}$ \checkmark
+    \item Grupo $M$--$h$: $q_5 + q_b = 240 + 120 = 360\ [\text{pC}] = Q$ \ y \
+          $V_6 + V_7 = 3{,}0 + 1{,}0 = 4{,}0\ [\text{V}] = V_{Mh}$ \checkmark
+\end{itemize}
+
+\subsection*{Parte (c) -- Energ\'ia almacenada}
+
+La energ\'ia de cada condensador es $U = \tfrac12\,q\,V$ (con $q$ en pC y $V$ en V, $U$ resulta en pJ):
+\begin{align*}
+    U_1 &= \tfrac12\,(360)(8{,}0) = 1440\ [\text{pJ}] &
+    U_2 &= \tfrac12\,(120)(4{,}0) = 240\ [\text{pJ}]\\[2pt]
+    U_3 &= \tfrac12\,(240)(6{,}0) = 720\ [\text{pJ}] &
+    U_4 &= \tfrac12\,(120)(2{,}0) = 120\ [\text{pJ}]\\[2pt]
+    U_5 &= \tfrac12\,(240)(4{,}0) = 480\ [\text{pJ}] &
+    U_6 &= \tfrac12\,(120)(3{,}0) = 180\ [\text{pJ}]\\[2pt]
+    U_7 &= \tfrac12\,(120)(1{,}0) = 60\ [\text{pJ}] & &
+\end{align*}
+\[
+    \boxed{U_{\text{total}} = \sum_{i=1}^{7} U_i = 3240\ [\text{pJ}] = 3{,}24\ [\text{nJ}]}
+\]
+
+\noindent\textit{Verificaci\'on:} la energ\'ia total tambi\'en se obtiene del circuito equivalente,
+\[
+    U_{\text{total}} = \tfrac12\,C_{eq}\,V^2 = \tfrac12\,(20\times10^{-12})(18{,}0)^2
+                     = 3{,}24\times10^{-9}\ [\text{J}] = 3{,}24\ [\text{nJ}]\ \checkmark
+\]
+El condensador que m\'as energ\'ia almacena es $C_1$: lleva toda la carga $Q$ y soporta el mayor
+voltaje.
+
+\subsection*{Resumen de resultados}
+
+\begin{center}
+\renewcommand{\arraystretch}{1.2}
+\begin{tabular}{|c|c|c|c|c|}
+\hline
+\textbf{Condensador} & \textbf{$C$ [pF]} & \textbf{Carga $q$ [pC]} & \textbf{Voltaje $V$ [V]} & \textbf{Energ\'ia $U$ [pJ]} \\
+\hline
+$C_1$ & 45  & 360 & 8{,}0 & 1440 \\
+$C_2$ & 30  & 120 & 4{,}0 & 240 \\
+$C_3$ & 40  & 240 & 6{,}0 & 720 \\
+$C_4$ & 60  & 120 & 2{,}0 & 120 \\
+$C_5$ & 60  & 240 & 4{,}0 & 480 \\
+$C_6$ & 40  & 120 & 3{,}0 & 180 \\
+$C_7$ & 120 & 120 & 1{,}0 & 60 \\
+\hline
+$C_{eq}$ & 20 & $Q = 360$ & $V = 18{,}0$ & $U_{\text{total}} = 3240$ \\
+\hline
+\end{tabular}
+\end{center}
+
+\end{document}
