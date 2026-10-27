@@ -1,0 +1,190 @@
+\documentclass[12pt,letterpaper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[spanish,es-noshorthands]{babel}
+\usepackage{amsmath,amssymb}
+\usepackage{xcolor}
+\usepackage{tikz}
+% puntaje: numero en circulo rojo
+\newcommand{\pts}[1]{\tikz[baseline=(c.base)]\node[circle,draw=red,text=red,thick,inner sep=1.3pt,font=\small\bfseries](c){#1};}
+\usepackage[margin=2.2cm]{geometry}
+\setlength{\parindent}{0pt}
+
+\begin{document}
+
+\begin{center}
+    {\Large\textbf{Pauta -- Certamen 3 -- Problema 3 (Formas A y B)}}
+\end{center}
+
+\begin{center}
+\fbox{\begin{minipage}{0.9\textwidth}\centering
+\textbf{Productos cruz de los vectores unitarios}\\[4pt]
+$\hat{\imath}\times\hat{\jmath} = \hat{k},\quad \hat{\jmath}\times\hat{k} = \hat{\imath},\quad \hat{k}\times\hat{\imath} = \hat{\jmath}$
+\qquad
+$\hat{\jmath}\times\hat{\imath} = -\hat{k},\quad \hat{k}\times\hat{\jmath} = -\hat{\imath},\quad \hat{\imath}\times\hat{k} = -\hat{\jmath}$\\[3pt]
+$\hat{\imath}\times\hat{\imath} = \hat{\jmath}\times\hat{\jmath} = \hat{k}\times\hat{k} = \vec{0}$
+\end{minipage}}
+\end{center}
+
+Lazo de la Fig.~3b (ambas formas): $1=(0,0,0)$, $2=(a,0,0)$, $3=(a,b,0)$, $4=(0,b,0)$.
+Momento magn\'etico: $\vec{\mu} = I\,A\,\hat{n}$ con $A = ab$; el sentido de $\hat{n}$ lo da la regla de la
+mano derecha.
+\begin{itemize}
+    \item \textbf{Forma A} (antihorario, $1\to2\to3\to4$): $\vec{l}_{12} = a\,\hat{\imath}$,
+          $\vec{l}_{23} = b\,\hat{\jmath}$, $\hat{n} = +\hat{k}$.
+    \item \textbf{Forma B} (horario, $1\to4\to3\to2$): en el tramo $12$ la corriente va de $2$ a $1$
+          y en el tramo $23$ de $3$ a $2$: $\vec{l}_{12} = -a\,\hat{\imath}$,
+          $\vec{l}_{23} = -b\,\hat{\jmath}$, $\hat{n} = -\hat{k}$.
+\end{itemize}
+
+%======================================================================
+\section*{FORMA A}
+
+\subsection*{3a) Carga puntual \quad\textcolor{red}{(7 puntos)}}
+
+Datos: $q = -5\times10^{-6}\ [\text{C}]$, $v = 4\times10^{5}\ [\text{m/s}]$, $B = 0{,}02\ [\text{T}]$.
+De la Fig.~3a: $\vec{v}$ forma $35^\circ$ sobre el eje $-x$ y $\vec{B}$ apunta $30^\circ$ bajo el eje $-x$:
+\begin{align*}
+    \vec{v} &= v\left(-\cos35^\circ\,\hat{\imath} + \sin35^\circ\,\hat{\jmath}\right) && \pts{2}\\
+    \vec{B} &= B\left(-\cos30^\circ\,\hat{\imath} - \sin30^\circ\,\hat{\jmath}\right) && \pts{2}
+\end{align*}
+Producto cruz t\'ermino a t\'ermino:
+\begin{align*}
+    \vec{v}\times\vec{B}
+      &= vB\bigl[\cos35^\circ\cos30^\circ(\hat{\imath}\times\hat{\imath})
+         + \cos35^\circ\sin30^\circ(\hat{\imath}\times\hat{\jmath})\\
+      &\qquad\;\; - \sin35^\circ\cos30^\circ(\hat{\jmath}\times\hat{\imath})
+         - \sin35^\circ\sin30^\circ(\hat{\jmath}\times\hat{\jmath})\bigr]\\
+      &= vB\left(\cos35^\circ\sin30^\circ + \sin35^\circ\cos30^\circ\right)\hat{k}
+       = vB\sin65^\circ\,\hat{k}\\
+      &= (4\times10^{5})(0{,}02)(0{,}9063)\,\hat{k} = 7250{,}5\,\hat{k}\ [\text{T m/s}]
+\end{align*}
+\[
+    \vec{F}_m = q\,\vec{v}\times\vec{B} = (-5\times10^{-6})(7250{,}5)\,\hat{k}
+    \qquad\Rightarrow\qquad
+    \boxed{\vec{F}_m = -3{,}63\times10^{-2}\,\hat{k}\ [\text{N}]} \quad\pts{3}
+\]
+La fuerza entra a la p\'agina (la carga es negativa).
+
+\subsection*{3b) Lazo rectangular \quad\textcolor{red}{(12 puntos)}}
+
+Datos: $a = 0{,}08\ [\text{m}]$, $b = 0{,}05\ [\text{m}]$, $I = 2{,}5\ [\text{A}]$,
+$\vec{B} = 0{,}8\,\hat{\jmath} - 0{,}3\,\hat{k}\ [\text{T}]$.
+
+\textbf{(i) Fuerzas} $\vec{F} = I\,\vec{l}\times\vec{B}$:
+\begin{align*}
+    \vec{F}_{12} &= (2{,}5)(0{,}08\,\hat{\imath})\times(0{,}8\,\hat{\jmath} - 0{,}3\,\hat{k})
+                  = 0{,}2\left[0{,}8\,(\hat{\imath}\times\hat{\jmath}) - 0{,}3\,(\hat{\imath}\times\hat{k})\right]\\
+                 &= 0{,}2\left[0{,}8\,\hat{k} + 0{,}3\,\hat{\jmath}\right]
+\end{align*}
+\[
+    \boxed{\vec{F}_{12} = 0{,}06\,\hat{\jmath} + 0{,}16\,\hat{k}\ [\text{N}]} \quad\pts{3}
+\]
+\begin{align*}
+    \vec{F}_{23} &= (2{,}5)(0{,}05\,\hat{\jmath})\times(0{,}8\,\hat{\jmath} - 0{,}3\,\hat{k})
+                  = 0{,}125\left[0{,}8\,(\hat{\jmath}\times\hat{\jmath}) - 0{,}3\,(\hat{\jmath}\times\hat{k})\right]\\
+                 &= 0{,}125\left[0 - 0{,}3\,\hat{\imath}\right]
+\end{align*}
+\[
+    \boxed{\vec{F}_{23} = -0{,}0375\,\hat{\imath}\ [\text{N}]} \quad\pts{3}
+\]
+
+\textbf{(ii) Momento magn\'etico:}
+\[
+    \vec{\mu} = I\,ab\,\hat{k} = (2{,}5)(0{,}08)(0{,}05)\,\hat{k}
+    \qquad\Rightarrow\qquad
+    \boxed{\vec{\mu} = 0{,}01\,\hat{k}\ [\text{A m}^2]} \quad\pts{3}
+\]
+
+\textbf{(iii) Torque:}
+\begin{align*}
+    \vec{\tau} = \vec{\mu}\times\vec{B} &= 0{,}01\,\hat{k}\times(0{,}8\,\hat{\jmath} - 0{,}3\,\hat{k})\\
+               &= 0{,}008\,(\hat{k}\times\hat{\jmath}) - 0{,}003\,(\hat{k}\times\hat{k})
+\end{align*}
+\[
+    \boxed{\vec{\tau} = -0{,}008\,\hat{\imath}\ [\text{N m}]} \quad\pts{3}
+\]
+
+
+\medskip
+\noindent\textcolor{red}{\textbf{Puntaje total Pregunta 3: 19 puntos}} \textcolor{red}{(3a: 7 puntos; 3b: 12 puntos)}
+
+\newpage
+%======================================================================
+\section*{FORMA B}
+
+\subsection*{3a) Carga puntual \quad\textcolor{red}{(7 puntos)}}
+
+Datos: $q = -4\times10^{-6}\ [\text{C}]$, $v = 3\times10^{5}\ [\text{m/s}]$, $B = 0{,}05\ [\text{T}]$.
+De la Fig.~3a: $\vec{v}$ apunta $40^\circ$ bajo el eje $+x$ y $\vec{B}$ forma $50^\circ$ sobre el eje $+x$:
+\begin{align*}
+    \vec{v} &= v\left(\cos40^\circ\,\hat{\imath} - \sin40^\circ\,\hat{\jmath}\right) && \pts{2}\\
+    \vec{B} &= B\left(\cos50^\circ\,\hat{\imath} + \sin50^\circ\,\hat{\jmath}\right) && \pts{2}
+\end{align*}
+Producto cruz t\'ermino a t\'ermino:
+\begin{align*}
+    \vec{v}\times\vec{B}
+      &= vB\bigl[\cos40^\circ\cos50^\circ(\hat{\imath}\times\hat{\imath})
+         + \cos40^\circ\sin50^\circ(\hat{\imath}\times\hat{\jmath})\\
+      &\qquad\;\; - \sin40^\circ\cos50^\circ(\hat{\jmath}\times\hat{\imath})
+         - \sin40^\circ\sin50^\circ(\hat{\jmath}\times\hat{\jmath})\bigr]\\
+      &= vB\left(\cos40^\circ\sin50^\circ + \sin40^\circ\cos50^\circ\right)\hat{k}
+       = vB\sin90^\circ\,\hat{k}\\
+      &= (3\times10^{5})(0{,}05)(1)\,\hat{k} = 15000\,\hat{k}\ [\text{T m/s}]
+\end{align*}
+\[
+    \vec{F}_m = q\,\vec{v}\times\vec{B} = (-4\times10^{-6})(15000)\,\hat{k}
+    \qquad\Rightarrow\qquad
+    \boxed{\vec{F}_m = -6{,}0\times10^{-2}\,\hat{k}\ [\text{N}]} \quad\pts{3}
+\]
+En esta forma $\vec{v}\perp\vec{B}$ ($90^\circ$), por lo que la fuerza tiene su magnitud m\'axima $|q|vB$.
+
+\subsection*{3b) Lazo rectangular \quad\textcolor{red}{(12 puntos)}}
+
+Datos: $a = 0{,}10\ [\text{m}]$, $b = 0{,}06\ [\text{m}]$, $I = 1{,}5\ [\text{A}]$ en sentido
+\textbf{horario}, $\vec{B} = 0{,}5\,\hat{\imath} - 0{,}4\,\hat{k}\ [\text{T}]$.
+Con el recorrido $1\to4\to3\to2\to1$: $\vec{l}_{12} = -0{,}10\,\hat{\imath}$ (de $2$ a $1$) y
+$\vec{l}_{23} = -0{,}06\,\hat{\jmath}$ (de $3$ a $2$).
+
+\textbf{(i) Fuerzas} $\vec{F} = I\,\vec{l}\times\vec{B}$:
+\begin{align*}
+    \vec{F}_{12} &= (1{,}5)(-0{,}10\,\hat{\imath})\times(0{,}5\,\hat{\imath} - 0{,}4\,\hat{k})
+                  = -0{,}15\left[0{,}5\,(\hat{\imath}\times\hat{\imath}) - 0{,}4\,(\hat{\imath}\times\hat{k})\right]\\
+                 &= -0{,}15\left[0 + 0{,}4\,\hat{\jmath}\right]
+\end{align*}
+\[
+    \boxed{\vec{F}_{12} = -0{,}06\,\hat{\jmath}\ [\text{N}]} \quad\pts{3}
+\]
+\begin{align*}
+    \vec{F}_{23} &= (1{,}5)(-0{,}06\,\hat{\jmath})\times(0{,}5\,\hat{\imath} - 0{,}4\,\hat{k})
+                  = -0{,}09\left[0{,}5\,(\hat{\jmath}\times\hat{\imath}) - 0{,}4\,(\hat{\jmath}\times\hat{k})\right]\\
+                 &= -0{,}09\left[-0{,}5\,\hat{k} - 0{,}4\,\hat{\imath}\right]
+\end{align*}
+\[
+    \boxed{\vec{F}_{23} = 0{,}036\,\hat{\imath} + 0{,}045\,\hat{k}\ [\text{N}]} \quad\pts{3}
+\]
+
+\textbf{(ii) Momento magn\'etico} (corriente horaria $\Rightarrow$ $\hat{n} = -\hat{k}$):
+\[
+    \vec{\mu} = I\,ab\,(-\hat{k}) = -(1{,}5)(0{,}10)(0{,}06)\,\hat{k}
+    \qquad\Rightarrow\qquad
+    \boxed{\vec{\mu} = -0{,}009\,\hat{k}\ [\text{A m}^2]} \quad\pts{3}
+\]
+
+\textbf{(iii) Torque:}
+\begin{align*}
+    \vec{\tau} = \vec{\mu}\times\vec{B} &= -0{,}009\,\hat{k}\times(0{,}5\,\hat{\imath} - 0{,}4\,\hat{k})\\
+               &= -0{,}0045\,(\hat{k}\times\hat{\imath}) + 0{,}0036\,(\hat{k}\times\hat{k})
+\end{align*}
+\[
+    \boxed{\vec{\tau} = -0{,}0045\,\hat{\jmath}\ [\text{N m}]} \quad\pts{3}
+\]
+
+
+\medskip
+\noindent\textcolor{red}{\textbf{Puntaje total Pregunta 3: 19 puntos}} \textcolor{red}{(3a: 7 puntos; 3b: 12 puntos)}
+
+\medskip
+\textit{Nota (ambas formas):} sumando los cuatro tramos del lazo, la fuerza neta es
+$\vec{0}$, como corresponde a un lazo cerrado en un campo uniforme.
+
+\end{document}
