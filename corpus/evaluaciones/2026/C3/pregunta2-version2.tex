@@ -1,0 +1,86 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[spanish]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{xcolor}
+\usepackage{amsmath,amssymb,booktabs,array,geometry,circuitikz,enumitem}
+\geometry{margin=2.2cm}
+\setlength{\parindent}{0pt}
+\newcommand{\circuito}{%
+\begin{center}
+\begin{circuitikz}[american,scale=.85,transform shape]
+\draw (0,0) to[battery1,l_=$V_1$] (0,3)
+ to[R,l=$R_1$,i>^=$I_1$] (3,3) node[circ]{};
+\draw (3,3) to[R,l=$R_2$,i>^=$I_2$] (3,0) node[circ]{} -- (0,0);
+\draw (3,3) -- (4,3) node[circ]{} to[R,l=$R_3$] (7,3) node[circ]{}
+ to[R,l=$R_5$,i>^=$I_3$] (10,3) -- (10,0);
+\draw (4,3) -- (4,1.5) to[R,l_=$R_4$] (7,1.5) -- (7,3);
+\draw (3,0) to[battery1,l=$V_2$] (10,0);
+\node at (-.35,2.1) {$+$};
+\node at (-.35,.9) {$-$};
+\node at (5.9,-.35) {$+$};
+\node at (7.1,-.35) {$-$};
+\end{circuitikz}
+\end{center}}
+\begin{document}
+\begin{center}{\Large\bfseries Problema 2 --- Versión 2}\\[3pt]\end{center}
+Considere el circuito compuesto de cinco resistencias y dos fuentes de voltaje como muestra la figura. Se tiene que:
+\[
+R_1=R_4=3\,\Omega,\quad R_2=R_3=6\,\Omega,\quad R_5=4\,\Omega,
+\qquad V_1=18\,\mathrm V,\quad V_2=12\,\mathrm V.
+\] Entonces:
+\circuito
+\begin{enumerate}[label=\alph*)]
+\item Determine la resistencia equivalente $R_{\mathrm{eq}}$ que se obtiene al reducir las resistencias $R_3$, $R_4$ y $R_5$. Indique las combinaciones en serie y en paralelo utilizadas (5 pts).
+\item Aplicando las leyes de Kirchhoff, determine las corrientes $I_1$, $I_2$ e $I_3$, con los sentidos indicados en el esquema.(6 pts)
+\item Determine la corriente, la tensión y la potencia disipada en $R_1$, $R_2$ y $R_{\mathrm{eq}}$. Complete la tabla(9 pts):
+\begin{center}\begin{tabular}{|c|>{\centering\arraybackslash}p{2.8cm}|>{\centering\arraybackslash}p{2.8cm}|>{\centering\arraybackslash}p{2.8cm}|}\hline
+Elemento & $I\,(\mathrm A)$ & $\Delta V\,(\mathrm V)$ & $P\,(\mathrm W)$\\\hline
+$R_1$ &&&\\[12pt]\hline $R_2$ &&&\\[12pt]\hline $R_{\mathrm{eq}}$ &&&\\[12pt]\hline
+\end{tabular}\end{center}
+\end{enumerate}
+\newpage
+\begin{center}{\Large\bfseries Problema 2 --- Versión 2}\\[3pt]{\large Pauta }\end{center}
+\textbf{a) Reducción de resistencias}\par
+$R_3$ y $R_4$ están en paralelo: 
+\[
+\frac{1}{R_{34}}=\frac{1}{R_3}+\frac{1}{R_4}=\frac16+\frac13=\frac12
+\quad\Rightarrow\quad \boxed{R_{34}=2\,\Omega}.\textcolor{red}{(2 pts)}
+\]
+En serie con $R_5$:
+\[
+\boxed{R_{\mathrm{eq}}=R_{34}+R_5=2+4=6\,\Omega}.\textcolor{red}{(3 pts)}
+\] 
+\textbf{b) Leyes de Kirchhoff}\par
+Ley de nodos:
+\begin{equation} I_1=I_2+I_3. \tag{1}\end{equation}
+Malla 1:
+\begin{equation} V_1-I_1R_1-I_2R_2=0
+\quad\Rightarrow\quad 18-3I_1-6I_2=0. \tag{2}\end{equation}
+Malla 2, con $R_{\mathrm{eq}}$:
+\begin{equation} V_2+I_2R_2-I_3R_{\mathrm{eq}}=0
+\quad\Rightarrow\quad 12+6I_2-6I_3=0. \tag{3}\end{equation}
+La solución del sistema (1)--(3) es:
+\[
+\boxed{I_1=4\,\mathrm A\textcolor{red}{(2 pts)},\qquad I_2=1\,\mathrm A\textcolor{red}{(2 pts)},\qquad I_3=3\,\mathrm A\textcolor{red}{(2 pts)}.}
+\]
+Las tres corrientes resultan positivas en los sentidos señalados.
+
+\medskip
+\textbf{c) Corriente, voltaje y potencia disipada}\par
+Usando $\Delta V=IR$ y $P=I^2R$:
+\begin{center}
+\begin{tabular}{lccc}
+\toprule
+Elemento & $I\,(\mathrm A)$ & $\Delta V\,(\mathrm V)$ & $P\,(\mathrm W)$\\
+\midrule
+$R_1=3\,\Omega$ & $4$ & $12$ & $48$\\
+$R_2=6\,\Omega$ & $1$ & $6$ & $6$\\
+$R_{\mathrm{eq}}=6\,\Omega$ & $3$ & $18$ & $54$\\
+\bottomrule
+\multicolumn{4}{c}{\textcolor{red}{(1 punto cada una)}}
+\end{tabular}
+\end{center}
+
+\end{document}
+

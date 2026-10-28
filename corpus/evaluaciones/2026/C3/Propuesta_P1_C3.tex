@@ -1,0 +1,234 @@
+\documentclass{article}
+\usepackage[papersize={216mm,356mm},left=0.8cm,top=0.5cm,right=0.8cm,bottom=1.2cm]{geometry}
+
+\usepackage[spanish]{babel}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{xcolor}
+\usepackage[american]{circuitikz}
+\usepackage{enumerate}
+\usepackage{tikz}
+\usepackage{siunitx}
+
+% Atajos de unidades y puntajes
+\newcommand{\uF}{\,\mu\mathrm{F}}
+\newcommand{\uC}{\,\mu\mathrm{C}}
+\newcommand{\Vv}{\,\mathrm{V}}
+\newcommand{\ptunit}[1]{\ifnum#1=1 pt\else pts\fi}
+\newcommand{\pt}[1]{\textcolor{red}{\quad (\textbf{#1 \ptunit{#1}})}}
+\newcommand{\ptt}[1]{\textcolor{red}{(\textbf{#1 \ptunit{#1}})}}
+
+\begin{document}
+\pagestyle{empty}
+
+\begin{enumerate}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% VERSIÓN 1
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+\begin{minipage}[t]{0.54\textwidth}
+\vspace{0pt}
+\item[1.] \ptt{20} La figura muestra un circuito con cinco capacitores de capacitancias $C_1=6{,}0\uF$, $C_2=2{,}0\uF$, $C_3=3{,}0\uF$, $C_4=6{,}0\uF$ y $C_5=2{,}0\uF$, conectados a una fuente de voltaje $V$ desconocido. Con un voltímetro se mide que el voltaje en $C_5$ es de $3{,}0\Vv$.
+\begin{enumerate}
+	\item[$a)$] Reduzca el circuito paso a paso. En cada etapa, dibuje el circuito equivalente y calcule su capacitancia hasta obtener la capacitancia equivalente final. \ptt{10}
+	\item[$b)$] Determine la carga de cada uno de los cinco capacitores. \ptt{10}
+\end{enumerate}
+\end{minipage}
+\hfill
+\begin{minipage}[t]{0.40\textwidth}
+\vspace{0pt}
+
+\centering
+\begin{circuitikz}[scale=0.7]
+    \draw (0,0) to[battery,invert, l=$V$] (0,4) to[C, l=$C_1$] (3,4);
+    \draw (3,4) to[C, l=$C_2$] (3,0) to[short] (0,0);
+    \draw (3,4) to[C, l=$C_3$] (6,4) to[C, l=$C_4$] (6,2) to[C, l=$C_5$] (6,0) to[short] (3,0);
+\end{circuitikz}
+\end{minipage}
+
+\paragraph{Solución:}
+\begin{enumerate}
+    \item[(a)] Reducción paso a paso.
+
+    \noindent\begin{minipage}[t]{0.60\linewidth}
+    \vspace{0pt}\textbf{Paso 1:} $C_3$, $C_4$ y $C_5$ están en serie (forman una sola rama):
+    \begin{align*}
+      \frac{1}{C_{345}} &= \frac{1}{C_3}+\frac{1}{C_4}+\frac{1}{C_5}
+       = \frac{1}{3}+\frac{1}{6}+\frac{1}{2}=1\,\uF^{-1} \pt{1}
+    \end{align*}
+        \begin{align*}
+      \boxed{C_{345} =1{,}0\uF} \pt{1}
+    \end{align*}
+
+    \end{minipage}\hfill
+    \begin{minipage}[t]{0.36\linewidth}
+    \vspace{0pt}\raggedleft\small Paso 1: \pt{1}\par
+    \begin{circuitikz}[scale=0.62]
+        \draw (0,0) to[battery,invert,l=$V$] (0,2.5) to[C,l=$C_1$] (2.5,2.5);
+        \draw (2.5,2.5) to[C,l=$C_2$] (2.5,0) to[short] (0,0);
+        \draw (2.5,2.5) to[C,l=$C_{345}$] (5,2.5) to[short] (5,0) to[short] (2.5,0);
+    \end{circuitikz}
+    \end{minipage}\par\medskip
+
+    \noindent\begin{minipage}[t]{0.60\linewidth}
+    \vspace{0pt}\textbf{Paso 2:} $C_2$ y $C_{345}$ están en paralelo (mismos nodos de conexión):
+    \begin{align*}
+      C_{2345} &= C_2+C_{345}=2{,}0\uF+1{,}0\uF=3{,}0\uF \pt{1}
+    \end{align*}
+      \begin{align*}
+      \boxed{C_{2345}=3{,}0\uF} \pt{1}
+    \end{align*}
+    \end{minipage}\hfill
+    \begin{minipage}[t]{0.36\linewidth}
+    \vspace{0pt}\raggedleft\small Paso 2: \pt{1}\par
+    \begin{circuitikz}[scale=0.62]
+        \draw (0,0) to[battery,invert,l=$V$] (0,2.5) to[C,l=$C_1$] (2.5,2.5) to[C,l=$C_{2345}$] (5,2.5) to[short] (5,0) to[short] (0,0);
+    \end{circuitikz}
+    \end{minipage}\par\medskip
+
+    \noindent\begin{minipage}[t]{0.60\linewidth}
+    \vspace{0pt}\textbf{Paso 3:} $C_1$ y $C_{2345}$ están en serie con la fuente:
+    \begin{align*}
+      \frac{1}{C_{12345}} &= \frac{1}{C_1}+\frac{1}{C_{2345}}\\
+      C_{12345} &= \frac{C_1C_{2345}}{C_1+C_{2345}} \pt{1}\\
+      C_{12345}&= \frac{6\cdot3}{6+3}\uF
+    \end{align*}
+        \begin{align*}
+        \boxed{C_{12345} =2{,}0\uF} \pt{2}
+    \end{align*}
+    \end{minipage}\hfill
+    \begin{minipage}[t]{0.36\linewidth}
+    \vspace{0pt}\raggedleft\small Capacitancia eq. final: \pt{1}\par
+    \begin{circuitikz}[scale=0.62]
+        \draw (0,0) to[battery,invert,l=$V$] (0,2.5) to[C,l=$C_{12345}$] (3.5,2.5) to[short] (3.5,0) to[short] (0,0);
+    \end{circuitikz}
+    \end{minipage}\par
+
+    \item[(b)] Carga de cada capacitor.
+    \begin{itemize}
+        \item Carga de $C_5$:
+        \[ Q_5 = C_5V_5 = (2{,}0\uF)(3{,}0\Vv) = 6{,}0\uC \pt{2} \]
+        \item $C_3$, $C_4$ y $C_5$ están en serie, luego comparten la carga:
+        \[ \boxed{Q_3 = Q_4 = Q_5 = Q_{345} = 6{,}0\uC} \pt{2} \]
+        \item Voltaje en el bloque $C_{2345}$ ($C_2$ está en paralelo con la rama $C_{345}$):
+        \[ V_{2345} = V_{345} = \frac{Q_{345}}{C_{345}} = \frac{6{,}0\uC}{1{,}0\uF} = 6{,}0\Vv \pt{2} \]
+        \item Carga de $C_2$:
+        \[ \boxed{Q_2 = C_2V_{2345} = (2{,}0\uF)(6{,}0\Vv) = 12\uC} \pt{2} \]
+        \item $C_1$ está en serie con el bloque $C_{2345}$, por lo que lleva la carga total:
+        \[ \boxed{Q_1 = Q_{2345} = Q_2+Q_{345} = 12\uC+6{,}0\uC = 18\uC} \pt{2} \]
+    \end{itemize}
+\end{enumerate}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% VERSIÓN 2
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newpage
+
+\begin{minipage}[t]{0.53\textwidth}
+\vspace{0pt}
+\item[1.] \ptt{20} La figura muestra un circuito con cinco capacitores de capacitancias $C_1=C$, $C_2=2C$, $C_3=3C$, $C_4=4C$ y $C_5=5C$, donde $C$ es una constante con unidades de faradios ($\mathrm{F}$).
+En términos de $C$:
+\begin{enumerate}
+	\item[$a)$] Reduzca el circuito paso a paso. En cada etapa, dibuje el circuito equivalente y calcule su capacitancia equivalente en función de $C$. \ptt{8}
+\end{enumerate}
+
+Si $C=5{,}0\uF$ y se sabe que el capacitor $C_4$ almacena una carga de $100\uC$:
+\begin{enumerate}
+	\item[$b)$] Determine la carga de cada uno de los cinco capacitores. \ptt{12}
+\end{enumerate}
+
+\end{minipage}
+%\hfill
+\begin{minipage}[t]{0.40\textwidth}
+\vspace{0pt}
+\centering
+\begin{circuitikz}[scale=0.7]
+    \draw (6,0) to[battery,invert, l_=$V$] (0,0);
+    \draw (0,0) to[C, l=$C_1$] (0,2) to[short] (0,4);
+    \draw (0,4) to[C, l=$C_2$] (3,4) to[C, l=$C_3$] (6,4);
+    \draw (0,2) to[C, l=$C_4$] (3,2) to[C, l=$C_5$] (6,2);
+    \draw (6,4) to[short] (6,2) to[short] (6,0);
+\end{circuitikz}
+\end{minipage}
+
+
+\paragraph{Solución:}
+\begin{enumerate}
+    \item[(a)] Reducción paso a paso.
+
+    \noindent\begin{minipage}[t]{0.6\linewidth}
+    \vspace{0pt}\textbf{Paso 1:} $C_2$ y $C_3$ están en serie, y también $C_4$ y $C_5$ (dos ramas):
+    \begin{align*}
+      C_{23} &= \frac{C_2C_3}{C_2+C_3}=\frac{(2C)(3C)}{2C+3C}=\frac{6}{5}C \pt{1}\\
+      C_{45} &= \frac{C_4C_5}{C_4+C_5}=\frac{(4C)(5C)}{4C+5C}=\frac{20}{9}C \pt{1}
+    \end{align*}
+    \end{minipage}\hfill
+    \begin{minipage}[t]{0.36\linewidth}
+    \vspace{0pt}\raggedleft\small Paso 1: \pt{1}\par
+    \centering
+    \begin{circuitikz}[scale=0.7]
+        \draw (-1,0) to[battery,invert,l=$V$] (-1,3) to[C,l=$C_1$] (2,3);
+        \draw (2,3) to[C,l_=$C_{23}$] (2,0) to[short] (-1,0);
+        \draw (2,3) to[short] (4,3) to[C,l_=$C_{45}$] (4,0) to[short] (2,0);
+    \end{circuitikz}
+    \end{minipage}\par\medskip
+
+    \noindent\begin{minipage}[t]{0.6\linewidth}
+    \vspace{0pt}\textbf{Paso 2:} las ramas $C_{23}$ y $C_{45}$ están en paralelo entre sí:
+    \begin{align*}
+      C_{2345} &= C_{23}+C_{45}=\frac{6}{5}C+\frac{20}{9}C\\
+      &=\frac{54+100}{45}C=\frac{154}{45}C \pt{1}
+    \end{align*}
+    \end{minipage}\hfill
+    \begin{minipage}[t]{0.36\linewidth}
+        \vspace{0pt}\raggedleft\small Paso 2: \pt{1}\par
+        \centering
+    \begin{circuitikz}[scale=0.6]
+        \draw (0,0) to[battery,invert,l=$V$] (0,3) to[C,l=$C_1$] (2,3) to[C,l=$C_{2345}$] (4.5,3) to[short] (4.5,0) to[short] (0,0);
+    \end{circuitikz}
+    \end{minipage}\par\medskip
+
+    \noindent\begin{minipage}[t]{0.6\linewidth}
+        \vspace{0pt}
+    \textbf{Paso 3:} $C_1$ y $C_{2345}$ están en serie con la fuente:
+    \begin{align*}
+      C_{12345} &= \frac{C_1C_{2345}}{C_1+C_{2345}}
+      =\frac{C\cdot\frac{154}{45}C}{C+\frac{154}{45}C}
+      =\frac{154}{199}C \pt{2}
+    \end{align*}
+    \end{minipage}\hfill
+    \begin{minipage}[t]{0.36\linewidth}
+      \centering
+    \vspace{0pt}\raggedleft\small Capacitancia eq. final: \pt{1}\par
+    \centering
+      \begin{circuitikz}[scale=0.6]
+        \draw (0,0) to[battery,invert,l=$V$] (0,3) to[C,l=$C_{12345}$] (3.5,3) to[short] (3.5,0) to[short] (0,0);
+    \end{circuitikz}
+    \end{minipage}\par
+
+
+ 
+    \item[(b)] Carga de cada capacitor. Para $C=5{,}0\uF$, las capacitancias son $C_1=5{,}0\uF$, $C_2=10\uF$, $C_3=15\uF$, $C_4=20\uF$ y $C_5=25\uF$.
+        Evaluando las capacitancias equivalentes para $C=5{,}0\uF$:
+    \begin{align*}
+        C_{23} &= \frac{6}{5}(5{,}0\uF)=6{,}0\uF, & C_{45} &= \frac{20}{9}(5{,}0\uF)=\frac{100}{9}\uF\approx 11{,}1\uF,\\
+        C_{2345} &= C_{23}+C_{45}=\frac{154}{9}\uF\approx 17{,}1\uF, & C_{eq} &= \frac{154}{199}(5{,}0\uF)=\frac{770}{199}\uF\approx 3{,}87\uF.
+    \end{align*}
+    
+    \begin{itemize}
+        \item $C_4$ y $C_5$ están en serie, luego comparten la carga:
+        \[ \boxed{Q_4 = Q_5 = Q_{45} = 100\uC} \pt{2} \]
+        \item Voltaje en el bloque $C_{2345}$:
+        \[ V_{2345} = V_{45} = \frac{Q_{45}}{C_{45}} = \frac{100\uC}{11{,}1\uF} \approx 9{,}01\Vv \pt{2} \]
+        \item La rama $C_{23}$ soporta el mismo voltaje y sus capacitores comparten carga:
+        \[ \boxed{Q_2 = Q_3 = Q_{23} \approx C_{23}V_{2345} = (6{,}0\uF)(9{,}01\Vv) \approx 54{,}1\uC} \pt{4} \]
+        \item $C_1$ está en serie con el bloque $C_{2345}$, por lo que lleva la carga total:
+        \[ \boxed{Q_1 = Q_{2345} \approx Q_{23}+Q_{45} \approx 54{,}1\uC+100\uC = 154{,}1\uC} \pt{4} \]
+    \end{itemize}
+
+\end{enumerate}
+
+\end{enumerate}
+\end{document}
