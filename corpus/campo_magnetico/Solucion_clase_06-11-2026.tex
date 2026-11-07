@@ -1,0 +1,356 @@
+\documentclass[12pt,letterpaper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[spanish,es-noshorthands]{babel}
+\usepackage{amsmath,amssymb}
+\usepackage{graphicx}
+\usepackage{xcolor}
+\usepackage{tikz}
+\usetikzlibrary{calc,arrows.meta}
+\usepackage[top=2.5cm, bottom=4cm, left=2cm, right=2cm, footskip=40pt]{geometry}
+\usepackage{fancyhdr}
+\usepackage{lastpage}
+
+\definecolor{ubbblue}{RGB}{0,51,102}
+\definecolor{cargazul}{RGB}{40,40,210}
+
+% separaci\'on vertical entre secciones numeradas
+\newcommand{\secgap}{\vspace{0.6cm}}
+
+\newcommand{\ii}{\hat{\imath}}
+\newcommand{\jj}{\hat{\jmath}}
+\newcommand{\kk}{\hat{k}}
+
+\pagestyle{fancy}
+\fancyhf{}
+\renewcommand{\headrulewidth}{0pt}
+\renewcommand{\footrulewidth}{0.4pt}
+\fancyfoot[L]{\raisebox{-0.5cm}{\includegraphics[height=1.2cm]{logo ubb.png}}}
+\fancyfoot[C]{%
+    \begin{minipage}[b]{8cm}\centering
+        \footnotesize\textcolor{ubbblue}{\textbf{Dr.\ Arturo Fern\'andez P\'erez}}\\
+        \scriptsize Departamento de F\'isica -- Universidad del B\'io-B\'io\\
+        \scriptsize \textit{Electro\_Asistente\_AI-UBB}\\
+        \tiny P\'agina \thepage\ de \pageref{LastPage}
+    \end{minipage}}
+\fancyfoot[R]{\raisebox{-0.5cm}{\includegraphics[height=1.2cm]{logo dfis.png}}}
+\fancypagestyle{plain}{%
+    \fancyhf{}
+    \renewcommand{\headrulewidth}{0pt}
+    \renewcommand{\footrulewidth}{0.4pt}
+    \fancyfoot[L]{\raisebox{-0.5cm}{\includegraphics[height=1.2cm]{logo ubb.png}}}
+    \fancyfoot[C]{%
+        \begin{minipage}[b]{8cm}\centering
+            \footnotesize\textcolor{ubbblue}{\textbf{Dr.\ Arturo Fern\'andez P\'erez}}\\
+            \scriptsize Departamento de F\'isica -- Universidad del B\'io-B\'io\\
+            \scriptsize \textit{Electro\_Asistente\_AI-UBB}\\
+            \tiny P\'agina \thepage\ de \pageref{LastPage}
+        \end{minipage}}
+    \fancyfoot[R]{\raisebox{-0.5cm}{\includegraphics[height=1.2cm]{logo dfis.png}}}
+}
+
+\begin{document}
+
+\begin{center}
+    \includegraphics[height=2cm]{logo ubb.png}\\[0.3cm]
+    {\large\textcolor{ubbblue}{\textbf{UNIVERSIDAD DEL B\'IO-B\'IO}}}\\[0.1cm]
+    {\normalsize Facultad de Ciencias -- Departamento de F\'isica}
+\end{center}
+
+\vspace{0.3cm}\hrule height 1pt\vspace{0.5cm}
+
+{\centering\Large\textbf{Problema resuelto en la clase del 06/11}\par}
+{\centering\normalsize\textit{Campo magn\'etico de dos lazos en forma de sector anular en planos perpendiculares (Ley de Biot--Savart)}\par}
+
+\vspace{0.5cm}
+
+%========================================================
+% ENUNCIADO
+%========================================================
+\noindent
+\begin{minipage}[t]{0.50\textwidth}
+\vspace{0pt}
+\noindent\textbf{Enunciado.} Dos lazos de corriente con forma de \textbf{sector anular}, ambos
+centrados en el origen $O$, transportan una corriente $I = 1{,}5$ [A]. Cada lazo est\'a formado
+por un arco interior, un arco exterior y dos tramos rectos radiales:
+\begin{itemize}\setlength\itemsep{2pt}
+    \item \textbf{Lazo 1 (rojo):} en el \textbf{plano $xy$}, radio interior $R_1 = 3$ [cm], radio
+          exterior $R_2 = 2R_1$ y \textbf{apertura angular $45^\circ$}. El arco exterior circula en
+          sentido \textbf{antihorario} visto desde $+z$ (el interior, en sentido horario).
+    \item \textbf{Lazo 2 (azul):} en el \textbf{plano $zx$}, radio interior $R_3 = 7$ [cm], radio
+          exterior $R_4 = 3R_3$ y \textbf{apertura angular $60^\circ$}. El arco exterior circula
+          en sentido \textbf{horario} visto desde $+y$ (el interior, en sentido antihorario).
+\end{itemize}
+Usando la ley de Biot--Savart, determine el campo magn\'etico en $O$:
+\textbf{(a)} debido al lazo 1; \textbf{(b)} debido al lazo 2; \textbf{(c)} total.
+\end{minipage}%
+\hfill
+\begin{minipage}[t]{0.47\textwidth}
+\vspace{0pt}
+\centering
+\begin{tikzpicture}[scale=0.78, >=Stealth, line width=0.8pt,
+    x={(-0.70cm,-0.70cm)}, y={(1cm,0cm)}, z={(0cm,1cm)}]
+    % ejes
+    \draw[->,gray] (0,0,0)--(4.4,0,0) node[below left,black,font=\small]{$x$};
+    \draw[->,gray] (0,0,0)--(0,3.6,0) node[right,black,font=\small]{$y$};
+    \draw[->,gray] (0,0,0)--(0,0,4.1) node[above,black,font=\small]{$z$};
+    \fill (0,0,0) circle(1.3pt); \node[font=\scriptsize,above right] at (0,0,0){$O$};
+    %
+    % ---- Lazo 1 (rojo): plano xy, R1 -> 1.5, R2 -> 3.0, apertura 45 ----
+    \def\ra{1.5} \def\rb{3.0}
+    \draw[dashed,gray] (0,0,0)--({\ra*cos(22.5)},{\ra*sin(22.5)},0);
+    \draw[dashed,gray] (0,0,0)--({\ra*cos(67.5)},{\ra*sin(67.5)},0);
+    % arco exterior: antihorario visto desde +z (de +x hacia +y)
+    \draw[->,red!75!black,line width=1.5pt] plot[domain=22.5:67.5,samples=30,variable=\t]
+        ({\rb*cos(\t)},{\rb*sin(\t)},0);
+    % arco interior: horario visto desde +z
+    \draw[->,red!75!black,line width=1.5pt] plot[domain=67.5:22.5,samples=30,variable=\t]
+        ({\ra*cos(\t)},{\ra*sin(\t)},0);
+    % tramos radiales
+    \draw[red!75!black,line width=1.5pt] ({\ra*cos(22.5)},{\ra*sin(22.5)},0)--({\rb*cos(22.5)},{\rb*sin(22.5)},0);
+    \draw[red!75!black,line width=1.5pt] ({\ra*cos(67.5)},{\ra*sin(67.5)},0)--({\rb*cos(67.5)},{\rb*sin(67.5)},0);
+    \node[red!75!black,font=\small] at ({3.45*cos(45)},{3.45*sin(45)},0){$I$};
+    \node[font=\scriptsize] at ({\ra*cos(88)},{\ra*sin(88)},-0.17){$R_1$};
+    \node[font=\scriptsize] at ({3.45*cos(45)},{3.45*sin(45)},-0.42){$R_2$};
+    \draw plot[domain=22.5:67.5,samples=20,variable=\t] ({0.5*cos(\t)},{0.5*sin(\t)},0);
+    \node[font=\scriptsize] at ({0.98*cos(45)},{0.98*sin(45)},0){$45^\circ$};
+    %
+    % ---- Lazo 2 (azul): plano zx, R3 -> 1.6, R4 -> 3.6, apertura 60 ----
+    \def\rc{1.6} \def\rd{3.6}
+    \draw[dashed,gray] (0,0,0)--({\rc*cos(15)},0,{\rc*sin(15)});
+    \draw[dashed,gray] (0,0,0)--({\rc*cos(75)},0,{\rc*sin(75)});
+    % arco exterior: horario visto desde +y (de +x hacia +z)
+    \draw[->,cargazul,line width=1.5pt] plot[domain=15:75,samples=30,variable=\t]
+        ({\rd*cos(\t)},0,{\rd*sin(\t)});
+    % arco interior: antihorario visto desde +y
+    \draw[->,cargazul,line width=1.5pt] plot[domain=75:15,samples=30,variable=\t]
+        ({\rc*cos(\t)},0,{\rc*sin(\t)});
+    % tramos radiales
+    \draw[cargazul,line width=1.5pt] ({\rc*cos(15)},0,{\rc*sin(15)})--({\rd*cos(15)},0,{\rd*sin(15)});
+    \draw[cargazul,line width=1.5pt] ({\rc*cos(75)},0,{\rc*sin(75)})--({\rd*cos(75)},0,{\rd*sin(75)});
+    \node[cargazul,font=\small] at ({4.0*cos(45)},0,{4.0*sin(45)}){$I$};
+    \node[font=\scriptsize] at ({4.0*cos(45)},0,{4.0*sin(45)+0.42}){$R_4$};
+    \node[font=\scriptsize,above left] at ({\rc*cos(15)},0,{\rc*sin(15)}){$R_3$};
+    \draw plot[domain=15:75,samples=20,variable=\t] ({0.5*cos(\t)},0,{0.5*sin(\t)});
+    \node[font=\scriptsize] at ({0.98*cos(45)},0,{0.98*sin(45)}){$60^\circ$};
+\end{tikzpicture}\\[2pt]
+{\scriptsize Lazo 1 (rojo) en el plano $xy$; lazo 2 (azul) en el plano $zx$.}
+\end{minipage}
+
+\vspace{0.3cm}
+
+\noindent\textbf{Datos:} $\mu_0 = 4\pi\times10^{-7}$ [T\,m/A], $I = 1{,}5$ [A];
+lazo 1: $R_1 = 0{,}03$ [m], $R_2 = 0{,}06$ [m], $\Delta\theta_1 = 45^\circ = \pi/4$;
+lazo 2: $R_3 = 0{,}07$ [m], $R_4 = 0{,}21$ [m], $\Delta\theta_2 = 60^\circ = \pi/3$.
+
+\secgap
+
+%========================================================
+% 1. MODULO DE dB
+%========================================================
+\noindent\textbf{1. M\'odulo del diferencial de campo.} Partimos de la ley de Biot--Savart en forma
+vectorial,
+\[
+    d\vec{B} = \frac{\mu_0 I}{4\pi}\,
+    \frac{d\vec{\ell}\times(\vec{r}-\vec{r}\,')}{\lVert\vec{r}-\vec{r}\,'\rVert^{3}},
+\]
+donde $d\vec{\ell}$ es el elemento diferencial de longitud del conductor, orientado en el sentido de
+la corriente.
+
+\noindent\textbf{Paso 1 (m\'odulo).} Con $\phi$ el \'angulo entre $d\vec{\ell}$ y $(\vec{r}-\vec{r}\,')$:
+\[
+    dB = \frac{\mu_0 I}{4\pi}\,
+    \frac{d\ell\,\lVert\vec{r}-\vec{r}\,'\rVert\sin\phi}{\lVert\vec{r}-\vec{r}\,'\rVert^{3}}
+    = \frac{\mu_0 I}{4\pi}\,\frac{d\ell\,\sin\phi}{\lVert\vec{r}-\vec{r}\,'\rVert^{2}}.
+\]
+\textbf{Paso 2 (geometr\'ia).} El campo se eval\'ua en el centro, $\vec{r}=\vec{0}$, de modo que
+$\vec{r}-\vec{r}\,' = -\vec{r}\,'$ es siempre un vector \emph{radial}. Para un punto sobre un arco de
+radio $R$, $\lVert\vec{r}-\vec{r}\,'\rVert = R$.
+
+\noindent\textbf{Paso 3 (\'angulo entre $d\vec{\ell}$ y el vector radial).} Cada lazo tiene dos tipos
+de tramo:
+
+\noindent\textbf{3a) Arcos.} $d\vec{\ell}$ es \emph{tangente} al arco y $(\vec{r}-\vec{r}\,')$ es
+\emph{radial}; son perpendiculares: $\phi=90^\circ$, $\sin\phi=1$.
+
+\noindent\textbf{3b) Tramos rectos radiales.} En los dos segmentos que unen el arco interior con el
+exterior, $d\vec{\ell}$ apunta \emph{a lo largo del radio}: hacia afuera o hacia adentro, seg\'un el
+sentido de la corriente. Como $(\vec{r}-\vec{r}\,')=-\vec{r}\,'$ tambi\'en es radial, ambos vectores
+son paralelos o antiparalelos: $\phi = 0^\circ$ o $\phi = 180^\circ$. En los dos casos:
+\[
+    \lVert d\vec{\ell}\times(\vec{r}-\vec{r}\,')\rVert
+    = d\ell\,\lVert\vec{r}-\vec{r}\,'\rVert\,\sin\phi = 0
+    \quad\Longrightarrow\quad d\vec{B} = \vec{0}.
+\]
+Los tramos radiales \textbf{no aportan} campo en $O$; solo contribuyen los arcos.
+
+\noindent\textbf{Paso 4 (elemento de arco).} En cada arco, el elemento $d\ell$ es el
+\textbf{diferencial de longitud de arco de circunferencia}: un arco de radio $R$ que subtiende el
+\'angulo $d\theta$ mide
+\[
+    d\ell = R\,d\theta \qquad(\text{arco} = \text{radio}\times\text{\'angulo}).
+\]
+
+\noindent\textbf{Paso 5 (sustituci\'on e integraci\'on).}
+\[
+    dB = \frac{\mu_0 I}{4\pi}\,\frac{R\,d\theta}{R^{2}} = \frac{\mu_0 I}{4\pi R}\,d\theta
+    \quad\Longrightarrow\quad
+    \boxed{B_{\text{arco}} = \frac{\mu_0 I}{4\pi R}\int_{\text{arco}} d\theta = \frac{\mu_0 I\,\Delta\theta}{4\pi R}}
+\]
+\noindent\textit{Observaci\'on clave:} el m\'odulo depende \textbf{solo} del radio $R$ y de la
+apertura $\Delta\theta$, no de d\'onde comienza o termina el arco.
+
+\noindent\textbf{Direcci\'on (regla de la mano derecha).} Se curvan los dedos de la mano derecha en
+el sentido en que circula la corriente por el arco; el \textbf{pulgar} apunta en la direcci\'on del
+campo magn\'etico en el centro $O$. Para un arco, el campo en $O$ siempre es perpendicular al plano
+del arco.
+
+\secgap
+
+%========================================================
+% 2. LAZO 1
+%========================================================
+\noindent\textbf{2. (a) Lazo 1 (plano $xy$, $45^\circ$).}
+
+\noindent\textbf{M\'odulos de sus arcos} ($\Delta\theta_1 = \pi/4$):
+\begin{align*}
+    B_{R_1} &= \frac{\mu_0 I}{4\pi R_1}\cdot\frac{\pi}{4} = \frac{\mu_0 I}{16\,R_1}
+             = \frac{(4\pi\times10^{-7})(1{,}5)}{16\,(0{,}03)} = 3{,}927\times10^{-6}\ [\text{T}],\\
+    B_{R_2} &= \frac{\mu_0 I}{16\,R_2}
+             = \frac{(4\pi\times10^{-7})(1{,}5)}{16\,(0{,}06)} = 1{,}963\times10^{-6}\ [\text{T}].
+\end{align*}
+
+\noindent\textbf{Direcciones (regla de la mano derecha, mirando desde $+z$):}
+\begin{itemize}\setlength\itemsep{2pt}
+    \item Arco exterior ($R_2$), \textbf{antihorario}: los dedos giran en sentido antihorario y el
+          pulgar apunta hacia el observador, es decir, hacia $+z$ $\Rightarrow$ $+\kk$.
+    \item Arco interior ($R_1$), \textbf{horario}: los dedos giran en sentido horario y el pulgar se
+          aleja del observador, hacia $-z$ $\Rightarrow$ $-\kk$.
+\end{itemize}
+
+\noindent\textbf{Campo del lazo 1:}
+\[
+    \vec{B}_1 = (B_{R_2}-B_{R_1})\,\kk
+    = \frac{\mu_0 I}{16}\left(\frac{1}{R_2}-\frac{1}{R_1}\right)\kk
+    = -\frac{\mu_0 I\,(R_2-R_1)}{16\,R_1R_2}\,\kk .
+\]
+Con $R_2 = 2R_1$ se simplifica a $\vec{B}_1 = -\dfrac{\mu_0 I}{32\,R_1}\,\kk$; num\'ericamente,
+$\vec{B}_1 = (1{,}963-3{,}927)\times10^{-6}\,\kk$:
+\[
+    \boxed{\vec{B}_1 = -1{,}963\times10^{-6}\,\kk\ [\text{T}]}
+\]
+Como $R_1<R_2$, domina el arco interior y $\vec{B}_1$ apunta a $-\kk$.
+
+\secgap
+
+%========================================================
+% 3. LAZO 2
+%========================================================
+\noindent\textbf{3. (b) Lazo 2 (plano $zx$, $60^\circ$).}
+
+\noindent\textbf{M\'odulos de sus arcos} ($\Delta\theta_2 = \pi/3$):
+\begin{align*}
+    B_{R_3} &= \frac{\mu_0 I}{4\pi R_3}\cdot\frac{\pi}{3} = \frac{\mu_0 I}{12\,R_3}
+             = \frac{(4\pi\times10^{-7})(1{,}5)}{12\,(0{,}07)} = 2{,}244\times10^{-6}\ [\text{T}],\\
+    B_{R_4} &= \frac{\mu_0 I}{12\,R_4}
+             = \frac{(4\pi\times10^{-7})(1{,}5)}{12\,(0{,}21)} = 0{,}748\times10^{-6}\ [\text{T}].
+\end{align*}
+
+\noindent\textbf{Direcciones (regla de la mano derecha, mirando desde $+y$):}
+\begin{itemize}\setlength\itemsep{2pt}
+    \item Arco exterior ($R_4$), \textbf{horario}: los dedos giran en sentido horario y el pulgar se
+          aleja del observador, hacia $-y$ $\Rightarrow$ $-\jj$.
+    \item Arco interior ($R_3$), \textbf{antihorario}: los dedos giran en sentido antihorario y el
+          pulgar apunta hacia el observador, hacia $+y$ $\Rightarrow$ $+\jj$.
+\end{itemize}
+
+\noindent\textbf{Campo del lazo 2:}
+\[
+    \vec{B}_2 = (B_{R_3}-B_{R_4})\,\jj
+    = \frac{\mu_0 I}{12}\left(\frac{1}{R_3}-\frac{1}{R_4}\right)\jj
+    = \frac{\mu_0 I\,(R_4-R_3)}{12\,R_3R_4}\,\jj .
+\]
+Con $R_4 = 3R_3$ se simplifica a $\vec{B}_2 = \dfrac{\mu_0 I}{18\,R_3}\,\jj$; num\'ericamente,
+$\vec{B}_2 = (2{,}244-0{,}748)\times10^{-6}\,\jj$:
+\[
+    \boxed{\vec{B}_2 = 1{,}496\times10^{-6}\,\jj\ [\text{T}]}
+\]
+Como $R_3<R_4$, domina el arco interior y $\vec{B}_2$ apunta a $+\jj$.
+
+%========================================================
+% 4. CAMPO TOTAL
+%========================================================
+\newpage
+\noindent\textbf{4. (c) Campo total en $O$.} Por superposici\'on:
+
+\noindent
+\begin{minipage}[c]{0.36\textwidth}
+\centering
+\begin{tikzpicture}[scale=1.1, >=Stealth, line width=0.8pt]
+    % ejes del plano yz (vista desde +x)
+    \draw[->,gray] (-0.5,0)--(2.4,0) node[right,black,font=\small]{$y$};
+    \draw[->,gray] (0,-2.5)--(0,0.7) node[above,black,font=\small]{$z$};
+    \fill (0,0) circle(1.3pt); \node[font=\scriptsize,above left] at (0,0){$O$};
+    % componentes (a escala: B1 -> 2.0, B2 -> 2.0*16/21)
+    \draw[->,cargazul,line width=1.4pt] (0,0)--(1.524,0);
+    \node[cargazul,font=\small,above] at (0.95,0){$\vec{B}_2$};
+    \draw[->,red!75!black,line width=1.4pt] (0,0)--(0,-2.0);
+    \node[red!75!black,font=\small,left] at (0,-1.25){$\vec{B}_1$};
+    % guias del paralelogramo
+    \draw[dashed,gray] (1.524,0)--(1.524,-2.0);
+    \draw[dashed,gray] (0,-2.0)--(1.524,-2.0);
+    % resultante
+    \draw[->,violet,line width=1.6pt] (0,0)--(1.524,-2.0);
+    \node[violet,font=\small,below right] at (1.524,-2.0){$\vec{B}$};
+    % angulo con el eje -z
+    \draw (0,-0.75) arc (270:307.3:0.75);
+    \node[font=\scriptsize] at (0.25,-0.98){$\varphi$};
+\end{tikzpicture}\\[2pt]
+{\scriptsize Plano $yz$ (vista desde $+x$), a escala.}
+\end{minipage}%
+\hfill
+\begin{minipage}[c]{0.60\textwidth}
+En forma simb\'olica,
+\begin{align*}
+    \vec{B} &= \frac{\mu_0 I\,(R_4-R_3)}{12\,R_3R_4}\,\jj
+             - \frac{\mu_0 I\,(R_2-R_1)}{16\,R_1R_2}\,\kk\\
+            &= \frac{\mu_0 I}{18\,R_3}\,\jj - \frac{\mu_0 I}{32\,R_1}\,\kk .
+\end{align*}
+Num\'ericamente:
+\[
+    \boxed{\vec{B} = 1{,}496\times10^{-6}\,\jj - 1{,}963\times10^{-6}\,\kk\ [\text{T}]}
+\]
+Su m\'odulo y su direcci\'on (medida desde el eje $-z$ hacia $+y$) son
+\[
+    \lVert\vec{B}\rVert = \sqrt{B_1^{2}+B_2^{2}} = 2{,}468\times10^{-6}\ [\text{T}],
+\]
+\[
+    \varphi = \arctan\frac{B_2}{B_1} = \arctan\frac{32\,R_1}{18\,R_3}
+    = \arctan\frac{16}{21} = 37{,}3^\circ.
+\]
+\end{minipage}
+
+\secgap
+
+%========================================================
+% 5. INTERPRETACION
+%========================================================
+\noindent\textbf{5. Interpretaci\'on f\'isica.}
+\begin{itemize}\itemsep6pt
+    \item \textbf{Cancelaci\'on parcial dentro de cada lazo.} En un lazo cerrado el arco interior y
+    el exterior recorren sentidos opuestos, por lo que sus campos en $O$ se \emph{restan}. Domina el
+    arco m\'as cercano a $O$ (radio menor). Si los dos radios de un lazo fueran iguales, su campo
+    ser\'ia nulo.
+    \item \textbf{Los tramos radiales no cuentan.} Su $d\vec{\ell}$ es paralelo o antiparalelo al
+    vector radial ($\phi = 0^\circ$ o $180^\circ$), y el producto cruz se anula
+    (paso~3b).
+    \item \textbf{Planos perpendiculares, campos perpendiculares.} El lazo 1 ($xy$) produce un
+    campo a lo largo de $\pm\kk$ y el lazo 2 ($zx$) a lo largo de $\pm\jj$. Por eso se suman
+    \emph{vectorialmente} y $\vec{B}$ queda en el plano $yz$. Si ambos lazos estuvieran en el
+    \emph{mismo} plano, como en la Tarea~4, sus campos ser\'ian colineales y se sumar\'ian como
+    escalares.
+    \item \textbf{Posici\'on de los arcos.} Girar un lazo dentro de su plano, manteniendo radios,
+    apertura y sentido de circulaci\'on, no cambia el campo en $O$. Solo importan los radios,
+    $\Delta\theta$, el plano y el sentido de la corriente.
+\end{itemize}
+
+\end{document}
