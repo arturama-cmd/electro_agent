@@ -1,0 +1,297 @@
+\documentclass[11pt,letterpaper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[spanish,es-noshorthands]{babel}
+\usepackage{amsmath,amssymb}
+\usepackage{graphicx}
+\usepackage{xcolor}
+\usepackage{tikz}
+\usetikzlibrary{calc,arrows.meta,decorations.markings}
+\usepackage[top=1.8cm, bottom=2.2cm, left=2.5cm, right=2.5cm]{geometry}
+\pagestyle{plain}
+
+% simbolos: punto (sale de la pagina) y cruz (entra a la pagina)
+\newcommand{\punto}[2][black]{%
+  \draw[#1,line width=0.7pt,fill=white] (#2) circle (0.16);
+  \fill[#1] (#2) circle (0.045);}
+\newcommand{\cruz}[2][black]{%
+  \draw[#1,line width=0.7pt,fill=white] (#2) circle (0.16);
+  \draw[#1,line width=0.7pt] ($(#2)+(-0.11,-0.11)$)--($(#2)+(0.11,0.11)$)
+        ($(#2)+(-0.11,0.11)$)--($(#2)+(0.11,-0.11)$);}
+% sistema de referencia: x derecha, y arriba, z saliendo de la pagina
+\newcommand{\ejesxyz}[1]{%
+  \begin{scope}[shift={(#1)}]
+    \draw[->,line width=0.7pt] (0,0)--(0.75,0) node[right,font=\footnotesize]{$x$};
+    \draw[->,line width=0.7pt] (0,0)--(0,0.75) node[above,font=\footnotesize]{$y$};
+    \draw[line width=0.6pt,fill=white] (0,0) circle (0.1); \fill (0,0) circle (0.03);
+    \node[below left=-1pt,font=\footnotesize] at (0,0){$z$};
+  \end{scope}}
+
+\begin{document}
+
+\begin{center}
+\includegraphics[height=1.9cm]{logo ubb.png}\\[0.25cm]
+\textbf{F\'isica II (2026-2)}\\
+\textbf{Tarea 4}\emph{: Ley de Biot-Savart, Ley de Amp\`ere y Ley de Faraday-Lenz}\\
+\textit{Profesor: Arturo Fern\'andez P\'erez}\\
+\textbf{Plazo de Entrega: Mi\'ercoles 18 de noviembre a las 23:59 hrs.}
+\end{center}
+
+\begin{enumerate}
+\renewcommand{\labelenumii}{(\alph{enumii})}
+
+%==================================================================
+% PROBLEMA 1
+%==================================================================
+\item Tres cables rectos muy largos y paralelos al eje $y$ se encuentran en el plano $xy$,
+ubicados en $x_1 = 0$, $x_2 = 10$ [cm] y $x_3 = 25$ [cm], como muestra la Fig.\ 1. Los cables
+conducen corrientes $I_1 = 2$ [A] en la direcci\'on $+y$, $I_2 = 5$ [A] en la direcci\'on $-y$ e
+$I_3 = 3$ [A] en la direcci\'on $-y$. Considerando el sistema de referencia de la figura
+(eje $z^{+}$ saliendo de la p\'agina), determine:
+
+\begin{enumerate}
+\item Usando la ley de Amp\`ere, la magnitud del campo magn\'etico que cada cable produce en la
+posici\'on de los otros dos.
+
+\item Usando la regla de la mano derecha, la direcci\'on de cada uno de esos campos, expres\'andola
+con la notaci\'on de puntos y cruces y como vector ($\pm\hat{k}$).
+
+\item Usando $\vec{F} = I\,\vec{L}\times\vec{B}$, el vector fuerza magn\'etica por unidad de longitud
+sobre cada cable.
+\end{enumerate}
+
+\begin{center}
+\begin{tikzpicture}[scale=0.9, >=Stealth, line width=0.9pt]
+    \foreach \x/\n in {0/1, 2/2, 5/3}{
+        \draw[orange!75!black,line width=2.2pt] (\x,-2.0)--(\x,2.0);
+        \node[font=\small] at (\x,-2.35){$(\n)$};}
+    % corrientes
+    \draw[->,violet,line width=1.3pt] (-0.3,-0.4)--(-0.3,0.6);
+    \node[violet,left,font=\small] at (-0.3,0.1){$I_1$};
+    \draw[->,violet,line width=1.3pt] (1.7,0.6)--(1.7,-0.4);
+    \node[violet,left,font=\small] at (1.7,0.1){$I_2$};
+    \draw[->,violet,line width=1.3pt] (4.7,0.6)--(4.7,-0.4);
+    \node[violet,left,font=\small] at (4.7,0.1){$I_3$};
+    % distancias
+    \draw[<->,gray] (0,1.6)--(2,1.6);  \node[above,font=\footnotesize,gray] at (1,1.6){$10$ cm};
+    \draw[<->,gray] (2,1.6)--(5,1.6);  \node[above,font=\footnotesize,gray] at (3.5,1.6){$15$ cm};
+    % sistema de referencia
+    \ejesxyz{6.2,-1.8}
+\end{tikzpicture}\\[2pt]
+Figura 1
+\end{center}
+
+%==================================================================
+% PROBLEMA 2
+%==================================================================
+\item Dos alambres con forma de arco circular, centrados en el origen $O$ y contenidos en el plano
+$xy$, conducen corrientes en sentidos opuestos, como muestra la Fig.\ 2. El arco interior tiene radio
+$R_1 = 6$ [cm], subtiende un \'angulo de $30^\circ$ y conduce una corriente $I_1 = 4$ [A] en sentido
+antihorario. El arco exterior tiene radio $R_2 = 10$ [cm], subtiende un \'angulo de $120^\circ$ y
+conduce una corriente $I_2 = 3$ [A] en sentido horario. Considerando s\'olo el campo producido por
+los arcos, determine:
+
+\smallskip
+\noindent
+\begin{minipage}[c]{0.50\linewidth}
+\begin{enumerate}
+\item Usando la ley de Biot-Savart, el campo magn\'etico (magnitud y direcci\'on) que produce cada
+arco en el origen.
+
+\item El campo magn\'etico neto en el origen, indicando si apunta en la direcci\'on $+z$ o $-z$.
+\end{enumerate}
+\end{minipage}%
+\hfill
+\begin{minipage}[c]{0.46\linewidth}
+\centering
+\begin{tikzpicture}[scale=0.72, >=Stealth, line width=0.9pt]
+    % ejes
+    \draw[->,line width=0.7pt] (-3.9,0)--(3.2,0) node[right,font=\small]{$x$};
+    \draw[->,line width=0.7pt] (0,-3.3)--(0,3.4) node[above,font=\small]{$y$};
+    % radios auxiliares (no son alambres)
+    \draw[gray,dashed,line width=0.6pt] (0,0)--(30:1.8);
+    \draw[gray,dashed,line width=0.6pt] (0,0)--(120:3.0);
+    \draw[gray,dashed,line width=0.6pt] (0,0)--(240:3.0);
+    % arco 1: R1, de 0 a 30 grados, antihorario
+    \draw[orange!75!black,line width=2.2pt,postaction={decorate},
+          decoration={markings, mark=at position 0.65 with {\arrow[violet,scale=1.1]{>}}}]
+          (0:1.8) arc[start angle=0, end angle=30, radius=1.8];
+    \node[violet,font=\small] at (18:2.3){$I_1$};
+    \node[font=\footnotesize] at (1.25,-0.3){$R_1$};
+    % arco 2: R2, de 240 a 120 grados, horario
+    \draw[orange!75!black,line width=2.2pt,postaction={decorate},
+          decoration={markings, mark=at position 0.5 with {\arrow[violet,scale=1.1]{>}}}]
+          (240:3.0) arc[start angle=240, end angle=120, radius=3.0];
+    \node[violet,font=\small] at (172:3.45){$I_2$};
+    \node[font=\footnotesize,left] at (120:2.0){$R_2$};
+    % angulos
+    \draw[line width=0.6pt] (0:0.7) arc[start angle=0, end angle=30, radius=0.7];
+    \node[font=\scriptsize] at (15:1.08){$30^\circ$};
+    \draw[line width=0.6pt] (120:0.7) arc[start angle=120, end angle=240, radius=0.7];
+    \node[font=\scriptsize] at (200:1.2){$120^\circ$};
+    % origen
+    \fill (0,0) circle (2pt);
+    \node[below left,font=\small] at (0,0){$O$};
+    % z saliendo
+    \draw[line width=0.6pt,fill=white] (2.6,2.8) circle (0.1); \fill (2.6,2.8) circle (0.03);
+    \node[right,font=\footnotesize] at (2.7,2.8){$z$};
+\end{tikzpicture}\\[2pt]
+Figura 2
+\end{minipage}
+
+\pagebreak
+%==================================================================
+% PROBLEMA 3
+%==================================================================
+\item Dos cables rectos muy largos y perpendiculares al plano de la hoja est\'an separados una
+distancia $d = 5$ [cm], como muestra la Fig.\ 3. El cable 1 conduce una corriente $I_1 = 6$ [A]
+\textbf{entrando} al plano de la hoja y el cable 2 conduce una corriente $I_2 = 8$ [A]
+\textbf{saliendo} del plano de la hoja. El punto $P$ se encuentra a $3$ [cm] del cable 1 y a $4$
+[cm] del cable 2. Determine:
+
+\begin{enumerate}
+\item Usando la ley de Amp\`ere, la magnitud del campo magn\'etico que produce cada cable en el
+punto $P$.
+
+\item Usando la regla de la mano derecha, la direcci\'on de cada campo en $P$. Dib\'ujelos en la
+figura y exprese cada uno en t\'erminos de $\hat{\imath}$ y $\hat{\jmath}$.
+
+\item El campo magn\'etico neto en $P$, su magnitud y el \'angulo que forma con el eje $x$.
+\end{enumerate}
+
+\begin{center}
+\begin{tikzpicture}[scale=1.0, >=Stealth, line width=0.9pt]
+    % lados del triangulo
+    \draw[gray,dashed,line width=0.7pt] (0,0)--(1.8,2.4)--(5,0);
+    \draw[<->,gray,line width=0.6pt] (0,-0.5)--(5,-0.5);
+    \node[below,font=\footnotesize,gray] at (2.5,-0.5){$d = 5$ cm};
+    \node[font=\footnotesize,gray] at (0.55,1.35){$3$ cm};
+    \node[font=\footnotesize,gray] at (3.75,1.45){$4$ cm};
+    % angulo recto en P
+    \draw[gray,line width=0.5pt] ($(1.8,2.4)!0.3cm!(0,0)$) -- ++(0.8*0.3,-0.6*0.3) -- ($(1.8,2.4)!0.3cm!(5,0)$);
+    % cables
+    \cruz[orange!75!black]{0,0}
+    \punto[orange!75!black]{5,0}
+    \node[below left,font=\small] at (-0.1,-0.05){$I_1$};
+    \node[below right,font=\small] at (5.1,-0.05){$I_2$};
+    \node[above left,font=\footnotesize] at (-0.1,0.1){$(1)$};
+    \node[above right,font=\footnotesize] at (5.1,0.1){$(2)$};
+    % punto P
+    \fill (1.8,2.4) circle (2pt);
+    \node[above,font=\small] at (1.8,2.45){$P$};
+    % sistema de referencia
+    \ejesxyz{6.3,1.6}
+\end{tikzpicture}\\[2pt]
+Figura 3
+\end{center}
+
+%==================================================================
+% PROBLEMA 4
+%==================================================================
+\item Un solenoide muy largo tiene $n = 4000$ [vueltas/m], radio $R = 3$ [cm] y conduce una
+corriente variable $I(t) = 3\sqrt{t}$ [A], con $t$ en segundos. Dos bobinas son conc\'entricas y
+coaxiales con el solenoide (Fig.\ 4): una bobina \textbf{interior} de $N_1 = 150$ vueltas, radio
+$r_1 = 2$ [cm] y resistencia $R_1 = 0{,}5$ [$\Omega$], y una bobina \textbf{exterior} de
+$N_2 = 100$ vueltas, radio $r_2 = 5$ [cm] y resistencia $R_2 = 1{,}2$ [$\Omega$]. Determine:
+
+\begin{enumerate}
+\item El campo magn\'etico en el interior del solenoide en $t = 4$ [s].
+
+\item El flujo magn\'etico a trav\'es de una vuelta de cada bobina, en funci\'on del tiempo.
+
+\item La fem inducida y la corriente inducida en cada bobina en $t = 4$ [s].
+
+\item Usando la ley de Lenz, si la corriente inducida en cada bobina circula en el mismo sentido
+o en sentido opuesto a la corriente del solenoide. Justifique.
+\end{enumerate}
+
+\begin{center}
+\begin{tikzpicture}[scale=0.9, >=Stealth, line width=0.9pt]
+    %----------------- vista lateral -----------------
+    \begin{scope}
+        % bobina exterior (mitad trasera)
+        \foreach \x in {-0.45,0,0.45}{
+            \draw[green!50!black,line width=1.1pt] (\x,1.7) arc[start angle=90, end angle=-90,
+                  x radius=0.22, y radius=1.7];}
+        % solenoide (espiras delgadas)
+        \foreach \x in {-2.55,-2.25,...,2.6}{
+            \draw[blue!70!black,line width=0.6pt] (\x,0) ellipse[x radius=0.1, y radius=1.0];}
+        % bobina interior
+        \foreach \x in {-0.3,0,0.3}{
+            \draw[red!80!black,line width=1.3pt] (\x+0.02,0) ellipse[x radius=0.08, y radius=0.67];}
+        % bobina exterior (mitad delantera)
+        \foreach \x in {-0.45,0,0.45}{
+            \draw[green!50!black,line width=1.1pt] (\x,-1.7) arc[start angle=-90, end angle=-270,
+                  x radius=0.22, y radius=1.7];}
+        % eje
+        \draw[gray,dash dot,line width=0.5pt] (-3.1,0)--(3.2,0);
+        % corriente del solenoide
+        \draw[->,violet,line width=1.2pt] (-3.3,-1.0)--(-2.7,-1.0);
+        \node[violet,left,font=\small] at (-3.3,-1.0){$I(t)$};
+        \node[blue!70!black,font=\footnotesize] at (-1.6,1.35){solenoide};
+        \draw[red!80!black,line width=0.5pt] (0.35,-0.45)--(1.1,-1.95);
+        \node[red!80!black,font=\footnotesize,below] at (1.1,-1.95){$N_1$};
+        \node[green!50!black,font=\footnotesize] at (1.15,1.85){$N_2$};
+        \node[font=\footnotesize] at (-1.2,-2.25){Vista lateral};
+    \end{scope}
+    %----------------- vista frontal -----------------
+    \begin{scope}[shift={(6.6,0)}]
+        \draw[green!50!black,line width=1.3pt] (0,0) circle (1.7);
+        \draw[blue!70!black,line width=1.3pt,postaction={decorate},
+              decoration={markings, mark=at position 0.1 with {\arrow[violet,scale=1.2]{>}}}]
+              (0,0) circle (1.0);
+        \draw[red!80!black,line width=1.3pt] (0,0) circle (0.67);
+        \fill (0,0) circle (1.5pt);
+        \draw[->,line width=0.6pt] (0,0)--(-60:0.67);  \node[font=\scriptsize] at (-35:0.45){$r_1$};
+        \draw[->,line width=0.6pt] (0,0)--(160:1.0);   \node[font=\scriptsize,above] at (160:0.62){$R$};
+        \draw[->,line width=0.6pt] (0,0)--(215:1.7);   \node[font=\scriptsize] at (225:1.3){$r_2$};
+        \node[violet,font=\small] at (52:1.32){$I$};
+        \node[font=\footnotesize,align=center] at (0,-2.25){Vista frontal\\(corriente antihoraria)};
+    \end{scope}
+\end{tikzpicture}\\[2pt]
+Figura 4
+\end{center}
+
+\pagebreak
+%==================================================================
+% PROBLEMA 5
+%==================================================================
+\item Una bobina rectangular de $N = 50$ vueltas y lados $a = 20$ [cm] y $b = 15$ [cm] gira con
+rapidez angular constante $\omega = 30$ [rad/s] alrededor de un eje perpendicular a un campo
+magn\'etico uniforme $\vec{B}$ de magnitud desconocida, como muestra la Fig.\ 5. La resistencia
+total de la bobina es $R = 12$ [$\Omega$] y la corriente inducida m\'axima es
+$I_{\text{m\'ax}} = 0{,}45$ [A]. Determine:
+
+\begin{enumerate}
+\item La fem inducida m\'axima en la bobina.
+
+\item Usando la ley de Faraday, la magnitud del campo magn\'etico $B$.
+
+\item Las expresiones del flujo magn\'etico $\Phi_B(t)$ a trav\'es de una vuelta y de la fem
+inducida $\varepsilon(t)$, si en $t = 0$ el plano de la bobina es perpendicular a $\vec{B}$.
+\end{enumerate}
+
+\begin{center}
+\begin{tikzpicture}[scale=0.9, >=Stealth, line width=0.9pt]
+    % lineas de campo uniforme
+    \foreach \y in {-1.8,-0.9,0,0.9,1.8}{
+        \draw[->,blue!70!black,line width=0.8pt] (-3.2,\y)--(3.4,\y);}
+    \node[blue!70!black,right,font=\small] at (3.4,1.8){$\vec{B}$};
+    % eje de rotacion (parte trasera)
+    \draw[gray,dash dot,line width=0.7pt] (0,-2.5)--(0,2.6);
+    % bobina (rectangulo girado en torno al eje vertical)
+    \draw[orange!75!black,line width=2.2pt,fill=orange!12,fill opacity=0.85]
+          (-1.1,-1.25)--(1.1,-0.95)--(1.1,1.45)--(-1.1,1.15)--cycle;
+    \draw[gray,dash dot,line width=0.7pt] (0,-1.1)--(0,1.3);
+    % cotas
+    \node[font=\small] at (1.4,0.25){$a$};
+    \node[font=\small] at (0.2,-1.45){$b$};
+    % rapidez angular
+    \draw[->,line width=1pt] (0.55,2.3) arc[start angle=-30, end angle=210, x radius=0.6, y radius=0.2];
+    \node[font=\small] at (1.05,2.55){$\omega$};
+\end{tikzpicture}\\[2pt]
+Figura 5
+\end{center}
+
+\end{enumerate}
+
+\end{document}

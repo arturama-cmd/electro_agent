@@ -1,0 +1,757 @@
+\documentclass[12pt,letterpaper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[spanish,es-noshorthands]{babel}
+\usepackage{amsmath,amssymb}
+\usepackage{graphicx}
+\usepackage{xcolor}
+\usepackage{tikz}
+\usetikzlibrary{calc,arrows.meta,decorations.markings}
+\usepackage{array}
+\usepackage[top=2.5cm, bottom=2.7cm, left=2cm, right=2cm, footskip=40pt]{geometry}
+\usepackage{fancyhdr}
+\usepackage{lastpage}
+
+\definecolor{ubbblue}{RGB}{0,51,102}
+
+% simbolos: punto (sale de la pagina) y cruz (entra a la pagina)
+\newcommand{\punto}[2][black]{%
+  \draw[#1,line width=0.7pt,fill=white] (#2) circle (0.16);
+  \fill[#1] (#2) circle (0.045);}
+\newcommand{\cruz}[2][black]{%
+  \draw[#1,line width=0.7pt,fill=white] (#2) circle (0.16);
+  \draw[#1,line width=0.7pt] ($(#2)+(-0.11,-0.11)$)--($(#2)+(0.11,0.11)$)
+        ($(#2)+(-0.11,0.11)$)--($(#2)+(0.11,-0.11)$);}
+% sistema de referencia: x derecha, y arriba, z saliendo de la pagina
+\newcommand{\ejesxyz}[1]{%
+  \begin{scope}[shift={(#1)}]
+    \draw[->,line width=0.7pt] (0,0)--(0.75,0) node[right,font=\footnotesize]{$x$};
+    \draw[->,line width=0.7pt] (0,0)--(0,0.75) node[above,font=\footnotesize]{$y$};
+    \draw[line width=0.6pt,fill=white] (0,0) circle (0.1); \fill (0,0) circle (0.03);
+    \node[below left=-1pt,font=\footnotesize] at (0,0){$z$};
+  \end{scope}}
+
+% ===== PIE DE PAGINA (formato institucional) =====
+\pagestyle{fancy}
+\fancyhf{}
+\renewcommand{\headrulewidth}{0pt}
+\renewcommand{\footrulewidth}{0.4pt}
+\fancyfoot[L]{\raisebox{-0.5\height}{\includegraphics[height=1.1cm]{logo ubb.png}}}
+\fancyfoot[C]{%
+    \begin{minipage}[c]{8cm}\centering
+        \footnotesize\textcolor{ubbblue}{\textbf{Dr.\ Arturo Fern\'andez P\'erez}}\\
+        \scriptsize Departamento de F\'isica -- Universidad del B\'io-B\'io\\
+        \scriptsize \textit{Electro\_Asistente\_AI-UBB}\\
+        \tiny P\'agina \thepage\ de \pageref{LastPage}
+    \end{minipage}}
+\fancyfoot[R]{\raisebox{-0.5\height}{\includegraphics[height=1.1cm]{logo dfis.png}}}
+\fancypagestyle{plain}{%
+    \fancyhf{}
+    \renewcommand{\headrulewidth}{0pt}
+    \renewcommand{\footrulewidth}{0.4pt}
+    \fancyfoot[L]{\raisebox{-0.5\height}{\includegraphics[height=1.1cm]{logo ubb.png}}}
+    \fancyfoot[C]{%
+        \begin{minipage}[c]{8cm}\centering
+            \footnotesize\textcolor{ubbblue}{\textbf{Dr.\ Arturo Fern\'andez P\'erez}}\\
+            \scriptsize Departamento de F\'isica -- Universidad del B\'io-B\'io\\
+            \scriptsize \textit{Electro\_Asistente\_AI-UBB}\\
+            \tiny P\'agina \thepage\ de \pageref{LastPage}
+        \end{minipage}}
+    \fancyfoot[R]{\raisebox{-0.5\height}{\includegraphics[height=1.1cm]{logo dfis.png}}}
+}
+
+\begin{document}
+
+%========================================================
+% ENCABEZADO INSTITUCIONAL
+%========================================================
+\begin{center}
+    \includegraphics[height=2cm]{logo ubb.png}\\[0.3cm]
+    {\large\textcolor{ubbblue}{\textbf{UNIVERSIDAD DEL B\'IO-B\'IO}}}\\[0.1cm]
+    {\normalsize Facultad de Ciencias -- Departamento de F\'isica}
+\end{center}
+
+\vspace{0.3cm}\hrule height 1pt\vspace{0.5cm}
+
+{\centering\Large\textbf{Pauta Tarea 4 -- F\'isica II (2026-2)}\par}
+{\centering\normalsize\textit{Ley de Biot-Savart, Ley de Amp\`ere y Ley de Faraday-Lenz}\par}
+
+\vspace{0.5cm}
+
+%--- recordatorio: productos cruz de unitarios ---
+\begin{center}
+\fcolorbox{ubbblue}{ubbblue!5}{%
+\begin{minipage}{0.92\textwidth}
+\centering
+\textbf{\textcolor{ubbblue}{Productos cruz de los vectores unitarios cartesianos}}\\[4pt]
+$\hat{\imath}\times\hat{\jmath}=\hat{k}$,\quad
+$\hat{\jmath}\times\hat{k}=\hat{\imath}$,\quad
+$\hat{k}\times\hat{\imath}=\hat{\jmath}$
+\qquad\qquad
+$\hat{\jmath}\times\hat{\imath}=-\hat{k}$,\quad
+$\hat{k}\times\hat{\jmath}=-\hat{\imath}$,\quad
+$\hat{\imath}\times\hat{k}=-\hat{\jmath}$\\[3pt]
+$\hat{\imath}\times\hat{\imath}=\hat{\jmath}\times\hat{\jmath}=\hat{k}\times\hat{k}=\vec{0}$
+\end{minipage}}
+\end{center}
+
+\vspace{0.2cm}
+
+%========================================================
+% PROBLEMA 1
+%========================================================
+\section*{Problema 1 -- Fuerza entre tres cables rectos paralelos}
+
+\subsection*{Enunciado}
+
+Tres cables rectos muy largos y paralelos al eje $y$ se encuentran en el plano $xy$, ubicados en
+$x_1 = 0$, $x_2 = 10$ [cm] y $x_3 = 25$ [cm], como muestra la Fig.\ 1. Los cables conducen corrientes
+$I_1 = 2$ [A] en la direcci\'on $+y$, $I_2 = 5$ [A] en la direcci\'on $-y$ e $I_3 = 3$ [A] en la
+direcci\'on $-y$. Determine: (a) usando la ley de Amp\`ere, la magnitud del campo magn\'etico que cada
+cable produce en la posici\'on de los otros dos; (b) usando la regla de la mano derecha, la
+direcci\'on de cada uno de esos campos (puntos y cruces, $\pm\hat{k}$); (c) usando
+$\vec{F} = I\,\vec{L}\times\vec{B}$, el vector fuerza magn\'etica por unidad de longitud sobre cada
+cable.
+
+\begin{center}
+\begin{tikzpicture}[scale=0.85, >=Stealth, line width=0.9pt]
+    \foreach \x/\n in {0/1, 2/2, 5/3}{
+        \draw[orange!75!black,line width=2.2pt] (\x,-2.0)--(\x,2.0);
+        \node[font=\small] at (\x,-2.35){$(\n)$};}
+    \draw[->,violet,line width=1.3pt] (-0.3,-0.4)--(-0.3,0.6);
+    \node[violet,left,font=\small] at (-0.3,0.1){$I_1$};
+    \draw[->,violet,line width=1.3pt] (1.7,0.6)--(1.7,-0.4);
+    \node[violet,left,font=\small] at (1.7,0.1){$I_2$};
+    \draw[->,violet,line width=1.3pt] (4.7,0.6)--(4.7,-0.4);
+    \node[violet,left,font=\small] at (4.7,0.1){$I_3$};
+    \draw[<->,gray] (0,1.6)--(2,1.6);  \node[above,font=\footnotesize,gray] at (1,1.6){$10$ cm};
+    \draw[<->,gray] (2,1.6)--(5,1.6);  \node[above,font=\footnotesize,gray] at (3.5,1.6){$15$ cm};
+    \ejesxyz{6.2,-1.8}
+\end{tikzpicture}\\[2pt]
+{\footnotesize Figura 1}
+\end{center}
+
+\subsection*{Datos}
+\[
+    I_1 = 2\ [\text{A}],\quad I_2 = 5\ [\text{A}],\quad I_3 = 3\ [\text{A}],\qquad
+    \frac{\mu_0}{2\pi} = \frac{4\pi\times10^{-7}}{2\pi} = 2\times10^{-7}\ [\text{T}\cdot\text{m/A}]
+\]
+Separaciones: $r_{12} = 0{,}10$ [m], $r_{23} = 0{,}15$ [m], $r_{13} = 0{,}25$ [m]. Vector longitud de
+cada cable (tramo $l$ en el sentido de su corriente):
+\[
+    \vec{L}_1 = l\,\hat{\jmath},\qquad \vec{L}_2 = -\,l\,\hat{\jmath},\qquad \vec{L}_3 = -\,l\,\hat{\jmath}
+\]
+
+\subsection*{Parte (a) -- Magnitud del campo: ley de Amp\`ere}
+
+Tomando como trayectoria amperiana una circunferencia de radio $r$ centrada en un cable,
+$\oint\vec{B}\cdot d\vec{\ell} = B\,(2\pi r) = \mu_0 I$, de donde
+\[
+    B = \frac{\mu_0 I}{2\pi r}
+\]
+Notaci\'on: $B_{a\to b}$ es el campo del cable $(a)$ en la posici\'on del cable $(b)$.
+\begin{align*}
+    B_{2\to1} &= \frac{(2\times10^{-7})(5)}{0{,}10} = 1{,}0\times10^{-5}\ [\text{T}] &
+    B_{3\to1} &= \frac{(2\times10^{-7})(3)}{0{,}25} = 2{,}4\times10^{-6}\ [\text{T}] \\[4pt]
+    B_{1\to2} &= \frac{(2\times10^{-7})(2)}{0{,}10} = 4{,}0\times10^{-6}\ [\text{T}] &
+    B_{3\to2} &= \frac{(2\times10^{-7})(3)}{0{,}15} = 4{,}0\times10^{-6}\ [\text{T}] \\[4pt]
+    B_{1\to3} &= \frac{(2\times10^{-7})(2)}{0{,}25} = 1{,}6\times10^{-6}\ [\text{T}] &
+    B_{2\to3} &= \frac{(2\times10^{-7})(5)}{0{,}15} = 6{,}67\times10^{-6}\ [\text{T}]
+\end{align*}
+
+\subsection*{Parte (b) -- Direcci\'on: regla de la mano derecha}
+
+Con el pulgar en el sentido de la corriente, los dedos indican el sentido de $\vec{B}$. Para un cable
+con corriente hacia $+y$, el campo \textbf{entra} a la p\'agina a su derecha (cruz) y \textbf{sale} a
+su izquierda (punto); para corriente hacia $-y$ es al rev\'es. Equivalentemente,
+$\hat{u}_B = \hat{u}_I\times\hat{u}_r$, con $\hat{u}_r$ dirigido desde el cable fuente hacia el
+punto:
+
+\begin{center}
+\renewcommand{\arraystretch}{1.4}
+\begin{tabular}{|c|c|c|c|c|c|}
+\hline
+\textbf{Campo} & $\hat{u}_I$ & $\hat{u}_r$ & $\hat{u}_I\times\hat{u}_r$ & \textbf{S\'imbolo} & \textbf{Vector [T]} \\
+\hline
+$\vec{B}_{2\to1}$ & $-\hat{\jmath}$ & $-\hat{\imath}$ & $(-\hat{\jmath})\times(-\hat{\imath}) = -\hat{k}$
+    & cruz & $-1{,}0\times10^{-5}\,\hat{k}$ \\
+$\vec{B}_{3\to1}$ & $-\hat{\jmath}$ & $-\hat{\imath}$ & $(-\hat{\jmath})\times(-\hat{\imath}) = -\hat{k}$
+    & cruz & $-2{,}4\times10^{-6}\,\hat{k}$ \\
+\hline
+$\vec{B}_{1\to2}$ & $+\hat{\jmath}$ & $+\hat{\imath}$ & $\hat{\jmath}\times\hat{\imath} = -\hat{k}$
+    & cruz & $-4{,}0\times10^{-6}\,\hat{k}$ \\
+$\vec{B}_{3\to2}$ & $-\hat{\jmath}$ & $-\hat{\imath}$ & $(-\hat{\jmath})\times(-\hat{\imath}) = -\hat{k}$
+    & cruz & $-4{,}0\times10^{-6}\,\hat{k}$ \\
+\hline
+$\vec{B}_{1\to3}$ & $+\hat{\jmath}$ & $+\hat{\imath}$ & $\hat{\jmath}\times\hat{\imath} = -\hat{k}$
+    & cruz & $-1{,}6\times10^{-6}\,\hat{k}$ \\
+$\vec{B}_{2\to3}$ & $-\hat{\jmath}$ & $+\hat{\imath}$ & $(-\hat{\jmath})\times\hat{\imath} = +\hat{k}$
+    & punto & $+6{,}67\times10^{-6}\,\hat{k}$ \\
+\hline
+\end{tabular}
+\end{center}
+
+\subsection*{Parte (c) -- Fuerza por unidad de longitud sobre cada cable}
+
+Con $\vec{F} = I\,\vec{L}\times\vec{B}$, la fuerza por unidad de longitud es
+$\vec{F}/l = I\,(\vec{L}/l)\times\vec{B}$. Se usa $\hat{\jmath}\times\hat{k} = \hat{\imath}$.
+
+\medskip
+\noindent\textbf{Cable (1):}\; $\vec{L}_1/l = \hat{\jmath}$
+\begin{align*}
+    \frac{\vec{F}_{2\to1}}{l} &= I_1\,\hat{\jmath}\times\vec{B}_{2\to1}
+        = (2)\,\hat{\jmath}\times(-1{,}0\times10^{-5}\,\hat{k})
+        = -2{,}0\times10^{-5}\,(\hat{\jmath}\times\hat{k})
+        = -2{,}0\times10^{-5}\,\hat{\imath}\ [\text{N/m}] \\[4pt]
+    \frac{\vec{F}_{3\to1}}{l} &= I_1\,\hat{\jmath}\times\vec{B}_{3\to1}
+        = (2)\,\hat{\jmath}\times(-2{,}4\times10^{-6}\,\hat{k})
+        = -4{,}8\times10^{-6}\,(\hat{\jmath}\times\hat{k})
+        = -4{,}8\times10^{-6}\,\hat{\imath}\ [\text{N/m}]
+\end{align*}
+\[
+    \boxed{\frac{\vec{F}_1}{l} = (-2{,}0\times10^{-5} - 4{,}8\times10^{-6})\,\hat{\imath}
+    = -2{,}48\times10^{-5}\,\hat{\imath}\ [\text{N/m}]}
+\]
+
+\noindent\textbf{Cable (2):}\; $\vec{L}_2/l = -\hat{\jmath}$
+\begin{align*}
+    \frac{\vec{F}_{1\to2}}{l} &= I_2\,(-\hat{\jmath})\times\vec{B}_{1\to2}
+        = (5)\,(-\hat{\jmath})\times(-4{,}0\times10^{-6}\,\hat{k})
+        = 2{,}0\times10^{-5}\,(\hat{\jmath}\times\hat{k})
+        = 2{,}0\times10^{-5}\,\hat{\imath}\ [\text{N/m}] \\[4pt]
+    \frac{\vec{F}_{3\to2}}{l} &= I_2\,(-\hat{\jmath})\times\vec{B}_{3\to2}
+        = (5)\,(-\hat{\jmath})\times(-4{,}0\times10^{-6}\,\hat{k})
+        = 2{,}0\times10^{-5}\,(\hat{\jmath}\times\hat{k})
+        = 2{,}0\times10^{-5}\,\hat{\imath}\ [\text{N/m}]
+\end{align*}
+\[
+    \boxed{\frac{\vec{F}_2}{l} = (2{,}0\times10^{-5} + 2{,}0\times10^{-5})\,\hat{\imath}
+    = 4{,}0\times10^{-5}\,\hat{\imath}\ [\text{N/m}]}
+\]
+
+\noindent\textbf{Cable (3):}\; $\vec{L}_3/l = -\hat{\jmath}$
+\begin{align*}
+    \frac{\vec{F}_{1\to3}}{l} &= I_3\,(-\hat{\jmath})\times\vec{B}_{1\to3}
+        = (3)\,(-\hat{\jmath})\times(-1{,}6\times10^{-6}\,\hat{k})
+        = 4{,}8\times10^{-6}\,(\hat{\jmath}\times\hat{k})
+        = 4{,}8\times10^{-6}\,\hat{\imath}\ [\text{N/m}] \\[4pt]
+    \frac{\vec{F}_{2\to3}}{l} &= I_3\,(-\hat{\jmath})\times\vec{B}_{2\to3}
+        = (3)\,(-\hat{\jmath})\times(6{,}67\times10^{-6}\,\hat{k})
+        = -2{,}0\times10^{-5}\,(\hat{\jmath}\times\hat{k})
+        = -2{,}0\times10^{-5}\,\hat{\imath}\ [\text{N/m}]
+\end{align*}
+\[
+    \boxed{\frac{\vec{F}_3}{l} = (4{,}8\times10^{-6} - 2{,}0\times10^{-5})\,\hat{\imath}
+    = -1{,}52\times10^{-5}\,\hat{\imath}\ [\text{N/m}]}
+\]
+
+\noindent\textbf{Verificaci\'on:} los pares cumplen la tercera ley de Newton
+($\vec{F}_{2\to1} = -\vec{F}_{1\to2}$, $\vec{F}_{3\to1} = -\vec{F}_{1\to3}$,
+$\vec{F}_{3\to2} = -\vec{F}_{2\to3}$), por lo que la suma de las fuerzas es nula:
+\[
+    \frac{\vec{F}_1}{l} + \frac{\vec{F}_2}{l} + \frac{\vec{F}_3}{l}
+    = (-2{,}48 + 4{,}0 - 1{,}52)\times10^{-5}\,\hat{\imath} = \vec{0}
+\]
+Los resultados concuerdan con la regla f\'isica: (2) repele a (1) (corrientes antiparalelas),
+(3) repele a (1), y (2) y (3) se atraen (corrientes paralelas).
+
+\newpage
+%========================================================
+% PROBLEMA 2
+%========================================================
+\section*{Problema 2 -- Campo de dos arcos circulares en el origen}
+
+\subsection*{Enunciado}
+
+Dos alambres con forma de arco circular, centrados en el origen $O$ y contenidos en el plano $xy$,
+conducen corrientes en sentidos opuestos (Fig.\ 2). El arco interior tiene radio $R_1 = 6$ [cm],
+subtiende $30^\circ$ y conduce $I_1 = 4$ [A] en sentido antihorario. El arco exterior tiene radio
+$R_2 = 10$ [cm], subtiende $120^\circ$ y conduce $I_2 = 3$ [A] en sentido horario. Considerando s\'olo
+el campo de los arcos, determine: (a) usando la ley de Biot-Savart, el campo que produce cada arco
+en el origen; (b) el campo neto en el origen, indicando si apunta en $+z$ o $-z$.
+
+\begin{center}
+\begin{tikzpicture}[scale=0.72, >=Stealth, line width=0.9pt]
+    \draw[->,line width=0.7pt] (-3.9,0)--(3.2,0) node[right,font=\small]{$x$};
+    \draw[->,line width=0.7pt] (0,-3.3)--(0,3.4) node[above,font=\small]{$y$};
+    \draw[gray,dashed,line width=0.6pt] (0,0)--(30:1.8);
+    \draw[gray,dashed,line width=0.6pt] (0,0)--(120:3.0);
+    \draw[gray,dashed,line width=0.6pt] (0,0)--(240:3.0);
+    \draw[orange!75!black,line width=2.2pt,postaction={decorate},
+          decoration={markings, mark=at position 0.65 with {\arrow[violet,scale=1.1]{>}}}]
+          (0:1.8) arc[start angle=0, end angle=30, radius=1.8];
+    \node[violet,font=\small] at (18:2.3){$I_1$};
+    \node[font=\footnotesize] at (1.25,-0.3){$R_1$};
+    \draw[orange!75!black,line width=2.2pt,postaction={decorate},
+          decoration={markings, mark=at position 0.5 with {\arrow[violet,scale=1.1]{>}}}]
+          (240:3.0) arc[start angle=240, end angle=120, radius=3.0];
+    \node[violet,font=\small] at (172:3.45){$I_2$};
+    \node[font=\footnotesize,left] at (120:2.0){$R_2$};
+    \draw[line width=0.6pt] (0:0.7) arc[start angle=0, end angle=30, radius=0.7];
+    \node[font=\scriptsize] at (15:1.08){$30^\circ$};
+    \draw[line width=0.6pt] (120:0.7) arc[start angle=120, end angle=240, radius=0.7];
+    \node[font=\scriptsize] at (208:1.45){$120^\circ$};
+    \fill (0,0) circle (2pt);
+    \node[below left,font=\small] at (0,0){$O$};
+    \draw[line width=0.6pt,fill=white] (2.6,2.8) circle (0.1); \fill (2.6,2.8) circle (0.03);
+    \node[right,font=\footnotesize] at (2.7,2.8){$z$};
+\end{tikzpicture}\\[2pt]
+{\footnotesize Figura 2}
+\end{center}
+
+\subsection*{Datos}
+\[
+    R_1 = 0{,}06\ [\text{m}],\ \ \theta_1 = 30^\circ = \frac{\pi}{6},\ \ I_1 = 4\ [\text{A}];\qquad
+    R_2 = 0{,}10\ [\text{m}],\ \ \theta_2 = 120^\circ = \frac{2\pi}{3},\ \ I_2 = 3\ [\text{A}]
+\]
+
+\subsection*{Parte (a) -- Campo de un arco en su centro (Biot-Savart)}
+
+\noindent\textbf{Ley de Biot-Savart} para el punto $P$ = origen:
+\[
+    d\vec{B} = \frac{\mu_0 I}{4\pi}\,\frac{d\vec{\ell}\times(\vec{r}_P - \vec{r}_I)}{|\vec{r}_P - \vec{r}_I|^3}
+\]
+Para un arco de radio $R$ centrado en el origen, parametrizado por el \'angulo $\varphi$:
+\begin{align*}
+    \vec{r}_I &= R\cos\varphi\,\hat{\imath} + R\sin\varphi\,\hat{\jmath},\qquad
+    \vec{r}_P = \vec{0}\;\Rightarrow\;
+    \vec{r}_P - \vec{r}_I = -R\cos\varphi\,\hat{\imath} - R\sin\varphi\,\hat{\jmath},\qquad
+    |\vec{r}_P - \vec{r}_I| = R\\[3pt]
+    d\vec{\ell} &= \frac{d\vec{r}_I}{d\varphi}\,d\varphi
+                 = \left(-R\sin\varphi\,\hat{\imath} + R\cos\varphi\,\hat{\jmath}\right)d\varphi
+\end{align*}
+Producto cruz, desarrollado t\'ermino a t\'ermino:
+\begin{align*}
+    d\vec{\ell}\times(\vec{r}_P-\vec{r}_I)
+    &= R^2\,d\varphi\,\Bigl[(-\sin\varphi)(-\cos\varphi)\,(\hat{\imath}\times\hat{\imath})
+       + (-\sin\varphi)(-\sin\varphi)\,(\hat{\imath}\times\hat{\jmath})\\
+    &\qquad\qquad + (\cos\varphi)(-\cos\varphi)\,(\hat{\jmath}\times\hat{\imath})
+       + (\cos\varphi)(-\sin\varphi)\,(\hat{\jmath}\times\hat{\jmath})\Bigr]\\[3pt]
+    &= R^2\,d\varphi\,\bigl[\,0 + \sin^2\varphi\,\hat{k} + \cos^2\varphi\,\hat{k} + 0\,\bigr]
+     = R^2\,d\varphi\,\hat{k}
+\end{align*}
+Por lo tanto:
+\[
+    d\vec{B} = \frac{\mu_0 I}{4\pi}\,\frac{R^2\,d\varphi}{R^3}\,\hat{k}
+    \qquad\Longrightarrow\qquad
+    \vec{B} = \frac{\mu_0 I}{4\pi R}\int_{\varphi_i}^{\varphi_f} d\varphi\;\hat{k}
+    = \frac{\mu_0 I}{4\pi R}\,(\varphi_f - \varphi_i)\,\hat{k}
+\]
+El signo de $(\varphi_f - \varphi_i)$ lo fija el sentido de la corriente: \textbf{antihorario}
+($\varphi$ crece) $\Rightarrow +\hat{k}$; \textbf{horario} ($\varphi$ decrece) $\Rightarrow -\hat{k}$.
+Esto coincide con la regla de la mano derecha (dedos en el sentido de $I$, pulgar indica $\vec{B}$ en
+el centro).
+
+\medskip
+\noindent\textbf{Arco 1} (antihorario, de $\varphi_i = 0$ a $\varphi_f = \pi/6$):
+\begin{align*}
+    \vec{B}_1 &= \frac{\mu_0 I_1}{4\pi R_1}\left(\frac{\pi}{6} - 0\right)\hat{k}
+    = \frac{(10^{-7})(4)}{0{,}06}\cdot\frac{\pi}{6}\,\hat{k}
+\end{align*}
+\[
+    \boxed{\vec{B}_1 = 3{,}49\times10^{-6}\,\hat{k}\ [\text{T}]\quad(\text{sale de la p\'agina})}
+\]
+
+\noindent\textbf{Arco 2} (horario, de $\varphi_i = 4\pi/3$ a $\varphi_f = 2\pi/3$):
+\begin{align*}
+    \vec{B}_2 &= \frac{\mu_0 I_2}{4\pi R_2}\left(\frac{2\pi}{3} - \frac{4\pi}{3}\right)\hat{k}
+    = -\,\frac{(10^{-7})(3)}{0{,}10}\cdot\frac{2\pi}{3}\,\hat{k}
+\end{align*}
+\[
+    \boxed{\vec{B}_2 = -6{,}28\times10^{-6}\,\hat{k}\ [\text{T}]\quad(\text{entra a la p\'agina})}
+\]
+
+\subsection*{Parte (b) -- Campo neto en el origen}
+\[
+    \vec{B}_O = \vec{B}_1 + \vec{B}_2 = (3{,}49 - 6{,}28)\times10^{-6}\,\hat{k}
+\]
+\[
+    \boxed{\vec{B}_O = -2{,}79\times10^{-6}\,\hat{k}\ [\text{T}]\quad\text{(direcci\'on } -z\text{, entrando a la p\'agina)}}
+\]
+Aunque el arco 2 est\'a m\'as lejos, domina porque subtiende un \'angulo cuatro veces mayor.
+
+\newpage
+%========================================================
+% PROBLEMA 3
+%========================================================
+\section*{Problema 3 -- Campo de dos cables perpendiculares a la hoja}
+
+\subsection*{Enunciado}
+
+Dos cables rectos muy largos y perpendiculares al plano de la hoja est\'an separados $d = 5$ [cm]
+(Fig.\ 3). El cable 1 conduce $I_1 = 6$ [A] \textbf{entrando} a la hoja y el cable 2 conduce
+$I_2 = 8$ [A] \textbf{saliendo} de la hoja. El punto $P$ est\'a a $3$ [cm] del cable 1 y a $4$ [cm]
+del cable 2. Determine: (a) con la ley de Amp\`ere, la magnitud del campo de cada cable en $P$;
+(b) con la regla de la mano derecha, la direcci\'on de cada campo en $P$, en t\'erminos de
+$\hat{\imath}$ y $\hat{\jmath}$; (c) el campo neto en $P$, su magnitud y su \'angulo con el eje $x$.
+
+\subsection*{Geometr\'ia}
+
+Como $3^2 + 4^2 = 5^2$, el tri\'angulo formado por los cables y $P$ es \textbf{rect\'angulo en $P$}.
+Con el cable 1 en el origen y el cable 2 en $(5;0)$ [cm], el \'angulo $\alpha$ en el cable 1 cumple
+$\cos\alpha = 3/5$ y $\sin\alpha = 4/5$, de modo que
+\[
+    \vec{r}_P = 3\cos\alpha\,\hat{\imath} + 3\sin\alpha\,\hat{\jmath} = 1{,}8\,\hat{\imath} + 2{,}4\,\hat{\jmath}\ [\text{cm}]
+\]
+Vectores unitarios desde cada cable hacia $P$:
+\[
+    \hat{u}_{r1} = \frac{(1{,}8;\ 2{,}4)}{3} = 0{,}6\,\hat{\imath} + 0{,}8\,\hat{\jmath},\qquad
+    \hat{u}_{r2} = \frac{(1{,}8-5;\ 2{,}4)}{4} = -0{,}8\,\hat{\imath} + 0{,}6\,\hat{\jmath}
+\]
+
+\noindent
+\begin{minipage}[c]{0.50\textwidth}
+\centering
+\begin{tikzpicture}[scale=1.0, >=Stealth, line width=0.9pt]
+    \draw[gray,dashed,line width=0.7pt] (0,0)--(1.8,2.4)--(5,0);
+    \draw[<->,gray,line width=0.6pt] (0,-0.5)--(5,-0.5);
+    \node[below,font=\footnotesize,gray] at (2.5,-0.5){$d = 5$ cm};
+    \node[font=\footnotesize,gray,left] at (0.5,0.95){$3$ cm};
+    \node[font=\footnotesize,gray] at (3.75,0.55){$4$ cm};
+    \draw[gray,line width=0.5pt] (0.7,0) arc[start angle=0, end angle=53.13, radius=0.7];
+    \node[font=\scriptsize,gray] at (26:0.95){$\alpha$};
+    \cruz[orange!75!black]{0,0}
+    \punto[orange!75!black]{5,0}
+    \node[below left,font=\small] at (-0.1,-0.05){$I_1$};
+    \node[below right,font=\small] at (5.1,-0.05){$I_2$};
+    % campos en P (escala: 4e-5 T -> 1,2 unidades)
+    \draw[->,red,line width=1.4pt] (1.8,2.4)--++(0.96,-0.72);
+    \node[red,above right,font=\small] at (2.6,1.85){$\vec{B}_1$};
+    \draw[->,blue,line width=1.4pt] (1.8,2.4)--++(-0.72,-0.96);
+    \node[blue,above left,font=\small] at (1.35,2.05){$\vec{B}_2$};
+    \draw[->,green!50!black,line width=1.6pt] (1.8,2.4)--++(0.24,-1.68);
+    \node[green!50!black,right,font=\small] at (2.0,0.85){$\vec{B}_P$};
+    \fill (1.8,2.4) circle (2pt);
+    \node[above,font=\small] at (1.8,2.45){$P$};
+    \ejesxyz{5.6,1.8}
+\end{tikzpicture}\\[2pt]
+{\footnotesize Figura 3 (con los campos en $P$)}
+\end{minipage}%
+\hfill
+\begin{minipage}[c]{0.46\textwidth}
+\textbf{Datos:}
+\[
+    I_1 = 6\ [\text{A}]\ (\otimes,\ -\hat{k}),\qquad r_1 = 0{,}03\ [\text{m}]
+\]
+\[
+    I_2 = 8\ [\text{A}]\ (\odot,\ +\hat{k}),\qquad r_2 = 0{,}04\ [\text{m}]
+\]
+\smallskip
+Cada campo es \textbf{tangente} a la circunferencia centrada en su cable que pasa por $P$, es decir,
+perpendicular a $\hat{u}_r$.
+\end{minipage}
+
+\subsection*{Parte (a) -- Magnitudes (ley de Amp\`ere)}
+\[
+    B_1 = \frac{\mu_0 I_1}{2\pi r_1} = \frac{(2\times10^{-7})(6)}{0{,}03} = 4{,}0\times10^{-5}\ [\text{T}],
+    \qquad
+    B_2 = \frac{\mu_0 I_2}{2\pi r_2} = \frac{(2\times10^{-7})(8)}{0{,}04} = 4{,}0\times10^{-5}\ [\text{T}]
+\]
+
+\subsection*{Parte (b) -- Direcciones (regla de la mano derecha)}
+
+\noindent\textbf{Cable 1} (corriente entrando, $\hat{u}_{I1} = -\hat{k}$): con el pulgar hacia la hoja,
+los dedos giran en sentido \textbf{horario}. Vectorialmente:
+\begin{align*}
+    \hat{u}_{B1} &= \hat{u}_{I1}\times\hat{u}_{r1} = (-\hat{k})\times(0{,}6\,\hat{\imath} + 0{,}8\,\hat{\jmath})
+    = -0{,}6\,(\hat{k}\times\hat{\imath}) - 0{,}8\,(\hat{k}\times\hat{\jmath})
+    = -0{,}6\,\hat{\jmath} + 0{,}8\,\hat{\imath}
+\end{align*}
+\[
+    \boxed{\vec{B}_1 = 4{,}0\times10^{-5}\,(0{,}8\,\hat{\imath} - 0{,}6\,\hat{\jmath})
+    = 3{,}2\times10^{-5}\,\hat{\imath} - 2{,}4\times10^{-5}\,\hat{\jmath}\ [\text{T}]}
+\]
+
+\noindent\textbf{Cable 2} (corriente saliendo, $\hat{u}_{I2} = +\hat{k}$): los dedos giran en sentido
+\textbf{antihorario}. Vectorialmente:
+\begin{align*}
+    \hat{u}_{B2} &= \hat{u}_{I2}\times\hat{u}_{r2} = \hat{k}\times(-0{,}8\,\hat{\imath} + 0{,}6\,\hat{\jmath})
+    = -0{,}8\,(\hat{k}\times\hat{\imath}) + 0{,}6\,(\hat{k}\times\hat{\jmath})
+    = -0{,}8\,\hat{\jmath} - 0{,}6\,\hat{\imath}
+\end{align*}
+\[
+    \boxed{\vec{B}_2 = 4{,}0\times10^{-5}\,(-0{,}6\,\hat{\imath} - 0{,}8\,\hat{\jmath})
+    = -2{,}4\times10^{-5}\,\hat{\imath} - 3{,}2\times10^{-5}\,\hat{\jmath}\ [\text{T}]}
+\]
+\noindent Verificaci\'on de tangencia: $\hat{u}_{B1}\cdot\hat{u}_{r1} = (0{,}8)(0{,}6) + (-0{,}6)(0{,}8) = 0$
+y $\hat{u}_{B2}\cdot\hat{u}_{r2} = (-0{,}6)(-0{,}8) + (-0{,}8)(0{,}6) = 0$. Adem\'as, como el
+tri\'angulo es rect\'angulo en $P$, $\vec{B}_1\perp\vec{B}_2$.
+
+\subsection*{Parte (c) -- Campo neto en $P$}
+\begin{align*}
+    \vec{B}_P &= \vec{B}_1 + \vec{B}_2
+    = (3{,}2 - 2{,}4)\times10^{-5}\,\hat{\imath} + (-2{,}4 - 3{,}2)\times10^{-5}\,\hat{\jmath}
+\end{align*}
+\[
+    \boxed{\vec{B}_P = 8{,}0\times10^{-6}\,\hat{\imath} - 5{,}6\times10^{-5}\,\hat{\jmath}\ [\text{T}]}
+\]
+\begin{align*}
+    |\vec{B}_P| &= \sqrt{(8{,}0\times10^{-6})^2 + (5{,}6\times10^{-5})^2}
+    = 5{,}66\times10^{-5}\ [\text{T}]
+    \qquad\left(=\sqrt{B_1^2 + B_2^2},\ \text{pues } \vec{B}_1\perp\vec{B}_2\right)\\[4pt]
+    \theta &= \arctan\!\left(\frac{-5{,}6\times10^{-5}}{8{,}0\times10^{-6}}\right) = -81{,}9^\circ
+\end{align*}
+\[
+    \boxed{|\vec{B}_P| = 5{,}66\times10^{-5}\ [\text{T}],\quad \theta = -81{,}9^\circ
+    \ \text{(bajo el eje } +x\text{, en el cuarto cuadrante)}}
+\]
+
+\newpage
+%========================================================
+% PROBLEMA 4
+%========================================================
+\section*{Problema 4 -- Solenoide con corriente variable y dos bobinas coaxiales}
+
+\subsection*{Enunciado}
+
+Un solenoide muy largo tiene $n = 4000$ [vueltas/m], radio $R = 3$ [cm] y conduce una corriente
+$I(t) = 3\sqrt{t}$ [A]. Dos bobinas son coaxiales con el solenoide (Fig.\ 4): una
+\textbf{interior} ($N_1 = 150$ vueltas, $r_1 = 2$ [cm], $R_1 = 0{,}5$ [$\Omega$]) y una
+\textbf{exterior} ($N_2 = 100$ vueltas, $r_2 = 5$ [cm], $R_2 = 1{,}2$ [$\Omega$]). Determine:
+(a) el campo en el interior del solenoide en $t = 4$ [s]; (b) el flujo a trav\'es de una vuelta de
+cada bobina en funci\'on del tiempo; (c) la fem y la corriente inducida en cada bobina en $t = 4$ [s];
+(d) con la ley de Lenz, el sentido de cada corriente inducida respecto de la del solenoide.
+
+\begin{center}
+\begin{tikzpicture}[scale=0.85, >=Stealth, line width=0.9pt]
+    \begin{scope}
+        \foreach \x in {-0.45,0,0.45}{
+            \draw[green!50!black,line width=1.1pt] (\x,1.7) arc[start angle=90, end angle=-90,
+                  x radius=0.22, y radius=1.7];}
+        \foreach \x in {-2.55,-2.25,...,2.6}{
+            \draw[blue!70!black,line width=0.6pt] (\x,0) ellipse[x radius=0.1, y radius=1.0];}
+        \foreach \x in {-0.3,0,0.3}{
+            \draw[red!80!black,line width=1.3pt] (\x+0.02,0) ellipse[x radius=0.08, y radius=0.67];}
+        \foreach \x in {-0.45,0,0.45}{
+            \draw[green!50!black,line width=1.1pt] (\x,-1.7) arc[start angle=-90, end angle=-270,
+                  x radius=0.22, y radius=1.7];}
+        \draw[gray,dash dot,line width=0.5pt] (-3.1,0)--(3.2,0);
+        \draw[->,violet,line width=1.2pt] (-3.3,-1.0)--(-2.7,-1.0);
+        \node[violet,left,font=\small] at (-3.3,-1.0){$I(t)$};
+        \node[blue!70!black,font=\footnotesize] at (-1.6,1.35){solenoide};
+        \draw[red!80!black,line width=0.5pt] (0.35,-0.45)--(1.1,-1.95);
+        \node[red!80!black,font=\footnotesize,below] at (1.1,-1.95){$N_1$};
+        \node[green!50!black,font=\footnotesize] at (1.15,1.85){$N_2$};
+        \node[font=\footnotesize] at (-1.2,-2.25){Vista lateral};
+    \end{scope}
+    \begin{scope}[shift={(6.6,0)}]
+        \draw[green!50!black,line width=1.3pt] (0,0) circle (1.7);
+        \draw[blue!70!black,line width=1.3pt,postaction={decorate},
+              decoration={markings, mark=at position 0.1 with {\arrow[violet,scale=1.2]{>}}}]
+              (0,0) circle (1.0);
+        \draw[red!80!black,line width=1.3pt] (0,0) circle (0.67);
+        \fill (0,0) circle (1.5pt);
+        \draw[->,line width=0.6pt] (0,0)--(-60:0.67);  \node[font=\scriptsize] at (-35:0.45){$r_1$};
+        \draw[->,line width=0.6pt] (0,0)--(160:1.0);   \node[font=\scriptsize,above] at (160:0.62){$R$};
+        \draw[->,line width=0.6pt] (0,0)--(215:1.7);   \node[font=\scriptsize] at (225:1.3){$r_2$};
+        \node[violet,font=\small] at (52:1.32){$I$};
+        \node[font=\footnotesize,align=center] at (0,-2.25){Vista frontal\\(corriente antihoraria)};
+    \end{scope}
+\end{tikzpicture}\\[2pt]
+{\footnotesize Figura 4}
+\end{center}
+
+\subsection*{Datos}
+\[
+    n = 4000\ [\text{m}^{-1}],\quad R = 0{,}03\ [\text{m}],\quad I(t) = 3\sqrt{t}\ [\text{A}]
+\]
+\[
+    \mu_0 n = (4\pi\times10^{-7})(4000) = 5{,}027\times10^{-3}\ [\text{T/A}]
+\]
+\[
+    N_1 = 150,\ r_1 = 0{,}02\ [\text{m}],\ R_1 = 0{,}5\ [\Omega];\qquad
+    N_2 = 100,\ r_2 = 0{,}05\ [\text{m}],\ R_2 = 1{,}2\ [\Omega]
+\]
+
+\subsection*{Parte (a) -- Campo en el interior del solenoide}
+\[
+    B(t) = \mu_0\,n\,I(t) = (5{,}027\times10^{-3})(3\sqrt{t}) = 1{,}508\times10^{-2}\sqrt{t}\ [\text{T}]
+\]
+En $t = 4$ [s]: $I(4) = 3\sqrt{4} = 6$ [A], luego
+\[
+    \boxed{B(4) = (5{,}027\times10^{-3})(6) = 3{,}02\times10^{-2}\ [\text{T}]}
+\]
+El campo es uniforme en el interior, paralelo al eje, y pr\'acticamente nulo en el exterior del
+solenoide.
+
+\subsection*{Parte (b) -- Flujo a trav\'es de una vuelta de cada bobina}
+
+\noindent\textbf{Bobina interior} ($r_1 < R$): toda su \'area est\'a dentro del solenoide.
+\begin{align*}
+    \Phi_1(t) &= B(t)\,\pi r_1^2 = (1{,}508\times10^{-2}\sqrt{t})\,\pi(0{,}02)^2
+\end{align*}
+\[
+    \boxed{\Phi_1(t) = 1{,}895\times10^{-5}\sqrt{t}\ [\text{Wb}]}
+\]
+
+\noindent\textbf{Bobina exterior} ($r_2 > R$): aunque su \'area es $\pi r_2^2$, el campo s\'olo existe
+dentro del solenoide ($B\approx 0$ para $R < r < r_2$). Por eso el \'area efectiva es la del
+solenoide, $\pi R^2$:
+\begin{align*}
+    \Phi_2(t) &= B(t)\,\pi R^2 = (1{,}508\times10^{-2}\sqrt{t})\,\pi(0{,}03)^2
+\end{align*}
+\[
+    \boxed{\Phi_2(t) = 4{,}264\times10^{-5}\sqrt{t}\ [\text{Wb}]}
+\]
+
+\subsection*{Parte (c) -- Fem y corriente inducida en $t = 4$ [s]}
+
+\noindent Ley de Faraday para una bobina de $N$ vueltas, con
+$\dfrac{d}{dt}\sqrt{t} = \dfrac{1}{2\sqrt{t}}$:
+\[
+    \varepsilon = -N\,\frac{d\Phi}{dt},\qquad
+    \left.\frac{d\sqrt{t}}{dt}\right|_{t=4} = \frac{1}{2\sqrt{4}} = 0{,}25\ [\text{s}^{-1/2}]
+\]
+
+\noindent\textbf{Bobina interior:}
+\begin{align*}
+    \varepsilon_1 &= -N_1\,\frac{d\Phi_1}{dt} = -(150)(1{,}895\times10^{-5})(0{,}25)
+    = -7{,}11\times10^{-4}\ [\text{V}]\\[4pt]
+    i_1 &= \frac{|\varepsilon_1|}{R_1} = \frac{7{,}11\times10^{-4}}{0{,}5}
+\end{align*}
+\[
+    \boxed{|\varepsilon_1| = 0{,}711\ [\text{mV}],\qquad i_1 = 1{,}42\ [\text{mA}]}
+\]
+
+\noindent\textbf{Bobina exterior:}
+\begin{align*}
+    \varepsilon_2 &= -N_2\,\frac{d\Phi_2}{dt} = -(100)(4{,}264\times10^{-5})(0{,}25)
+    = -1{,}07\times10^{-3}\ [\text{V}]\\[4pt]
+    i_2 &= \frac{|\varepsilon_2|}{R_2} = \frac{1{,}066\times10^{-3}}{1{,}2}
+\end{align*}
+\[
+    \boxed{|\varepsilon_2| = 1{,}07\ [\text{mV}],\qquad i_2 = 0{,}888\ [\text{mA}]}
+\]
+
+\subsection*{Parte (d) -- Sentido de las corrientes inducidas (ley de Lenz)}
+
+La corriente $I(t) = 3\sqrt{t}$ \textbf{crece} con el tiempo, por lo que el campo del solenoide y el
+flujo a trav\'es de ambas bobinas \textbf{aumentan}. Seg\'un la ley de Lenz, la corriente inducida en
+cada bobina crea un campo que se \textbf{opone al aumento} del flujo, es decir, un campo opuesto al
+del solenoide en su interior. Para ello debe circular en sentido \textbf{opuesto} a la corriente del
+solenoide:
+\begin{center}
+\fbox{\parbox{0.85\textwidth}{\centering En ambas bobinas la corriente inducida circula en sentido
+\textbf{opuesto} a la del solenoide (horario en la vista frontal).}}
+\end{center}
+
+\newpage
+%========================================================
+% PROBLEMA 5
+%========================================================
+\section*{Problema 5 -- Bobina rectangular que gira en un campo uniforme}
+
+\subsection*{Enunciado}
+
+Una bobina rectangular de $N = 50$ vueltas y lados $a = 20$ [cm] y $b = 15$ [cm] gira con rapidez
+angular constante $\omega = 30$ [rad/s] alrededor de un eje perpendicular a un campo magn\'etico
+uniforme $\vec{B}$ de magnitud desconocida (Fig.\ 5). La resistencia total de la bobina es
+$R = 12$ [$\Omega$] y la corriente inducida m\'axima es $I_{\text{m\'ax}} = 0{,}45$ [A]. Determine:
+(a) la fem inducida m\'axima; (b) usando la ley de Faraday, la magnitud de $B$; (c) las expresiones
+de $\Phi_B(t)$ a trav\'es de una vuelta y de $\varepsilon(t)$, si en $t = 0$ el plano de la bobina es
+perpendicular a $\vec{B}$.
+
+\begin{center}
+\begin{tikzpicture}[scale=0.85, >=Stealth, line width=0.9pt]
+    \foreach \y in {-1.8,-0.9,0,0.9,1.8}{
+        \draw[->,blue!70!black,line width=0.8pt] (-3.2,\y)--(3.4,\y);}
+    \node[blue!70!black,right,font=\small] at (3.4,1.8){$\vec{B}$};
+    \draw[gray,dash dot,line width=0.7pt] (0,-2.5)--(0,2.6);
+    \draw[orange!75!black,line width=2.2pt,fill=orange!12,fill opacity=0.85]
+          (-1.1,-1.25)--(1.1,-0.95)--(1.1,1.45)--(-1.1,1.15)--cycle;
+    \draw[gray,dash dot,line width=0.7pt] (0,-1.1)--(0,1.3);
+    \node[font=\small] at (1.4,0.25){$a$};
+    \node[font=\small] at (0.2,-1.45){$b$};
+    \draw[->,line width=1pt] (0.55,2.3) arc[start angle=-30, end angle=210, x radius=0.6, y radius=0.2];
+    \node[font=\small] at (1.05,2.55){$\omega$};
+\end{tikzpicture}\\[2pt]
+{\footnotesize Figura 5}
+\end{center}
+
+\subsection*{Datos}
+\[
+    N = 50,\quad A = a\,b = (0{,}20)(0{,}15) = 3{,}0\times10^{-2}\ [\text{m}^2]
+\]
+\[
+    \omega = 30\ [\text{rad/s}],\quad R = 12\ [\Omega],\quad I_{\text{m\'ax}} = 0{,}45\ [\text{A}]
+\]
+
+\subsection*{Parte (a) -- Fem inducida m\'axima}
+
+Por la ley de Ohm, la fem y la corriente alcanzan su m\'aximo en el mismo instante:
+\[
+    \varepsilon_{\text{m\'ax}} = I_{\text{m\'ax}}\,R = (0{,}45)(12)
+    \qquad\Longrightarrow\qquad
+    \boxed{\varepsilon_{\text{m\'ax}} = 5{,}4\ [\text{V}]}
+\]
+
+\subsection*{Parte (b) -- Magnitud del campo magn\'etico (ley de Faraday)}
+
+Sea $\theta = \omega t$ el \'angulo entre el vector normal $\hat{n}$ de la bobina y $\vec{B}$. El
+flujo a trav\'es de una vuelta es
+\[
+    \Phi_B(t) = \vec{B}\cdot\vec{A} = B\,A\cos(\omega t)
+\]
+y la ley de Faraday para $N$ vueltas da
+\begin{align*}
+    \varepsilon(t) &= -N\,\frac{d\Phi_B}{dt} = -N\,B\,A\,\frac{d}{dt}\cos(\omega t)
+    = N\,B\,A\,\omega\,\sin(\omega t)
+\end{align*}
+La fem es m\'axima cuando $\sin(\omega t) = 1$ (plano de la bobina paralelo a $\vec{B}$):
+\[
+    \varepsilon_{\text{m\'ax}} = N\,B\,A\,\omega
+    \qquad\Longrightarrow\qquad
+    B = \frac{\varepsilon_{\text{m\'ax}}}{N\,A\,\omega} = \frac{5{,}4}{(50)(3{,}0\times10^{-2})(30)}
+\]
+\[
+    \boxed{B = 0{,}12\ [\text{T}]}
+\]
+
+\subsection*{Parte (c) -- Flujo y fem en funci\'on del tiempo}
+
+Como en $t = 0$ el plano de la bobina es perpendicular a $\vec{B}$, el vector normal es paralelo a
+$\vec{B}$ y el flujo es m\'aximo; por eso se usa $\cos(\omega t)$:
+\[
+    \Phi_{\text{m\'ax}} = B\,A = (0{,}12)(3{,}0\times10^{-2}) = 3{,}6\times10^{-3}\ [\text{Wb}]
+\]
+\[
+    \boxed{\Phi_B(t) = 3{,}6\times10^{-3}\cos(30\,t)\ [\text{Wb}],\qquad
+    \varepsilon(t) = 5{,}4\,\sin(30\,t)\ [\text{V}]}
+\]
+\noindent Verificaci\'on: $N\,\Phi_{\text{m\'ax}}\,\omega = (50)(3{,}6\times10^{-3})(30) = 5{,}4$ [V]
+$= \varepsilon_{\text{m\'ax}}$.
+
+%========================================================
+% RESUMEN
+%========================================================
+\section*{Resumen de resultados}
+
+\begin{center}
+\small
+\renewcommand{\arraystretch}{1.35}
+\begin{tabular}{|c|l|l|}
+\hline
+\textbf{Problema} & \textbf{Magnitud} & \textbf{Resultado} \\
+\hline
+1 & $\vec{F}_1/l$ & $-2{,}48\times10^{-5}\,\hat{\imath}$ [N/m] \\
+  & $\vec{F}_2/l$ & $4{,}0\times10^{-5}\,\hat{\imath}$ [N/m] \\
+  & $\vec{F}_3/l$ & $-1{,}52\times10^{-5}\,\hat{\imath}$ [N/m] \\
+\hline
+2 & $\vec{B}_1$;\ $\vec{B}_2$ & $3{,}49\times10^{-6}\,\hat{k}$;\ $-6{,}28\times10^{-6}\,\hat{k}$ [T] \\
+  & $\vec{B}_O$ & $-2{,}79\times10^{-6}\,\hat{k}$ [T] (direcci\'on $-z$) \\
+\hline
+3 & $\vec{B}_P$ & $8{,}0\times10^{-6}\,\hat{\imath} - 5{,}6\times10^{-5}\,\hat{\jmath}$ [T] \\
+  & $|\vec{B}_P|$;\ $\theta$ & $5{,}66\times10^{-5}$ [T];\ $-81{,}9^\circ$ \\
+\hline
+4 & $B(4)$ & $3{,}02\times10^{-2}$ [T] \\
+  & $\Phi_1(t)$;\ $\Phi_2(t)$ & $1{,}895\times10^{-5}\sqrt{t}$;\ $4{,}264\times10^{-5}\sqrt{t}$ [Wb] \\
+  & $|\varepsilon_1|$;\ $i_1$ & $0{,}711$ [mV];\ $1{,}42$ [mA] \\
+  & $|\varepsilon_2|$;\ $i_2$ & $1{,}07$ [mV];\ $0{,}888$ [mA] \\
+  & Lenz & ambas corrientes inducidas opuestas a $I$ \\
+\hline
+5 & $\varepsilon_{\text{m\'ax}}$;\ $B$ & $5{,}4$ [V];\ $0{,}12$ [T] \\
+  & $\Phi_B(t)$;\ $\varepsilon(t)$ & $3{,}6\times10^{-3}\cos(30t)$ [Wb];\ $5{,}4\sin(30t)$ [V] \\
+\hline
+\end{tabular}
+\end{center}
+
+\end{document}
