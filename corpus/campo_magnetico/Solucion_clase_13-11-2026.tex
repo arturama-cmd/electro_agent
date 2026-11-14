@@ -1,0 +1,301 @@
+\documentclass[12pt,letterpaper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[spanish,es-noshorthands]{babel}
+\usepackage{amsmath,amssymb}
+\usepackage{graphicx}
+\usepackage{xcolor}
+\usepackage{tikz}
+\usetikzlibrary{calc,arrows.meta}
+\usepackage[top=2.5cm, bottom=4cm, left=2cm, right=2cm, footskip=40pt]{geometry}
+\usepackage{fancyhdr}
+\usepackage{lastpage}
+
+\definecolor{ubbblue}{RGB}{0,51,102}
+\definecolor{cargazul}{RGB}{40,40,210}
+
+% separaci\'on vertical entre secciones numeradas
+\newcommand{\secgap}{\vspace{0.6cm}}
+\newcommand{\eps}{\varepsilon}
+
+\pagestyle{fancy}
+\fancyhf{}
+\renewcommand{\headrulewidth}{0pt}
+\renewcommand{\footrulewidth}{0.4pt}
+\fancyfoot[L]{\raisebox{-0.5cm}{\includegraphics[height=1.2cm]{logo ubb.png}}}
+\fancyfoot[C]{%
+    \begin{minipage}[b]{8cm}\centering
+        \footnotesize\textcolor{ubbblue}{\textbf{Dr.\ Arturo Fern\'andez P\'erez}}\\
+        \scriptsize Departamento de F\'isica -- Universidad del B\'io-B\'io\\
+        \scriptsize \textit{Electro\_Asistente\_AI-UBB}\\
+        \tiny P\'agina \thepage\ de \pageref{LastPage}
+    \end{minipage}}
+\fancyfoot[R]{\raisebox{-0.5cm}{\includegraphics[height=1.2cm]{logo dfis.png}}}
+\fancypagestyle{plain}{%
+    \fancyhf{}
+    \renewcommand{\headrulewidth}{0pt}
+    \renewcommand{\footrulewidth}{0.4pt}
+    \fancyfoot[L]{\raisebox{-0.5cm}{\includegraphics[height=1.2cm]{logo ubb.png}}}
+    \fancyfoot[C]{%
+        \begin{minipage}[b]{8cm}\centering
+            \footnotesize\textcolor{ubbblue}{\textbf{Dr.\ Arturo Fern\'andez P\'erez}}\\
+            \scriptsize Departamento de F\'isica -- Universidad del B\'io-B\'io\\
+            \scriptsize \textit{Electro\_Asistente\_AI-UBB}\\
+            \tiny P\'agina \thepage\ de \pageref{LastPage}
+        \end{minipage}}
+    \fancyfoot[R]{\raisebox{-0.5cm}{\includegraphics[height=1.2cm]{logo dfis.png}}}
+}
+
+\begin{document}
+
+\begin{center}
+    \includegraphics[height=2cm]{logo ubb.png}\\[0.3cm]
+    {\large\textcolor{ubbblue}{\textbf{UNIVERSIDAD DEL B\'IO-B\'IO}}}\\[0.1cm]
+    {\normalsize Facultad de Ciencias -- Departamento de F\'isica}
+\end{center}
+
+\vspace{0.3cm}\hrule height 1pt\vspace{0.5cm}
+
+{\centering\Large\textbf{Problemas resueltos en la clase del 13/11/2026}\par}
+{\centering\normalsize\textit{Inducci\'on electromagn\'etica: leyes de Faraday y de Lenz}\par}
+
+\vspace{0.5cm}
+
+%========================================================
+% INTRODUCCION: FARADAY Y LENZ
+%========================================================
+\noindent\textbf{Ley de Faraday.} Cuando el flujo magn\'etico a trav\'es de un circuito cambia en el
+tiempo, se induce en \'el una fuerza electromotriz (fem). El flujo magn\'etico a trav\'es de una
+superficie $S$ es
+\[
+    \Phi = \int_S \vec{B}\cdot d\vec{S},
+\]
+y la fem inducida es igual a menos la rapidez de cambio de ese flujo:
+\[
+    \boxed{\eps = -\frac{d\Phi}{dt}}
+\]
+Si el circuito tiene $N$ vueltas, $\eps = -N\,d\Phi/dt$. El flujo puede cambiar porque cambia el
+campo $\vec{B}$, porque cambia el \'area del circuito o porque cambia la orientaci\'on entre ambos.
+Si el circuito tiene resistencia $R$, circula una corriente inducida $i_{\text{ind}} = |\eps|/R$.
+
+\medskip
+\noindent\textbf{Ley de Lenz.} El signo menos de la ley de Faraday indica el \emph{sentido} de la
+corriente inducida: esta circula de modo que el campo magn\'etico que ella misma produce se
+\textbf{opone al cambio} de flujo que la origin\'o.
+\begin{itemize}\setlength\itemsep{2pt}
+    \item Si el flujo \textbf{aumenta}, la corriente inducida crea un campo \emph{opuesto} al campo
+          externo (intenta disminuir el flujo).
+    \item Si el flujo \textbf{disminuye}, la corriente inducida crea un campo \emph{en el mismo
+          sentido} que el campo externo (intenta mantener el flujo).
+\end{itemize}
+
+\newpage
+
+%========================================================
+% CAMPO DEL ALAMBRE Y REGLA DE LA MANO DERECHA
+%========================================================
+\noindent\textbf{Direcci\'on de $\vec{B}$ de un alambre recto: regla de la mano derecha.}
+
+\noindent
+\begin{minipage}[c]{0.42\textwidth}
+\centering
+\begin{tikzpicture}[scale=1.0, >=Stealth, line width=0.9pt]
+    % alambre con corriente hacia la derecha
+    \draw[orange!75!black,line width=2pt] (-0.4,1.5)--(4.0,1.5);
+    \draw[->,line width=1.2pt] (1.4,1.5)--(2.4,1.5);
+    \node[above,font=\small] at (1.9,1.55){$I$};
+    % campo saliente sobre el alambre (puntos)
+    \foreach \x in {0.3,1.1,2.7,3.5}{
+        \draw[cargazul,line width=0.5pt] (\x,2.25) circle (0.1); \fill[cargazul] (\x,2.25) circle (0.025);}
+    \node[cargazul,font=\scriptsize,right] at (3.7,2.25){sale};
+    % campo entrante bajo el alambre (cruces)
+    \foreach \x in {0.3,1.1,1.9,2.7,3.5}{
+        \draw[cargazul,line width=0.5pt] (\x,0.75) circle (0.1);
+        \draw[cargazul,line width=0.5pt] (\x-0.07,0.68)--(\x+0.07,0.82) (\x-0.07,0.82)--(\x+0.07,0.68);}
+    \node[cargazul,font=\scriptsize,right] at (3.7,0.75){entra};
+    % lazo debajo
+    \draw[blue!60!black,dashed] (0.2,0.0) rectangle (3.6,0.5);
+    \node[font=\scriptsize] at (1.9,0.25){lazo};
+\end{tikzpicture}\\[2pt]
+{\footnotesize Campo de un alambre con corriente hacia la derecha.}
+\end{minipage}%
+\hfill
+\begin{minipage}[c]{0.55\textwidth}
+Se toma el alambre con la mano derecha, con el \textbf{pulgar} en el sentido de la corriente; los
+\textbf{dedos} se curvan en el sentido de las l\'ineas de $\vec{B}$, que son circunferencias
+conc\'entricas al alambre, de m\'odulo
+\[
+    B = \frac{\mu_0 I}{2\pi r}.
+\]
+Con la corriente hacia la derecha, los dedos \emph{salen} de la p\'agina por encima del alambre
+($\odot$) y \emph{entran} por debajo ($\otimes$). Como el lazo est\'a debajo del alambre, en toda su
+superficie el campo \textbf{entra a la p\'agina}.
+\end{minipage}
+
+\secgap
+
+%========================================================
+% PROBLEMA 1 (texto del Problema 1 de la Guia 10, clase 01/07)
+%========================================================
+\section*{1. Problema 1 (Gu\'ia 10): Flujo y fem en un lazo cercano a un alambre}
+
+\noindent Un lazo rectangular de lados $L = 1\ [\text{m}]$ (paralelo al alambre) y
+$w = 10\ [\text{cm}]$ est\'a a una distancia $h = 1\ [\text{cm}]$ de un alambre recto muy largo que
+conduce una corriente $I(t) = 3 + 10t\ [\text{A}]$. Determine el flujo magn\'etico a trav\'es del
+lazo, la fem inducida y la direcci\'on de la corriente inducida.
+
+\medskip
+
+\noindent
+\begin{minipage}[t]{0.42\textwidth}
+\centering\vspace{0pt}
+\begin{tikzpicture}[scale=1.0, >=Stealth, line width=0.9pt]
+    % alambre
+    \draw[orange!75!black,line width=2pt] (-0.6,2.6)--(3.8,2.6);
+    \draw[->,line width=1.2pt] (1.4,2.6)--(2.4,2.6);
+    \node[above,font=\small] at (1.9,2.7){$I(t)$};
+    % lazo
+    \draw[blue!60!black,line width=1.3pt] (0,0) rectangle (3.2,1.9);
+    % campo entrante (cruces)
+    \foreach \x in {0.5,1.1,1.7,2.3,2.9} \foreach \y in {0.45,1.0,1.5}
+        \draw[blue,line width=0.4pt] (\x-0.06,\y-0.06)--(\x+0.06,\y+0.06)
+                                     (\x-0.06,\y+0.06)--(\x+0.06,\y-0.06);
+    % corriente inducida (antihoraria): lado izq. baja, lado der. sube
+    \draw[->,red,line width=1pt] (0,1.5)--(0,0.95); \node[red,left,font=\footnotesize] at (-0.05,1.2){$i_{\text{ind}}$};
+    \draw[->,red,line width=1pt] (3.2,0.4)--(3.2,0.95);
+    % cotas
+    \draw[<->,gray] (3.5,2.6)--(3.5,1.9); \node[right,font=\footnotesize,gray] at (3.5,2.25){$h$};
+    \draw[<->,gray] (3.5,1.9)--(3.5,0);   \node[right,font=\footnotesize,gray] at (3.5,0.95){$w$};
+    \node[below,font=\footnotesize] at (1.6,0){$L$};
+\end{tikzpicture}\\[2pt]
+{\footnotesize Figura 1}
+\end{minipage}%
+\hfill
+\begin{minipage}[t]{0.55\textwidth}
+\vspace{0pt}
+El campo del alambre a distancia $r$ es $B=\dfrac{\mu_0 I}{2\pi r}$ (entra a la p\'agina dentro
+del lazo). Por definici\'on, $\Phi = \int_S \vec{B}\cdot d\vec{S}$; como $B$ var\'ia con $r$, se
+integra sobre franjas de \'area $d\vec{S}=L\,dr$:
+\[
+    \Phi = \int_S \vec{B}\cdot d\vec{S} = \int_{h}^{h+w}\!\frac{\mu_0 I}{2\pi r}\,L\,dr
+         = \frac{\mu_0 I L}{2\pi}\ln\!\frac{h+w}{h}
+\]
+\end{minipage}
+
+\medskip
+
+\noindent Con $\dfrac{\mu_0 L}{2\pi}\ln\dfrac{h+w}{h}
+= (2\times10^{-7})\ln\!\dfrac{0{,}11}{0{,}01} = (2\times10^{-7})\ln 11 = 4{,}80\times10^{-7}$:
+\[
+    \Phi(t) = 4{,}80\times10^{-7}\,(3+10t)
+    \;\Rightarrow\;
+    \boxed{\Phi(t) = 1{,}439\times10^{-6} + 4{,}80\times10^{-6}\,t\ [\text{Wb}]}
+\]
+\textbf{Fem inducida} (ley de Faraday):
+\[
+    \eps = -\frac{d\Phi}{dt} = -4{,}80\times10^{-6}
+    \;\Rightarrow\;
+    \boxed{\eps = -4{,}80\ [\mu\text{V}]}
+\]
+\textbf{Direcci\'on:} la corriente del alambre crece, as\'i que el flujo entrante aumenta. Por la
+ley de Lenz, la corriente inducida se opone creando flujo \emph{saliente} dentro del lazo, es decir
+circula en \textbf{sentido antihorario}.
+
+\newpage
+
+%========================================================
+% PROBLEMA 2 (variante)
+%========================================================
+\section*{2. Variante: corriente decreciente en el tiempo}
+
+\noindent El mismo lazo rectangular del problema anterior ($L = 1$ [m], $w = 10$ [cm],
+$h = 1$ [cm]) est\'a ahora junto a un alambre recto muy largo por el que circula, de
+\textbf{derecha a izquierda}, la corriente
+\[
+    I(t) = \frac{3}{(5t)^{3/2}}\ [\text{A}] \qquad (t>0,\ t\ \text{en segundos}).
+\]
+Determine el flujo magn\'etico a trav\'es del lazo, la fem inducida y la direcci\'on de la
+corriente inducida.
+
+\noindent
+\begin{minipage}[t]{0.42\textwidth}
+\centering\vspace{0pt}
+\begin{tikzpicture}[scale=1.0, >=Stealth, line width=0.9pt]
+    % alambre (corriente de derecha a izquierda)
+    \draw[orange!75!black,line width=2pt] (-0.6,2.6)--(3.8,2.6);
+    \draw[->,line width=1.2pt] (2.4,2.6)--(1.4,2.6);
+    \node[above,font=\small] at (1.9,2.7){$I(t)$};
+    % lazo
+    \draw[blue!60!black,line width=1.3pt] (0,0) rectangle (3.2,1.9);
+    % campo saliente (puntos)
+    \foreach \x in {0.5,1.1,1.7,2.3,2.9} \foreach \y in {0.45,1.0,1.5}{
+        \draw[blue,line width=0.4pt] (\x,\y) circle (0.07); \fill[blue] (\x,\y) circle (0.02);}
+    % corriente inducida (antihoraria): lado izq. baja, lado der. sube
+    \draw[->,red,line width=1pt] (0,1.5)--(0,0.95); \node[red,left,font=\footnotesize] at (-0.05,1.2){$i_{\text{ind}}$};
+    \draw[->,red,line width=1pt] (3.2,0.4)--(3.2,0.95);
+    % cotas
+    \draw[<->,gray] (3.5,2.6)--(3.5,1.9); \node[right,font=\footnotesize,gray] at (3.5,2.25){$h$};
+    \draw[<->,gray] (3.5,1.9)--(3.5,0);   \node[right,font=\footnotesize,gray] at (3.5,0.95){$w$};
+    \node[below,font=\footnotesize] at (1.6,0){$L$};
+\end{tikzpicture}\\[2pt]
+{\footnotesize Figura 2}
+\end{minipage}%
+\hfill
+\begin{minipage}[t]{0.55\textwidth}
+\vspace{0pt}
+\textbf{Direcci\'on de $\vec{B}$} (regla de la mano derecha): con el pulgar hacia la
+\emph{izquierda}, en el sentido de $I$, los dedos se curvan \emph{saliendo} de la p\'agina por debajo
+del alambre (y entrando por encima). Por lo tanto, en todo el lazo $\vec{B}$ \textbf{sale de la
+p\'agina} ($\odot$), con m\'odulo $B=\dfrac{\mu_0 I}{2\pi r}$.
+
+\smallskip
+\textbf{Flujo.} Tomando $d\vec{S}$ hacia afuera de la p\'agina (paralelo a $\vec{B}$) y franjas de
+\'area $dS = L\,dr$:
+\[
+    \Phi = \int_{h}^{h+w}\!\frac{\mu_0 I}{2\pi r}\,L\,dr
+         = \frac{\mu_0 L}{2\pi}\ln\!\frac{h+w}{h}\; I(t).
+\]
+\end{minipage}
+
+\medskip
+
+\noindent Con $\dfrac{\mu_0 L}{2\pi}\ln\dfrac{h+w}{h} = (2\times10^{-7})\ln 11 = 4{,}80\times10^{-7}$
+[Wb/A]:
+\[
+    \Phi(t) = 4{,}80\times10^{-7}\cdot\frac{3}{(5t)^{3/2}}
+    \;\Rightarrow\;
+    \boxed{\Phi(t) = \frac{1{,}439\times10^{-6}}{(5t)^{3/2}}\ [\text{Wb}]}\quad(\text{saliente})
+\]
+
+\textbf{Derivada de la corriente.} Escribiendo $I(t) = 3\,(5t)^{-3/2}$ y aplicando la regla de la
+cadena:
+\[
+    \frac{dI}{dt} = 3\left(-\frac{3}{2}\right)(5t)^{-5/2}\cdot 5 = -\frac{22{,}5}{(5t)^{5/2}}\ [\text{A/s}].
+\]
+La derivada es negativa: la corriente \textbf{disminuye} con el tiempo.
+
+\medskip
+\textbf{Fem inducida} (ley de Faraday):
+\begin{align*}
+    \eps = -\frac{d\Phi}{dt} &= -4{,}80\times10^{-7}\,\frac{dI}{dt}
+          = -4{,}80\times10^{-7}\left(-\frac{22{,}5}{(5t)^{5/2}}\right)\\
+    \Rightarrow\quad & \boxed{\eps(t) = \frac{1{,}079\times10^{-5}}{(5t)^{5/2}}\ [\text{V}]}
+\end{align*}
+Por ejemplo, en $t = 1$ [s]: $\eps = 1{,}079\times10^{-5}/5^{5/2} \approx 1{,}93\times10^{-7}$ [V]
+$= 0{,}193\ [\mu\text{V}]$.
+
+\medskip
+\textbf{Direcci\'on:} la corriente del alambre \emph{disminuye}, as\'i que el flujo \emph{saliente} a
+trav\'es del lazo \textbf{disminuye}. Por la ley de Lenz, la corriente inducida se opone a esa
+disminuci\'on creando flujo \emph{saliente} dentro del lazo; por la regla de la mano derecha (dedos en
+el sentido de $i_{\text{ind}}$, pulgar hacia afuera de la p\'agina), esto corresponde a una
+corriente en \textbf{sentido antihorario}.
+
+\medskip
+\noindent\textit{Comparaci\'on con el Problema 1:} en ambos casos la corriente inducida es
+antihoraria, pero por razones distintas. All\'a el campo \emph{entraba} al lazo y el flujo
+\emph{aumentaba}; aqu\'i el campo \emph{sale} del lazo y el flujo \emph{disminuye}. Invertir el
+sentido de la corriente del alambre y, a la vez, pasar de una corriente creciente a una decreciente
+deja el sentido de la corriente inducida sin cambios. Adem\'as, aqu\'i la fem no es constante: decae
+como $(5t)^{-5/2}$.
+
+\end{document}
