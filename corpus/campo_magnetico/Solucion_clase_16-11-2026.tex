@@ -1,0 +1,340 @@
+\documentclass[12pt,letterpaper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[spanish,es-noshorthands]{babel}
+\usepackage{amsmath,amssymb}
+\usepackage{graphicx}
+\usepackage{xcolor}
+\usepackage{tikz}
+\usetikzlibrary{calc,arrows.meta,decorations.markings,decorations.pathmorphing}
+\usepackage[top=2.5cm, bottom=2.7cm, left=2cm, right=2cm, footskip=40pt]{geometry}
+\usepackage{fancyhdr}
+\usepackage{lastpage}
+
+\definecolor{ubbblue}{RGB}{0,51,102}
+
+\pagestyle{fancy}
+\fancyhf{}
+\renewcommand{\headrulewidth}{0pt}
+\renewcommand{\footrulewidth}{0.4pt}
+\fancyfoot[L]{\raisebox{-0.5\height}{\includegraphics[height=1.1cm]{logo ubb.png}}}
+\fancyfoot[C]{%
+    \begin{minipage}[c]{8cm}\centering
+        \footnotesize\textcolor{ubbblue}{\textbf{Dr.\ Arturo Fern\'andez P\'erez}}\\
+        \scriptsize Departamento de F\'isica -- Universidad del B\'io-B\'io\\
+        \scriptsize \textit{Electro\_Asistente\_AI-UBB}\\
+        \tiny P\'agina \thepage\ de \pageref{LastPage}
+    \end{minipage}}
+\fancyfoot[R]{\raisebox{-0.5\height}{\includegraphics[height=1.1cm]{logo dfis.png}}}
+\fancypagestyle{plain}{%
+    \fancyhf{}
+    \renewcommand{\headrulewidth}{0pt}
+    \renewcommand{\footrulewidth}{0.4pt}
+    \fancyfoot[L]{\raisebox{-0.5\height}{\includegraphics[height=1.1cm]{logo ubb.png}}}
+    \fancyfoot[C]{%
+        \begin{minipage}[c]{8cm}\centering
+            \footnotesize\textcolor{ubbblue}{\textbf{Dr.\ Arturo Fern\'andez P\'erez}}\\
+            \scriptsize Departamento de F\'isica -- Universidad del B\'io-B\'io\\
+            \scriptsize \textit{Electro\_Asistente\_AI-UBB}\\
+            \tiny P\'agina \thepage\ de \pageref{LastPage}
+        \end{minipage}}
+    \fancyfoot[R]{\raisebox{-0.5\height}{\includegraphics[height=1.1cm]{logo dfis.png}}}
+}
+
+\newcommand{\eps}{\varepsilon}
+
+\begin{document}
+
+%========================================
+% ENCABEZADO INSTITUCIONAL
+%========================================
+\begin{center}
+    \includegraphics[height=2cm]{logo ubb.png}\\[0.3cm]
+    {\large\textcolor{ubbblue}{\textbf{UNIVERSIDAD DEL B\'IO-B\'IO}}}\\[0.1cm]
+    {\normalsize Facultad de Ciencias -- Departamento de F\'isica}
+\end{center}
+
+\vspace{0.3cm}
+\hrule height 1pt
+\vspace{0.5cm}
+
+{\centering\Large\textbf{Problemas Resueltos en la Clase del 16/11}\par}
+{\centering\normalsize\textit{El alternador y fuerza entre alambres paralelos}\par}
+
+\vspace{0.6cm}
+
+\section*{Problema 1: El alternador (generador de corriente alterna)}
+
+\noindent El alternador convierte energ\'ia mec\'anica en energ\'ia el\'ectrica mediante la
+\textbf{inducci\'on electromagn\'etica}. Un lazo de $N$ vueltas y \'area $A$ gira con rapidez
+angular $\omega$ dentro de un campo magn\'etico uniforme $\vec{B}$; al girar, el flujo a trav\'es
+del lazo cambia en el tiempo e induce una fem.
+
+\medskip
+
+\noindent
+\begin{minipage}[t]{0.42\textwidth}
+\centering\vspace{0pt}
+\begin{tikzpicture}[scale=1.0, >=Stealth, line width=0.9pt]
+    % lineas de campo B
+    \foreach \y in {-1.3,-0.9,...,1.5}{
+        \draw[cyan!70!black,->,line width=0.7pt] (-2.2,\y)--(2.2,\y);}
+    \node[cyan!70!black,font=\small] at (2.0,1.75){$\vec{B}$};
+    % lazo inclinado (visto de canto) a angulo theta
+    \draw[orange!85!black,line width=2pt] (-1.0,-0.75)--(1.0,0.75);
+    \draw[orange!85!black,line width=2pt] (-1.05,-0.72)--(0.95,0.78);
+    % normal
+    \draw[->,black,line width=1.1pt] (0,0)--(0.75,-1.0);
+    \node[below right,font=\footnotesize] at (0.6,-0.9){Normal};
+    % angulo theta entre normal y ... marca
+    \draw[->,gray,line width=0.8pt] (0,0)--(0.9,0); % direccion de B en el centro
+    \node[font=\footnotesize] at (0.45,-0.28){$\theta$};
+    \node[font=\footnotesize] at (1.2,1.3){$\theta=\omega t$};
+\end{tikzpicture}\\[2pt]
+{\footnotesize Lazo rotante: normal a \'angulo $\theta=\omega t$}
+\end{minipage}%
+\hfill
+\begin{minipage}[t]{0.55\textwidth}
+\vspace{0pt}
+El \'angulo entre la normal al lazo y el campo es $\theta=\omega t$ (con $\omega=2\pi f$). Por
+definici\'on, $\Phi_B = \int_S \vec{B}\cdot d\vec{S}$; con $\vec{B}$ uniforme, el flujo depende del
+\'angulo entre $\vec{B}$ y la normal:
+\[
+    \Phi_B = \int_S \vec{B}\cdot d\vec{S} = B A\cos\theta = B A\cos(\omega t)
+\]
+Aplicando la ley de Faraday a las $N$ vueltas:
+\[
+    \eps = -N\frac{d\Phi_B}{dt}
+         = -N A B\,\frac{d}{dt}\!\big(\cos\omega t\big)
+\]
+\end{minipage}
+
+\medskip
+
+\noindent Derivando:
+\[
+    \boxed{\eps(t) = N A B\,\omega\,\sin(\omega t)}
+    \qquad\Longrightarrow\qquad
+    \eps_{\max} = N A B\,\omega
+\]
+
+\noindent Por lo tanto, \textbf{la fem var\'ia sinusoidalmente en el tiempo}: un lazo que rota con
+rapidez angular constante en un campo uniforme genera un \textbf{voltaje alterno} de amplitud
+$\eps_{\max}=NAB\omega$ y frecuencia $f=\omega/2\pi$. Este es el principio de funcionamiento del
+generador de corriente alterna.
+
+\subsection*{Aplicaci\'on num\'erica}
+
+\noindent Considere un lazo con los siguientes valores:
+\[
+    A = 30\ [\text{cm}^2],\qquad \omega = 30\ [\text{rpm}],\qquad N = 1,\qquad B = 0{,}5\ [\text{T}]
+\]
+
+\noindent\textbf{Transformaci\'on de unidades.}
+
+\noindent\'Area: como $1\ [\text{cm}] = 10^{-2}\ [\text{m}]$, entonces $1\ [\text{cm}^2] = 10^{-4}\ [\text{m}^2]$:
+\[
+    A = 30\ [\text{cm}^2]\cdot\frac{10^{-4}\ [\text{m}^2]}{1\ [\text{cm}^2]} = 3{,}0\times10^{-3}\ [\text{m}^2]
+\]
+Rapidez angular: una revoluci\'on equivale a $2\pi$ [rad] y un minuto a $60$ [s]:
+\begin{align*}
+    \omega &= 30\ \frac{\text{rev}}{\text{min}}\cdot\frac{2\pi\ [\text{rad}]}{1\ [\text{rev}]}
+              \cdot\frac{1\ [\text{min}]}{60\ [\text{s}]}\\[4pt]
+           &= \frac{60\pi}{60}\ [\text{rad/s}] = \pi\ [\text{rad/s}] \approx 3{,}14\ [\text{rad/s}]
+\end{align*}
+(lo que corresponde a una frecuencia $f = \omega/2\pi = 0{,}5$ [Hz]).
+
+\medskip
+\noindent\textbf{Fem m\'axima inducida.}
+\begin{align*}
+    \eps_{\max} &= N A B\,\omega = (1)(3{,}0\times10^{-3})(0{,}5)(\pi)\\[4pt]
+                &= 1{,}5\pi\times10^{-3}\ [\text{V}]
+\end{align*}
+\[
+    \boxed{\eps_{\max} = 4{,}71\times10^{-3}\ [\text{V}] = 4{,}71\ [\text{mV}]}
+\]
+\noindent Por lo tanto, la fem inducida en funci\'on del tiempo es:
+\[
+    \boxed{\eps(t) = 4{,}71\times10^{-3}\,\sin(\pi t)\ [\text{V}]}
+\]
+
+\noindent\textbf{Gr\'afica de la fem inducida.} El per\'iodo es $T = 2\pi/\omega = 2\pi/\pi = 2$ [s].
+La fem cambia de signo cada medio per\'iodo: es un \textbf{voltaje alterno}.
+
+\begin{center}
+\begin{tikzpicture}[>=Stealth, line width=0.9pt, xscale=3.2, yscale=0.42]
+    % cuadricula suave
+    \foreach \x in {0.5,1,...,4}{\draw[gray!25,line width=0.4pt] (\x,-5.6)--(\x,5.6);}
+    \foreach \y in {-4.71,4.71}{\draw[gray!50,dashed,line width=0.5pt] (0,\y)--(4.1,\y);}
+    % ejes
+    \draw[->] (0,0)--(4.35,0) node[right,font=\small]{$t$ [s]};
+    \draw[->] (0,-5.6)--(0,6.9) node[above,font=\small]{$\eps$ [mV]};
+    % marcas eje t
+    \foreach \x/\lab in {0.5/{0{,}5},1/1,1.5/{1{,}5},2/2,2.5/{2{,}5},3/3,3.5/{3{,}5},4/4}{
+        \draw[line width=0.6pt] (\x,0.18)--(\x,-0.18);
+        \node[below,font=\footnotesize] at (\x,-5.7){$\lab$};}
+    % marcas eje eps
+    \node[left,font=\footnotesize] at (0,4.71){$4{,}71$};
+    \node[left,font=\footnotesize] at (0,-4.71){$-4{,}71$};
+    \node[left,font=\footnotesize] at (0,0){$0$};
+    % curva eps(t) = 4,71 sin(pi t) [mV]
+    \draw[red!80!black,line width=1.6pt,domain=0:4,samples=161,smooth]
+        plot (\x,{4.71*sin(180*\x)});
+    % periodo
+    \draw[<->,blue!70!black,line width=0.8pt] (0.5,5.9)--(2.5,5.9);
+    \node[blue!70!black,font=\footnotesize,fill=white,inner sep=1pt] at (1.5,5.9){$T = 2$ s};
+    % zonas positiva / negativa
+    \node[red!80!black,font=\footnotesize] at (0.5,2.3){$\eps>0$};
+    \node[red!80!black,font=\footnotesize] at (1.5,-2.3){$\eps<0$};
+\end{tikzpicture}\\[2pt]
+{\footnotesize Fem inducida $\eps(t) = 4{,}71\,\sin(\pi t)$ [mV] durante dos per\'iodos.}
+\end{center}
+
+\newpage
+
+\section*{Problema 2: Campo y fuerza entre tres alambres (Amp\`ere y $\vec{F}=I\vec{L}\times\vec{B}$)}
+
+\noindent Tres alambres rectos, muy largos y paralelos conducen corrientes uniformes. Las corrientes
+(1) y (2) \textbf{salen} del plano; la (3) \textbf{entra}. Las corrientes (2) y (3) est\'an a una
+distancia $d$ de la (1), con $\theta=60^\circ$ y $\alpha=30^\circ$. Determine: (a) el campo de (2) y
+(3) por Amp\`ere; (b) la fuerza sobre una secci\'on $L$ de la corriente (1); (c) la fuerza neta si
+$I_1=1$ [A], $I_2=I_3=2$ [A], $d=2L=20$ [cm].
+
+\medskip
+
+\noindent
+\begin{minipage}[t]{0.40\textwidth}
+\centering\vspace{0pt}
+\begin{tikzpicture}[scale=1.0, >=Stealth, line width=0.9pt]
+    \draw[->,thick] (-2.3,0)--(3,0) node[right]{$x$};
+    \draw[->,thick] (0,-1.2)--(0,2.7) node[above]{$y$};
+    % I1 en origen (sale del plano)
+    \draw[thick] (0,0) circle(0.22); \fill (0,0) circle(2pt);
+    \node[below right,font=\small] at (0.18,-0.05){$I_1$};
+    % I3 en +x (entra al plano)
+    \draw[thick] (2,0) circle(0.22);
+    \draw (1.845,-0.155)--(2.155,0.155) (1.845,0.155)--(2.155,-0.155);
+    \node[above right,font=\small] at (2.15,0.12){$I_3$};
+    % I2 arriba-izquierda (sale del plano): (-d/2, d sqrt3/2), d=2
+    \coordinate (I2) at (-1,1.732);
+    \draw[thick] (I2) circle(0.22); \fill (I2) circle(2pt);
+    \node[above left,font=\small] at (-1.1,1.83){$I_2$};
+    \draw[dashed,gray] (0,0)--(I2); \node[gray,font=\footnotesize] at (-0.68,1.05){$d$};
+    \draw[dashed,gray] (0,0)--(2,0); \node[gray,below,font=\footnotesize] at (1.0,-0.02){$d$};
+    \draw (-0.6,0) arc (180:120:0.6); \node[font=\footnotesize] at (-0.82,0.3){$\theta$};
+\end{tikzpicture}\\[2pt]
+{\footnotesize Vista de perfil (corrientes $\perp$ al plano)}
+\end{minipage}%
+\hfill
+\begin{minipage}[t]{0.57\textwidth}
+\vspace{0pt}
+\textbf{(a) Campo por la ley de Amp\`ere.} Para un alambre recto infinito, con un lazo amperiano
+circular de radio $r$ centrado en el alambre, $\vec{B}$ es tangente y de m\'odulo constante:
+\[
+    \oint \vec{B}\cdot d\vec{\ell} = B\,(2\pi r) = \mu_0 I
+    \;\Rightarrow\; B = \frac{\mu_0 I}{2\pi r}
+\]
+\end{minipage}
+
+\medskip
+
+\noindent\textbf{Signo del vector unitario angular $\hat{\varphi}$ (regla de la mano derecha).}
+El sentido de $\vec{B}$ lo fija la mano derecha: se apunta el \textbf{pulgar} en el sentido de la
+corriente y los \textbf{dedos} se curvan indicando el sentido de circulaci\'on de $\vec{B}$.
+\begin{itemize}\setlength\itemsep{1pt}
+    \item Corriente (2), que \textbf{sale} del plano ($+\hat{k}$): $\vec{B}$ circula
+          \textbf{antihorario} $\Rightarrow +\hat{\varphi}$.
+    \item Corriente (3), que \textbf{entra} al plano ($-\hat{k}$): $\vec{B}$ circula
+          \textbf{horario} $\Rightarrow -\hat{\varphi}$.
+\end{itemize}
+\[
+    \vec{B}_2 = \frac{\mu_0 I_2}{2\pi r}\,\hat{\varphi},
+    \qquad
+    \vec{B}_3 = \frac{\mu_0 I_3}{2\pi r}\,(-\hat{\varphi})
+\]
+
+\subsection*{(b) Fuerza sobre una secci\'on $L$ de la corriente (1)}
+
+\noindent\textbf{Geometr\'ia de los vectores unitarios.} En la posici\'on de la corriente (1), el
+campo $\vec{B}_2$ es \emph{perpendicular} a la recta $I_1$--$I_2$ (direcci\'on radial). Como esa
+recta forma un \'angulo $\theta=60^\circ$ con la horizontal, y $\vec{B}_2\perp$ a ella, el campo
+$\vec{B}_2$ forma con el eje $x$ el \'angulo complementario $\alpha=90^\circ-\theta=30^\circ$:
+
+\medskip
+\noindent
+\begin{minipage}[t]{0.42\textwidth}
+\centering\vspace{0pt}
+\begin{tikzpicture}[scale=1.35, >=Stealth, line width=0.9pt, font=\small]
+    % ejes
+    \draw[->,gray] (-1.4,0)--(1.9,0) node[right,black]{$x$};
+    \draw[->,gray] (0,-0.2)--(0,1.85) node[above,black]{$y$};
+    \fill (0,0) circle(1.6pt); \node[font=\footnotesize] at (-0.2,-0.28){$I_1$};
+    % recta radial a I2 (120 grados)
+    \coordinate (I2) at (120:1.75);
+    \draw[dashed,gray,line width=1pt] (0,0)--(I2);
+    \fill (I2) circle(1.6pt); \node[left,font=\footnotesize] at (I2){$I_2$};
+    \node[gray,font=\footnotesize] at (120:1.0){$d$};
+    % B2 a 30 grados (alpha)  -> tip=(1.299,0.75) para L=1.5
+    \coordinate (B2) at (1.299,0.75);
+    % B3 (verde): +j, de igual modulo que B2 (I2 = I3, misma distancia d)
+    \draw[->,green!55!black,line width=1.5pt] (0,0)--(0,1.5);
+    \node[green!55!black,right] at (0.05,1.45){$\vec{B}_3$};
+    \draw[->,red!75!black,line width=1.3pt] (0,0)--(B2); \node[red!75!black] at (1.5,0.83){$\vec{B}_2$};
+    % componentes
+    \draw[dashed,blue!55!black] (B2)--(1.299,0);
+    \draw[dashed,blue!55!black] (B2)--(0,0.75);
+    \draw[->,blue!60!black,line width=1pt] (0,0)--(1.299,0);
+    \node[below,blue!60!black,font=\footnotesize] at (0.9,-0.30){$B_2\cos\alpha$};
+    \draw[->,blue!60!black,line width=1pt] (0,0)--(0,0.75);
+    \node[blue!60!black,font=\footnotesize] at (-0.5,0.62){$B_2\sin\alpha$};
+    % angulo recto entre B2 (30) y radial (120)
+    \draw (0.173,0.1)--(0.073,0.273)--(-0.1,0.173);
+    % angulo alpha (0 a 30)
+    \draw (0.5,0) arc (0:30:0.5); \node[font=\footnotesize] at (15:0.66){$\alpha$};
+    % angulo theta (180 a 120)
+    \draw (-0.5,0) arc (180:120:0.5); \node[font=\footnotesize] at (150:0.68){$\theta$};
+\end{tikzpicture}\\[2pt]
+{\footnotesize Descomposici\'on de $\vec{B}_2$: $\alpha=90^\circ-\theta$. En verde, la direcci\'on de $\vec{B}_3$ ($+\hat{\jmath}$).}
+\end{minipage}%
+\hfill
+\begin{minipage}[t]{0.55\textwidth}
+\vspace{0pt}
+Con $\alpha=30^\circ$ ($\cos\alpha=\tfrac{\sqrt3}{2}$, $\sin\alpha=\tfrac12$), el campo de (2) en la
+posici\'on de (1) es:
+\[
+    \vec{B}_2 = \frac{\mu_0 I_2}{2\pi d}\big(\cos\alpha\,\hat{\imath}+\sin\alpha\,\hat{\jmath}\big)
+              = \frac{\mu_0 I_2}{2\pi d}\Big(\tfrac{\sqrt{3}}{2}\,\hat{\imath}+\tfrac{1}{2}\,\hat{\jmath}\Big)
+\]
+La corriente (3) est\'a sobre el eje $x$ y entra al plano; su campo en (1) apunta en $+\hat{\jmath}$:
+\[
+    \vec{B}_3 = \frac{\mu_0 I_3}{2\pi d}\,\hat{\jmath}
+\]
+\end{minipage}
+
+\medskip
+
+\noindent Con $\vec{L}=L\,\hat{k}$ (la corriente (1) sale del plano) y $\vec{F}=I_1\vec{L}\times\vec{B}$,
+usando $\hat{k}\times\hat{\imath}=\hat{\jmath}$ y $\hat{k}\times\hat{\jmath}=-\hat{\imath}$:
+\begin{align*}
+    \vec{F}_{12} &= I_1 L\,\hat{k}\times\frac{\mu_0 I_2}{2\pi d}
+        \Big(\tfrac{\sqrt{3}}{2}\hat{\imath}+\tfrac12\hat{\jmath}\Big)
+        = \frac{\mu_0 I_1 I_2 L}{2\pi d}\Big(\tfrac{\sqrt{3}}{2}\,\hat{\jmath}-\tfrac12\,\hat{\imath}\Big)\\
+    \vec{F}_{13} &= I_1 L\,\hat{k}\times\frac{\mu_0 I_3}{2\pi d}\,\hat{\jmath}
+        = \frac{\mu_0 I_1 I_3 L}{2\pi d}\,(-\hat{\imath})
+\end{align*}
+
+\subsection*{(c) Fuerza neta sobre la corriente (1)}
+
+Con $I_1=1$, $I_2=I_3=2$ [A], $L=0{,}10$ [m], $d=0{,}20$ [m], el coeficiente
+$\dfrac{\mu_0 I_1 I_2 L}{2\pi d}=\dfrac{\mu_0 I_1 I_3 L}{2\pi d}=\dfrac{\mu_0}{2\pi}$. Por
+superposici\'on:
+\begin{align*}
+    \vec{F}_1 = \vec{F}_{12}+\vec{F}_{13}
+      &= \frac{\mu_0}{2\pi}\Big(\tfrac{\sqrt{3}}{2}\,\hat{\jmath}-\tfrac12\,\hat{\imath}\Big)
+         + \frac{\mu_0}{2\pi}\,(-\hat{\imath})
+       = \frac{\mu_0}{2\pi}\Big(-\tfrac{3}{2}\,\hat{\imath}+\tfrac{\sqrt{3}}{2}\,\hat{\jmath}\Big)
+\end{align*}
+\[
+    \boxed{\vec{F}_1 = \frac{\mu_0}{4\pi}\left(-3\,\hat{\imath}+\sqrt{3}\,\hat{\jmath}\right)\ [\text{N}]}
+\]
+
+\end{document}
