@@ -1,0 +1,545 @@
+\documentclass[12pt,letterpaper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[spanish,es-noshorthands]{babel}
+\usepackage{amsmath,amssymb}
+\usepackage{graphicx}
+\usepackage{xcolor}
+\usepackage{tikz}
+\usetikzlibrary{calc,arrows.meta,decorations.markings}
+\usepackage[top=2.5cm, bottom=2.7cm, left=2cm, right=2cm, footskip=40pt]{geometry}
+\usepackage{fancyhdr}
+\usepackage{lastpage}
+
+\definecolor{ubbblue}{RGB}{0,51,102}
+\newcommand{\eps}{\varepsilon}
+\newcommand{\ptos}[1]{\textcolor{red}{\textbf{(#1 ptos)}}}
+
+% simbolos: punto (sale de la pagina) y cruz (entra a la pagina)
+\newcommand{\punto}[2][black]{%
+  \draw[#1,line width=0.8pt,fill=white] (#2) circle (0.22);
+  \fill[#1] (#2) circle (0.05);}
+\newcommand{\cruz}[2][black]{%
+  \draw[#1,line width=0.8pt,fill=white] (#2) circle (0.22);
+  \draw[#1,line width=0.8pt] ($(#2)+(-0.155,-0.155)$)--($(#2)+(0.155,0.155)$)
+        ($(#2)+(-0.155,0.155)$)--($(#2)+(0.155,-0.155)$);}
+
+\pagestyle{fancy}
+\fancyhf{}
+\renewcommand{\headrulewidth}{0pt}
+\renewcommand{\footrulewidth}{0.4pt}
+\fancyfoot[L]{\raisebox{-0.5\height}{\includegraphics[height=1.1cm]{logo ubb.png}}}
+\fancyfoot[C]{%
+    \begin{minipage}[c]{8cm}\centering
+        \footnotesize\textcolor{ubbblue}{\textbf{Dr.\ Arturo Fern\'andez P\'erez}}\\
+        \scriptsize Departamento de F\'isica -- Universidad del B\'io-B\'io\\
+        \scriptsize \textit{Electro\_Asistente\_AI-UBB}\\
+        \tiny P\'agina \thepage\ de \pageref{LastPage}
+    \end{minipage}}
+\fancyfoot[R]{\raisebox{-0.5\height}{\includegraphics[height=1.1cm]{logo dfis.png}}}
+\fancypagestyle{plain}{%
+    \fancyhf{}
+    \renewcommand{\headrulewidth}{0pt}
+    \renewcommand{\footrulewidth}{0.4pt}
+    \fancyfoot[L]{\raisebox{-0.5\height}{\includegraphics[height=1.1cm]{logo ubb.png}}}
+    \fancyfoot[C]{%
+        \begin{minipage}[c]{8cm}\centering
+            \footnotesize\textcolor{ubbblue}{\textbf{Dr.\ Arturo Fern\'andez P\'erez}}\\
+            \scriptsize Departamento de F\'isica -- Universidad del B\'io-B\'io\\
+            \scriptsize \textit{Electro\_Asistente\_AI-UBB}\\
+            \tiny P\'agina \thepage\ de \pageref{LastPage}
+        \end{minipage}}
+    \fancyfoot[R]{\raisebox{-0.5\height}{\includegraphics[height=1.1cm]{logo dfis.png}}}
+}
+
+\begin{document}
+
+%========================================
+% ENCABEZADO INSTITUCIONAL
+%========================================
+\begin{center}
+    \includegraphics[height=2cm]{logo ubb.png}\\[0.3cm]
+    {\large\textcolor{ubbblue}{\textbf{UNIVERSIDAD DEL B\'IO-B\'IO}}}\\[0.1cm]
+    {\normalsize Facultad de Ciencias -- Departamento de F\'isica}
+\end{center}
+
+\vspace{0.3cm}
+\hrule height 1pt
+\vspace{0.5cm}
+
+{\centering\Large\textbf{Problemas Resueltos en la Clase del 23/11}\par}
+{\centering\normalsize\textit{Certamen 4 Recuperativo (05/01/2026): Biot-Savart, Amp\`ere y Faraday}\par}
+
+\vspace{0.5cm}
+
+%--- recordatorio: productos cruz de unitarios ---
+\begin{center}
+\fcolorbox{ubbblue}{ubbblue!5}{%
+\begin{minipage}{0.92\textwidth}
+\centering
+\textbf{\textcolor{ubbblue}{Productos cruz de los vectores unitarios cartesianos}}\\[4pt]
+$\hat{\imath}\times\hat{\jmath}=\hat{k}$,\quad
+$\hat{\jmath}\times\hat{k}=\hat{\imath}$,\quad
+$\hat{k}\times\hat{\imath}=\hat{\jmath}$
+\qquad\qquad
+$\hat{\jmath}\times\hat{\imath}=-\hat{k}$,\quad
+$\hat{k}\times\hat{\jmath}=-\hat{\imath}$,\quad
+$\hat{\imath}\times\hat{k}=-\hat{\jmath}$\\[3pt]
+$\hat{\imath}\times\hat{\imath}=\hat{\jmath}\times\hat{\jmath}=\hat{k}\times\hat{k}=\vec{0}$
+\end{minipage}}
+\end{center}
+
+\vspace{0.2cm}
+
+%========================================================
+% PROBLEMA 1
+%========================================================
+\section*{Problema 1: Campo de dos arcos en planos perpendiculares \textcolor{red}{(22 ptos)}}
+
+\noindent En el sistema de coordenadas cartesiano de la figura se tienen dos filamentos conductores
+circulares, ambos centrados en el origen, que transportan una corriente constante $I$. El primer
+filamento es un arco de radio $R_1$ en el plano $xz$ que forma un semic\'irculo (\'angulo total
+$\pi$), por el cual circula la corriente en sentido antihorario. El segundo filamento es un arco de
+radio $R_2$ en el plano $xy$ que abarca un \'angulo $\alpha = \pi/4$, por el cual la corriente
+tambi\'en circula en sentido antihorario. Usando la ley de Biot-Savart, determine: (a) el campo en el
+origen debido al filamento $R_1$; (b) el campo en el origen debido al filamento $R_2$; (c) el campo
+total en el origen. Desprecie la contribuci\'on de los segmentos rectos.
+
+\medskip
+
+\noindent
+\begin{minipage}[c]{0.46\textwidth}
+\centering
+\begin{tikzpicture}[scale=1.05, >=Stealth, line width=0.9pt,
+                    x={(1cm,0cm)}, y={(0cm,1cm)}, z={(-0.6cm,-0.6cm)}]
+    % ejes
+    \draw[->] (0,0,0)--(2.9,0,0) node[right]{$x$};
+    \draw[->] (0,0,0)--(0,2.5,0) node[above]{$y$};
+    \draw[->] (0,0,0)--(0,0,3.1) node[below left]{$z$};
+    \draw[dashed,gray] (0,0,0)--(0,0,-2.0);
+    \node[gray,font=\footnotesize] at (0,0,-2.35){$-z$};
+    % arco R1: plano xz, de +z a -z pasando por +x
+    \draw[orange!80!black,line width=1.8pt,postaction={decorate},
+          decoration={markings, mark=at position 0.25 with {\arrow[violet,scale=1.2]{>}},
+                                mark=at position 0.75 with {\arrow[violet,scale=1.2]{>}}}]
+          plot[domain=0:180,samples=80] ({2.0*sin(\x)},0,{2.0*cos(\x)});
+    \draw[gray,line width=0.6pt] (0,0,0)--({2.0*sin(60)},0,{2.0*cos(60)});
+    \node[font=\footnotesize] at ({1.2*sin(60)},0.18,{1.2*cos(60)}){$R_1$};
+    \node[violet,font=\small] at ({2.3*sin(35)},0,{2.3*cos(35)}){$I$};
+    % arco R2: plano xy, de +y hacia -x, angulo pi/4
+    \draw[orange!80!black,line width=1.8pt,postaction={decorate},
+          decoration={markings, mark=at position 0.55 with {\arrow[violet,scale=1.2]{>}}}]
+          plot[domain=0:45,samples=40] ({-1.5*sin(\x)},{1.5*cos(\x)},0);
+    \draw[gray,line width=0.6pt] (0,0,0)--({-1.5*sin(45)},{1.5*cos(45)},0);
+    \node[font=\footnotesize] at (-0.72,0.42,0){$R_2$};
+    \draw[line width=0.6pt] (0,0.55,0) arc[start angle=90, end angle=135, radius=0.55];
+    \node[font=\scriptsize] at (-0.2,0.75){$\alpha$};
+    \node[violet,font=\small] at ({-1.9*sin(25)},{1.9*cos(25)},0){$I$};
+    \fill (0,0,0) circle (1.6pt);
+\end{tikzpicture}\\[2pt]
+{\footnotesize Figura 1}
+\end{minipage}%
+\hfill
+\begin{minipage}[c]{0.50\textwidth}
+\textbf{Campo de un elemento de arco.} Para un elemento $d\ell = R\,d\varphi$ de un arco de radio
+$R$ centrado en el origen, el vector $d\vec{\ell}$ es siempre perpendicular al radio que lo une con
+el origen ($\sin90^\circ = 1$) y la distancia es constante e igual a $R$:
+\[
+    dB = \frac{\mu_0 I}{4\pi}\,\frac{d\ell\,\sin 90^\circ}{R^2}
+       = \frac{\mu_0 I}{4\pi}\,\frac{R\,d\varphi}{R^2}
+       = \frac{\mu_0 I}{4\pi R}\,d\varphi
+\]
+\textbf{Geometr\'ia (seg\'un la figura):}
+\begin{itemize}\setlength\itemsep{1pt}
+    \item Arco $R_1$: comienza en el eje $+z$, pasa por $+x$ y termina en $-z$ (plano $xz$).
+    \item Arco $R_2$: comienza en el eje $+y$ y avanza hacia $-x$ un \'angulo $\alpha = \pi/4$
+          (plano $xy$).
+\end{itemize}
+\end{minipage}
+
+\medskip
+\noindent Como todos los elementos de un mismo arco producen en el origen un $d\vec{B}$ con la
+\textbf{misma direcci\'on} (perpendicular al plano del arco), basta integrar el m\'odulo sobre el
+\'angulo que abarca el arco y luego asignar la direcci\'on con la regla de la mano derecha.
+
+%--------------------------------------------------
+\subsection*{(a) Campo del filamento de radio $R_1$ \ptos{10}}
+
+\noindent\textbf{M\'odulo.} El semic\'irculo abarca un \'angulo $\pi$:
+\[
+    B_1 = \int_0^{\pi}\frac{\mu_0 I}{4\pi R_1}\,d\varphi
+        = \frac{\mu_0 I}{4\pi R_1}\,(\pi - 0)
+        = \frac{\mu_0 I}{4R_1}
+\]
+
+\noindent\textbf{Direcci\'on (regla de la mano derecha).} Los dedos de la mano derecha se curvan en
+el sentido de la corriente, que recorre el arco $+z\to+x\to-z$ en el plano $xz$ (antihorario visto
+desde $+y$). El pulgar apunta en la direcci\'on de $\vec{B}$ en el centro del arco: \textbf{$+y$}.
+(Equivalentemente, girar de $\hat{k}$ hacia $\hat{\imath}$ corresponde a
+$\hat{k}\times\hat{\imath} = \hat{\jmath}$.)
+\[
+    \boxed{\vec{B}_1 = \frac{\mu_0 I}{4R_1}\,\hat{\jmath}}
+\]
+
+%--------------------------------------------------
+\subsection*{(b) Campo del filamento de radio $R_2$ \ptos{10}}
+
+\noindent\textbf{M\'odulo.} El arco abarca un \'angulo $\alpha = \pi/4$:
+\[
+    B_2 = \int_0^{\pi/4}\frac{\mu_0 I}{4\pi R_2}\,d\varphi
+        = \frac{\mu_0 I}{4\pi R_2}\cdot\frac{\pi}{4}
+        = \frac{\mu_0 I}{16R_2}
+\]
+
+\noindent\textbf{Direcci\'on (regla de la mano derecha).} La corriente recorre el arco desde $+y$
+hacia $-x$ en el plano $xy$, es decir, en sentido antihorario visto desde $+z$. Con los dedos en ese
+sentido, el pulgar apunta en \textbf{$+z$}. (Equivalentemente, girar de $\hat{\jmath}$ hacia
+$-\hat{\imath}$ corresponde a $\hat{\jmath}\times(-\hat{\imath}) = \hat{k}$.)
+\[
+    \boxed{\vec{B}_2 = \frac{\mu_0 I}{16R_2}\,\hat{k}}
+\]
+
+%--------------------------------------------------
+\subsection*{(c) Campo total en el origen \ptos{2}}
+
+\noindent Por superposici\'on:
+\[
+    \boxed{\vec{B} = \vec{B}_1 + \vec{B}_2 = \frac{\mu_0 I}{4R_1}\,\hat{\jmath} + \frac{\mu_0 I}{16R_2}\,\hat{k}}
+    \qquad\Longrightarrow\qquad
+    |\vec{B}| = \mu_0 I\sqrt{\frac{1}{256\,R_2^2} + \frac{1}{16\,R_1^2}}
+\]
+
+\newpage
+%========================================================
+% PROBLEMA 2
+%========================================================
+\section*{Problema 2: Fuerza entre tres alambres paralelos \textcolor{red}{(22 ptos)}}
+
+\noindent Se dispone de un sistema de tres alambres muy largos por donde circulan corrientes
+uniformes y paralelas entre s\'i (radios despreciables). La figura muestra la vista de perfil. Las
+corrientes (2) y (3) est\'an a una distancia $d$ de la corriente (1), con $\theta = 60^\circ$. La
+corriente (1) \textbf{sale} del plano; las corrientes (2) y (3) \textbf{entran} a \'el.
+(a) Calcule con la ley de Amp\`ere el campo que producen las corrientes (2) y (3). (b) Para una
+secci\'on de longitud $L$ del alambre (1), calcule la fuerza magn\'etica debida a los campos de (2)
+y (3). (c) Si $I_1 = 1$ [A], $I_2 = I_3 = 2$ [A] y $d = 2L = 20$ [cm], determine la fuerza neta sobre
+la corriente (1), en funci\'on de $\mu_0$ y $\pi$.
+
+\medskip
+
+\noindent
+\begin{minipage}[c]{0.42\textwidth}
+\centering
+\begin{tikzpicture}[scale=1.0, >=Stealth, line width=0.9pt]
+    \draw[->] (-1.0,0)--(3.2,0) node[right]{$x$};
+    \draw[->] (0,-0.8)--(0,2.6) node[above]{$y$};
+    \coordinate (I2) at (60:2.2);
+    \draw[dashed,gray] (0,0)--(I2);
+    \node[gray,font=\footnotesize] at ($(30:0.2)+(60:1.2)$){$d$};
+    \node[gray,font=\footnotesize,below] at (1.1,-0.05){$d$};
+    \draw (0.65,0) arc (0:60:0.65); \node[font=\footnotesize] at (30:0.9){$\theta$};
+    \punto{0,0}
+    \cruz{I2}
+    \cruz{2.2,0}
+    \node[below left,font=\small] at (-0.15,-0.1){$I_1$};
+    \node[above right,font=\small] at ($(I2)+(0.15,0.1)$){$I_2$};
+    \node[above right,font=\small] at (2.3,0.15){$I_3$};
+\end{tikzpicture}\\[2pt]
+{\footnotesize Figura 2: vista de perfil ($\odot$ sale, $\otimes$ entra)}
+\end{minipage}%
+\hfill
+\begin{minipage}[c]{0.54\textwidth}
+\textbf{Posiciones} (con $I_1$ en el origen):
+\[
+    \vec{r}_1 = \vec{0},\qquad
+    \vec{r}_2 = d\cos\theta\,\hat{\imath} + d\sin\theta\,\hat{\jmath},\qquad
+    \vec{r}_3 = d\,\hat{\imath}
+\]
+\textbf{Sentido de las corrientes:}
+\[
+    \hat{u}_{I1} = +\hat{k},\qquad \hat{u}_{I2} = \hat{u}_{I3} = -\hat{k}
+\]
+\end{minipage}
+
+%--------------------------------------------------
+\subsection*{(a) Campo de las corrientes (2) y (3): ley de Amp\`ere \ptos{6}}
+
+\noindent Se elige una trayectoria amperiana circular de radio $r$ centrada en el alambre. Por
+simetr\'ia, $\vec{B}$ es tangente a ella y de m\'odulo constante:
+\[
+    \oint\vec{B}\cdot d\vec{\ell} = B\,(2\pi r) = \mu_0 I
+    \qquad\Longrightarrow\qquad
+    B_2 = \frac{\mu_0 I_2}{2\pi r},\qquad B_3 = \frac{\mu_0 I_3}{2\pi r}
+\]
+\noindent\textbf{Direcci\'on (regla de la mano derecha):} como (2) y (3) \textbf{entran} al plano,
+con el pulgar hacia la hoja los dedos giran en sentido \textbf{horario}. En la posici\'on de (1),
+a distancia $r = d$ de cada alambre, el campo es tangente a la circunferencia centrada en el alambre
+fuente, es decir, perpendicular a la l\'inea radial $\hat{u}_r$ que une (1) con ese alambre:
+
+\medskip
+\noindent\textbf{Campo de (2) en (1).}
+
+\noindent
+\begin{minipage}[c]{0.38\textwidth}
+\centering
+\begin{tikzpicture}[scale=1.0, >=Stealth, line width=0.9pt]
+    \draw[->,gray] (-1.9,0)--(2.0,0) node[right,black,font=\small]{$x$};
+    \draw[->,gray] (0,-0.4)--(0,2.4) node[above,black,font=\small]{$y$};
+    % linea radial hacia I2 (direccion u_r)
+    \draw[dashed,gray,line width=1pt] (0,0)--(60:2.1);
+    \cruz{60:2.1}
+    \node[right,font=\footnotesize] at ($(60:2.1)+(0.2,0)$){$I_2$};
+    \draw[->,blue!70!black,line width=1.2pt] (0,0)--(60:1.1);
+    \node[blue!70!black,right,font=\footnotesize] at (60:1.05){$\hat{u}_r$};
+    % B2 a 90 + theta = 150 grados
+    \draw[->,red!75!black,line width=1.5pt] (0,0)--(150:1.6);
+    \node[red!75!black,above,font=\small] at (150:1.65){$\vec{B}_2$};
+    % angulo recto entre u_r y B2
+    \draw[line width=0.5pt] (60:0.28)--($(60:0.28)+(150:0.28)$)--(150:0.28);
+    % angulos theta y 90+theta
+    \draw[line width=0.6pt] (0.55,0) arc (0:60:0.55);
+    \node[font=\scriptsize] at (30:0.78){$\theta$};
+    \draw[red!75!black,line width=0.6pt] (0.95,0) arc (0:150:0.95);
+    \node[red!75!black,font=\scriptsize] at (113:1.32){$90^\circ+\theta$};
+    \punto{0,0}
+    \node[below left,font=\footnotesize] at (-0.1,-0.1){$I_1$};
+\end{tikzpicture}\\[2pt]
+{\footnotesize $\vec{B}_2$ es tangente: forma $90^\circ$ con $\hat{u}_r$.}
+\end{minipage}%
+\hfill
+\begin{minipage}[c]{0.58\textwidth}
+Las l\'ineas de campo de (2) son circunferencias centradas en (2); por lo tanto, en el origen
+$\vec{B}_2$ es \textbf{tangente} a la circunferencia de radio $d$, es decir, forma un \'angulo de
+$90^\circ$ con la l\'inea radial que une (1) con (2), cuya direcci\'on es
+\[
+    \hat{u}_r = \cos\theta\,\hat{\imath} + \sin\theta\,\hat{\jmath}.
+\]
+Como (2) entra al plano, $\vec{B}_2$ circula en sentido horario alrededor de (2): en el origen
+apunta girado $90^\circ$ en sentido antihorario respecto de $\hat{u}_r$, es decir, a un \'angulo
+$90^\circ+\theta$ del eje $+x$:
+\[
+    \hat{u}_{B2} = \cos(90^\circ+\theta)\,\hat{\imath} + \sin(90^\circ+\theta)\,\hat{\jmath}
+\]
+\end{minipage}
+
+\medskip
+\noindent Usando $\cos(90^\circ+\theta) = -\sin\theta$ y $\sin(90^\circ+\theta) = \cos\theta$, con
+$\theta = 60^\circ$:
+\[
+    \hat{u}_{B2} = -\sin60^\circ\,\hat{\imath} + \cos60^\circ\,\hat{\jmath}
+    = -\tfrac{\sqrt{3}}{2}\,\hat{\imath} + \tfrac{1}{2}\,\hat{\jmath}
+    \qquad(\text{a } 150^\circ \text{ del eje } +x)
+\]
+\[
+    \boxed{\vec{B}_2 = \frac{\mu_0 I_2}{2\pi d}\bigl[\cos(90^\circ+\theta)\,\hat{\imath} + \sin(90^\circ+\theta)\,\hat{\jmath}\bigr]
+    = \frac{\mu_0 I_2}{2\pi d}\Bigl(-\tfrac{\sqrt{3}}{2}\,\hat{\imath} + \tfrac{1}{2}\,\hat{\jmath}\Bigr)}
+\]
+\noindent Verificaci\'on: $\hat{u}_{B2}\cdot\hat{u}_r = \cos(90^\circ+\theta)\cos\theta + \sin(90^\circ+\theta)\sin\theta
+= \cos(90^\circ) = 0$, de modo que $\vec{B}_2\perp\hat{u}_r$.
+
+\noindent\textbf{Campo de (3) en (1).}
+
+\noindent
+\begin{minipage}[c]{0.38\textwidth}
+\centering
+\begin{tikzpicture}[scale=1.0, >=Stealth, line width=0.9pt]
+    \draw[->,gray] (-0.9,0)--(2.8,0) node[right,black,font=\small]{$x$};
+    \draw[->,gray] (0,-0.4)--(0,2.2) node[above,black,font=\small]{$y$};
+    % circunferencia de campo de (3) que pasa por (1), sentido horario
+    \draw[green!50!black,dashed,line width=0.7pt,postaction={decorate},
+          decoration={markings, mark=at position 0.85 with {\arrow[scale=1.1]{>}}}]
+          (2.1,0) ++(215:2.1) arc[start angle=215, end angle=142, radius=2.1];
+    % linea radial hacia I3 (direccion u_r)
+    \draw[dashed,gray,line width=1pt] (0,0)--(2.1,0);
+    \cruz{2.1,0}
+    \node[above right,font=\footnotesize] at (2.2,0.1){$I_3$};
+    \draw[->,blue!70!black,line width=1.2pt] (0,0)--(1.0,0);
+    \node[blue!70!black,below,font=\footnotesize] at (0.8,-0.05){$\hat{u}_r$};
+    % B3 a 90 grados
+    \draw[->,red!75!black,line width=1.5pt] (0,0)--(0,1.5);
+    \node[red!75!black,left,font=\small] at (0,1.45){$\vec{B}_3$};
+    % angulo recto
+    \draw[line width=0.5pt] (0.28,0)--(0.28,0.28)--(0,0.28);
+    \draw[red!75!black,line width=0.6pt] (0.75,0) arc (0:90:0.75);
+    \node[red!75!black,font=\scriptsize] at (45:1.0){$90^\circ$};
+    \punto{0,0}
+    \node[below left,font=\footnotesize] at (-0.1,-0.1){$I_1$};
+\end{tikzpicture}\\[2pt]
+{\footnotesize $\vec{B}_3$ es tangente: forma $90^\circ$ con $\hat{u}_r$.}
+\end{minipage}%
+\hfill
+\begin{minipage}[c]{0.58\textwidth}
+Las l\'ineas de campo de (3) son circunferencias centradas en (3). En el origen, $\vec{B}_3$ es
+\textbf{tangente} a la circunferencia de radio $d$ y forma un \'angulo de $90^\circ$ con la l\'inea
+radial que une (1) con (3), cuya direcci\'on es
+\[
+    \hat{u}_r = \cos0^\circ\,\hat{\imath} + \sin0^\circ\,\hat{\jmath} = \hat{\imath}.
+\]
+Como (3) entra al plano, $\vec{B}_3$ circula en sentido horario alrededor de (3): en el origen
+(a la izquierda de (3)) apunta girado $90^\circ$ en sentido antihorario respecto de $\hat{u}_r$, es
+decir, a $90^\circ$ del eje $+x$:
+\[
+    \hat{u}_{B3} = \cos90^\circ\,\hat{\imath} + \sin90^\circ\,\hat{\jmath} = \hat{\jmath}
+\]
+\end{minipage}
+
+\[
+    \boxed{\vec{B}_3 = \frac{\mu_0 I_3}{2\pi d}\,\hat{\jmath}}
+\]
+\noindent Es el mismo resultado que da la expresi\'on de $\vec{B}_2$ con $\theta = 0^\circ$
+(la corriente (3) est\'a sobre el eje $x$): $\cos(90^\circ+0^\circ)\,\hat{\imath} +
+\sin(90^\circ+0^\circ)\,\hat{\jmath} = \hat{\jmath}$. Verificaci\'on:
+$\hat{u}_{B3}\cdot\hat{u}_r = \hat{\jmath}\cdot\hat{\imath} = 0$.
+
+%--------------------------------------------------
+\subsection*{(b) Fuerza sobre una secci\'on $L$ del alambre (1) \ptos{10}}
+
+\noindent Como la corriente (1) sale del plano, $\vec{L} = L\,\hat{k}$. Con
+$\vec{F} = I_1\,\vec{L}\times\vec{B}$:
+\begin{align*}
+    \vec{F}_{2\to1} &= I_1 L\,\hat{k}\times\frac{\mu_0 I_2}{2\pi d}
+                       \Bigl(-\tfrac{\sqrt{3}}{2}\,\hat{\imath} + \tfrac{1}{2}\,\hat{\jmath}\Bigr)\\[3pt]
+    &= \frac{\mu_0 I_1 I_2 L}{2\pi d}
+       \Bigl[-\tfrac{\sqrt{3}}{2}\,(\hat{k}\times\hat{\imath}) + \tfrac{1}{2}\,(\hat{k}\times\hat{\jmath})\Bigr]
+     = \frac{\mu_0 I_1 I_2 L}{2\pi d}
+       \Bigl[-\tfrac{\sqrt{3}}{2}\,\hat{\jmath} - \tfrac{1}{2}\,\hat{\imath}\Bigr]
+\end{align*}
+\[
+    \boxed{\vec{F}_{2\to1} = \frac{\mu_0 I_1 I_2 L}{2\pi d}
+    \Bigl(-\tfrac{1}{2}\,\hat{\imath} - \tfrac{\sqrt{3}}{2}\,\hat{\jmath}\Bigr)}
+\]
+\begin{align*}
+    \vec{F}_{3\to1} &= I_1 L\,\hat{k}\times\frac{\mu_0 I_3}{2\pi d}\,\hat{\jmath}
+    = \frac{\mu_0 I_1 I_3 L}{2\pi d}\,(\hat{k}\times\hat{\jmath})
+\end{align*}
+\[
+    \boxed{\vec{F}_{3\to1} = -\,\frac{\mu_0 I_1 I_3 L}{2\pi d}\,\hat{\imath}}
+\]
+\noindent\textbf{Interpretaci\'on:} (1) es antiparalela a (2) y a (3), por lo que ambas la
+\textbf{repelen}: $\vec{F}_{2\to1}$ apunta desde (2) hacia (1) (a
+$\theta + 180^\circ = 240^\circ$ del eje $+x$) y $\vec{F}_{3\to1}$ apunta en $-\hat{\imath}$.
+
+%--------------------------------------------------
+\subsection*{(c) Fuerza neta sobre la corriente (1) \ptos{6}}
+
+\noindent Con $I_1 = 1$ [A], $I_2 = I_3 = 2$ [A], $L = 0{,}10$ [m] y $d = 0{,}20$ [m], el coeficiente
+com\'un es:
+\[
+    \frac{\mu_0 I_1 I_2 L}{2\pi d} = \frac{\mu_0 I_1 I_3 L}{2\pi d}
+    = \frac{\mu_0\,(1)(2)(0{,}10)}{2\pi\,(0{,}20)} = \frac{\mu_0}{2\pi}
+\]
+Por superposici\'on:
+\begin{align*}
+    \vec{F}_1 = \vec{F}_{2\to1} + \vec{F}_{3\to1}
+    &= \frac{\mu_0}{2\pi}\Bigl(-\tfrac{1}{2}\,\hat{\imath} - \tfrac{\sqrt{3}}{2}\,\hat{\jmath}\Bigr)
+       + \frac{\mu_0}{2\pi}\,(-\hat{\imath})
+     = \frac{\mu_0}{2\pi}\Bigl(-\tfrac{3}{2}\,\hat{\imath} - \tfrac{\sqrt{3}}{2}\,\hat{\jmath}\Bigr)
+\end{align*}
+\[
+    \boxed{\vec{F}_1 = \frac{\mu_0}{4\pi}\bigl(-3\,\hat{\imath} - \sqrt{3}\,\hat{\jmath}\bigr)\ [\text{N}]}
+\]
+\noindent Magnitud: $|\vec{F}_1| = \dfrac{\mu_0}{4\pi}\sqrt{9+3} = \dfrac{\mu_0\sqrt{12}}{4\pi}
+= \dfrac{\sqrt{3}\,\mu_0}{2\pi}$ [N]. Num\'ericamente, con $\mu_0 = 4\pi\times10^{-7}$
+[T$\cdot$m/A], $|\vec{F}_1| = 2\sqrt{3}\times10^{-7} = 3{,}46\times10^{-7}$ [N].
+
+\newpage
+%========================================================
+% PROBLEMA 3
+%========================================================
+\section*{Problema 3: Fem inducida en una espira \textcolor{red}{(15 ptos)}}
+
+\noindent Una espira plana de alambre de $8$ [cm$^2$] de \'area y $n = 6$ vueltas es perpendicular a
+un campo magn\'etico que aumenta uniformemente de $0{,}5$ [T] a $2{,}5$ [T] en $1$ [s].
+(a) Calcule la fem inducida en la espira. (b) Calcule la corriente inducida si la espira tiene una
+resistencia de $4$ [$\Omega$].
+
+\medskip
+
+\noindent
+\begin{minipage}[c]{0.36\textwidth}
+\centering
+\begin{tikzpicture}[scale=0.95, >=Stealth, line width=0.9pt]
+    \foreach \x in {-1.2,-0.4,0.4,1.2}{
+        \foreach \y in {-1.2,-0.4,0.4,1.2}{\punto[blue!70!black]{\x,\y}}}
+    \draw[orange!80!black,line width=2pt,rounded corners=2pt] (-0.85,-0.85) rectangle (0.85,0.85);
+    \node[orange!80!black,font=\small] at (0,-1.75){espira, $n = 6$};
+    \node[blue!70!black,font=\small] at (1.75,1.55){$\vec{B}(t)$};
+\end{tikzpicture}\\[2pt]
+{\footnotesize Figura 3: $\vec{B}$ perpendicular al plano de la espira}
+\end{minipage}%
+\hfill
+\begin{minipage}[c]{0.60\textwidth}
+\textbf{Datos y transformaci\'on de unidades:}
+\[
+    A = 8\ [\text{cm}^2]\cdot\frac{10^{-4}\ [\text{m}^2]}{1\ [\text{cm}^2]} = 8\times10^{-4}\ [\text{m}^2]
+\]
+\[
+    n = 6,\qquad B_i = 0{,}5\ [\text{T}],\qquad B_f = 2{,}5\ [\text{T}]
+\]
+\[
+    \Delta t = 1\ [\text{s}],\qquad R = 4\ [\Omega]
+\]
+Como $\vec{B}$ es perpendicular al plano de la espira, es paralelo a su vector normal
+($\theta = 0$, $\cos\theta = 1$).
+\end{minipage}
+
+%--------------------------------------------------
+\subsection*{(a) Fem inducida \ptos{10}}
+
+\noindent\textbf{Flujo a trav\'es de una vuelta:}
+\[
+    \Phi_B = \int_S\vec{B}\cdot d\vec{S} = B\,A\cos0^\circ = B\,A
+\]
+Como $A$ es constante y $B$ crece uniformemente, la tasa de cambio del campo es constante:
+\[
+    \frac{dB}{dt} = \frac{\Delta B}{\Delta t} = \frac{2{,}5 - 0{,}5}{1} = 2{,}0\ [\text{T/s}]
+\]
+\textbf{Ley de Faraday} para $n$ vueltas:
+\begin{align*}
+    \eps &= -\,n\,\frac{d\Phi_B}{dt} = -\,n\,A\,\frac{dB}{dt}
+          = -(6)(8\times10^{-4})(2{,}0)
+\end{align*}
+\[
+    \boxed{\eps = -9{,}6\times10^{-3}\ [\text{V}],\qquad |\eps| = 9{,}6\ [\text{mV}]}
+\]
+\noindent El signo negativo expresa la ley de Lenz: la fem inducida produce una corriente cuyo campo
+se opone al \textbf{aumento} del flujo, es decir, un campo inducido opuesto a $\vec{B}$ en el interior
+de la espira (en la Fig.\ 3, la corriente inducida circula en sentido \textbf{horario}).
+
+%--------------------------------------------------
+\subsection*{(b) Corriente inducida \ptos{5}}
+
+\noindent Por la ley de Ohm:
+\[
+    i = \frac{|\eps|}{R} = \frac{9{,}6\times10^{-3}}{4}
+    \qquad\Longrightarrow\qquad
+    \boxed{i = 2{,}4\times10^{-3}\ [\text{A}] = 2{,}4\ [\text{mA}]}
+\]
+
+%========================================================
+% RESUMEN
+%========================================================
+\section*{Resumen de resultados}
+
+\begin{center}
+\renewcommand{\arraystretch}{1.5}
+\begin{tabular}{|c|c|l|}
+\hline
+\textbf{Problema} & \textbf{Parte} & \textbf{Resultado} \\
+\hline
+1 & (a) & $\vec{B}_1 = \dfrac{\mu_0 I}{4R_1}\,\hat{\jmath}$ \\
+  & (b) & $\vec{B}_2 = \dfrac{\mu_0 I}{16R_2}\,\hat{k}$ \\
+  & (c) & $\vec{B} = \dfrac{\mu_0 I}{4R_1}\,\hat{\jmath} + \dfrac{\mu_0 I}{16R_2}\,\hat{k}$ \\
+\hline
+2 & (a) & $\vec{B}_2 = \dfrac{\mu_0 I_2}{2\pi d}\bigl(-\tfrac{\sqrt3}{2}\hat{\imath} + \tfrac12\hat{\jmath}\bigr)$ \\
+  &     & $\vec{B}_3 = \dfrac{\mu_0 I_3}{2\pi d}\,\hat{\jmath}$ \\
+  & (b) & $\vec{F}_{2\to1} = \dfrac{\mu_0 I_1 I_2 L}{2\pi d}\bigl(-\tfrac12\hat{\imath} - \tfrac{\sqrt3}{2}\hat{\jmath}\bigr)$ \\
+  &     & $\vec{F}_{3\to1} = -\dfrac{\mu_0 I_1 I_3 L}{2\pi d}\,\hat{\imath}$ \\
+  & (c) & $\vec{F}_1 = \dfrac{\mu_0}{4\pi}\bigl(-3\,\hat{\imath} - \sqrt{3}\,\hat{\jmath}\bigr)$ [N],\quad
+          $|\vec{F}_1| = 3{,}46\times10^{-7}$ [N] \\
+\hline
+3 & (a) & $|\eps| = 9{,}6$ [mV] \\
+  & (b) & $i = 2{,}4$ [mA] \\
+\hline
+\end{tabular}
+\end{center}
+
+\end{document}
