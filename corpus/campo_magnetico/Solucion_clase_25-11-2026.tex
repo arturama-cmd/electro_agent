@@ -1,0 +1,311 @@
+\documentclass[12pt,letterpaper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[spanish,es-noshorthands]{babel}
+\usepackage{amsmath,amssymb}
+\usepackage{graphicx}
+\usepackage{xcolor}
+\usepackage{array}
+\usepackage{tikz}
+\usetikzlibrary{calc,arrows.meta,decorations.markings}
+\usepackage[top=2.5cm, bottom=2.7cm, left=2cm, right=2cm, footskip=40pt]{geometry}
+\usepackage{fancyhdr}
+\usepackage{lastpage}
+
+\definecolor{ubbblue}{RGB}{0,51,102}
+\newcommand{\eps}{\varepsilon}
+
+% simbolo de campo saliendo de la pagina
+\newcommand{\punto}[2][black]{%
+  \draw[#1,line width=0.7pt,fill=white] (#2) circle (0.13);
+  \fill[#1] (#2) circle (0.04);}
+
+\pagestyle{fancy}
+\fancyhf{}
+\renewcommand{\headrulewidth}{0pt}
+\renewcommand{\footrulewidth}{0.4pt}
+\fancyfoot[L]{\raisebox{-0.5\height}{\includegraphics[height=1.1cm]{logo ubb.png}}}
+\fancyfoot[C]{%
+    \begin{minipage}[c]{8cm}\centering
+        \footnotesize\textcolor{ubbblue}{\textbf{Dr.\ Arturo Fern\'andez P\'erez}}\\
+        \scriptsize Departamento de F\'isica -- Universidad del B\'io-B\'io\\
+        \scriptsize \textit{Electro\_Asistente\_AI-UBB}\\
+        \tiny P\'agina \thepage\ de \pageref{LastPage}
+    \end{minipage}}
+\fancyfoot[R]{\raisebox{-0.5\height}{\includegraphics[height=1.1cm]{logo dfis.png}}}
+\fancypagestyle{plain}{%
+    \fancyhf{}
+    \renewcommand{\headrulewidth}{0pt}
+    \renewcommand{\footrulewidth}{0.4pt}
+    \fancyfoot[L]{\raisebox{-0.5\height}{\includegraphics[height=1.1cm]{logo ubb.png}}}
+    \fancyfoot[C]{%
+        \begin{minipage}[c]{8cm}\centering
+            \footnotesize\textcolor{ubbblue}{\textbf{Dr.\ Arturo Fern\'andez P\'erez}}\\
+            \scriptsize Departamento de F\'isica -- Universidad del B\'io-B\'io\\
+            \scriptsize \textit{Electro\_Asistente\_AI-UBB}\\
+            \tiny P\'agina \thepage\ de \pageref{LastPage}
+        \end{minipage}}
+    \fancyfoot[R]{\raisebox{-0.5\height}{\includegraphics[height=1.1cm]{logo dfis.png}}}
+}
+
+\begin{document}
+
+%========================================
+% ENCABEZADO INSTITUCIONAL
+%========================================
+\begin{center}
+    \includegraphics[height=2cm]{logo ubb.png}\\[0.3cm]
+    {\large\textcolor{ubbblue}{\textbf{UNIVERSIDAD DEL B\'IO-B\'IO}}}\\[0.1cm]
+    {\normalsize Facultad de Ciencias -- Departamento de F\'isica}
+\end{center}
+
+\vspace{0.3cm}
+\hrule height 1pt
+\vspace{0.5cm}
+
+{\centering\Large\textbf{Problema Resuelto en la Clase del 25/11}\par}
+{\centering\normalsize\textit{Inducci\'on electromagn\'etica: solenoide con corriente definida por tramos}\par}
+
+\vspace{0.6cm}
+
+%========================================================
+% ENUNCIADO
+%========================================================
+\section*{Enunciado}
+
+\noindent Un solenoide muy largo de radio $R_1 = 10$ [cm] y $n = 250$ [vueltas/m] conduce una
+corriente que var\'ia en el tiempo seg\'un la funci\'on definida por tramos
+\[
+    I(t) =
+    \begin{cases}
+        3\,t^{3/2}\ [\text{A}], & 0 < t < 4\ [\text{s}]\\[3pt]
+        2\,e^{-5t}\ [\text{A}], & 4 < t < 6\ [\text{s}]\\[3pt]
+        2\sin(8t)\ [\text{A}], & t > 6\ [\text{s}]
+    \end{cases}
+\]
+Una bobina de radio $R_2 = 15$ [cm], con $N = 30$ vueltas y resistencia $R = 100$ [$\Omega$], rodea
+al solenoide y es coaxial con \'el. Para cada tramo de la corriente, determine: (a) el flujo
+magn\'etico a trav\'es de la bobina; (b) la fem inducida; (c) la corriente inducida; (d) usando la ley
+de Lenz, la direcci\'on de la corriente inducida y del campo inducido, indicando si es la misma
+direcci\'on que la del solenoide o la opuesta.
+
+\medskip
+
+\noindent
+\begin{minipage}[c]{0.40\textwidth}
+\centering
+\begin{tikzpicture}[scale=1.0, >=Stealth, line width=0.9pt]
+    % bobina (radio R2)
+    \draw[orange!80!black,line width=1.8pt] (0,0) circle (2.1);
+    % solenoide (radio R1) con corriente antihoraria
+    \draw[blue!70!black,line width=1.6pt,postaction={decorate},
+          decoration={markings, mark=at position 0.12 with {\arrow[violet,scale=1.2]{>}},
+                                mark=at position 0.62 with {\arrow[violet,scale=1.2]{>}}}]
+          (0,0) circle (1.4);
+    \node[violet,font=\small] at (52:1.75){$I(t)$};
+    % campo del solenoide (saliendo) para I>0
+    \foreach \x/\y in {-0.5/0.45,0.5/0.45,-0.5/-0.45,0.5/-0.45}{\punto[blue!70!black]{\x,\y}}
+    \node[blue!70!black,font=\small] at (0,0){$\vec{B}$};
+    % radios
+    \draw[->,line width=0.6pt] (0,0)--(-30:1.4);
+    \node[font=\footnotesize,below left] at (-30:1.05){$R_1$};
+    \draw[->,line width=0.6pt] (0,0)--(165:2.1);
+    \node[font=\footnotesize,above] at (165:1.75){$R_2$};
+    \node[orange!80!black,font=\footnotesize,right] at (2.15,0.6){bobina};
+    \node[orange!80!black,font=\footnotesize,right] at (2.15,0.25){$N,\ R$};
+    \node[blue!70!black,font=\footnotesize] at (0,1.72){solenoide};
+\end{tikzpicture}\\[2pt]
+{\footnotesize Corte transversal (para $I>0$).}
+\end{minipage}%
+\hfill
+\begin{minipage}[c]{0.56\textwidth}
+\textbf{Datos:}
+\[
+    R_1 = 0{,}10\ [\text{m}],\quad n = 250\ [\text{m}^{-1}],\quad R_2 = 0{,}15\ [\text{m}]
+\]
+\[
+    N = 30,\qquad R = 100\ [\Omega],\qquad \mu_0 = 4\pi\times10^{-7}\ [\text{T}\cdot\text{m/A}]
+\]
+\textbf{Convenci\'on de signos:} el eje del solenoide es el eje $z$. Una corriente $I>0$ circula en
+sentido antihorario (visto desde $+z$) y produce un campo en $+\hat{k}$. Para la bobina se toma la
+normal $\hat{n} = +\hat{k}$, de modo que una fem o corriente inducida \textbf{positiva} circula en el
+\textbf{mismo} sentido que $I>0$.
+\end{minipage}
+
+%========================================================
+% FLUJO GENERAL
+%========================================================
+\section*{Planteamiento general}
+
+\noindent\textbf{Campo del solenoide.} Dentro del solenoide el campo es uniforme y paralelo al eje;
+fuera de \'el es pr\'acticamente nulo:
+\[
+    \vec{B}(t) = \mu_0\,n\,I(t)\,\hat{k}\quad (r < R_1),\qquad \vec{B}\approx\vec{0}\quad (r > R_1)
+\]
+
+\noindent\textbf{Flujo a trav\'es de una vuelta de la bobina.} Aunque la bobina tiene radio
+$R_2 > R_1$, el campo s\'olo existe dentro del solenoide, por lo que el \'area efectiva es
+$\pi R_1^2$:
+\begin{align*}
+    \Phi_B(t) &= \int_S\vec{B}\cdot d\vec{S} = \mu_0\,n\,I(t)\,\pi R_1^2\\[3pt]
+              &= (4\pi\times10^{-7})(250)\,\pi(0{,}10)^2\,I(t)
+               = 9{,}870\times10^{-6}\,I(t)\ [\text{Wb}]
+\end{align*}
+
+\noindent\textbf{Fem y corriente inducida} (ley de Faraday y ley de Ohm):
+\begin{align*}
+    \eps(t) &= -N\,\frac{d\Phi_B}{dt} = -N\mu_0 n\pi R_1^2\,\frac{dI}{dt}
+             = -(30)(9{,}870\times10^{-6})\,\frac{dI}{dt}
+             = -2{,}961\times10^{-4}\,\frac{dI}{dt}\ [\text{V}]\\[3pt]
+    i(t) &= \frac{\eps(t)}{R} = -2{,}961\times10^{-6}\,\frac{dI}{dt}\ [\text{A}]
+\end{align*}
+
+\noindent\textbf{Ley de Lenz.} La corriente inducida crea un campo que se opone al
+\textbf{cambio} del flujo:
+\begin{itemize}\setlength\itemsep{2pt}
+    \item si $|I|$ \textbf{aumenta}, el campo inducido es \textbf{opuesto} al del solenoide y la corriente
+          inducida circula en sentido \textbf{opuesto} a la del solenoide;
+    \item si $|I|$ \textbf{disminuye}, el campo inducido tiene la \textbf{misma} direcci\'on que el del
+          solenoide y la corriente inducida circula en el \textbf{mismo} sentido.
+\end{itemize}
+
+%========================================================
+% TRAMO 1
+%========================================================
+\section*{Tramo 1: $I(t) = 3\,t^{3/2}$ [A], \ $0 < t < 4$ [s]}
+
+\noindent\textbf{(a) Flujo:}
+\[
+    \boxed{\Phi_B(t) = 9{,}870\times10^{-6}\,(3\,t^{3/2}) = 2{,}961\times10^{-5}\,t^{3/2}\ [\text{Wb}]}
+\]
+
+\noindent\textbf{(b) Fem inducida:} con $\dfrac{dI}{dt} = 3\cdot\dfrac{3}{2}\,t^{1/2} = 4{,}5\,\sqrt{t}$ [A/s],
+\[
+    \eps(t) = -2{,}961\times10^{-4}\,(4{,}5\sqrt{t})
+    \qquad\Longrightarrow\qquad
+    \boxed{\eps(t) = -1{,}332\times10^{-3}\,\sqrt{t}\ [\text{V}]}
+\]
+
+\noindent\textbf{(c) Corriente inducida:}
+\[
+    \boxed{i(t) = \frac{\eps(t)}{R} = -1{,}332\times10^{-5}\,\sqrt{t}\ [\text{A}]}
+\]
+Por ejemplo, en $t = 1$ [s]: $|\eps| = 1{,}33$ [mV] e $|i| = 13{,}3$ [$\mu$A]; en $t\to4$ [s]:
+$|\eps| = 2{,}66$ [mV] e $|i| = 26{,}6$ [$\mu$A].
+
+\medskip
+\noindent\textbf{(d) Direcci\'on (ley de Lenz):} $I > 0$ y $dI/dt > 0$, es decir, $|I|$
+\textbf{aumenta} y el flujo crece en $+\hat{k}$. La bobina se opone al aumento:
+\begin{center}
+\fbox{\parbox{0.88\textwidth}{\centering campo inducido en $-\hat{k}$: \textbf{opuesto} al del
+solenoide;\quad corriente inducida en sentido \textbf{horario}: \textbf{opuesta} a la del solenoide
+(signo negativo de $i$).}}
+\end{center}
+
+%========================================================
+% TRAMO 2
+%========================================================
+\section*{Tramo 2: $I(t) = 2\,e^{-5t}$ [A], \ $4 < t < 6$ [s]}
+
+\noindent\textbf{(a) Flujo:}
+\[
+    \boxed{\Phi_B(t) = 9{,}870\times10^{-6}\,(2\,e^{-5t}) = 1{,}974\times10^{-5}\,e^{-5t}\ [\text{Wb}]}
+\]
+
+\noindent\textbf{(b) Fem inducida:} con $\dfrac{dI}{dt} = 2(-5)\,e^{-5t} = -10\,e^{-5t}$ [A/s],
+\[
+    \eps(t) = -2{,}961\times10^{-4}\,(-10\,e^{-5t})
+    \qquad\Longrightarrow\qquad
+    \boxed{\eps(t) = 2{,}961\times10^{-3}\,e^{-5t}\ [\text{V}]}
+\]
+
+\noindent\textbf{(c) Corriente inducida:}
+\[
+    \boxed{i(t) = \frac{\eps(t)}{R} = 2{,}961\times10^{-5}\,e^{-5t}\ [\text{A}]}
+\]
+Como $e^{-5t}$ es muy peque\~no en este intervalo (en $t = 4$ [s], $e^{-20}\approx 2{,}1\times10^{-9}$),
+la fem es despreciable: $\eps(4)\approx 6{,}1\times10^{-12}$ [V].
+
+\medskip
+\noindent\textbf{(d) Direcci\'on (ley de Lenz):} $I > 0$ y $dI/dt < 0$, es decir, $|I|$
+\textbf{disminuye} y el flujo en $+\hat{k}$ decrece. La bobina trata de mantenerlo:
+\begin{center}
+\fbox{\parbox{0.88\textwidth}{\centering campo inducido en $+\hat{k}$: \textbf{misma} direcci\'on que
+el del solenoide;\quad corriente inducida en sentido \textbf{antihorario}: \textbf{mismo} sentido que
+la del solenoide (signo positivo de $i$).}}
+\end{center}
+
+%========================================================
+% TRAMO 3
+%========================================================
+\section*{Tramo 3: $I(t) = 2\sin(8t)$ [A], \ $t > 6$ [s]}
+
+\noindent\textbf{(a) Flujo:}
+\[
+    \boxed{\Phi_B(t) = 9{,}870\times10^{-6}\,(2\sin 8t) = 1{,}974\times10^{-5}\sin(8t)\ [\text{Wb}]}
+\]
+
+\noindent\textbf{(b) Fem inducida:} con $\dfrac{dI}{dt} = 2\cdot8\cos(8t) = 16\cos(8t)$ [A/s],
+\[
+    \eps(t) = -2{,}961\times10^{-4}\,(16\cos 8t)
+    \qquad\Longrightarrow\qquad
+    \boxed{\eps(t) = -4{,}737\times10^{-3}\cos(8t)\ [\text{V}]}
+\]
+
+\noindent\textbf{(c) Corriente inducida:}
+\[
+    \boxed{i(t) = \frac{\eps(t)}{R} = -4{,}737\times10^{-5}\cos(8t)\ [\text{A}]}
+\]
+Es una corriente alterna de amplitud $47{,}4$ [$\mu$A] y per\'iodo $T = 2\pi/8 = \pi/4\approx0{,}785$ [s],
+desfasada en $90^\circ$ respecto de la corriente del solenoide.
+
+\medskip
+\noindent\textbf{(d) Direcci\'on (ley de Lenz):} ahora la corriente del solenoide cambia de signo, por
+lo que el resultado depende de si $|I|$ aumenta o disminuye. Como
+$I\,\dfrac{dI}{dt} = (2\sin8t)(16\cos8t) = 16\sin(16t)$:
+\begin{itemize}\setlength\itemsep{2pt}
+    \item cuando $\sin(16t) > 0$, $|I|$ \textbf{aumenta}: campo inducido \textbf{opuesto} al del
+          solenoide y corriente inducida en sentido \textbf{opuesto};
+    \item cuando $\sin(16t) < 0$, $|I|$ \textbf{disminuye}: campo inducido en la \textbf{misma}
+          direcci\'on que el del solenoide y corriente inducida en el \textbf{mismo} sentido.
+\end{itemize}
+Es decir, en cada cuarto de per\'iodo ($\pi/16\approx0{,}196$ [s]) la situaci\'on se alterna:
+\begin{center}
+\renewcommand{\arraystretch}{1.35}
+\begin{tabular}{|c|c|c|c|}
+\hline
+\textbf{Intervalo de $8t$} & $I$ & $|I|$ & \textbf{Campo y corriente inducidos} \\
+\hline
+$(2k\pi,\ 2k\pi+\tfrac{\pi}{2})$ & $>0$ & aumenta & opuestos al solenoide \\
+$(2k\pi+\tfrac{\pi}{2},\ 2k\pi+\pi)$ & $>0$ & disminuye & mismo sentido que el solenoide \\
+$(2k\pi+\pi,\ 2k\pi+\tfrac{3\pi}{2})$ & $<0$ & aumenta & opuestos al solenoide \\
+$(2k\pi+\tfrac{3\pi}{2},\ 2k\pi+2\pi)$ & $<0$ & disminuye & mismo sentido que el solenoide \\
+\hline
+\end{tabular}
+\end{center}
+
+%========================================================
+% RESUMEN
+%========================================================
+\section*{Resumen}
+
+\begin{center}
+\renewcommand{\arraystretch}{1.5}
+\begin{tabular}{|c|c|c|c|c|}
+\hline
+\textbf{Tramo} & $\Phi_B(t)$ [Wb] & $\eps(t)$ [V] & $i(t)$ [A] & \textbf{Lenz} \\
+\hline
+$0<t<4$ & $2{,}961\times10^{-5}\,t^{3/2}$ & $-1{,}332\times10^{-3}\sqrt{t}$
+        & $-1{,}332\times10^{-5}\sqrt{t}$ & opuesto \\
+$4<t<6$ & $1{,}974\times10^{-5}\,e^{-5t}$ & $2{,}961\times10^{-3}\,e^{-5t}$
+        & $2{,}961\times10^{-5}\,e^{-5t}$ & mismo \\
+$t>6$ & $1{,}974\times10^{-5}\sin 8t$ & $-4{,}737\times10^{-3}\cos 8t$
+      & $-4{,}737\times10^{-5}\cos 8t$ & se alterna \\
+\hline
+\end{tabular}
+\end{center}
+
+\noindent\textbf{Observaci\'on:} la funci\'on $I(t)$ es discontinua en $t = 4$ [s] (pasa de $24$ [A] a
+pr\'acticamente $0$) y en $t = 6$ [s]. En esos instantes $dI/dt$ no est\'a definida, por lo que el
+an\'alisis se realiza dentro de cada tramo (intervalos abiertos).
+
+\end{document}
